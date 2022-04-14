@@ -1,4 +1,3 @@
-import 'package:desejando_app/layers/data/repositories/i_desejo_repository.dart';
 import 'package:desejando_app/layers/data/usecases/desejos/get_desejo_by_id.dart';
 import 'package:desejando_app/layers/domain/entities/desejo_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/domain_error.dart';
@@ -6,9 +5,8 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../../../mocks/desejos/classes_spy_mock.dart';
 import '../../../../mocks/desejos/mock_desejo_entity.dart';
-
-class DesejoRepositorySpy extends Mock implements IDesejoRepository {}
 
 void main() {
   late GetDesejoById sut;
@@ -31,7 +29,7 @@ void main() {
     mockGetById(desejoResult);
   });
 
-  test("Deve chamar Repository com valores corretos", () async {
+  test("Deve chamar GetById no Repository com valores corretos", () async {
     await sut.get(idDesejo);
 
     verify(() => desejoRepository.getById(idDesejo));
@@ -47,7 +45,7 @@ void main() {
     mockGetByIdError();
     final Future future = sut.get(idDesejo);
 
-    expect(future, throwsA(UnexpectedError));
+    expect(future, throwsA(UnexpectedDomainError));
   });
 
   test("Deve throw AlreadyExistsError", () {

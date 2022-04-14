@@ -17,7 +17,7 @@ class GetDesejoById implements IGetDesejoById {
     } on AlreadyExistsError {
       throw AlreadyExistsError;
     } catch (e) {
-      throw UnexpectedError;
+      throw UnexpectedDomainError;
     }
   }
 }
