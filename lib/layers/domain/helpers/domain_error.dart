@@ -2,10 +2,10 @@ abstract class DomainError implements Exception {
   String get message;
 }
 
-class UnexpectedError extends DomainError {
+class UnexpectedDomainError extends DomainError {
   @override
   final String message;
-  UnexpectedError(this.message);
+  UnexpectedDomainError(this.message);
 }
 
 class NotFoundError extends DomainError {
