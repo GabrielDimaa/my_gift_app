@@ -1,3 +1,5 @@
+import '../../../i18n/resources.dart';
+
 abstract class DomainError implements Exception {
   String get message;
 }
@@ -5,17 +7,20 @@ abstract class DomainError implements Exception {
 class UnexpectedDomainError extends DomainError {
   @override
   final String message;
+
   UnexpectedDomainError(this.message);
 }
 
-class NotFoundError extends DomainError {
+class AlreadyExistsDomainError extends DomainError {
   @override
   final String message;
-  NotFoundError(this.message);
+
+  AlreadyExistsDomainError({String? message}) : message = message ?? R.string.alreadyExistsError;
 }
 
-class AlreadyExistsError extends DomainError {
+class NotFoundDomainError extends DomainError {
   @override
   final String message;
-  AlreadyExistsError(this.message);
+
+  NotFoundDomainError({String? message}) : message = message ?? R.string.notFoundError;
 }

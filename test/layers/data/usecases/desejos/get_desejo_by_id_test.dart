@@ -56,9 +56,9 @@ void main() {
   });
 
   test("Deve throw NotFoundError", () {
-    mockGetByIdError(error: NotFoundError("any_message"));
+    mockGetByIdError(error: NotFoundDomainError("any_message"));
     final Future future = sut.get(idDesejo);
 
-    expect(future, throwsA(NotFoundError));
+    expect(future, throwsA(NotFoundDomainError));
   });
 }
