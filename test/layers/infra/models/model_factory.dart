@@ -1,17 +1,17 @@
-import 'package:desejando_app/layers/infra/models/desejo_model.dart';
+import 'package:desejando_app/layers/infra/models/wish_model.dart';
 import 'package:faker/faker.dart';
 
 abstract class ModelFactory {
-  static DesejoModel desejo() => DesejoModel(
+  static WishModel wish() => WishModel(
     id: faker.guid.guid(),
-    descricao: faker.lorem.sentence(),
-    imagem: faker.internet.httpsUrl(),
+    description: faker.lorem.sentence(),
+    image: faker.internet.httpsUrl(),
     link: faker.internet.httpsUrl(),
-    observacao: faker.lorem.sentence(),
-    faixaPrecoInicial: 40,
-    faixaPrecoFinal: 60,
-    dataCriado: DateTime(2022),
-    arquivado: faker.randomGenerator.boolean(),
-    finalizado: faker.randomGenerator.boolean(),
+    note: faker.lorem.sentence(),
+    priceRangeInitial: 40,
+    priceRangeFinal: 60,
+    createdAt: DateTime(2022),
+    expose: faker.randomGenerator.boolean(),
+    finished: faker.randomGenerator.boolean(),
   );
 }
