@@ -30,6 +30,12 @@ class PtBr implements Translation {
   String get emailInUseError => "Email já foi cadastrado.";
 
   @override
+  String get emailInvalidError => "Email inválido.";
+
+  @override
+  String get passwordError => "Senha inválida.";
+
+  @override
   String get permissionDeniedError => "Sem permissão.";
 
   @override

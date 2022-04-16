@@ -29,5 +29,19 @@ class EmailInUseDomainError extends DomainError {
   @override
   final String message;
 
-  EmailInUseDomainError({String? message}) : message = message ?? R.string.notFoundError;
+  EmailInUseDomainError() : message = R.string.emailInUseError;
+}
+
+class EmailInvalidDomainError extends DomainError {
+  @override
+  final String message;
+
+  EmailInvalidDomainError() : message = R.string.emailInvalidError;
+}
+
+class PasswordDomainError extends DomainError {
+  @override
+  final String message;
+
+  PasswordDomainError({String? message}) : message = message ?? R.string.notFoundError;
 }

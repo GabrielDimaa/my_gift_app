@@ -12,10 +12,8 @@ class GetDesejoById implements IGetDesejoById {
   Future<DesejoEntity> get(String id) async {
     try {
       return await desejoRepository.getById(id);
-    } on NotFoundDomainError {
-      throw NotFoundDomainError;
-    } on AlreadyExistsError {
-      throw AlreadyExistsError;
+    } on DomainError {
+      rethrow;
     } catch (e) {
       throw UnexpectedDomainError;
     }

@@ -4,7 +4,7 @@ import 'package:desejando_app/layers/external/helpers/external_error.dart';
 import 'package:desejando_app/layers/infra/models/desejo_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../mocks/desejos/mock_desejo.dart';
+import '../../infra/models/model_factory.dart';
 import '../mocks/firebase_spy.dart';
 
 void main() {
@@ -17,7 +17,7 @@ void main() {
   void mockFirebaseException(String code) => firestore.mockSnapshotError(FirebaseException(plugin: "any_plugin", code: code));
 
   setUp(() async {
-    desejo = MockDesejo.desejoModel();
+    desejo = ModelFactory.desejo();
     json = desejo.toJson()..remove('id');
 
     firestore = FirestoreSpy(json);

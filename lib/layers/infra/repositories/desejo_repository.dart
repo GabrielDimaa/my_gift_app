@@ -16,7 +16,7 @@ class DesejoRepository implements IDesejoRepository {
     try {
       final DesejoModel desejoModel = await desejoDataSource.getById(id);
       return desejoModel.toEntity();
-    } on ConnectionExternalError catch (e) {
+    } on ExternalError catch (e) {
       throw e.toDomainError();
     } catch (e) {
       throw UnexpectedExternalError().toDomainError();

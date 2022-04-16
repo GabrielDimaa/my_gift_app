@@ -7,28 +7,22 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../mocks/desejos/classes_spy_mock.dart';
-import '../../../mocks/desejos/mock_desejo.dart';
+import '../../external/mocks/firebase_desejo_datasource_spy.dart';
+import '../models/model_factory.dart';
 
 void main() {
   late DesejoRepository sut;
-  late DesejoDataSourceSpy desejoDataSourceSpy;
+  late FirebaseDesejoDataSourceSpy desejoDataSourceSpy;
 
   late String idDesejo;
   late DesejoModel desejoResult;
 
-  When mockGetByIdCall() => when(() => desejoDataSourceSpy.getById(any()));
-  void mockGetById(DesejoModel value) => mockGetByIdCall().thenAnswer((_) => Future.value(value));
-  void mockGetByIdError({ExternalError? error}) => mockGetByIdCall().thenThrow(error ?? Exception("any_message"));
-
   setUp(() {
-    desejoDataSourceSpy = DesejoDataSourceSpy();
-    sut = DesejoRepository(desejoDataSource: desejoDataSourceSpy);
-
     idDesejo = faker.guid.guid();
-    desejoResult = MockDesejo.desejoModel();
+    desejoResult = ModelFactory.desejo();
 
-    mockGetById(desejoResult);
+    desejoDataSourceSpy = FirebaseDesejoDataSourceSpy(desejoResult);
+    sut = DesejoRepository(desejoDataSource: desejoDataSourceSpy);
   });
 
   group("getById", () {
@@ -38,24 +32,31 @@ void main() {
       verify(() => desejoDataSourceSpy.getById(idDesejo));
     });
 
-    test("Deve retornar o DesejoEntity com sucesso", () async {
+    test("Deve retornar DesejoEntity com sucesso", () async {
       final DesejoEntity desejo = await sut.getById(idDesejo);
 
       expect(desejo, desejoResult.toEntity());
     });
 
     test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
-      mockGetByIdError(error: ConnectionExternalError());
+      desejoDataSourceSpy.mockGetByIdError(error: ConnectionExternalError());
       final Future future = sut.getById(idDesejo);
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError se UnexpectedExternalError", () {
-      mockGetByIdError();
+    test("Deve throw UnexpectedDomainError", () {
+      desejoDataSourceSpy.mockGetByIdError(error: Exception());
       final Future future = sut.getById(idDesejo);
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw NotFoundDomainError se NotFoundExternalError", () {
+      desejoDataSourceSpy.mockGetByIdError(error: NotFoundExternalError());
+      final Future future = sut.getById(idDesejo);
+
+      expect(future, throwsA(isA<NotFoundDomainError>()));
     });
   });
 }

@@ -5,8 +5,8 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../../mocks/desejos/classes_spy_mock.dart';
-import '../../../../mocks/desejos/mock_desejo.dart';
+import '../../../domain/entity_factory.dart';
+import '../../../infra/mocks/desejo_repository_spy.dart';
 
 void main() {
   late GetDesejoById sut;
@@ -15,18 +15,12 @@ void main() {
   late String idDesejo;
   late DesejoEntity desejoResult;
 
-  When mockGetByIdCall() => when(() => desejoRepository.getById(any()));
-  void mockGetById(DesejoEntity value) => mockGetByIdCall().thenAnswer((_) => Future.value(value));
-  void mockGetByIdError({DomainError? error}) => mockGetByIdCall().thenThrow(error ?? Exception("any_error"));
-
   setUp(() {
-    desejoRepository = DesejoRepositorySpy();
-    sut = GetDesejoById(desejoRepository: desejoRepository);
-
     idDesejo = faker.guid.guid();
-    desejoResult = MockDesejo.desejoEntity();
+    desejoResult = EntityFactory.desejo();
 
-    mockGetById(desejoResult);
+    desejoRepository = DesejoRepositorySpy(desejoResult);
+    sut = GetDesejoById(desejoRepository: desejoRepository);
   });
 
   test("Deve chamar GetById no Repository com valores corretos", () async {
@@ -41,24 +35,17 @@ void main() {
     expect(desejo, desejoResult);
   });
 
-  test("Deve throw UnexpectedError", () {
-    mockGetByIdError();
+  test("Deve throw UnexpectedDomainError", () {
+    desejoRepository.mockGetByIdError();
     final Future future = sut.get(idDesejo);
 
     expect(future, throwsA(UnexpectedDomainError));
   });
 
-  test("Deve throw AlreadyExistsError", () {
-    mockGetByIdError(error: AlreadyExistsError("any_message"));
-    final Future future = sut.get(idDesejo);
-
-    expect(future, throwsA(AlreadyExistsError));
-  });
-
   test("Deve throw NotFoundError", () {
-    mockGetByIdError(error: NotFoundDomainError("any_message"));
+    desejoRepository.mockGetByIdError(error: NotFoundDomainError());
     final Future future = sut.get(idDesejo);
 
-    expect(future, throwsA(NotFoundDomainError));
+    expect(future, throwsA(isA<NotFoundDomainError>()));
   });
 }
