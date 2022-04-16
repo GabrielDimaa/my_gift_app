@@ -2,7 +2,7 @@ import 'package:desejando_app/layers/domain/entities/desejo_entity.dart';
 import 'package:desejando_app/layers/infra/models/desejo_model.dart';
 import 'package:faker/faker.dart';
 
-abstract class MockDesejoEntity {
+abstract class MockDesejo {
   static DesejoEntity desejoEntity() => DesejoEntity(
         id: faker.guid.guid(),
         descricao: faker.lorem.sentence(),

@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../mocks/desejos/classes_spy_mock.dart';
-import '../../../mocks/desejos/mock_desejo_entity.dart';
+import '../../../mocks/desejos/mock_desejo.dart';
 
 void main() {
   late DesejoRepository sut;
@@ -26,7 +26,7 @@ void main() {
     sut = DesejoRepository(desejoDataSource: desejoDataSourceSpy);
 
     idDesejo = faker.guid.guid();
-    desejoResult = MockDesejoEntity.desejoModel();
+    desejoResult = MockDesejo.desejoModel();
 
     mockGetById(desejoResult);
   });

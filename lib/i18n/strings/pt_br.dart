@@ -27,6 +27,9 @@ class PtBr implements Translation {
   String get notFoundError => "Nenhum resultado encontrado.";
 
   @override
+  String get emailInUseError => "Email já foi cadastrado.";
+
+  @override
   String get permissionDeniedError => "Sem permissão.";
 
   @override

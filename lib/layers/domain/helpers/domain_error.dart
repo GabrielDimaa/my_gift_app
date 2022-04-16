@@ -24,3 +24,10 @@ class NotFoundDomainError extends DomainError {
 
   NotFoundDomainError({String? message}) : message = message ?? R.string.notFoundError;
 }
+
+class EmailInUseDomainError extends DomainError {
+  @override
+  final String message;
+
+  EmailInUseDomainError({String? message}) : message = message ?? R.string.notFoundError;
+}

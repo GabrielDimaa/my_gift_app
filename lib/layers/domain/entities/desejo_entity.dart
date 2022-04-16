@@ -3,9 +3,9 @@ import 'package:equatable/equatable.dart';
 class DesejoEntity extends Equatable {
   final String id;
   final String descricao;
-  final String imagem;
-  final String link;
-  final String observacao;
+  final String? imagem;
+  final String? link;
+  final String? observacao;
 
   final double faixaPrecoInicial;
   final double faixaPrecoFinal;
@@ -18,9 +18,9 @@ class DesejoEntity extends Equatable {
   const DesejoEntity({
     required this.id,
     required this.descricao,
-    required this.imagem,
-    required this.link,
-    required this.observacao,
+    this.imagem,
+    this.link,
+    this.observacao,
     required this.faixaPrecoInicial,
     required this.faixaPrecoFinal,
     required this.dataCriado,
