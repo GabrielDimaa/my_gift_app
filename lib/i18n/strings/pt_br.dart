@@ -30,6 +30,9 @@ class PtBr implements Translation {
   String get emailInUseError => "Email já foi cadastrado.";
 
   @override
+  String get emailNotVerifiedError => "Email não verificado.";
+
+  @override
   String get emailInvalidError => "Email inválido.";
 
   @override
@@ -46,5 +49,8 @@ class PtBr implements Translation {
 
   @override
   String get resourceExhaustedError => "Não foi possível concluir a operação. Verifique se o seu dispositivo possui espaço no armazenamento.";
+
+  @override
+  String get loginError => "Não foi possível fazer login. Tente novamente.";
   //endregion
 }

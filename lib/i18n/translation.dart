@@ -9,11 +9,13 @@ abstract class Translation {
   String get invalidArgumentError;
   String get notFoundError;
   String get emailInUseError;
+  String get emailNotVerifiedError;
   String get emailInvalidError;
   String get passwordError;
   String get permissionDeniedError;
   String get unauthenticatedError;
   String get unavailableError;
   String get resourceExhaustedError;
+  String get loginError;
   //endregion
 }

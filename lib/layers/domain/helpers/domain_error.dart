@@ -32,6 +32,13 @@ class EmailInUseDomainError extends DomainError {
   EmailInUseDomainError() : message = R.string.emailInUseError;
 }
 
+class EmailNotVerifiedDomainError extends DomainError {
+  @override
+  final String message;
+
+  EmailNotVerifiedDomainError() : message = R.string.emailNotVerifiedError;
+}
+
 class EmailInvalidDomainError extends DomainError {
   @override
   final String message;
