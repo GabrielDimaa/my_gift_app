@@ -52,5 +52,8 @@ class PtBr implements Translation {
 
   @override
   String get loginError => "Não foi possível fazer login. Tente novamente.";
+
+  @override
+  String get loginNotFoundError => "Email ou senha estão incorretos.";
   //endregion
 }

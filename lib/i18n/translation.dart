@@ -17,5 +17,6 @@ abstract class Translation {
   String get unavailableError;
   String get resourceExhaustedError;
   String get loginError;
+  String get loginNotFoundError;
   //endregion
 }

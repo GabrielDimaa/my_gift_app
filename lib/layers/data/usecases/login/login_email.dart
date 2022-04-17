@@ -18,7 +18,9 @@ class LoginEmail implements ILoginEmail {
       if (!user.emailVerified) throw EmailNotVerifiedDomainError();
 
       return user;
-    } on DomainError {
+    } on DomainError catch(e) {
+      if (e is NotFoundDomainError) throw NotFoundDomainError(message: R.string.loginNotFoundError);
+
       rethrow;
     } catch (e) {
       throw UnexpectedDomainError(R.string.loginError);

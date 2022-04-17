@@ -33,10 +33,17 @@ void main() {
     expect(user, userResult);
   });
 
-  test("Deve throw EmailNotVerifiedDomainError se email não foi verificado", () {
+  test("Deve throw EmailNotVerifiedDomainError se email não for verificado", () {
     loginRepositorySpy.mockAuthWithEmail(EntityFactory.user(emailVerified: false));
     final Future future = sut.auth(loginParams);
 
     expect(future, throwsA(isA<EmailNotVerifiedDomainError>()));
+  });
+
+  test("Deve throw Not se email não for verificado", () {
+    loginRepositorySpy.mockAuthWithEmailError(NotFoundDomainError(message: "any_message"));
+    final Future future = sut.auth(loginParams);
+
+    expect(future, throwsA(isA<NotFoundDomainError>()));
   });
 }
