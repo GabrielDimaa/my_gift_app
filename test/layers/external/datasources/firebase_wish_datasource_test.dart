@@ -5,11 +5,11 @@ import 'package:desejando_app/layers/infra/models/wish_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../infra/models/model_factory.dart';
-import '../mocks/firebase_spy.dart';
+import '../mocks/firebase_firestore_spy.dart';
 
 void main() {
   late FirebaseWishDataSource sut;
-  late FirestoreSpy firestore;
+  late FirestoreFirestoreSpy firestore;
 
   late WishModel wish;
   late Map<String, dynamic> json;
@@ -20,7 +20,7 @@ void main() {
     wish = ModelFactory.wish();
     json = wish.toJson()..remove('id');
 
-    firestore = FirestoreSpy(json);
+    firestore = FirestoreFirestoreSpy(json);
     sut = FirebaseWishDataSource(firestore: firestore);
   });
 

@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mocktail/mocktail.dart';
 
-class FirestoreSpy extends Mock implements FirebaseFirestore {
+class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
   late CollectionReferenceStubby collectionReferenceStubby;
   late DocumentReferenceStubby documentReferenceStubby;
   late DocumentSnapshotSpy documentSnapshotSpy;
 
-  FirestoreSpy(Map<String, dynamic> data) {
+  FirestoreFirestoreSpy(Map<String, dynamic> data) {
     collectionReferenceStubby = CollectionReferenceStubby();
     documentReferenceStubby = DocumentReferenceStubby();
     documentSnapshotSpy = DocumentSnapshotSpy();
