@@ -14,10 +14,8 @@ class FirebaseAuthSpy extends Mock implements FirebaseAuth {
     return when(() => signInWithEmailAndPassword(email: email ?? this.email, password: password ?? this.password));
   }
 
-  void mockSignInWithEmailAndPassword({required String email, required String password, UserCredentialMock? user}) {
-    user ??= UserCredentialMock();
-
-    mockSignInWithEmailAndPasswordCall(email: email, password: password).thenAnswer((_) => Future.value(user));
+  void mockSignInWithEmailAndPassword({required String email, required String password, UserMock? user}) {
+    mockSignInWithEmailAndPasswordCall(email: email, password: password).thenAnswer((_) => Future.value(UserCredentialMock(userMock: user)));
   }
 
   void mockSignInWithEmailAndPasswordError(Exception error) {
@@ -37,27 +35,44 @@ class UserCredentialMock extends Mock implements UserCredential {
 }
 
 class UserMock extends Mock implements User {
+  late String _uid;
+  late String _displayName;
+  late String _email;
   late bool _emailVerified;
+  late String _phoneNumber;
+  String? _photoURL;
 
-  UserMock({bool emailVerified = true}) {
-    _emailVerified = emailVerified;
+  UserMock({
+    String? uid,
+    String? displayName,
+    String? email,
+    bool? emailVerified,
+    String? phoneNumber,
+    String? photoURL,
+  }) {
+    _uid = uid ?? faker.guid.guid();
+    _displayName = displayName ?? faker.person.name();
+    _email = email ?? faker.internet.email();
+    _emailVerified = emailVerified ?? true;
+    _phoneNumber = phoneNumber ?? faker.phoneNumber.random.fromPattern(["(##)#####-####"]);
+    _photoURL = photoURL ?? faker.internet.httpsUrl();
   }
 
   @override
-  String get uid => faker.guid.guid();
+  String get uid => _uid;
 
   @override
-  String? get displayName => faker.person.name();
+  String? get displayName => _displayName;
 
   @override
-  String? get email => faker.internet.email();
+  String? get email => _email;
 
   @override
   bool get emailVerified => _emailVerified;
 
   @override
-  String? get phoneNumber => faker.phoneNumber.random.fromPattern(["(##)#####-####"]);
+  String? get phoneNumber => _phoneNumber;
 
   @override
-  String? get photoURL => faker.internet.httpsUrl();
+  String? get photoURL => _photoURL;
 }
