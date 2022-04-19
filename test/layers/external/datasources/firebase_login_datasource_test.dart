@@ -40,8 +40,7 @@ void main() {
   });
 
   test("Deve retornar UserModel com sucesso", () async {
-    var teste = UserCredentialMock(userMock: userFirebase);
-    firebaseAuthSpy.mockSignInWithEmailAndPassword(email: loginParams.email, password: loginParams.password, user: teste);
+    firebaseAuthSpy.mockSignInWithEmailAndPassword(email: loginParams.email, password: loginParams.password, user: userFirebase);
 
     final UserModel userResponse = await sut.authWithEmail(loginParams);
     expect(userResponse, userResult);
