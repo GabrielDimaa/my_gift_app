@@ -1,6 +1,6 @@
 import '../../data/repositories/i_wish_repository.dart';
 import '../../domain/entities/wish_entity.dart';
-import '../../external/helpers/external_error.dart';
+import '../../external/helpers/errors/external_error.dart';
 import '../datasources/i_wish_datasource.dart';
 import '../models/wish_model.dart';
 

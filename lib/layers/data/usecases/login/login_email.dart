@@ -1,7 +1,7 @@
 import '../../../../i18n/resources.dart';
 import '../../../domain/entities/user_entity.dart';
-import '../../../domain/helpers/domain_error.dart';
-import '../../../domain/helpers/login_params.dart';
+import '../../../domain/helpers/errors/domain_error.dart';
+import '../../../domain/helpers/params/login_params.dart';
 import '../../../domain/usecases/login/i_login_email.dart';
 import '../../repositories/i_login_repository.dart';
 

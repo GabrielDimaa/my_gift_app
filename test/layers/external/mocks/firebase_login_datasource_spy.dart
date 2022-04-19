@@ -1,4 +1,4 @@
-import 'package:desejando_app/layers/domain/helpers/login_params.dart';
+import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
 import 'package:desejando_app/layers/infra/datasources/i_login_datasource.dart';
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:mocktail/mocktail.dart';

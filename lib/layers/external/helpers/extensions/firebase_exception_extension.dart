@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'external_error.dart';
+import '../errors/external_error.dart';
 
 /*
 [ABORTED] A operação foi abortada, normalmente devido a um problema de simultaneidade, como abortos de transações, etc.
@@ -25,7 +25,7 @@ https://firebase.google.com/docs/reference/android/com/google/firebase/firestore
 
 extension FirebaseExceptionExtension on FirebaseException {
   ExternalError get getExternalError {
-    switch(code) {
+    switch(code.toUpperCase()) {
       case "ABORTED": return AbortedExternalError();
       case "ALREADY_EXISTS": return AlreadyExistsExternalError();
       case "CANCELLED": return CancelledExternalError();

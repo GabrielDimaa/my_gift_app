@@ -1,7 +1,7 @@
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
-import 'package:desejando_app/layers/domain/helpers/domain_error.dart';
-import 'package:desejando_app/layers/domain/helpers/login_params.dart';
-import 'package:desejando_app/layers/external/helpers/external_error.dart';
+import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
+import 'package:desejando_app/layers/external/helpers/errors/external_error.dart';
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:desejando_app/layers/infra/repositories/login_repository.dart';
 import 'package:flutter_test/flutter_test.dart';

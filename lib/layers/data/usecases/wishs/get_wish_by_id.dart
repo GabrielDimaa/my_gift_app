@@ -1,5 +1,5 @@
 import '../../../domain/entities/wish_entity.dart';
-import '../../../domain/helpers/domain_error.dart';
+import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/usecases/wishs/i_get_wish_by_id.dart';
 import '../../repositories/i_wish_repository.dart';
 

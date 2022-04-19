@@ -1,6 +1,6 @@
 import 'package:desejando_app/layers/data/repositories/i_login_repository.dart';
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
-import 'package:desejando_app/layers/domain/helpers/login_params.dart';
+import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LoginRepositorySpy extends Mock implements ILoginRepository {

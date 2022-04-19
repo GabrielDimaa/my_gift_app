@@ -1,7 +1,7 @@
 import 'package:desejando_app/layers/data/usecases/login/login_email.dart';
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
-import 'package:desejando_app/layers/domain/helpers/domain_error.dart';
-import 'package:desejando_app/layers/domain/helpers/login_params.dart';
+import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

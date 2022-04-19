@@ -1,9 +1,9 @@
 import '../../../i18n/resources.dart';
 import '../../data/repositories/i_login_repository.dart';
 import '../../domain/entities/user_entity.dart';
-import '../../domain/helpers/domain_error.dart';
-import '../../domain/helpers/login_params.dart';
-import '../../external/helpers/external_error.dart';
+import '../../domain/helpers/errors/domain_error.dart';
+import '../../domain/helpers/params/login_params.dart';
+import '../../external/helpers/errors/external_error.dart';
 import '../datasources/i_login_datasource.dart';
 import '../models/user_model.dart';
 

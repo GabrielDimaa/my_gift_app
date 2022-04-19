@@ -1,4 +1,4 @@
-import '../../../i18n/resources.dart';
+import '../../../../i18n/resources.dart';
 
 abstract class DomainError implements Exception {
   String get message;
@@ -25,6 +25,7 @@ class NotFoundDomainError extends DomainError {
   NotFoundDomainError({String? message}) : message = message ?? R.string.notFoundError;
 }
 
+//region Auth
 class EmailInUseDomainError extends DomainError {
   @override
   final String message;
@@ -50,5 +51,13 @@ class PasswordDomainError extends DomainError {
   @override
   final String message;
 
-  PasswordDomainError({String? message}) : message = message ?? R.string.notFoundError;
+  PasswordDomainError({String? message}) : message = message ?? R.string.passwordError;
 }
+
+class ExpiredActionDomainError extends DomainError {
+  @override
+  final String message;
+
+  ExpiredActionDomainError({String? message}) : message = message ?? R.string.actionCodeError;
+}
+//endregion

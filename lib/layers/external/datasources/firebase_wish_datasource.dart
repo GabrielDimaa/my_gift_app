@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../infra/datasources/i_wish_datasource.dart';
 import '../../infra/models/wish_model.dart';
-import '../helpers/external_error.dart';
-import '../helpers/firebase_exception_extension.dart';
+import '../helpers/errors/external_error.dart';
+import '../helpers/extensions/firebase_exception_extension.dart';
 
 class FirebaseWishDataSource implements IWishDataSource {
   final FirebaseFirestore firestore;
