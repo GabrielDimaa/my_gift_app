@@ -20,6 +20,7 @@ abstract class ModelFactory {
         id: faker.guid.guid(),
         name: faker.person.name(),
         email: faker.internet.email(),
+        phone: faker.phoneNumber.random.fromPattern(["(##)#####-####"]),
         photo: faker.internet.httpsUrl(),
         emailVerified: emailVerified,
       );

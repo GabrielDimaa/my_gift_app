@@ -1,5 +1,5 @@
-import '../../../i18n/resources.dart';
-import '../../domain/helpers/domain_error.dart';
+import '../../../../i18n/resources.dart';
+import '../../../domain/helpers/errors/domain_error.dart';
 
 abstract class ExternalError implements Exception {
   DomainError toDomainError();
@@ -64,3 +64,31 @@ class NotFoundExternalError extends ExternalError {
   @override
   DomainError toDomainError() => NotFoundDomainError();
 }
+
+//region Auth
+
+class EmailInvalidExternalError extends ExternalError {
+  @override
+  DomainError toDomainError() => EmailInvalidDomainError();
+}
+
+class EmailInUseExternalError extends ExternalError {
+  @override
+  DomainError toDomainError() => EmailInUseDomainError();
+}
+
+class EmailNotVerifiedExternalError extends ExternalError {
+  @override
+  DomainError toDomainError() => EmailNotVerifiedDomainError();
+}
+
+class WrongPasswordExternalError extends ExternalError {
+  @override
+  DomainError toDomainError() => PasswordDomainError();
+}
+
+class ExpiredActionExternalError extends ExternalError {
+  @override
+  DomainError toDomainError() => ExpiredActionDomainError();
+}
+//endregion
