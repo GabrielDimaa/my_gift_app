@@ -87,8 +87,8 @@ class WrongPasswordExternalError extends ExternalError {
   DomainError toDomainError() => PasswordDomainError();
 }
 
-class ExpiredActionExternalError extends ExternalError {
+class InvalidActionExternalError extends ExternalError {
   @override
-  DomainError toDomainError() => ExpiredActionDomainError();
+  DomainError toDomainError() => InvalidActionDomainError();
 }
 //endregion

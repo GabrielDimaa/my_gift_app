@@ -5,9 +5,11 @@ import 'package:mocktail/mocktail.dart';
 class FirebaseAuthSpy extends Mock implements FirebaseAuth {
   final String email;
   final String password;
+  late UserMock userMock;
 
   FirebaseAuthSpy({required this.email, required this.password}) {
-    mockSignInWithEmailAndPassword(email: email, password: password);
+    userMock = UserMock();
+    mockSignInWithEmailAndPassword(email: email, password: password, user: userMock);
   }
 
   When mockSignInWithEmailAndPasswordCall({String? email, String? password}) {
@@ -24,10 +26,10 @@ class FirebaseAuthSpy extends Mock implements FirebaseAuth {
 }
 
 class UserCredentialMock extends Mock implements UserCredential {
-  late User _userMock;
+  late User? _userMock;
 
   UserCredentialMock({User? userMock}) {
-    _userMock = userMock ?? UserMock();
+    _userMock = userMock;
   }
 
   @override

@@ -54,10 +54,10 @@ class PasswordDomainError extends DomainError {
   PasswordDomainError({String? message}) : message = message ?? R.string.passwordError;
 }
 
-class ExpiredActionDomainError extends DomainError {
+class InvalidActionDomainError extends DomainError {
   @override
   final String message;
 
-  ExpiredActionDomainError({String? message}) : message = message ?? R.string.actionCodeError;
+  InvalidActionDomainError({String? message}) : message = message ?? R.string.actionCodeError;
 }
 //endregion

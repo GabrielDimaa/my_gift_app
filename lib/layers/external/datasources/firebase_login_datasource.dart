@@ -26,7 +26,7 @@ class FirebaseLoginDataSource implements ILoginDataSource {
     } on ExternalError {
       rethrow;
     } catch (e) {
-      //Exception pois terá uma mensagem mais amigável em infra layer.
+      //Exception e não External, pois terá uma mensagem mais amigável em infra layer.
       throw Exception();
     }
   }

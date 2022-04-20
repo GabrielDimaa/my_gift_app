@@ -4,19 +4,25 @@ import '../errors/external_error.dart';
 
 extension FirebaseAuthExceptionExtension on FirebaseAuthException {
   ExternalError get getExternalError {
-    switch(code.toUpperCase()) {
-      case "ERROR_INVALID_EMAIL": return EmailInvalidExternalError();
-      case "ERROR_INVALID": return EmailInvalidExternalError();
-      case "ERROR_EMAIL_ALREADY_IN_USE": return EmailInUseExternalError();
-      case "ERROR_INVALID_CREDENTIAL": return AlreadyExistsExternalError();
-      case "ERROR_USER_NOT_FOUND": return NotFoundExternalError();
-      case "ERROR_WRONG_PASSWORD": return WrongPasswordExternalError();
-      case "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL": return NotFoundExternalError();
-      case "ERROR_INVALID_ACTION_CODE": return ExpiredActionExternalError();
-      case "INVALID_ACTION_CODE": return ExpiredActionExternalError();
-      case "EXPIRED_ACTION_CODE": return ExpiredActionExternalError();
-      case "USER_NOT_FOUND": return NotFoundExternalError();
-      case "ERROR_INVALID_VERIFICATION_CODE": return AlreadyExistsExternalError();
+    switch(code.toLowerCase()) {
+      case "auth/user-not-found":
+      case "user-not-found": return NotFoundExternalError();
+      case "auth/wrong-password":
+      case "wrong-password": return WrongPasswordExternalError();
+      case "auth/invalid-email":
+      case "invalid-email": return EmailInvalidExternalError();
+      case "auth/email-already-in-use":
+      case "email-already-in-use": return EmailInUseExternalError();
+      case "auth/account-exists-with-different-credential":
+      case "account-exists-with-different-credential": return NotFoundExternalError();
+      case "auth/invalid-credential":
+      case "invalid-credential": return NotFoundExternalError();
+      case "auth/invalid-verification-code":
+      case "invalid-verification-code": return InvalidActionExternalError();
+      case "auth/invalid-action-code":
+      case "invalid-action-code": return InvalidActionExternalError();
+      case "auth/expired-action-code":
+      case "expired-action-code": return InvalidActionExternalError();
       default: return UnexpectedExternalError();
     }
   }
