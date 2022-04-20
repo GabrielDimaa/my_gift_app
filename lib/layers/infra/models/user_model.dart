@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../domain/entities/user_entity.dart';
 
 class UserModel extends Equatable {
-  final String id;
+  final String? id;
   final String name;
   final String email;
   final String phone;
@@ -11,7 +11,7 @@ class UserModel extends Equatable {
   final bool emailVerified;
 
   const UserModel({
-    required this.id,
+    this.id,
     required this.name,
     required this.email,
     required this.phone,
@@ -49,6 +49,17 @@ class UserModel extends Equatable {
       phone: json['phone'],
       photo: json['photo'],
       emailVerified: json['email_verified'],
+    );
+  }
+
+  factory UserModel.fromEntity(UserEntity entity) {
+    return UserModel(
+      id: entity.id,
+      name: entity.name,
+      email: entity.email,
+      phone: entity.phone,
+      photo: entity.photo,
+      emailVerified: entity.emailVerified,
     );
   }
 

@@ -39,6 +39,9 @@ class PtBr implements Translation {
   String get passwordError => "Senha inválida.";
 
   @override
+  String get shortPasswordError => "Senha muito curta.";
+
+  @override
   String get permissionDeniedError => "Sem permissão.";
 
   @override
@@ -52,6 +55,9 @@ class PtBr implements Translation {
 
   @override
   String get loginError => "Não foi possível fazer login. Tente novamente.";
+
+  @override
+  String get signUpError => "Não foi possível criar sua conta de usuário. Tente novamente.";
 
   @override
   String get loginNotFoundError => "Email ou senha estão incorretos.";

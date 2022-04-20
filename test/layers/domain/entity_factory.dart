@@ -23,5 +23,15 @@ abstract class EntityFactory {
         phone: faker.phoneNumber.random.fromPattern(["(##)#####-####"]),
         photo: faker.internet.httpsUrl(),
         emailVerified: emailVerified,
+        password: faker.internet.password(),
+      );
+
+  static UserEntity userWithoutId({bool emailVerified = true}) => UserEntity(
+        name: faker.person.name(),
+        email: faker.internet.email(),
+        phone: faker.phoneNumber.random.fromPattern(["(##)#####-####"]),
+        photo: faker.internet.httpsUrl(),
+        emailVerified: emailVerified,
+        password: faker.internet.password(),
       );
 }

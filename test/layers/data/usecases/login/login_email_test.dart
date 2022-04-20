@@ -40,7 +40,7 @@ void main() {
     expect(future, throwsA(isA<EmailNotVerifiedDomainError>()));
   });
 
-  test("Deve throw Not se email não for verificado", () {
+  test("Deve throw NotFoundDomainError", () {
     loginRepositorySpy.mockAuthWithEmailError(NotFoundDomainError(message: "any_message"));
     final Future future = sut.auth(loginParams);
 
