@@ -26,8 +26,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
     } on ExternalError {
       rethrow;
     } catch (e) {
-      //Exception e não External, pois terá uma mensagem mais amigável em infra layer.
-      throw Exception();
+      throw UnexpectedExternalError();
     }
   }
 
