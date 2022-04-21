@@ -7,24 +7,24 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../domain/entity_factory.dart';
 import '../../../domain/params_factory.dart';
-import '../../../infra/mocks/login_repository_spy.dart';
+import '../../../infra/mocks/user_account_repository_spy.dart';
 
 void main() {
   late LoginEmail sut;
-  late LoginRepositorySpy loginRepositorySpy;
+  late UserAccountRepositorySpy userAccountRepositorySpy;
 
   final LoginParams loginParams = ParamsFactory.login();
   final UserEntity userResult = EntityFactory.user();
 
   setUp(() {
-    loginRepositorySpy = LoginRepositorySpy(params: loginParams, entity: userResult);
-    sut = LoginEmail(loginRepository: loginRepositorySpy);
+    userAccountRepositorySpy = UserAccountRepositorySpy(params: loginParams, entityResult: userResult);
+    sut = LoginEmail(userAccountRepository: userAccountRepositorySpy);
   });
 
   test("Deve chamar authWithEmail com valores corretos", () async {
     await sut.auth(loginParams);
 
-    verify(() => loginRepositorySpy.authWithEmail(loginParams));
+    verify(() => userAccountRepositorySpy.authWithEmail(loginParams));
   });
 
   test("Deve retornar UserEntity com sucesso", () async {
@@ -34,14 +34,14 @@ void main() {
   });
 
   test("Deve throw EmailNotVerifiedDomainError se email não for verificado", () {
-    loginRepositorySpy.mockAuthWithEmail(EntityFactory.user(emailVerified: false));
+    userAccountRepositorySpy.mockAuthWithEmail(EntityFactory.user(emailVerified: false));
     final Future future = sut.auth(loginParams);
 
     expect(future, throwsA(isA<EmailNotVerifiedDomainError>()));
   });
 
   test("Deve throw NotFoundDomainError", () {
-    loginRepositorySpy.mockAuthWithEmailError(NotFoundDomainError(message: "any_message"));
+    userAccountRepositorySpy.mockAuthWithEmailError(NotFoundDomainError(message: "any_message"));
     final Future future = sut.auth(loginParams);
 
     expect(future, throwsA(isA<NotFoundDomainError>()));

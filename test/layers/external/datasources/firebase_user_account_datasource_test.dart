@@ -1,5 +1,5 @@
 import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
-import 'package:desejando_app/layers/external/datasources/firebase_login_datasource.dart';
+import 'package:desejando_app/layers/external/datasources/firebase_user_account_datasource.dart';
 import 'package:desejando_app/layers/external/helpers/errors/external_error.dart';
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +10,7 @@ import '../../domain/params_factory.dart';
 import '../mocks/firebase_auth_spy.dart';
 
 void main() {
-  late FirebaseLoginDataSource sut;
+  late FirebaseUserAccountDataSource sut;
   late FirebaseAuthSpy firebaseAuthSpy;
 
   late UserModel userResult;
@@ -33,7 +33,7 @@ void main() {
 
   setUp(() async {
     firebaseAuthSpy = FirebaseAuthSpy(email: loginParams.email, password: loginParams.password);
-    sut = FirebaseLoginDataSource(firebaseAuth: firebaseAuthSpy);
+    sut = FirebaseUserAccountDataSource(firebaseAuth: firebaseAuthSpy);
 
     userResultMock();
   });

@@ -5,56 +5,56 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../domain/entity_factory.dart';
-import '../../../infra/mocks/signup_repository_spy.dart';
+import '../../../infra/mocks/user_account_repository_spy.dart';
 
 void main() {
   late SignUpEmail sut;
-  late SignUpRepositorySpy signUpRepositorySpy;
+  late UserAccountRepositorySpy userAccountRepositorySpy;
 
   final UserEntity userRequest = EntityFactory.userWithoutId();
   final UserEntity userResult = EntityFactory.user();
 
   setUp(() {
-    signUpRepositorySpy = SignUpRepositorySpy(entityRequest: userRequest, entityResult: userResult);
-    sut = SignUpEmail(signUpRepository: signUpRepositorySpy);
+    userAccountRepositorySpy = UserAccountRepositorySpy(entityRequest: userRequest, entityResult: userResult);
+    sut = SignUpEmail(userAccountRepository: userAccountRepositorySpy);
   });
 
   test("Deve chamar signUpWithEmail com valores corretos", () async {
-    await sut.auth(userRequest);
+    await sut.signUp(userRequest);
 
-    verify(() => signUpRepositorySpy.signUpWithEmail(userRequest));
+    verify(() => userAccountRepositorySpy.signUpWithEmail(userRequest));
   });
 
   test("Deve retornar UserEntity com sucesso", () async {
-    final UserEntity user = await sut.auth(userRequest);
+    final UserEntity user = await sut.signUp(userRequest);
 
     expect(user, userResult);
   });
 
   test("Deve throw PasswordDomainError se senha não conter pelo menos 8 caracteres", () {
-    signUpRepositorySpy.mockSignUpWithEmailError(PasswordDomainError());
-    final Future future = sut.auth(userRequest);
+    userAccountRepositorySpy.mockSignUpWithEmailError(PasswordDomainError());
+    final Future future = sut.signUp(userRequest);
 
     expect(future, throwsA(isA<PasswordDomainError>()));
   });
 
   test("Deve throw EmailInvalidDomainError se email for inválido", () {
-    signUpRepositorySpy.mockSignUpWithEmailError(EmailInvalidDomainError());
-    final Future future = sut.auth(userRequest);
+    userAccountRepositorySpy.mockSignUpWithEmailError(EmailInvalidDomainError());
+    final Future future = sut.signUp(userRequest);
 
     expect(future, throwsA(isA<EmailInvalidDomainError>()));
   });
 
   test("Deve throw EmailInUseDomainError se email já estiver em uso", () {
-    signUpRepositorySpy.mockSignUpWithEmailError(EmailInUseDomainError());
-    final Future future = sut.auth(userRequest);
+    userAccountRepositorySpy.mockSignUpWithEmailError(EmailInUseDomainError());
+    final Future future = sut.signUp(userRequest);
 
     expect(future, throwsA(isA<EmailInUseDomainError>()));
   });
 
   test("Deve throw UnexpectedDomainError se ocorrer um erro inesperado", () {
-    signUpRepositorySpy.mockSignUpWithEmailError(UnexpectedDomainError("any_message"));
-    final Future future = sut.auth(userRequest);
+    userAccountRepositorySpy.mockSignUpWithEmailError(UnexpectedDomainError("any_message"));
+    final Future future = sut.signUp(userRequest);
 
     expect(future, throwsA(isA<UnexpectedDomainError>()));
   });

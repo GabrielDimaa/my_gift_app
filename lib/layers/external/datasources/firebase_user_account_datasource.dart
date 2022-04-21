@@ -2,15 +2,15 @@ import 'package:desejando_app/layers/external/helpers/extensions/firebase_auth_e
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../domain/helpers/params/login_params.dart';
-import '../../infra/datasources/i_login_datasource.dart';
+import '../../infra/datasources/i_user_account_datasource.dart';
 import '../../infra/models/user_model.dart';
 import '../helpers/errors/external_error.dart';
 import '../helpers/extensions/firebase_user_credential_extension.dart';
 
-class FirebaseLoginDataSource implements ILoginDataSource {
+class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   final FirebaseAuth firebaseAuth;
 
-  FirebaseLoginDataSource({required this.firebaseAuth});
+  FirebaseUserAccountDataSource({required this.firebaseAuth});
 
   @override
   Future<UserModel> authWithEmail(LoginParams params) async {
@@ -29,5 +29,11 @@ class FirebaseLoginDataSource implements ILoginDataSource {
       //Exception e não External, pois terá uma mensagem mais amigável em infra layer.
       throw Exception();
     }
+  }
+
+  @override
+  Future<UserModel> signUpWithEmail(UserModel model) async {
+    // TODO: implement signUpWithEmail
+    throw UnimplementedError();
   }
 }
