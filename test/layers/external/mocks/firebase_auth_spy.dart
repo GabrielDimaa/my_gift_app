@@ -10,8 +10,10 @@ class FirebaseAuthSpy extends Mock implements FirebaseAuth {
   FirebaseAuthSpy({required this.email, required this.password}) {
     userMock = UserMock();
     mockSignInWithEmailAndPassword(email: email, password: password, user: userMock);
+    mockCreateUserWithEmailAndPassword(email: email, password: password, user: userMock);
   }
 
+  //region signInWithEmailAndPassword
   When mockSignInWithEmailAndPasswordCall({String? email, String? password}) {
     return when(() => signInWithEmailAndPassword(email: email ?? this.email, password: password ?? this.password));
   }
@@ -23,6 +25,21 @@ class FirebaseAuthSpy extends Mock implements FirebaseAuth {
   void mockSignInWithEmailAndPasswordError(Exception error) {
     mockSignInWithEmailAndPasswordCall(email: email, password: password).thenThrow(error);
   }
+  //endregion
+
+  //region createUserWithEmailAndPassword
+  When mockCreateUserWithEmailAndPasswordCall({String? email, String? password}) {
+    return when(() => createUserWithEmailAndPassword(email: email ?? this.email, password: password ?? this.password));
+  }
+
+  void mockCreateUserWithEmailAndPassword({required String email, required String password, UserMock? user}) {
+    mockCreateUserWithEmailAndPasswordCall(email: email, password: password).thenAnswer((_) => Future.value(UserCredentialMock(userMock: user)));
+  }
+
+  void mockCreateUserWithEmailAndPasswordError(Exception error) {
+    mockCreateUserWithEmailAndPasswordCall().thenThrow(error);
+  }
+  //endregion
 }
 
 class UserCredentialMock extends Mock implements UserCredential {

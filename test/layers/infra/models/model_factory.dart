@@ -23,5 +23,15 @@ abstract class ModelFactory {
         phone: faker.phoneNumber.random.fromPattern(["(##)#####-####"]),
         photo: faker.internet.httpsUrl(),
         emailVerified: emailVerified,
+        password: faker.internet.password(),
+      );
+
+  static UserModel userWithoutId({bool emailVerified = true, String? password = "12345678"}) => UserModel(
+        name: faker.person.name(),
+        email: faker.internet.email(),
+        phone: faker.phoneNumber.random.fromPattern(["(##)#####-####"]),
+        photo: faker.internet.httpsUrl(),
+        emailVerified: emailVerified,
+        password: password,
       );
 }

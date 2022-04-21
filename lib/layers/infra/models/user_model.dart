@@ -9,6 +9,7 @@ class UserModel extends Equatable {
   final String phone;
   final String? photo;
   final bool emailVerified;
+  final String? password;
 
   const UserModel({
     this.id,
@@ -17,6 +18,7 @@ class UserModel extends Equatable {
     required this.phone,
     this.photo,
     required this.emailVerified,
+    this.password,
   });
 
   UserEntity toEntity() {
@@ -27,28 +29,7 @@ class UserModel extends Equatable {
       phone: phone,
       photo: photo,
       emailVerified: emailVerified,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'photo': photo,
-      'email_verified': emailVerified,
-    };
-  }
-
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
-      phone: json['phone'],
-      photo: json['photo'],
-      emailVerified: json['email_verified'],
+      password: password,
     );
   }
 
@@ -60,9 +41,10 @@ class UserModel extends Equatable {
       phone: entity.phone,
       photo: entity.photo,
       emailVerified: entity.emailVerified,
+      password: entity.password,
     );
   }
 
   @override
-  List<Object?> get props => [id, name, email, phone, photo, emailVerified];
+  List<Object?> get props => [id, name, email, phone, photo, emailVerified, password];
 }
