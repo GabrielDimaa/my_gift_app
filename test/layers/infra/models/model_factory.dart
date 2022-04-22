@@ -16,6 +16,8 @@ abstract class ModelFactory {
         finished: faker.randomGenerator.boolean(),
       );
 
+  static List<WishModel> wishes({int length = 4}) => List.generate(length, (_) => wish());
+
   static UserModel user({bool emailVerified = true}) => UserModel(
         id: faker.guid.guid(),
         name: faker.person.name(),

@@ -15,8 +15,7 @@ class SignUpEmail implements ISignUpEmail {
       if ((entity.password?.trim().length ?? 0) < 8) throw PasswordDomainError(message: R.string.shortPasswordError);
 
       return await userAccountRepository.signUpWithEmail(entity);
-    } on DomainError catch (e) {
-      if (e is UnexpectedDomainError) throw UnexpectedDomainError(R.string.signUpError);
+    } on DomainError {
       rethrow;
     } catch (e) {
       throw UnexpectedDomainError(R.string.signUpError);

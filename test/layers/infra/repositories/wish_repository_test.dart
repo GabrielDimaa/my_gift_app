@@ -14,18 +14,17 @@ void main() {
   late WishRepository sut;
   late FirebaseWishDataSourceSpy wishDataSourceSpy;
 
-  late String wishId;
-  late WishModel wishResult;
+  final WishModel wishResult = ModelFactory.wish();
+  final List<WishModel> wishesResult = ModelFactory.wishes();
 
   setUp(() {
-    wishId = faker.guid.guid();
-    wishResult = ModelFactory.wish();
-
-    wishDataSourceSpy = FirebaseWishDataSourceSpy(wishResult);
+    wishDataSourceSpy = FirebaseWishDataSourceSpy(data: wishResult, datas: wishesResult);
     sut = WishRepository(wishDataSource: wishDataSourceSpy);
   });
 
   group("getById", () {
+    final String wishId = faker.guid.guid();
+
     test("Deve chamar GetById no Datasource com valores corretos", () async {
       await sut.getById(wishId);
 
@@ -57,6 +56,39 @@ void main() {
       final Future future = sut.getById(wishId);
 
       expect(future, throwsA(isA<NotFoundDomainError>()));
+    });
+  });
+
+  group("getAll", () {
+    final String userId = faker.guid.guid();
+
+    test("Deve chamar GetAll no Datasource com valores corretos", () async {
+      await sut.getAll(userId);
+
+      verify(() => wishDataSourceSpy.getAll(userId));
+    });
+
+    test("Deve retornar List<DesejoEntity> com sucesso", () async {
+      final List<WishEntity> wishes = await sut.getAll(userId);
+
+      expect(wishes, wishesResult.map((e) => e.toEntity()).toList());
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
+      wishDataSourceSpy.mockGetAllError(error: ConnectionExternalError());
+      final Future future = sut.getAll(userId);
+
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      wishDataSourceSpy.mockGetAllError(error: Exception());
+      Future future = sut.getAll(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+
+      wishDataSourceSpy.mockGetAllError(error: UnexpectedDomainError("any_message"));
+      future = sut.getAll(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
   });
 }

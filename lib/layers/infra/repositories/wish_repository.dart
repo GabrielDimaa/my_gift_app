@@ -23,7 +23,13 @@ class WishRepository implements IWishRepository {
 
   @override
   Future<List<WishEntity>> getAll(String userId) async {
-    // TODO: implement get
-    throw UnimplementedError();
+    try {
+      final List<WishModel> wishesModel = await wishDataSource.getAll(userId);
+      return wishesModel.map((e) => e.toEntity()).toList();
+    } on ExternalError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedExternalError().toDomainError();
+    }
   }
 }

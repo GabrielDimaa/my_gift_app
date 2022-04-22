@@ -20,8 +20,6 @@ class LoginEmail implements ILoginEmail {
       return user;
     } on DomainError catch(e) {
       if (e is NotFoundDomainError) throw NotFoundDomainError(message: R.string.loginNotFoundError);
-      if (e is UnexpectedDomainError) throw UnexpectedDomainError(R.string.loginError);
-
       rethrow;
     } catch (e) {
       throw UnexpectedDomainError(R.string.loginError);
