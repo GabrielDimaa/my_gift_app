@@ -21,5 +21,6 @@ abstract class Translation {
   String get signUpError;
   String get loginNotFoundError;
   String get actionCodeError;
+  String get getError;
   //endregion
 }

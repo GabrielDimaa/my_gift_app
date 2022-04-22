@@ -12,40 +12,35 @@ void main() {
   late GetWishById sut;
   late WishRepositorySpy wishRepository;
 
-  late String wishId;
-  late WishEntity wishResult;
+  late String wishId = faker.guid.guid();
+  late WishEntity wishResult = EntityFactory.wish();
 
   setUp(() {
-    wishId = faker.guid.guid();
-    wishResult = EntityFactory.wish();
-
-    wishRepository = WishRepositorySpy(wishResult);
+    wishRepository = WishRepositorySpy(data: wishResult);
     sut = GetWishById(wishRepository: wishRepository);
   });
 
   test("Deve chamar GetById no Repository com valores corretos", () async {
     await sut.get(wishId);
-
     verify(() => wishRepository.getById(wishId));
   });
 
   test("Deve retornar o WishEntity com sucesso", () async {
     final WishEntity wish = await sut.get(wishId);
-
     expect(wish, wishResult);
   });
 
   test("Deve throw UnexpectedDomainError", () {
     wishRepository.mockGetByIdError();
-    final Future future = sut.get(wishId);
 
+    final Future future = sut.get(wishId);
     expect(future, throwsA(UnexpectedDomainError));
   });
 
   test("Deve throw NotFoundDomainError", () {
     wishRepository.mockGetByIdError(error: NotFoundDomainError());
-    final Future future = sut.get(wishId);
 
+    final Future future = sut.get(wishId);
     expect(future, throwsA(isA<NotFoundDomainError>()));
   });
 }

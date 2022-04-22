@@ -64,5 +64,8 @@ class PtBr implements Translation {
 
   @override
   String get actionCodeError => "Código de ação expirou ou já foi usado.";
+
+  @override
+  String get getError => "Não foi possível concluir a busca.";
   //endregion
 }

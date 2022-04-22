@@ -16,6 +16,8 @@ abstract class EntityFactory {
         finished: faker.randomGenerator.boolean(),
       );
 
+  static List<WishEntity> wishes({int length = 4}) => List.generate(length, (_) => wish());
+
   static UserEntity user({bool emailVerified = true}) => UserEntity(
         id: faker.guid.guid(),
         name: faker.person.name(),
