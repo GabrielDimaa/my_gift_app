@@ -13,7 +13,7 @@ class FirebaseWishDataSource implements IWishDataSource {
   @override
   Future<WishModel> getById(String id) async {
     try {
-      final Map<String, dynamic>? response = (await firestore.collection("wishs").doc(id).get()).data();
+      final Map<String, dynamic>? response = (await firestore.collection("wishes").doc(id).get()).data();
       response?.addAll({'id': id});
 
       if (!WishModel.validateJson(response)) throw NotFoundExternalError();
