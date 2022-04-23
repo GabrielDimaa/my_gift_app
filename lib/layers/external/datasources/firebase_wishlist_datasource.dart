@@ -1,28 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../infra/datasources/i_wish_datasource.dart';
-import '../../infra/models/wish_model.dart';
+import '../../infra/datasources/i_wishlist_datasource.dart';
+import '../../infra/models/wishlist_model.dart';
 import '../helpers/errors/external_error.dart';
 import '../helpers/extensions/firebase_exception_extension.dart';
 
-class FirebaseWishDataSource implements IWishDataSource {
+class FirebaseWishlistDataSource implements IWishlistDataSource {
   final FirebaseFirestore firestore;
 
-  FirebaseWishDataSource({required this.firestore});
+  FirebaseWishlistDataSource({required this.firestore});
 
-  static const String _collectionPath = "wishes";
+  static const String _collectionPath = "wishlists";
 
   @override
-  Future<WishModel> getById(String id) async {
+  Future<WishlistModel> getById(String id) async {
     try {
       final DocumentSnapshot<Map<String, dynamic>> snapshot = await firestore.collection(_collectionPath).doc(id).get();
-      final Map<String, dynamic>? json = snapshot.data();
 
+      final Map<String, dynamic>? json = snapshot.data();
       json?.addAll({'id': snapshot.id});
 
-      if (!WishModel.validateJson(json)) throw NotFoundExternalError();
+      if (!WishlistModel.validateJson(json)) throw NotFoundExternalError();
 
-      return WishModel.fromJson(json!);
+      return WishlistModel.fromJson(json!);
     } on FirebaseException catch (e) {
       throw e.getExternalError;
     } on ExternalError {

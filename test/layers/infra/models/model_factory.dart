@@ -1,5 +1,6 @@
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:desejando_app/layers/infra/models/wish_model.dart';
+import 'package:desejando_app/layers/infra/models/wishlist_model.dart';
 import 'package:faker/faker.dart';
 
 abstract class ModelFactory {
@@ -17,6 +18,12 @@ abstract class ModelFactory {
       );
 
   static List<WishModel> wishes({int length = 4}) => List.generate(length, (_) => wish());
+
+  static WishlistModel wishlist() => WishlistModel(
+        id: faker.guid.guid(),
+        description: faker.lorem.sentence(),
+        wishes: wishes(),
+      );
 
   static UserModel user({bool emailVerified = true}) => UserModel(
         id: faker.guid.guid(),

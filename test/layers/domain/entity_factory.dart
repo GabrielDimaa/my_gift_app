@@ -1,5 +1,6 @@
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
+import 'package:desejando_app/layers/domain/entities/wishlist_entity.dart';
 import 'package:faker/faker.dart';
 
 abstract class EntityFactory {
@@ -17,6 +18,12 @@ abstract class EntityFactory {
       );
 
   static List<WishEntity> wishes({int length = 4}) => List.generate(length, (_) => wish());
+
+  static WishlistEntity wishlist() => WishlistEntity(
+        id: faker.guid.guid(),
+        description: faker.lorem.sentence(),
+        wishes: wishes(),
+      );
 
   static UserEntity user({bool emailVerified = true}) => UserEntity(
         id: faker.guid.guid(),
