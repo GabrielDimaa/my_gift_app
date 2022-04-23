@@ -21,4 +21,10 @@ class WishlistRepository implements IWishlistRepository {
       throw UnexpectedExternalError().toDomainError();
     }
   }
+
+  @override
+  Future<List<WishlistEntity>> getAll(String userId) async {
+    // TODO: implement getAll
+    throw UnimplementedError();
+  }
 }
