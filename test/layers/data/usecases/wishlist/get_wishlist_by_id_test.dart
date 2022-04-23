@@ -1,4 +1,4 @@
-import 'package:desejando_app/layers/data/usecases/wishes/get_wishlist_by_id.dart';
+import 'package:desejando_app/layers/data/usecases/wishlist/get_wishlist_by_id.dart';
 import 'package:desejando_app/layers/domain/entities/wishlist_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:faker/faker.dart';
