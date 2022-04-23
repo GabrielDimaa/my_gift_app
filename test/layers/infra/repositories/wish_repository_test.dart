@@ -15,10 +15,9 @@ void main() {
   late FirebaseWishDataSourceSpy wishDataSourceSpy;
 
   final WishModel wishResult = ModelFactory.wish();
-  final List<WishModel> wishesResult = ModelFactory.wishes();
 
   setUp(() {
-    wishDataSourceSpy = FirebaseWishDataSourceSpy(data: wishResult, datas: wishesResult);
+    wishDataSourceSpy = FirebaseWishDataSourceSpy(data: wishResult);
     sut = WishRepository(wishDataSource: wishDataSourceSpy);
   });
 
@@ -56,39 +55,6 @@ void main() {
       final Future future = sut.getById(wishId);
 
       expect(future, throwsA(isA<NotFoundDomainError>()));
-    });
-  });
-
-  group("getAll", () {
-    final String userId = faker.guid.guid();
-
-    test("Deve chamar GetAll no Datasource com valores corretos", () async {
-      await sut.getAll(userId);
-
-      verify(() => wishDataSourceSpy.getAll(userId));
-    });
-
-    test("Deve retornar List<DesejoEntity> com sucesso", () async {
-      final List<WishEntity> wishes = await sut.getAll(userId);
-
-      expect(wishes, wishesResult.map((e) => e.toEntity()).toList());
-    });
-
-    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
-      wishDataSourceSpy.mockGetAllError(error: ConnectionExternalError());
-      final Future future = sut.getAll(userId);
-
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
-    });
-
-    test("Deve throw UnexpectedDomainError", () {
-      wishDataSourceSpy.mockGetAllError(error: Exception());
-      Future future = sut.getAll(userId);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
-
-      wishDataSourceSpy.mockGetAllError(error: UnexpectedDomainError("any_message"));
-      future = sut.getAll(userId);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
   });
 }
