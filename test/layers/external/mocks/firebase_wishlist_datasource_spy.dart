@@ -4,7 +4,10 @@ import 'package:mocktail/mocktail.dart';
 
 class FirebaseWishlistDataSourceSpy extends Mock implements IWishlistDataSource {
   FirebaseWishlistDataSourceSpy({WishlistModel? data, List<WishlistModel>? datas}) {
-    if (data != null) mockGetById(data);
+    if (data != null) {
+      mockGetById(data);
+      mockCreate(data);
+    }
     if (datas != null) mockGetAll(datas);
   }
 
@@ -18,5 +21,11 @@ class FirebaseWishlistDataSourceSpy extends Mock implements IWishlistDataSource 
   When mockGetAllCall() => when(() => getAll(any()));
   void mockGetAll(List<WishlistModel> data) => mockGetAllCall().thenAnswer((_) => Future.value(data));
   void mockGetAllError({Exception? error}) => mockGetAllCall().thenThrow(error ?? Exception("any_message"));
+  //endregion
+
+  //region create
+  When mockCreateCall() => when(() => create(any()));
+  void mockCreate(WishlistModel data) => mockCreateCall().thenAnswer((_) => Future.value(data));
+  void mockCreateError({Exception? error}) => mockCreateCall().thenThrow(error ?? Exception("any_message"));
   //endregion
 }

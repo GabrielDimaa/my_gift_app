@@ -14,7 +14,7 @@ void main() {
     late FirestoreFirestoreSpy firestore;
 
     final WishlistModel wishlist = ModelFactory.wishlist();
-    final String wishlistId = wishlist.id;
+    final String wishlistId = wishlist.id!;
     final Map<String, dynamic> json = wishlist.toJson();
 
     void mockFirebaseException(String code) => firestore.mockDocumentSnapshotError(FirebaseException(plugin: "any_plugin", code: code));

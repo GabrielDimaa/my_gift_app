@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../domain/entities/wish_entity.dart';
 
 class WishModel extends Equatable {
-  final String id;
+  final String? id;
   final String description;
   final String? image;
   final String? link;
@@ -18,7 +18,7 @@ class WishModel extends Equatable {
   final bool finished;
 
   const WishModel({
-    required this.id,
+    this.id,
     required this.description,
     this.image,
     this.link,
@@ -58,6 +58,21 @@ class WishModel extends Equatable {
       'expose': expose,
       'finished': finished,
     };
+  }
+
+  factory WishModel.fromEntity(WishEntity entity) {
+    return WishModel(
+      id: entity.id,
+      description: entity.description,
+      image: entity.image,
+      link: entity.link,
+      note: entity.note,
+      priceRangeInitial: entity.priceRangeInitial,
+      priceRangeFinal: entity.priceRangeFinal,
+      createdAt: entity.createdAt,
+      expose: entity.expose,
+      finished: entity.finished,
+    );
   }
 
   factory WishModel.fromJson(Map<String, dynamic> json) {

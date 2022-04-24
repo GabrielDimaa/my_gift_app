@@ -36,8 +36,14 @@ class WishlistRepository implements IWishlistRepository {
 
   @override
   Future<WishlistEntity> create(WishlistEntity entity) async {
-    // TODO: implement create
-    throw UnimplementedError();
+    try {
+      final WishlistModel wishlistModel = await wishlistDataSource.create(WishlistModel.fromEntity(entity));
+      return wishlistModel.toEntity();
+    } on ExternalError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedExternalError().toDomainError();
+    }
   }
 
   @override

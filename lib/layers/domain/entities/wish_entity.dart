@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class WishEntity extends Equatable {
-  final String id;
+  final String? id;
   final String description;
   final String? image;
   final String? link;
@@ -16,7 +16,7 @@ class WishEntity extends Equatable {
   final bool finished;
 
   const WishEntity({
-    required this.id,
+    this.id,
     required this.description,
     this.image,
     this.link,

@@ -7,6 +7,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../domain/entity_factory.dart';
 import '../../external/mocks/firebase_wishlist_datasource_spy.dart';
 import '../models/model_factory.dart';
 
@@ -14,16 +15,14 @@ void main() {
   late WishlistRepository sut;
   late FirebaseWishlistDataSourceSpy wishlistDataSourceSpy;
 
-  final WishlistModel wishlistResult = ModelFactory.wishlist();
-  final List<WishlistModel> wishlistsResult = ModelFactory.wishlists();
-
-  setUp(() {
-    wishlistDataSourceSpy = FirebaseWishlistDataSourceSpy(data: wishlistResult, datas: wishlistsResult);
-    sut = WishlistRepository(wishlistDataSource: wishlistDataSourceSpy);
-  });
-
   group("getById", () {
+    final WishlistModel wishlistResult = ModelFactory.wishlist();
     final String wishlistId = faker.guid.guid();
+
+    setUp(() {
+      wishlistDataSourceSpy = FirebaseWishlistDataSourceSpy(data: wishlistResult);
+      sut = WishlistRepository(wishlistDataSource: wishlistDataSourceSpy);
+    });
 
     test("Deve chamar GetById no Datasource com valores corretos", () async {
       await sut.getById(wishlistId);
@@ -58,7 +57,13 @@ void main() {
   });
 
   group("getAll", () {
+    final List<WishlistModel> wishlistsResult = ModelFactory.wishlists();
     final String userId = faker.guid.guid();
+
+    setUp(() {
+      wishlistDataSourceSpy = FirebaseWishlistDataSourceSpy(datas: wishlistsResult);
+      sut = WishlistRepository(wishlistDataSource: wishlistDataSourceSpy);
+    });
 
     test("Deve chamar GetAll no Datasource com valores corretos", () async {
       await sut.getAll(userId);
@@ -89,6 +94,49 @@ void main() {
 
       final Future future = sut.getAll(userId);
       expect(future, throwsA(isA<NotFoundDomainError>()));
+    });
+  });
+
+  group("create", () {
+    final WishlistEntity entity = EntityFactory.wishlistWithoutId();
+    final WishlistModel modelResult = ModelFactory.wishlist();
+
+    setUp(() {
+      wishlistDataSourceSpy = FirebaseWishlistDataSourceSpy(data: modelResult);
+      sut = WishlistRepository(wishlistDataSource: wishlistDataSourceSpy);
+    });
+
+    setUpAll(() => registerFallbackValue(modelResult));
+
+    test("Deve chamar create com valores corretos", () async {
+      await sut.create(entity);
+      verify(() => wishlistDataSourceSpy.create(WishlistModel.fromEntity(entity)));
+    });
+
+    test("Deve criar wishlist com sucesso", () async {
+      final WishlistEntity wishlist = await sut.create(entity);
+      expect(wishlist, modelResult.toEntity());
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
+      wishlistDataSourceSpy.mockCreateError(error: ConnectionExternalError());
+
+      final Future future = sut.create(entity);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      wishlistDataSourceSpy.mockCreateError();
+
+      final Future future = sut.create(entity);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw AlreadyExistsDomainError", () {
+    wishlistDataSourceSpy.mockCreateError(error: AlreadyExistsExternalError());
+
+    final Future future = sut.create(entity);
+    expect(future, throwsA(isA<AlreadyExistsDomainError>()));
     });
   });
 }

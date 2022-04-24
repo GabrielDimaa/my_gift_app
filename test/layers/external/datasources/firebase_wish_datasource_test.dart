@@ -13,7 +13,7 @@ void main() {
     late FirestoreFirestoreSpy firestore;
 
     final WishModel wish = ModelFactory.wish();
-    final String wishId = wish.id;
+    final String wishId = wish.id!;
     final Map<String, dynamic> json = wish.toJson();
 
     void mockFirebaseException(String code) => firestore.mockDocumentSnapshotError(FirebaseException(plugin: "any_plugin", code: code));

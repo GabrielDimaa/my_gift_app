@@ -25,6 +25,8 @@ abstract class ModelFactory {
         wishes: wishes(),
       );
 
+  static WishlistModel wishlistWithoutId() => WishlistModel(description: faker.lorem.sentence(), wishes: wishes());
+
   static List<WishlistModel> wishlists({int length = 4}) => List.generate(length, (_) => wishlist());
 
   static UserModel user({bool emailVerified = true}) => UserModel(

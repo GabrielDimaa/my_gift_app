@@ -4,12 +4,12 @@ import '../../domain/entities/wishlist_entity.dart';
 import './wish_model.dart';
 
 class WishlistModel extends Equatable {
-  final String id;
+  final String? id;
   final String description;
   final List<WishModel> wishes;
 
   const WishlistModel({
-    required this.id,
+    this.id,
     required this.description,
     required this.wishes,
   });
@@ -28,6 +28,14 @@ class WishlistModel extends Equatable {
       'description': description,
       'wishes': wishes.map((e) => e.toJson()).toList(),
     };
+  }
+
+  factory WishlistModel.fromEntity(WishlistEntity entity) {
+    return WishlistModel(
+      id: entity.id,
+      description: entity.description,
+      wishes: entity.wishes.map((e) => WishModel.fromEntity(e)).toList(),
+    );
   }
 
   factory WishlistModel.fromJson(Map<String, dynamic> json) {

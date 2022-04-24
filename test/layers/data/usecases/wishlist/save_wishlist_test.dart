@@ -27,9 +27,10 @@ void main() {
       verify(() => wishlistRepositorySpy.create(entity));
     });
 
-    test("Deve create wishlist com sucesso", () async {
+    test("Deve criar wishlist com sucesso", () async {
       final WishlistEntity wishlist = await sut.save(entity);
       expect(wishlist, wishlistResult);
+      expect(wishlist.id != null, true);
     });
 
     test("Deve throw UnexpectedDomainError", () {

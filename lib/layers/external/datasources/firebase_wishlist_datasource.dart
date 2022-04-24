@@ -61,4 +61,16 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       throw UnexpectedExternalError();
     }
   }
+
+  @override
+  Future<WishlistModel> create(WishlistModel model) async {
+    // TODO: implement create
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<WishlistModel> update(WishlistModel model) async {
+    // TODO: implement update
+    throw UnimplementedError();
+  }
 }
