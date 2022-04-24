@@ -4,7 +4,11 @@ import 'package:mocktail/mocktail.dart';
 
 class WishlistRepositorySpy extends Mock implements IWishlistRepository {
   WishlistRepositorySpy({WishlistEntity? data, List<WishlistEntity>? datas}) {
-    if (data != null) mockGetById(data);
+    if (data != null) {
+      mockGetById(data);
+      mockCreate(data);
+      mockUpdate(data);
+    }
     if (datas != null) mockGetAll(datas);
   }
 
@@ -18,5 +22,17 @@ class WishlistRepositorySpy extends Mock implements IWishlistRepository {
   When mockGetAllCall() => when(() => getAll(any()));
   void mockGetAll(List<WishlistEntity> value) => mockGetAllCall().thenAnswer((_) => Future.value(value));
   void mockGetAllError({Exception? error}) => mockGetAllCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region create
+  When mockCreateCall() => when(() => create(any()));
+  void mockCreate(WishlistEntity value) => mockCreateCall().thenAnswer((_) => Future.value(value));
+  void mockCreateError({Exception? error}) => mockCreateCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region update
+  When mockUpdateCall() => when(() => update(any()));
+  void mockUpdate(WishlistEntity value) => mockUpdateCall().thenAnswer((_) => Future.value(value));
+  void mockUpdateError({Exception? error}) => mockUpdateCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

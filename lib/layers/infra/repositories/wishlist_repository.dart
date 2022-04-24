@@ -33,4 +33,16 @@ class WishlistRepository implements IWishlistRepository {
       throw UnexpectedExternalError().toDomainError();
     }
   }
+
+  @override
+  Future<WishlistEntity> create(WishlistEntity entity) async {
+    // TODO: implement create
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<WishlistEntity> update(WishlistEntity entity) async {
+    // TODO: implement update
+    throw UnimplementedError();
+  }
 }

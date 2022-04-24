@@ -34,7 +34,7 @@ void main() {
     wishRepository.mockGetByIdError();
 
     final Future future = sut.get(wishId);
-    expect(future, throwsA(UnexpectedDomainError));
+    expect(future, throwsA(isA<UnexpectedDomainError>()));
   });
 
   test("Deve throw NotFoundDomainError", () {

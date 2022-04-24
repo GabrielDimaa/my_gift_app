@@ -19,11 +19,13 @@ abstract class EntityFactory {
 
   static List<WishEntity> wishes({int length = 4}) => List.generate(length, (_) => wish());
 
-  static WishlistEntity wishlist() => WishlistEntity(
-        id: faker.guid.guid(),
+  static WishlistEntity wishlist({String? id}) => WishlistEntity(
+        id: id ?? faker.guid.guid(),
         description: faker.lorem.sentence(),
         wishes: wishes(),
       );
+
+  static WishlistEntity wishlistWithoutId() => WishlistEntity(description: faker.lorem.sentence(), wishes: wishes(),);
 
   static List<WishlistEntity> wishlists({int length = 4}) => List.generate(length, (_) => wishlist());
 

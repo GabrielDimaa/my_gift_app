@@ -1,3 +1,4 @@
+import '../../../../i18n/resources.dart';
 import '../../../domain/entities/wish_entity.dart';
 import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/usecases/wish/i_get_wish_by_id.dart';
@@ -15,7 +16,7 @@ class GetWishById implements IGetWishById {
     } on DomainError {
       rethrow;
     } catch (e) {
-      throw UnexpectedDomainError;
+      throw UnexpectedDomainError(R.string.getError);
     }
   }
 }
