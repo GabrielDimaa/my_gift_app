@@ -7,6 +7,7 @@ class FirebaseWishlistDataSourceSpy extends Mock implements IWishlistDataSource 
     if (data != null) {
       mockGetById(data);
       mockCreate(data);
+      mockUpdate(data);
     }
     if (datas != null) mockGetAll(datas);
   }
@@ -27,5 +28,11 @@ class FirebaseWishlistDataSourceSpy extends Mock implements IWishlistDataSource 
   When mockCreateCall() => when(() => create(any()));
   void mockCreate(WishlistModel data) => mockCreateCall().thenAnswer((_) => Future.value(data));
   void mockCreateError({Exception? error}) => mockCreateCall().thenThrow(error ?? Exception("any_message"));
+  //endregion
+
+  //region update
+  When mockUpdateCall() => when(() => update(any()));
+  void mockUpdate(WishlistModel data) => mockUpdateCall().thenAnswer((_) => Future.value(data));
+  void mockUpdateError({Exception? error}) => mockUpdateCall().thenThrow(error ?? Exception("any_message"));
   //endregion
 }

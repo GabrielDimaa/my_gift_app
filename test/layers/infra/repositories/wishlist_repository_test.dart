@@ -24,6 +24,8 @@ void main() {
       sut = WishlistRepository(wishlistDataSource: wishlistDataSourceSpy);
     });
 
+    setUpAll(() => registerFallbackValue(wishlistResult));
+
     test("Deve chamar GetById no Datasource com valores corretos", () async {
       await sut.getById(wishlistId);
       verify(() => wishlistDataSourceSpy.getById(wishlistId));
@@ -137,6 +139,58 @@ void main() {
 
     final Future future = sut.create(entity);
     expect(future, throwsA(isA<AlreadyExistsDomainError>()));
+    });
+  });
+
+  group("update", () {
+    final WishlistEntity entity = EntityFactory.wishlist();
+    final WishlistModel modelResult = ModelFactory.wishlist(id: entity.id);
+
+    setUp(() {
+      wishlistDataSourceSpy = FirebaseWishlistDataSourceSpy(data: modelResult);
+      sut = WishlistRepository(wishlistDataSource: wishlistDataSourceSpy);
+    });
+
+    setUpAll(() => registerFallbackValue(modelResult));
+
+    test("Deve chamar update com valores corretos", () async {
+      await sut.update(entity);
+      verify(() => wishlistDataSourceSpy.update(WishlistModel.fromEntity(entity)));
+    });
+
+    test("Deve update wishlist com sucesso", () async {
+      final WishlistEntity wishlist = await sut.update(entity);
+      expect(wishlist, modelResult.toEntity());
+      expect(wishlist != entity, true);
+      expect(wishlist.id, entity.id);
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
+      wishlistDataSourceSpy.mockUpdateError(error: ConnectionExternalError());
+
+      final Future future = sut.update(entity);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      wishlistDataSourceSpy.mockUpdateError();
+
+      final Future future = sut.update(entity);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw AlreadyExistsDomainError", () {
+      wishlistDataSourceSpy.mockUpdateError(error: AlreadyExistsExternalError());
+
+      final Future future = sut.update(entity);
+      expect(future, throwsA(isA<AlreadyExistsDomainError>()));
+    });
+
+    test("Deve throw NotFoundDomainError", () {
+      wishlistDataSourceSpy.mockUpdateError(error: NotFoundExternalError());
+
+      final Future future = sut.update(entity);
+      expect(future, throwsA(isA<NotFoundDomainError>()));
     });
   });
 }
