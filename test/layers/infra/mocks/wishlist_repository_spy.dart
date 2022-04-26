@@ -10,6 +10,7 @@ class WishlistRepositorySpy extends Mock implements IWishlistRepository {
       mockUpdate(data);
     }
     if (datas != null) mockGetAll(datas);
+    mockDelete();
   }
 
   //region getById
@@ -34,5 +35,11 @@ class WishlistRepositorySpy extends Mock implements IWishlistRepository {
   When mockUpdateCall() => when(() => update(any()));
   void mockUpdate(WishlistEntity value) => mockUpdateCall().thenAnswer((_) => Future.value(value));
   void mockUpdateError({Exception? error}) => mockUpdateCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region delete
+  When mockDeleteCall() => when(() => delete(any()));
+  void mockDelete() => mockDeleteCall().thenAnswer((_) => Future.value());
+  void mockDeleteError({Exception? error}) => mockDeleteCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

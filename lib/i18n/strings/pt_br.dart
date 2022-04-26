@@ -70,5 +70,8 @@ class PtBr implements Translation {
 
   @override
   String get saveError => "Não foi possível salvar. Tente novamente";
+
+  @override
+  String get deleteError => "Não foi possível excluir. Tente novamente";
   //endregion
 }

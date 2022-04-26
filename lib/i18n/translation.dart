@@ -23,5 +23,6 @@ abstract class Translation {
   String get actionCodeError;
   String get getError;
   String get saveError;
+  String get deleteError;
   //endregion
 }
