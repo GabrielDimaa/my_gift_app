@@ -4,7 +4,7 @@ import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/usecases/wishlist/i_save_wishlist.dart';
 import '../../repositories/i_wishlist_repository.dart';
 
-class SaveWishlist implements ISaveWishlists {
+class SaveWishlist implements ISaveWishlist {
   final IWishlistRepository wishlistRepository;
 
   SaveWishlist({required this.wishlistRepository});
