@@ -98,7 +98,19 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
   @override
   Future<WishlistModel> update(WishlistModel model) async {
-    // TODO: implement update
-    throw UnimplementedError();
+    try {
+      if (model.id == null) throw NotFoundExternalError();
+
+      final doc = firestore.collection(WISHLISTS_REFERENCE).doc(model.id);
+      await doc.update(model.toJson());
+
+      return model;
+    } on FirebaseException catch (e) {
+      throw e.getExternalError;
+    } on ExternalError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedExternalError();
+    }
   }
 }
