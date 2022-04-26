@@ -26,7 +26,6 @@ class WishlistModel extends Equatable {
     return {
       'id': id,
       'description': description,
-      'wishes': wishes.map((e) => e.toJson()).toList(),
     };
   }
 

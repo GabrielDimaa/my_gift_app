@@ -4,6 +4,7 @@ import 'package:desejando_app/layers/external/helpers/errors/external_error.dart
 import 'package:desejando_app/layers/infra/models/wishlist_model.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../infra/models/model_factory.dart';
 import '../mocks/firebase_firestore_spy.dart';
@@ -247,4 +248,6 @@ void main() {
       expect(future, throwsA(isA<UnexpectedExternalError>()));
     });
   });
+
+  //TODO: Implementar create.
 }

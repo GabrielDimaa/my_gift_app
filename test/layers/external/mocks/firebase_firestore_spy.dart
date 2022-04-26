@@ -36,6 +36,18 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
     mockQuerySnapshot();
   }
 
+  // FirestoreFirestoreSpy.batch() {
+  //   collectionReferenceStubby = CollectionReferenceStubby();
+  //   documentReferenceStubby = DocumentReferenceStubby();
+  //   batchStubby = WriteBatchStubby();
+  //
+  //   mockCollection();
+  //   mockDocumentTeste();
+  //   mockBatch();
+  //   mockSet();
+  //   mockCommit();
+  // }
+
   When _mockCollectionCall() => when(() => collection(any()));
   void mockCollection() => _mockCollectionCall().thenReturn(collectionReferenceStubby);
 
@@ -76,6 +88,20 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
   When _mockQueryGetCall() => when(() => querySpy.get());
   void mockQueryGet(QuerySnapshotSpy snapshot) => _mockQueryGetCall().thenAnswer((_) => Future.value(snapshot));
   void mockQueryGetError(Exception error) => _mockQueryGetCall().thenThrow(error);
+  //endregion
+
+  //region batch
+  // When _mockBatchCall() => when(() => batch());
+  // void mockBatch() => _mockBatchCall().thenReturn(batchStubby);
+  //
+  // When _mockSetCall() => when(() => batchStubby.set(collectionReferenceStubby.doc(), any()));
+  // void mockSet() => _mockSetCall().thenAnswer((_) => Future.value());
+  //
+  // When _mockCommitCall() => when(() => batchStubby.commit());
+  // void mockCommit() => _mockCommitCall().thenAnswer((_) => Future.value());
+  //
+  // When _mockDocumentTesteCall() => when(() => collectionReferenceStubby.doc());
+  // void mockDocumentTeste() => _mockDocumentTesteCall().thenReturn(documentReferenceStubby);
   //endregion
 }
 
@@ -128,6 +154,5 @@ class QuerySnapshotSpy extends Mock implements QuerySnapshot<Map<String, dynamic
 }
 
 // ignore: subtype_of_sealed_class
-class QuerySpy extends Mock implements Query<Map<String, dynamic>> {
-
-}
+class QuerySpy extends Mock implements Query<Map<String, dynamic>> {}
+class WriteBatchStubby extends Mock implements WriteBatch {}
