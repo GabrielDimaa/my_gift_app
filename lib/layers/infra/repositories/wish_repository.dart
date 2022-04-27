@@ -23,13 +23,29 @@ class WishRepository implements IWishRepository {
 
   @override
   Future<WishEntity> create(WishEntity entity) async {
-    // TODO: implement create
-    throw UnimplementedError();
+    try {
+      if (entity.id != null) throw InvalidArgumentExternalError();
+
+      final WishModel wishModel = await wishDataSource.create(WishModel.fromEntity(entity));
+      return wishModel.toEntity();
+    } on ExternalError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedExternalError().toDomainError();
+    }
   }
 
   @override
   Future<WishEntity> update(WishEntity entity) async {
-    // TODO: implement update
-    throw UnimplementedError();
+    try {
+      if (entity.id == null) throw InvalidArgumentExternalError();
+
+      final WishModel wishModel = await wishDataSource.update(WishModel.fromEntity(entity));
+      return wishModel.toEntity();
+    } on ExternalError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedExternalError().toDomainError();
+    }
   }
 }

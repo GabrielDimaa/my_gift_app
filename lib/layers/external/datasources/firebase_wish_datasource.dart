@@ -31,4 +31,16 @@ class FirebaseWishDataSource implements IWishDataSource {
       throw UnexpectedExternalError();
     }
   }
+
+  @override
+  Future<WishModel> create(WishModel entity) async {
+    // TODO: implement create
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<WishModel> update(WishModel entity) async {
+    // TODO: implement update
+    throw UnimplementedError();
+  }
 }

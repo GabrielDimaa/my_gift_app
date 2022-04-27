@@ -4,8 +4,8 @@ import 'package:desejando_app/layers/infra/models/wishlist_model.dart';
 import 'package:faker/faker.dart';
 
 abstract class ModelFactory {
-  static WishModel wish() => WishModel(
-        id: faker.guid.guid(),
+  static WishModel wish({String? id, bool withId = true}) => WishModel(
+        id: withId ? id ?? faker.guid.guid() : null,
         description: faker.lorem.sentence(),
         image: faker.internet.httpsUrl(),
         link: faker.internet.httpsUrl(),
