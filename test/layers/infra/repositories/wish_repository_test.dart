@@ -162,4 +162,40 @@ void main() {
       expect(future, throwsA(isA<NotFoundDomainError>()));
     });
   });
+
+  group("delete", () {
+    final String wishId = faker.guid.guid();
+
+    setUp(() {
+      wishDataSourceSpy = FirebaseWishDataSourceSpy(delete: true);
+      sut = WishRepository(wishDataSource: wishDataSourceSpy);
+    });
+
+    test("Deve chamar Delete com valores corretos", () async {
+      await sut.delete(wishId);
+
+      verify(() => wishDataSourceSpy.delete(wishId));
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
+      wishDataSourceSpy.mockDeleteError(error: ConnectionExternalError());
+      final Future future = sut.delete(wishId);
+
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      wishDataSourceSpy.mockDeleteError(error: Exception());
+      final Future future = sut.delete(wishId);
+
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw NotFoundDomainError se NotFoundExternalError", () {
+      wishDataSourceSpy.mockDeleteError(error: NotFoundExternalError());
+      final Future future = sut.delete(wishId);
+
+      expect(future, throwsA(isA<NotFoundDomainError>()));
+    });
+  });
 }

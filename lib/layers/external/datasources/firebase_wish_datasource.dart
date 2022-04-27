@@ -43,4 +43,10 @@ class FirebaseWishDataSource implements IWishDataSource {
     // TODO: implement update
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> delete(String id) async {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
 }
