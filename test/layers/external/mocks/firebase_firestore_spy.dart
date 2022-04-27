@@ -45,6 +45,15 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
     mockUpdate(data);
   }
 
+  FirestoreFirestoreSpy.delete() {
+    collectionReferenceStubby = CollectionReferenceStubby();
+    documentReferenceStubby = DocumentReferenceStubby();
+
+    mockCollection();
+    mockDocument();
+    mockDelete();
+  }
+
   // FirestoreFirestoreSpy.batch() {
   //   collectionReferenceStubby = CollectionReferenceStubby();
   //   documentReferenceStubby = DocumentReferenceStubby();
@@ -103,6 +112,12 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
   When _mockUpdateCall(Map<String, dynamic> data) => when(() => documentReferenceStubby.update(data));
   void mockUpdate(Map<String, dynamic> data) => _mockUpdateCall(data).thenAnswer((_) => Future.value());
   void mockUpdateError({required Map<String, dynamic> data, required Exception error}) => _mockUpdateCall(data).thenThrow(error);
+  //endregion
+
+  //region delete
+  When _mockDeleteCall() => when(() => documentReferenceStubby.delete());
+  void mockDelete() => _mockDeleteCall().thenAnswer((_) => Future.value());
+  void mockDeleteError(Exception error) => _mockDeleteCall().thenThrow(error);
   //endregion
 
   //region batch

@@ -14,7 +14,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<WishlistModel> getById(String id) async {
     try {
-      final DocumentSnapshot<Map<String, dynamic>> snapshot = await firestore.collection(WISHLISTS_REFERENCE).doc(id).get();
+      final DocumentSnapshot<Map<String, dynamic>> snapshot = await firestore.collection(constantWishlistsReference).doc(id).get();
 
       final Map<String, dynamic>? json = snapshot.data();
       json?.addAll({'id': snapshot.id});
@@ -34,7 +34,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<List<WishlistModel>> getAll(String userId) async {
     try {
-      final QuerySnapshot<Map<String, dynamic>> snapshot = await firestore.collection(WISHLISTS_REFERENCE).where("userId", isEqualTo: userId).get();
+      final QuerySnapshot<Map<String, dynamic>> snapshot = await firestore.collection(constantWishlistsReference).where("userId", isEqualTo: userId).get();
       final List<Map<String, dynamic>> jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
         var json = e.data();
         if (json.isEmpty) {
@@ -65,7 +65,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   Future<WishlistModel> create(WishlistModel model) async {
     try {
       final WriteBatch batch = firestore.batch();
-      final docWishlist = firestore.collection(WISHLISTS_REFERENCE).doc();
+      final docWishlist = firestore.collection(constantWishlistsReference).doc();
 
       batch.set(docWishlist, model.toJson()..remove('id'));
 
@@ -74,7 +74,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       List<Map<String, dynamic>> wishes = [];
       for (var wish in model.wishes) {
-        final docWish = docWishlist.collection(WISHES_REFERENCE).doc();
+        final docWish = docWishlist.collection(constantWishesReference).doc();
         batch.set(docWish, wish.toJson()..remove('id'));
 
         Map<String, dynamic> wishJson = wish.toJson();
@@ -101,7 +101,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
     try {
       if (model.id == null) throw NotFoundExternalError();
 
-      final doc = firestore.collection(WISHLISTS_REFERENCE).doc(model.id);
+      final doc = firestore.collection(constantWishlistsReference).doc(model.id);
       await doc.update(model.toJson());
 
       return model;
@@ -116,7 +116,14 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
   @override
   Future<void> delete(String id) async {
-    // TODO: implement delete
-    throw UnimplementedError();
+    try {
+      await firestore.collection(constantWishlistsReference).doc(id).delete();
+    } on FirebaseException catch (e) {
+      throw e.getExternalError;
+    } on ExternalError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedExternalError();
+    }
   }
 }

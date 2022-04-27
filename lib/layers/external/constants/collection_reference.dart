@@ -1,2 +1,2 @@
-const String WISHLISTS_REFERENCE = "wishlists";
-const String WISHES_REFERENCE = "wishes";
+const String constantWishlistsReference = "wishlists";
+const String constantWishesReference = "wishes";
