@@ -119,7 +119,7 @@ void main() {
     late FirebaseUserAccountDataSource sut;
     late FirebaseAuthSpy firebaseAuthSpy;
 
-    final UserModel userRequest = ModelFactory.userWithoutId();
+    final UserModel userRequest = ModelFactory.user(withId: false);
     late UserModel userResult;
     late UserMock userFirebase;
 
@@ -159,7 +159,7 @@ void main() {
     });
 
     test("Deve throw WrongPasswordExternalError se password for igual a null", () {
-      final Future future = sut.signUpWithEmail(ModelFactory.userWithoutId(password: null));
+      final Future future = sut.signUpWithEmail(ModelFactory.user(password: null));
       expect(future, throwsA(isA<WrongPasswordExternalError>()));
     });
 

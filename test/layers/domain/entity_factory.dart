@@ -29,17 +29,8 @@ abstract class EntityFactory {
 
   static List<WishlistEntity> wishlists({int length = 4}) => List.generate(length, (_) => wishlist());
 
-  static UserEntity user({bool emailVerified = true}) => UserEntity(
-        id: faker.guid.guid(),
-        name: faker.person.name(),
-        email: faker.internet.email(),
-        phone: faker.phoneNumber.random.fromPattern(["(##)#####-####"]),
-        photo: faker.internet.httpsUrl(),
-        emailVerified: emailVerified,
-        password: faker.internet.password(),
-      );
-
-  static UserEntity userWithoutId({bool emailVerified = true}) => UserEntity(
+  static UserEntity user({bool emailVerified = true, bool withId = true}) => UserEntity(
+        id: withId ? faker.guid.guid() : null,
         name: faker.person.name(),
         email: faker.internet.email(),
         phone: faker.phoneNumber.random.fromPattern(["(##)#####-####"]),

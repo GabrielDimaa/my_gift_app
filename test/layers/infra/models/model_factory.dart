@@ -19,27 +19,16 @@ abstract class ModelFactory {
 
   static List<WishModel> wishes({int length = 4}) => List.generate(length, (_) => wish());
 
-  static WishlistModel wishlist({String? id}) => WishlistModel(
-        id: id ?? faker.guid.guid(),
+  static WishlistModel wishlist({String? id, bool withId = true}) => WishlistModel(
+        id: withId ? id ?? faker.guid.guid() : null,
         description: faker.lorem.sentence(),
         wishes: wishes(),
       );
 
-  static WishlistModel wishlistWithoutId() => WishlistModel(description: faker.lorem.sentence(), wishes: wishes());
-
   static List<WishlistModel> wishlists({int length = 4}) => List.generate(length, (_) => wishlist());
 
-  static UserModel user({bool emailVerified = true}) => UserModel(
-        id: faker.guid.guid(),
-        name: faker.person.name(),
-        email: faker.internet.email(),
-        phone: faker.phoneNumber.random.fromPattern(["(##)#####-####"]),
-        photo: faker.internet.httpsUrl(),
-        emailVerified: emailVerified,
-        password: faker.internet.password(),
-      );
-
-  static UserModel userWithoutId({bool emailVerified = true, String? password = "12345678"}) => UserModel(
+  static UserModel user({bool emailVerified = true, bool withId = true, String? password = "12345678"}) => UserModel(
+        id: withId ? faker.guid.guid() : null,
         name: faker.person.name(),
         email: faker.internet.email(),
         phone: faker.phoneNumber.random.fromPattern(["(##)#####-####"]),

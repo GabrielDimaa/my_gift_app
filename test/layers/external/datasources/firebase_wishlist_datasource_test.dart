@@ -272,7 +272,7 @@ void main() {
     });
 
     test("Deve throw NotFoundExternalError se model não possuir id", () {
-      Future future = sut.update(ModelFactory.wishlistWithoutId());
+      Future future = sut.update(ModelFactory.wishlist(withId: false));
       expect(future, throwsA(isA<NotFoundExternalError>()));
     });
 

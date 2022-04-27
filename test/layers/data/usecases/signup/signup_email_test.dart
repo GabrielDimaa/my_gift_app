@@ -11,7 +11,7 @@ void main() {
   late SignUpEmail sut;
   late UserAccountRepositorySpy userAccountRepositorySpy;
 
-  final UserEntity userRequest = EntityFactory.userWithoutId();
+  final UserEntity userRequest = EntityFactory.user(withId: false);
   final UserEntity userResult = EntityFactory.user();
 
   setUp(() {
