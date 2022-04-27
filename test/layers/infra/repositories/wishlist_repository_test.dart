@@ -193,4 +193,39 @@ void main() {
       expect(future, throwsA(isA<NotFoundDomainError>()));
     });
   });
+
+  group("delete", () {
+    final String wishlistId = faker.guid.guid();
+
+    setUp(() {
+      wishlistDataSourceSpy = FirebaseWishlistDataSourceSpy();
+      sut = WishlistRepository(wishlistDataSource: wishlistDataSourceSpy);
+    });
+
+    test("Deve chamar Delete com valores corretos", () async {
+      await sut.delete(wishlistId);
+      verify(() => wishlistDataSourceSpy.delete(wishlistId));
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
+      wishlistDataSourceSpy.mockDeleteError(error: ConnectionExternalError());
+
+      final Future future = sut.delete(wishlistId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      wishlistDataSourceSpy.mockDeleteError();
+
+      final Future future = sut.delete(wishlistId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw NotFoundDomainError", () {
+      wishlistDataSourceSpy.mockDeleteError(error: NotFoundExternalError());
+
+      final Future future = sut.delete(wishlistId);
+      expect(future, throwsA(isA<NotFoundDomainError>()));
+    });
+  });
 }

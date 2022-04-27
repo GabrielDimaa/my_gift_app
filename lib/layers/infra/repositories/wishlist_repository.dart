@@ -59,8 +59,13 @@ class WishlistRepository implements IWishlistRepository {
   }
 
   @override
-  Future<void> delete(String wishlistId) async {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<void> delete(String id) async {
+    try {
+      await wishlistDataSource.delete(id);
+    } on ExternalError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedExternalError().toDomainError();
+    }
   }
 }

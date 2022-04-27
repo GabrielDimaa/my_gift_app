@@ -9,9 +9,9 @@ class DeleteWishlist implements IDeleteWishlist {
   DeleteWishlist({required this.wishlistRepository});
 
   @override
-  Future<void> delete(String wishlistId) async {
+  Future<void> delete(String id) async {
     try {
-      await wishlistRepository.delete(wishlistId);
+      await wishlistRepository.delete(id);
     } on DomainError {
       rethrow;
     } catch (e) {

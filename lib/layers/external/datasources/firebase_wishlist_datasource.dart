@@ -113,4 +113,10 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       throw UnexpectedExternalError();
     }
   }
+
+  @override
+  Future<void> delete(String id) async {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
 }

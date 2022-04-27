@@ -10,6 +10,7 @@ class FirebaseWishlistDataSourceSpy extends Mock implements IWishlistDataSource 
       mockUpdate(data);
     }
     if (datas != null) mockGetAll(datas);
+    mockDelete();
   }
 
   //region getById
@@ -34,5 +35,11 @@ class FirebaseWishlistDataSourceSpy extends Mock implements IWishlistDataSource 
   When mockUpdateCall() => when(() => update(any()));
   void mockUpdate(WishlistModel data) => mockUpdateCall().thenAnswer((_) => Future.value(data));
   void mockUpdateError({Exception? error}) => mockUpdateCall().thenThrow(error ?? Exception("any_message"));
+  //endregion
+
+  //region delete
+  When mockDeleteCall() => when(() => delete(any()));
+  void mockDelete() => mockDeleteCall().thenAnswer((_) => Future.value());
+  void mockDeleteError({Exception? error}) => mockDeleteCall().thenThrow(error ?? Exception("any_message"));
   //endregion
 }

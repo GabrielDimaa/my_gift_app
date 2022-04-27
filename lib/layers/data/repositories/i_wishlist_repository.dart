@@ -5,5 +5,5 @@ abstract class IWishlistRepository {
   Future<List<WishlistEntity>> getAll(String userId);
   Future<WishlistEntity> create(WishlistEntity entity);
   Future<WishlistEntity> update(WishlistEntity entity);
-  Future<void> delete(String wishlistId);
+  Future<void> delete(String id);
 }

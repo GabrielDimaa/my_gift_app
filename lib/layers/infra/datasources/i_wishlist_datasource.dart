@@ -5,4 +5,5 @@ abstract class IWishlistDataSource {
   Future<List<WishlistModel>> getAll(String userId);
   Future<WishlistModel> create(WishlistModel model);
   Future<WishlistModel> update(WishlistModel model);
+  Future<void> delete(String id);
 }
