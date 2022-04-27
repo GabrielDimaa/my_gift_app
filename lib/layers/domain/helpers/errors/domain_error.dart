@@ -25,6 +25,13 @@ class NotFoundDomainError extends DomainError {
   NotFoundDomainError({String? message}) : message = message ?? R.string.notFoundError;
 }
 
+class ValidationDomainError extends DomainError {
+  @override
+  final String message;
+
+  ValidationDomainError({String? message}) : message = message ?? R.string.invalidDataError;
+}
+
 //region Auth
 class EmailInUseDomainError extends DomainError {
   @override

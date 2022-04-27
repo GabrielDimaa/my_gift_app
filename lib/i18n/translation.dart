@@ -8,6 +8,8 @@ abstract class Translation {
   String get internalError;
   String get invalidArgumentError;
   String get notFoundError;
+  String get invalidDataError;
+  String get wishlistUninformedError;
   String get emailInUseError;
   String get emailNotVerifiedError;
   String get emailInvalidError;

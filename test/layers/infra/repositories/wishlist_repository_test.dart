@@ -100,7 +100,7 @@ void main() {
   });
 
   group("create", () {
-    final WishlistEntity entity = EntityFactory.wishlistWithoutId();
+    final WishlistEntity entity = EntityFactory.wishlist(withId: false);
     final WishlistModel modelResult = ModelFactory.wishlist();
 
     setUp(() {

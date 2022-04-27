@@ -27,6 +27,12 @@ class PtBr implements Translation {
   String get notFoundError => "Nenhum resultado encontrado.";
 
   @override
+  String get invalidDataError => "Dados inválidos.";
+
+  @override
+  String get wishlistUninformedError => "Lista de desejos não informada.";
+
+  @override
   String get emailInUseError => "Email já foi cadastrado.";
 
   @override

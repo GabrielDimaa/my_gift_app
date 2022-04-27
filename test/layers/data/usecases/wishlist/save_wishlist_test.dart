@@ -12,7 +12,7 @@ void main() {
   late WishlistRepositorySpy wishlistRepositorySpy;
 
   group("create", () {
-    final WishlistEntity entity = EntityFactory.wishlistWithoutId();
+    final WishlistEntity entity = EntityFactory.wishlist(withId: false);
     final WishlistEntity wishlistResult = EntityFactory.wishlist();
 
     setUp(() {

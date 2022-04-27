@@ -20,4 +20,16 @@ class WishRepository implements IWishRepository {
       throw UnexpectedExternalError().toDomainError();
     }
   }
+
+  @override
+  Future<WishEntity> create(WishEntity entity) async {
+    // TODO: implement create
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<WishEntity> update(WishEntity entity) async {
+    // TODO: implement update
+    throw UnimplementedError();
+  }
 }

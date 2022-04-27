@@ -4,8 +4,10 @@ import 'package:desejando_app/layers/domain/entities/wishlist_entity.dart';
 import 'package:faker/faker.dart';
 
 abstract class EntityFactory {
-  static WishEntity wish() => WishEntity(
-        id: faker.guid.guid(),
+
+  static WishEntity wish({String? id, bool withId = true, bool withWishlistId = true}) => WishEntity(
+        id: withId ? id ?? faker.guid.guid() : null,
+        wishlistId: withWishlistId ? faker.guid.guid() : null,
         description: faker.lorem.sentence(),
         image: faker.internet.httpsUrl(),
         link: faker.internet.httpsUrl(),
@@ -19,13 +21,11 @@ abstract class EntityFactory {
 
   static List<WishEntity> wishes({int length = 4}) => List.generate(length, (_) => wish());
 
-  static WishlistEntity wishlist({String? id}) => WishlistEntity(
-        id: id ?? faker.guid.guid(),
+  static WishlistEntity wishlist({String? id, bool withId = true}) => WishlistEntity(
+        id: withId ? id ?? faker.guid.guid() : null,
         description: faker.lorem.sentence(),
         wishes: wishes(),
       );
-
-  static WishlistEntity wishlistWithoutId() => WishlistEntity(description: faker.lorem.sentence(), wishes: wishes(),);
 
   static List<WishlistEntity> wishlists({int length = 4}) => List.generate(length, (_) => wishlist());
 

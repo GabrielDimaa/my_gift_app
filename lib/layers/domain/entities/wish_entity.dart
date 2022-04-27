@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class WishEntity extends Equatable {
   final String? id;
+  final String? wishlistId;
   final String description;
   final String? image;
   final String? link;
@@ -17,6 +18,7 @@ class WishEntity extends Equatable {
 
   const WishEntity({
     this.id,
+    this.wishlistId,
     required this.description,
     this.image,
     this.link,
@@ -29,5 +31,5 @@ class WishEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, description, image, link, note, priceRangeInitial, priceRangeFinal, createdAt, expose, finished];
+  List<Object?> get props => [id, wishlistId, description, image, link, note, priceRangeInitial, priceRangeFinal, createdAt, expose, finished];
 }

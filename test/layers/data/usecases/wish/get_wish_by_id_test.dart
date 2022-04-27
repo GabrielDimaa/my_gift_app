@@ -16,7 +16,7 @@ void main() {
   late WishEntity wishResult = EntityFactory.wish();
 
   setUp(() {
-    wishRepository = WishRepositorySpy(data: wishResult);
+    wishRepository = WishRepositorySpy(data: wishResult, get: true);
     sut = GetWishById(wishRepository: wishRepository);
   });
 
