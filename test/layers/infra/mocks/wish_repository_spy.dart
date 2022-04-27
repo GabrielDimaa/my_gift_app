@@ -3,12 +3,13 @@ import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
 import 'package:mocktail/mocktail.dart';
 
 class WishRepositorySpy extends Mock implements IWishRepository {
-  WishRepositorySpy({required WishEntity data, bool get = false, bool save = false}) {
-    if (get) mockGetById(data);
+  WishRepositorySpy({WishEntity? data, bool get = false, bool save = false, bool delete = false}) {
+    if (get) mockGetById(data!);
     if (save) {
-      mockCreate(data);
+      mockCreate(data!);
       mockUpdate(data);
     }
+    if (delete) mockDelete();
   }
 
   //region getById
@@ -27,5 +28,11 @@ class WishRepositorySpy extends Mock implements IWishRepository {
   When mockUpdateCall() => when(() => update(any()));
   void mockUpdate(WishEntity value) => mockUpdateCall().thenAnswer((_) => Future.value(value));
   void mockUpdateError({Exception? error}) => mockUpdateCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region delete
+  When mockDeleteCall() => when(() => delete(any()));
+  void mockDelete() => mockDeleteCall().thenAnswer((_) => Future.value());
+  void mockDeleteError({Exception? error}) => mockDeleteCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

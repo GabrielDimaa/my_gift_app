@@ -48,4 +48,10 @@ class WishRepository implements IWishRepository {
       throw UnexpectedExternalError().toDomainError();
     }
   }
+
+  @override
+  Future<void> delete(String id) async {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
 }
