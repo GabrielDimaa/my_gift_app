@@ -24,8 +24,6 @@ class WishRepository implements IWishRepository {
   @override
   Future<WishEntity> create(WishEntity entity) async {
     try {
-      if (entity.id != null) throw InvalidArgumentExternalError();
-
       final WishModel wishModel = await wishDataSource.create(WishModel.fromEntity(entity));
       return wishModel.toEntity();
     } on ExternalError catch (e) {
@@ -38,8 +36,6 @@ class WishRepository implements IWishRepository {
   @override
   Future<WishEntity> update(WishEntity entity) async {
     try {
-      if (entity.id == null) throw InvalidArgumentExternalError();
-
       final WishModel wishModel = await wishDataSource.update(WishModel.fromEntity(entity));
       return wishModel.toEntity();
     } on ExternalError catch (e) {

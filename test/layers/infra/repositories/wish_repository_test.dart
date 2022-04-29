@@ -82,10 +82,10 @@ void main() {
       expect(wish.id != null, true);
     });
 
-    test("Deve throw UnexpectedDomainError se id for null", () async {
-      final Future future = sut.create(EntityFactory.wish());
+    test("Deve throw ValidationDomainError se wishlistId for null", () async {
+      final Future future = sut.create(EntityFactory.wish(withWishlistId: false));
 
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<ValidationDomainError>()));
     });
 
     test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
@@ -135,10 +135,10 @@ void main() {
       expect(wish.id != null, true);
     });
 
-    test("Deve throw UnexpectedDomainError se id for null", () async {
-      final Future future = sut.update(EntityFactory.wish(withId: false));
+    test("Deve throw ValidationDomainError se wishlistId for null", () async {
+      final Future future = sut.update(EntityFactory.wish(withWishlistId: false));
 
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<ValidationDomainError>()));
     });
 
     test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {

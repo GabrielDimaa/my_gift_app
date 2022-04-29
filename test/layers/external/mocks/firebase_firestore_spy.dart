@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 
 class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
@@ -36,13 +37,23 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
     mockQuerySnapshot();
   }
 
-  FirestoreFirestoreSpy.update(Map<String, dynamic> data) {
+  FirestoreFirestoreSpy.add(Map<String, dynamic> data) {
+    collectionReferenceStubby = CollectionReferenceStubby();
+    documentReferenceStubby = DocumentReferenceStubby(docId: data['id']);
+    documentSnapshotSpy = DocumentSnapshotSpy(data);
+
+    mockCollection();
+    mockDocument();
+    mockAdd(data);
+  }
+
+  FirestoreFirestoreSpy.update() {
     collectionReferenceStubby = CollectionReferenceStubby();
     documentReferenceStubby = DocumentReferenceStubby();
 
     mockCollection();
     mockDocument();
-    mockUpdate(data);
+    mockUpdate();
   }
 
   FirestoreFirestoreSpy.delete() {
@@ -108,10 +119,16 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
   void mockQueryGetError(Exception error) => _mockQueryGetCall().thenThrow(error);
   //endregion
 
+  //region add
+  When _mockAddCall(Map<String, dynamic> data) => when(() => collectionReferenceStubby.add(data));
+  void mockAdd(Map<String, dynamic> data) => _mockAddCall(data).thenAnswer((_) => Future.value(documentReferenceStubby));
+  void mockAddError({required Map<String, dynamic> data, required Exception error}) => _mockAddCall(data).thenThrow(error);
+  //endregion
+
   //region update
-  When _mockUpdateCall(Map<String, dynamic> data) => when(() => documentReferenceStubby.update(data));
-  void mockUpdate(Map<String, dynamic> data) => _mockUpdateCall(data).thenAnswer((_) => Future.value());
-  void mockUpdateError({required Map<String, dynamic> data, required Exception error}) => _mockUpdateCall(data).thenThrow(error);
+  When _mockUpdateCall() => when(() => documentReferenceStubby.update(any()));
+  void mockUpdate() => _mockUpdateCall().thenAnswer((_) => Future.value());
+  void mockUpdateError({required Exception error}) => _mockUpdateCall().thenThrow(error);
   //endregion
 
   //region delete
@@ -138,7 +155,14 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
 // ignore: subtype_of_sealed_class
 class CollectionReferenceStubby extends Mock implements CollectionReference<Map<String, dynamic>> {}
 // ignore: subtype_of_sealed_class
-class DocumentReferenceStubby extends Mock implements DocumentReference<Map<String, dynamic>> {}
+class DocumentReferenceStubby extends Mock implements DocumentReference<Map<String, dynamic>> {
+  final String? docId;
+
+  DocumentReferenceStubby({this.docId});
+
+  @override
+  String get id => docId ?? faker.guid.guid();
+}
 // ignore: subtype_of_sealed_class
 class DocumentSnapshotSpy extends Mock implements DocumentSnapshot<Map<String, dynamic>> {
   String? idJson;

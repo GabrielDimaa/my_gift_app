@@ -65,6 +65,11 @@ class NotFoundExternalError extends ExternalError {
   DomainError toDomainError() => NotFoundDomainError();
 }
 
+class InvalidDataExternalError extends ExternalError {
+  @override
+  DomainError toDomainError() => ValidationDomainError();
+}
+
 //region Auth
 
 class EmailInvalidExternalError extends ExternalError {

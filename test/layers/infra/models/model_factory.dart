@@ -6,6 +6,7 @@ import 'package:faker/faker.dart';
 abstract class ModelFactory {
   static WishModel wish({String? id, bool withId = true}) => WishModel(
         id: withId ? id ?? faker.guid.guid() : null,
+        wishlistId: faker.guid.guid(),
         description: faker.lorem.sentence(),
         image: faker.internet.httpsUrl(),
         link: faker.internet.httpsUrl(),

@@ -257,12 +257,11 @@ void main() {
     late FirestoreFirestoreSpy firestore;
 
     final WishlistModel wishlist = ModelFactory.wishlist();
-    final Map<String, dynamic> json = wishlist.toJson();
 
-    void mockFirebaseException(String code) => firestore.mockUpdateError(data: json, error: FirebaseException(plugin: "any_plugin", code: code));
+    void mockFirebaseException(String code) => firestore.mockUpdateError(error: FirebaseException(plugin: "any_plugin", code: code));
 
     setUp(() {
-      firestore = FirestoreFirestoreSpy.update(json);
+      firestore = FirestoreFirestoreSpy.update();
       sut = FirebaseWishlistDataSource(firestore: firestore);
     });
 

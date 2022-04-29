@@ -1,9 +1,11 @@
 import 'package:equatable/equatable.dart';
 
+import '../../external/helpers/errors/external_error.dart';
 import '../../domain/entities/wish_entity.dart';
 
 class WishModel extends Equatable {
   final String? id;
+  final String wishlistId;
   final String description;
   final String? image;
   final String? link;
@@ -19,6 +21,7 @@ class WishModel extends Equatable {
 
   const WishModel({
     this.id,
+    required this.wishlistId,
     required this.description,
     this.image,
     this.link,
@@ -33,6 +36,7 @@ class WishModel extends Equatable {
   WishEntity toEntity() {
     return WishEntity(
       id: id,
+      wishlistId: wishlistId,
       description: description,
       image: image,
       link: link,
@@ -47,7 +51,7 @@ class WishModel extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      'wishlist_id': wishlistId,
       'description': description,
       'image': image,
       'link': link,
@@ -61,8 +65,11 @@ class WishModel extends Equatable {
   }
 
   factory WishModel.fromEntity(WishEntity entity) {
+    if (entity.wishlistId == null) throw InvalidDataExternalError();
+
     return WishModel(
       id: entity.id,
+      wishlistId: entity.wishlistId!,
       description: entity.description,
       image: entity.image,
       link: entity.link,
@@ -76,8 +83,11 @@ class WishModel extends Equatable {
   }
 
   factory WishModel.fromJson(Map<String, dynamic> json) {
+    if (json['wishlist_id'] == null) throw InvalidDataExternalError();
+
     return WishModel(
       id: json['id'],
+      wishlistId: json['wishlist_id'],
       description: json['description'],
       image: json['image'],
       link: json['link'],
@@ -94,6 +104,7 @@ class WishModel extends Equatable {
     return json != null &&
         json.keys.toSet().containsAll([
           'id',
+          'wishlist_id',
           'description',
           'price_range_initial',
           'price_range_final',
@@ -104,5 +115,5 @@ class WishModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, description, image, link, note, priceRangeInitial, priceRangeFinal, createdAt, expose, finished];
+  List<Object?> get props => [id, wishlistId, description, image, link, note, priceRangeInitial, priceRangeFinal, createdAt, expose, finished];
 }
