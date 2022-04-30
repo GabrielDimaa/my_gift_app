@@ -6,7 +6,7 @@ class WishRepositorySpy extends Mock implements IWishRepository {
   WishRepositorySpy({WishEntity? data, List<WishEntity>? datas, bool get = false, bool save = false, bool delete = false}) {
     if (get) {
       if (data != null) mockGetById(data);
-      if (datas != null) mockGetAll(datas);
+      if (datas != null) mockGetByWishlist(datas);
     }
 
     if (save) {
@@ -24,9 +24,9 @@ class WishRepositorySpy extends Mock implements IWishRepository {
   //endregion
 
   //region getAll
-  When mockGetAllCall() => when(() => getAll(id: any(named: "id"), wishlistId: any(named: "wishlistId")));
-  void mockGetAll(List<WishEntity> value) => mockGetAllCall().thenAnswer((_) => Future.value(value));
-  void mockGetAllError({Exception? error}) => mockGetAllCall().thenThrow(error ?? Exception("any_error"));
+  When mockGetByWishlistCall() => when(() => getByWishlist(any()));
+  void mockGetByWishlist(List<WishEntity> value) => mockGetByWishlistCall().thenAnswer((_) => Future.value(value));
+  void mockGetByWishlistError({Exception? error}) => mockGetByWishlistCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 
   //region create

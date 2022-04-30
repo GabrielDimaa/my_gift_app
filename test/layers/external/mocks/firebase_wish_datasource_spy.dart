@@ -6,7 +6,7 @@ class FirebaseWishDataSourceSpy extends Mock implements IWishDataSource {
   FirebaseWishDataSourceSpy({WishModel? data, List<WishModel>? datas, bool get = false, bool save = false, bool delete = false}) {
     if (get) {
       if (data != null) mockGetById(data);
-      if (datas != null) mockGetAll(datas);
+      if (datas != null) mockGetByWishlist(datas);
     }
 
     if (save) {
@@ -24,9 +24,9 @@ class FirebaseWishDataSourceSpy extends Mock implements IWishDataSource {
   //endregion
 
   //region getAll
-  When mockGetAllCall() => when(() => getAll(id: any(named: "id"), wishlistId: any(named: "wishlistId")));
-  void mockGetAll(List<WishModel> data) => mockGetAllCall().thenAnswer((_) => Future.value(data));
-  void mockGetAllError({Exception? error}) => mockGetAllCall().thenThrow(error ?? Exception("any_message"));
+  When mockGetByWishlistCall() => when(() => getByWishlist(any()));
+  void mockGetByWishlist(List<WishModel> data) => mockGetByWishlistCall().thenAnswer((_) => Future.value(data));
+  void mockGetByWishlistError({Exception? error}) => mockGetByWishlistCall().thenThrow(error ?? Exception("any_message"));
   //endregion
 
   //region create

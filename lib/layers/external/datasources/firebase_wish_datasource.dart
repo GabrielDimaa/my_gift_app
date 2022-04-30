@@ -32,9 +32,33 @@ class FirebaseWishDataSource implements IWishDataSource {
   }
 
   @override
-  Future<List<WishModel>> getAll({required String id, required String wishlistId}) async {
-    // TODO: implement getAll
-    throw UnimplementedError();
+  Future<List<WishModel>> getByWishlist(String wishlistId) async {
+    try {
+      final snapshot = await firestore.collection(constantWishesReference).where("wishlist_id", isEqualTo: wishlistId).get();
+      final jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
+        var json = e.data();
+        if (json.isEmpty) {
+          return json;
+        }
+        return json..addAll({'id': e.id});
+      }).toList();
+
+      List<WishModel> wishesModel = [];
+
+      for (var json in jsonList) {
+        if (WishModel.validateJson(json)) {
+          wishesModel.add(WishModel.fromJson(json));
+        }
+      }
+
+      return wishesModel;
+    } on FirebaseException catch (e) {
+      throw e.getExternalError;
+    } on ExternalError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedExternalError();
+    }
   }
 
   @override

@@ -10,32 +10,31 @@ import '../../../domain/entities/entity_factory.dart';
 import '../../../infra/mocks/wish_repository_spy.dart';
 
 void main() {
-  late GetWishes sut;
+  late GetWishesByWishlist sut;
   late WishRepositorySpy wishRepositorySpy;
 
-  final id = faker.guid.guid();
   final wishlistId = faker.guid.guid();
   final List<WishEntity> wishesResult = EntityFactory.wishes();
 
   setUp(() {
     wishRepositorySpy = WishRepositorySpy(get: true, datas: wishesResult);
-    sut = GetWishes(wishRepository: wishRepositorySpy);
+    sut = GetWishesByWishlist(wishRepository: wishRepositorySpy);
   });
 
   test("Deve chamar getAll com valores corretos", () async {
-    await sut.get(id: id, wishlistId: wishlistId);
-    verify(() => wishRepositorySpy.getAll(id: id, wishlistId: wishlistId));
+    await sut.get(wishlistId);
+    verify(() => wishRepositorySpy.getByWishlist(wishlistId));
   });
 
   test("Deve chamar getAll e retornar wishes com sucesso", () async {
-    final List<WishEntity> wishes = await sut.get(id: id, wishlistId: wishlistId);
+    final List<WishEntity> wishes = await sut.get(wishlistId);
     expect(wishes.equals(wishesResult), true);
   });
 
   test("Deve throw UnexpectedDomainError", () {
-    wishRepositorySpy.mockGetAllError();
+    wishRepositorySpy.mockGetByWishlistError();
 
-    final Future future = sut.get(id: id, wishlistId: wishlistId);
+    final Future future = sut.get(wishlistId);
     expect(future, throwsA(isA<UnexpectedDomainError>()));
   });
 }
