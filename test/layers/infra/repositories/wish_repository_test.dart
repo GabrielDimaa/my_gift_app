@@ -7,7 +7,8 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../domain/entity_factory.dart';
+import '../../domain/entities/entity_extension.dart';
+import '../../domain/entities/entity_factory.dart';
 import '../../external/mocks/firebase_wish_datasource_spy.dart';
 import '../models/model_factory.dart';
 
@@ -33,7 +34,7 @@ void main() {
     test("Deve retornar WishEntity com sucesso", () async {
       final WishEntity wish = await sut.getById(wishId);
 
-      expect(wish, wishResult.toEntity());
+      expect(wish.equals(wishResult.toEntity()), true);
     });
 
     test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
@@ -69,16 +70,10 @@ void main() {
 
     setUpAll(() => registerFallbackValue(wishResult));
 
-    test("Deve chamar Create com valores corretos", () async {
-      await sut.create(wishRequest);
-
-      verify(() => wishDataSourceSpy.create(WishModel.fromEntity(wishRequest)));
-    });
-
     test("Deve chamar Create retornar WishEntity com sucesso", () async {
       final WishEntity wish = await sut.create(wishRequest);
 
-      expect(wish, wishResult.toEntity());
+      expect(wish.equals(wishResult.toEntity()), true);
       expect(wish.id != null, true);
     });
 
@@ -121,16 +116,10 @@ void main() {
 
     setUpAll(() => registerFallbackValue(wishResult));
 
-    test("Deve chamar Update com valores corretos", () async {
-      await sut.update(wishRequest);
-
-      verify(() => wishDataSourceSpy.update(WishModel.fromEntity(wishRequest)));
-    });
-
     test("Deve chamar Update retornar WishEntity com sucesso", () async {
       final WishEntity wish = await sut.update(wishRequest);
 
-      expect(wish, wishResult.toEntity());
+      expect(wish.equals(wishResult.toEntity()), true);
       expect(wish.id == wishRequest.id, true);
       expect(wish.id != null, true);
     });

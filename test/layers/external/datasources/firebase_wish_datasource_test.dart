@@ -5,6 +5,7 @@ import 'package:desejando_app/layers/infra/models/wish_model.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../infra/models/model_extension.dart';
 import '../../infra/models/model_factory.dart';
 import '../mocks/firebase_firestore_spy.dart';
 
@@ -26,7 +27,7 @@ void main() {
 
     test("Deve chamar GetById e retornar os valores com sucesso", () async {
       final WishModel wishResponse = await sut.getById(wishId);
-      expect(wishResponse, wish);
+      expect(wishResponse.equals(wish), true);
     });
 
     test("Deve throw NotFoundExternalError se data() retornar null", () {
@@ -149,7 +150,7 @@ void main() {
 
     test("Deve chamar Create e retornar os valores com sucesso", () async {
       final WishModel wishResponse = await sut.create(wish);
-      expect(wishResponse, WishModel.fromJson(wish.toJson()..addAll({'id': wishId})));
+      expect(wishResponse.equals(WishModel.fromJson(wish.toJson()..addAll({'id': wishId}))), true);
     });
 
     test("Deve throw AbortedExternalError se add() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {

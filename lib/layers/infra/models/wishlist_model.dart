@@ -1,9 +1,7 @@
-import 'package:equatable/equatable.dart';
-
 import '../../domain/entities/wishlist_entity.dart';
 import './wish_model.dart';
 
-class WishlistModel extends Equatable {
+class WishlistModel {
   final String? id;
   final String description;
   final List<WishModel> wishes;
@@ -48,7 +46,4 @@ class WishlistModel extends Equatable {
   static bool validateJson(Map<String, dynamic>? json) {
     return json != null && json.keys.toSet().containsAll(['id', 'description']);
   }
-
-  @override
-  List<Object?> get props => [id, description, wishes];
 }

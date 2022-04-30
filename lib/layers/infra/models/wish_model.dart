@@ -1,9 +1,7 @@
-import 'package:equatable/equatable.dart';
-
 import '../../external/helpers/errors/external_error.dart';
 import '../../domain/entities/wish_entity.dart';
 
-class WishModel extends Equatable {
+class WishModel {
   final String? id;
   final String wishlistId;
   final String description;
@@ -113,7 +111,4 @@ class WishModel extends Equatable {
           'finished',
         ]);
   }
-
-  @override
-  List<Object?> get props => [id, wishlistId, description, image, link, note, priceRangeInitial, priceRangeFinal, createdAt, expose, finished];
 }

@@ -14,7 +14,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<WishlistModel> getById(String id) async {
     try {
-      final DocumentSnapshot<Map<String, dynamic>> snapshot = await firestore.collection(constantWishlistsReference).doc(id).get();
+      final snapshot = await firestore.collection(constantWishlistsReference).doc(id).get();
 
       final Map<String, dynamic>? json = snapshot.data();
       json?.addAll({'id': snapshot.id});
@@ -34,8 +34,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<List<WishlistModel>> getAll(String userId) async {
     try {
-      final QuerySnapshot<Map<String, dynamic>> snapshot = await firestore.collection(constantWishlistsReference).where("userId", isEqualTo: userId).get();
-      final List<Map<String, dynamic>> jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
+      final snapshot = await firestore.collection(constantWishlistsReference).where("user_id", isEqualTo: userId).get();
+      final jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
         var json = e.data();
         if (json.isEmpty) {
           return json;
@@ -64,29 +64,15 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<WishlistModel> create(WishlistModel model) async {
     try {
-      final WriteBatch batch = firestore.batch();
-      final docWishlist = firestore.collection(constantWishlistsReference).doc();
+      final Map<String, dynamic> json = model.toJson();
 
-      batch.set(docWishlist, model.toJson()..remove('id'));
+      final col = firestore.collection(constantWishlistsReference);
+      final doc = await col.add(json);
+      json.addAll({'id': doc.id});
 
-      Map<String, dynamic> response = model.toJson();
-      response.containsKey('id') ? response['id'] = docWishlist.id : response.addAll({'id': docWishlist.id});
+      if (!WishlistModel.validateJson(json)) throw UnexpectedExternalError();
 
-      List<Map<String, dynamic>> wishes = [];
-      for (var wish in model.wishes) {
-        final docWish = docWishlist.collection(constantWishesReference).doc();
-        batch.set(docWish, wish.toJson()..remove('id'));
-
-        Map<String, dynamic> wishJson = wish.toJson();
-        wishJson.containsKey('id') ? wishJson['id'] = docWish.id : wishJson.addAll({'id': docWish.id});
-
-        wishes.add(wishJson);
-      }
-
-      await batch.commit();
-
-      response.addAll({'wishes': wishes});
-      return WishlistModel.fromJson(response);
+      return WishlistModel.fromJson(json);
     } on FirebaseException catch (e) {
       throw e.getExternalError;
     } on ExternalError {
@@ -99,8 +85,6 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<WishlistModel> update(WishlistModel model) async {
     try {
-      if (model.id == null) throw NotFoundExternalError();
-
       final doc = firestore.collection(constantWishlistsReference).doc(model.id);
       await doc.update(model.toJson());
 
@@ -117,7 +101,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<void> delete(String id) async {
     try {
-      await firestore.collection(constantWishlistsReference).doc(id).delete();
+      final doc = firestore.collection(constantWishlistsReference).doc(id);
+      await doc.delete();
     } on FirebaseException catch (e) {
       throw e.getExternalError;
     } on ExternalError {

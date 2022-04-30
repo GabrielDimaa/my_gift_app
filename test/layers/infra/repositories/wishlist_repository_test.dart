@@ -7,7 +7,8 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../domain/entity_factory.dart';
+import '../../domain/entities/entity_extension.dart';
+import '../../domain/entities/entity_factory.dart';
 import '../../external/mocks/firebase_wishlist_datasource_spy.dart';
 import '../models/model_factory.dart';
 
@@ -33,7 +34,7 @@ void main() {
 
     test("Deve retornar WishlistEntity com sucesso", () async {
       final WishlistEntity wishlist = await sut.getById(wishlistId);
-      expect(wishlist, wishlistResult.toEntity());
+      expect(wishlist.equals(wishlistResult.toEntity()), true);
     });
 
     test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
@@ -74,7 +75,7 @@ void main() {
 
     test("Deve retornar List<WishlistEntity> com sucesso", () async {
       final List<WishlistEntity> wishlist = await sut.getAll(userId);
-      expect(wishlist, wishlistsResult.map((e) => e.toEntity()).toList());
+      expect(wishlist.equals(wishlistsResult.map((e) => e.toEntity()).toList()), true);
     });
 
     test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
@@ -110,14 +111,9 @@ void main() {
 
     setUpAll(() => registerFallbackValue(modelResult));
 
-    test("Deve chamar create com valores corretos", () async {
-      await sut.create(entity);
-      verify(() => wishlistDataSourceSpy.create(WishlistModel.fromEntity(entity)));
-    });
-
     test("Deve criar wishlist com sucesso", () async {
       final WishlistEntity wishlist = await sut.create(entity);
-      expect(wishlist, modelResult.toEntity());
+      expect(wishlist.equals(modelResult.toEntity()), true);
     });
 
     test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
@@ -153,14 +149,9 @@ void main() {
 
     setUpAll(() => registerFallbackValue(modelResult));
 
-    test("Deve chamar update com valores corretos", () async {
-      await sut.update(entity);
-      verify(() => wishlistDataSourceSpy.update(WishlistModel.fromEntity(entity)));
-    });
-
     test("Deve update wishlist com sucesso", () async {
       final WishlistEntity wishlist = await sut.update(entity);
-      expect(wishlist, modelResult.toEntity());
+      expect(wishlist.equals(modelResult.toEntity()), true);
       expect(wishlist != entity, true);
       expect(wishlist.id, entity.id);
     });

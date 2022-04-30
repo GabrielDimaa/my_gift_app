@@ -7,6 +7,7 @@ import 'package:desejando_app/layers/infra/repositories/user_account_repository.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../domain/entities/entity_extension.dart';
 import '../../domain/params_factory.dart';
 import '../../external/mocks/firebase_user_account_datasource_spy.dart';
 import '../models/model_factory.dart';
@@ -19,8 +20,13 @@ void main() {
   final UserModel userModel = ModelFactory.user();
 
   setUp(() {
-    userAccountDataSourceSpy = FirebaseUserAccountDataSourceSpy(loginParams, userModel);
+    userAccountDataSourceSpy = FirebaseUserAccountDataSourceSpy(userModel);
     sut = UserAccountRepository(userAccountDataSource: userAccountDataSourceSpy);
+  });
+
+  setUpAll(() {
+    registerFallbackValue(loginParams);
+    registerFallbackValue(userModel);
   });
 
   group("authWithEmail", () {
@@ -31,7 +37,7 @@ void main() {
 
     test("Deve retornar UserEntity com sucesso", () async {
       final UserEntity entity = await sut.authWithEmail(loginParams);
-      expect(entity, userModel.toEntity());
+      expect(entity.equals(userModel.toEntity()), true);
     });
 
     test("Deve throw NotFoundDomainError", () {
@@ -92,14 +98,9 @@ void main() {
   });
 
   group("signUpWithEmail", () {
-    test("Deve chamar signUpWithEmail com valores corretos", () async {
-      await sut.signUpWithEmail(userModel.toEntity());
-      verify(() => userAccountDataSourceSpy.signUpWithEmail(userModel));
-    });
-
     test("Deve retornar UserEntity com sucesso", () async {
       final UserEntity entity = await sut.signUpWithEmail(userModel.toEntity());
-      expect(entity, userModel.toEntity());
+      expect(entity.equals(userModel.toEntity()), true);
     });
 
     test("Deve throw UnexpectedDomainError", () {

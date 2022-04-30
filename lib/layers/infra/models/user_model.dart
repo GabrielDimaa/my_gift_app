@@ -1,17 +1,15 @@
-import 'package:equatable/equatable.dart';
-
 import '../../domain/entities/user_entity.dart';
 
-class UserModel extends Equatable {
+class UserModel {
   final String? id;
-  final String name;
-  final String email;
-  final String phone;
-  final String? photo;
-  final bool emailVerified;
-  final String? password;
+  String name;
+  String email;
+  String phone;
+  String? photo;
+  bool emailVerified;
+  String? password;
 
-  const UserModel({
+  UserModel({
     this.id,
     required this.name,
     required this.email,
@@ -44,7 +42,4 @@ class UserModel extends Equatable {
       password: entity.password,
     );
   }
-
-  @override
-  List<Object?> get props => [id, name, email, phone, photo, emailVerified, password];
 }

@@ -1,5 +1,4 @@
-import 'package:desejando_app/layers/infra/models/wishlist_model.dart';
-
+import '../../infra/models/wishlist_model.dart';
 import '../../data/repositories/i_wishlist_repository.dart';
 import '../../domain/entities/wishlist_entity.dart';
 import '../../external/helpers/errors/external_error.dart';

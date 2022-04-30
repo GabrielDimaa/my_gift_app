@@ -4,7 +4,7 @@ import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../domain/entity_factory.dart';
+import '../../../domain/entities/entity_factory.dart';
 import '../../../infra/mocks/user_account_repository_spy.dart';
 
 void main() {

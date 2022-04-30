@@ -5,7 +5,7 @@ import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../domain/entity_factory.dart';
+import '../../../domain/entities/entity_factory.dart';
 import '../../../domain/params_factory.dart';
 import '../../../infra/mocks/user_account_repository_spy.dart';
 

@@ -1,36 +1,66 @@
 import 'package:desejando_app/layers/data/usecases/wishlist/save_wishlist.dart';
+import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
 import 'package:desejando_app/layers/domain/entities/wishlist_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../domain/entity_factory.dart';
+import '../../../domain/entities/entity_extension.dart';
+import '../../../domain/entities/entity_factory.dart';
+import '../../../infra/mocks/wish_repository_spy.dart';
 import '../../../infra/mocks/wishlist_repository_spy.dart';
 
 void main() {
   late SaveWishlist sut;
   late WishlistRepositorySpy wishlistRepositorySpy;
+  late WishRepositorySpy wishRepositorySpy;
 
   group("create", () {
     final WishlistEntity entity = EntityFactory.wishlist(withId: false);
     final WishlistEntity wishlistResult = EntityFactory.wishlist();
+    final WishEntity wishResult = EntityFactory.wish();
 
     setUp(() {
       wishlistRepositorySpy = WishlistRepositorySpy(data: wishlistResult);
-      sut = SaveWishlist(wishlistRepository: wishlistRepositorySpy);
+      wishRepositorySpy = WishRepositorySpy(data: wishResult, save: true);
+      sut = SaveWishlist(wishlistRepository: wishlistRepositorySpy, wishRepository: wishRepositorySpy);
     });
 
-    setUpAll(() => registerFallbackValue(entity));
+    setUpAll(() {
+      registerFallbackValue(entity);
+      registerFallbackValue(wishResult);
+    });
 
     test("Deve chamar create com valores corretos", () async {
       await sut.save(entity);
-      verify(() => wishlistRepositorySpy.create(entity));
+      verifyInOrder([
+        () => wishlistRepositorySpy.create(entity),
+        () => wishRepositorySpy.create(entity.wishes[0]),
+      ]);
     });
 
     test("Deve criar wishlist com sucesso", () async {
       final WishlistEntity wishlist = await sut.save(entity);
-      expect(wishlist, wishlistResult);
+      expect(wishlist.equals(wishlistResult), true);
       expect(wishlist.id != null, true);
+    });
+
+    test("Deve criar todos wishes", () async {
+      final WishlistEntity wishlist = await sut.save(entity);
+      expect(wishlist.wishes.length, wishlistResult.wishes.length);
+    });
+
+    test("Deve salvar wishlist e repassar o id para os wishes", () async {
+      await sut.save(entity);
+      final capture = verify(() => wishRepositorySpy.create(captureAny())).captured;
+      expect(capture.any((e) => e.wishlistId != wishlistResult.id), false);
+    });
+
+    test("Deve throw ValidationDomainError se entity.id null", () {
+      wishlistRepositorySpy.mockCreate(EntityFactory.wishlist(withId: false));
+
+      final Future future = sut.save(entity);
+      expect(future, throwsA(isA<ValidationDomainError>()));
     });
 
     test("Deve throw UnexpectedDomainError", () {
@@ -51,10 +81,12 @@ void main() {
   group("update", () {
     final WishlistEntity entity = EntityFactory.wishlist();
     final WishlistEntity wishlistResult = EntityFactory.wishlist(id: entity.id);
+    final WishEntity wishResult = EntityFactory.wish();
 
     setUp(() {
       wishlistRepositorySpy = WishlistRepositorySpy(data: wishlistResult);
-      sut = SaveWishlist(wishlistRepository: wishlistRepositorySpy);
+      wishRepositorySpy = WishRepositorySpy(data: wishResult);
+      sut = SaveWishlist(wishlistRepository: wishlistRepositorySpy, wishRepository: wishRepositorySpy);
     });
 
     setUpAll(() => registerFallbackValue(entity));

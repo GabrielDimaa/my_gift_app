@@ -44,7 +44,7 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
 
     mockCollection();
     mockDocument();
-    mockAdd(data);
+    mockAdd();
   }
 
   FirestoreFirestoreSpy.update() {
@@ -120,9 +120,9 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
   //endregion
 
   //region add
-  When _mockAddCall(Map<String, dynamic> data) => when(() => collectionReferenceStubby.add(data));
-  void mockAdd(Map<String, dynamic> data) => _mockAddCall(data).thenAnswer((_) => Future.value(documentReferenceStubby));
-  void mockAddError({required Map<String, dynamic> data, required Exception error}) => _mockAddCall(data).thenThrow(error);
+  When _mockAddCall() => when(() => collectionReferenceStubby.add(any()));
+  void mockAdd() => _mockAddCall().thenAnswer((_) => Future.value(documentReferenceStubby));
+  void mockAddError({required Map<String, dynamic> data, required Exception error}) => _mockAddCall().thenThrow(error);
   //endregion
 
   //region update

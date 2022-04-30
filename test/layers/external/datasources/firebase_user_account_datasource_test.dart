@@ -49,14 +49,9 @@ void main() {
       firebaseAuthSpy.mockSignInWithEmailAndPassword(email: loginParams.email, password: loginParams.password, user: userFirebase);
 
       final UserModel userResponse = await sut.authWithEmail(loginParams);
-      expect(userResponse, userResult);
-    });
-
-    test("Deve retornar UserModel com sucesso", () async {
-      firebaseAuthSpy.mockSignInWithEmailAndPassword(email: loginParams.email, password: loginParams.password, user: userFirebase);
-
-      final UserModel userResponse = await sut.authWithEmail(loginParams);
-      expect(userResponse, userResult);
+      expect(userResponse.id, userResult.id);
+      expect(userResponse.email, userResult.email);
+      expect(userResponse.phone, userResult.phone);
     });
 
     test("Deve retornar NotFoundExternalError se signIn retornar credential.user null", () {
@@ -155,7 +150,9 @@ void main() {
       firebaseAuthSpy.mockCreateUserWithEmailAndPassword(email: userRequest.email, password: userRequest.password!, user: userFirebase);
 
       final UserModel userResponse = await sut.signUpWithEmail(userRequest);
-      expect(userResponse, userResult);
+      expect(userResponse.id, userResult.id);
+      expect(userResponse.email, userResult.email);
+      expect(userResponse.phone, userResult.phone);
     });
 
     test("Deve throw WrongPasswordExternalError se password for igual a null", () {

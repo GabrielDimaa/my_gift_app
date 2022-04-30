@@ -1,17 +1,13 @@
-import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
-import 'package:equatable/equatable.dart';
+import './wish_entity.dart';
 
-class WishlistEntity extends Equatable {
+class WishlistEntity {
   final String? id;
-  final String description;
-  final List<WishEntity> wishes;
+  String description;
+  List<WishEntity> wishes;
 
-  const WishlistEntity({
+  WishlistEntity({
     this.id,
     required this.description,
     required this.wishes,
   });
-
-  @override
-  List<Object?> get props => [id, description, wishes];
 }
