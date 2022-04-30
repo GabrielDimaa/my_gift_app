@@ -1,10 +1,10 @@
+import 'package:desejando_app/layers/domain/entities/tag_entity.dart';
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
 import 'package:desejando_app/layers/domain/entities/wishlist_entity.dart';
 import 'package:faker/faker.dart';
 
 abstract class EntityFactory {
-
   static WishEntity wish({String? id, bool withId = true, bool withWishlistId = true}) => WishEntity(
         id: withId ? id ?? faker.guid.guid() : null,
         wishlistId: withWishlistId ? faker.guid.guid() : null,
@@ -38,4 +38,12 @@ abstract class EntityFactory {
         emailVerified: emailVerified,
         password: faker.internet.password(),
       );
+
+  static TagEntity tag({bool withId = true}) => TagEntity(
+        id: withId ? faker.guid.guid() : null,
+        name: faker.person.name(),
+        color: "#00000",
+      );
+
+  static List<TagEntity> tags({int length = 4}) => List.generate(length, (_) => tag());
 }

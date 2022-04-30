@@ -60,7 +60,6 @@ void main() {
   });
 
   group("getAll", () {
-    final String id = faker.guid.guid();
     final String wishlistId = faker.guid.guid();
     final List<WishModel> wishesResult = ModelFactory.wishes();
 
