@@ -41,7 +41,7 @@ abstract class EntityFactory {
 
   static TagEntity tag({bool withId = true}) => TagEntity(
         id: withId ? faker.guid.guid() : null,
-        name: faker.person.name(),
+        name: faker.lorem.word(),
         color: "#00000",
       );
 

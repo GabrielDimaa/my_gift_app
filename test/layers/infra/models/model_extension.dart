@@ -1,3 +1,4 @@
+import 'package:desejando_app/layers/infra/models/tag_model.dart';
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:desejando_app/layers/infra/models/wish_model.dart';
 import 'package:desejando_app/layers/infra/models/wishlist_model.dart';
@@ -57,5 +58,23 @@ extension UserModelExtension on UserModel {
         model.name == name &&
         model.photo == photo &&
         model.emailVerified == emailVerified;
+  }
+}
+
+extension TagModelExtension on TagModel {
+  bool equals(TagModel model) {
+    return model.id == id && model.name == name && model.color == color;
+  }
+}
+
+extension TagsModelExtension on List<TagModel> {
+  bool equals(List<TagModel> models) {
+    if (models.length != length) return false;
+
+    for (var i = 0; i < length; i++) {
+      if (!models[i].equals(this[i])) return false;
+    }
+
+    return true;
   }
 }

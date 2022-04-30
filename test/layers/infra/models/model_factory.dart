@@ -1,3 +1,4 @@
+import 'package:desejando_app/layers/infra/models/tag_model.dart';
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:desejando_app/layers/infra/models/wish_model.dart';
 import 'package:desejando_app/layers/infra/models/wishlist_model.dart';
@@ -37,4 +38,12 @@ abstract class ModelFactory {
         emailVerified: emailVerified,
         password: password,
       );
+
+  static TagModel tag({bool withId = true}) => TagModel(
+    id: withId ? faker.guid.guid() : null,
+    name: faker.lorem.word(),
+    color: "#00000",
+  );
+
+  static List<TagModel> tags({int length = 4}) => List.generate(length, (_) => tag());
 }
