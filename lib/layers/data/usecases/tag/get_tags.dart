@@ -10,9 +10,9 @@ class GetTags implements IGetTags {
   GetTags({required this.tagRepository});
 
   @override
-  Future<List<TagEntity>> get() async {
+  Future<List<TagEntity>> get(String userId) async {
     try {
-      return await tagRepository.getAll();
+      return await tagRepository.getAll(userId);
     } on DomainError {
       rethrow;
     } catch (e) {

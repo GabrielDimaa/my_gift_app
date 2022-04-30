@@ -3,6 +3,7 @@ import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:desejando_app/layers/external/helpers/errors/external_error.dart';
 import 'package:desejando_app/layers/infra/models/tag_model.dart';
 import 'package:desejando_app/layers/infra/repositories/tag_repository.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -15,6 +16,7 @@ void main() {
   late FirebaseTagDataSourceSpy tagDataSourceSpy;
 
   final List<TagModel> tagsResult = ModelFactory.tags();
+  final String userId = faker.guid.guid();
 
   setUp(() {
     tagDataSourceSpy = FirebaseTagDataSourceSpy(datas: tagsResult, get: true);
@@ -22,25 +24,25 @@ void main() {
   });
 
   test("Deve chamar getAll corretamente", () async {
-    await sut.getAll();
-    verify(() => tagDataSourceSpy.getAll());
+    await sut.getAll(userId);
+    verify(() => tagDataSourceSpy.getAll(userId));
   });
 
   test("Deve chamar getAll e retornar os valores corretamente", () async {
-    final List<TagEntity> tags = await sut.getAll();
+    final List<TagEntity> tags = await sut.getAll(userId);
     expect(tags.equals(tagsResult.map((e) => e.toEntity()).toList()), true);
   });
 
   test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
     tagDataSourceSpy.mockGetAllError(error: ConnectionExternalError());
-    final Future future = sut.getAll();
+    final Future future = sut.getAll(userId);
 
     expect(future, throwsA(isA<UnexpectedDomainError>()));
   });
 
   test("Deve throw UnexpectedDomainError", () {
     tagDataSourceSpy.mockGetAllError(error: Exception());
-    final Future future = sut.getAll();
+    final Future future = sut.getAll(userId);
 
     expect(future, throwsA(isA<UnexpectedDomainError>()));
   });

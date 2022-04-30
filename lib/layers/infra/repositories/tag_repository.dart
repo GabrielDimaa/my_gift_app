@@ -10,9 +10,9 @@ class TagRepository implements ITagRepository {
   TagRepository({required this.tagDataSource});
 
   @override
-  Future<List<TagEntity>> getAll() async {
+  Future<List<TagEntity>> getAll(userId) async {
     try {
-      final List<TagModel> tagsModel = await tagDataSource.getAll();
+      final List<TagModel> tagsModel = await tagDataSource.getAll(userId);
       return tagsModel.map((e) => e.toEntity()).toList();
     } on ExternalError catch (e) {
       throw e.toDomainError();

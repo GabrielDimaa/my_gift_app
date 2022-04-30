@@ -8,7 +8,7 @@ class TagRepositorySpy extends Mock implements ITagRepository {
   }
 
   //region getAll
-  When mockGetAllCall() => when(() => getAll());
+  When mockGetAllCall() => when(() => getAll(any()));
   void mockGetAll(List<TagEntity> datas) => mockGetAllCall().thenAnswer((_) => Future.value(datas));
   void mockGetAllError({Exception? error}) => mockGetAllCall().thenThrow(error ?? Exception("any_error"));
 //endregion
