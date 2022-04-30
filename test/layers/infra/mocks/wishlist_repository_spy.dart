@@ -9,7 +9,9 @@ class WishlistRepositorySpy extends Mock implements IWishlistRepository {
       mockCreate(data);
       mockUpdate(data);
     }
+
     if (datas != null) mockGetAll(datas);
+
     mockDelete();
   }
 

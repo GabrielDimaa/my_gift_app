@@ -1,23 +1,29 @@
 import 'package:desejando_app/layers/data/usecases/wishlist/get_wishlist_by_id.dart';
+import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
 import 'package:desejando_app/layers/domain/entities/wishlist_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../../domain/entities/entity_extension.dart';
 import '../../../domain/entities/entity_factory.dart';
+import '../../../infra/mocks/wish_repository_spy.dart';
 import '../../../infra/mocks/wishlist_repository_spy.dart';
 
 void main() {
   late GetWishlistById sut;
   late WishlistRepositorySpy wishlistRepositorySpy;
+  late WishRepositorySpy wishRepositorySpy;
 
   final String id = faker.guid.guid();
-  final WishlistEntity wishlistResult = EntityFactory.wishlist();
+  final WishlistEntity wishlistResult = EntityFactory.wishlist()..wishes = [];
+  final List<WishEntity> wishes = EntityFactory.wishes(id: wishlistResult.id);
 
   setUp(() {
     wishlistRepositorySpy = WishlistRepositorySpy(data: wishlistResult);
-    sut = GetWishlistById(wishlistRepository: wishlistRepositorySpy);
+    wishRepositorySpy = WishRepositorySpy(datas: wishes, get: true);
+    sut = GetWishlistById(wishlistRepository: wishlistRepositorySpy, wishRepository: wishRepositorySpy);
   });
 
   setUpAll(() => registerFallbackValue(wishlistResult));
@@ -25,6 +31,14 @@ void main() {
   test("Deve chamar getById com valores corretos", () async {
     await sut.get(id);
     verify(() => wishlistRepositorySpy.getById(id));
+  });
+
+  test("Deve chamar getById e retornar os wishes correspondentes", () async {
+    wishlistResult.wishes = [];
+    final WishlistEntity wishlist = await sut.get(id);
+
+    expect(wishlist.wishes.isNotEmpty, true);
+    expect(wishlist.wishes.equals(wishes), true);
   });
 
   test("Deve chamar getById e retornar um wishlist", () async {

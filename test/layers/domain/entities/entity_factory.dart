@@ -19,7 +19,7 @@ abstract class EntityFactory {
         finished: faker.randomGenerator.boolean(),
       );
 
-  static List<WishEntity> wishes({int length = 4}) => List.generate(length, (_) => wish());
+  static List<WishEntity> wishes({String? id, int length = 4}) => List.generate(length, (_) => wish(id: id));
 
   static WishlistEntity wishlist({String? id, bool withId = true}) => WishlistEntity(
         id: withId ? id ?? faker.guid.guid() : null,
