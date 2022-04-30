@@ -22,6 +22,12 @@ class WishRepository implements IWishRepository {
   }
 
   @override
+  Future<List<WishEntity>> getAll({required String id, required String wishlistId}) async {
+    // TODO: implement getAll
+    throw UnimplementedError();
+  }
+
+  @override
   Future<WishEntity> create(WishEntity entity) async {
     try {
       final WishModel wishModel = await wishDataSource.create(WishModel.fromEntity(entity));

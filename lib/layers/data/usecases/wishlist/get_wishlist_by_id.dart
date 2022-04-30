@@ -9,7 +9,7 @@ class GetWishlistById implements IGetWishlistById {
 
   GetWishlistById({required this.wishlistRepository});
 
-  @override
+  @override //TODO: buscar os wishes separadamente
   Future<WishlistEntity> get(String id) async {
     try {
       return await wishlistRepository.getById(id);
