@@ -3,12 +3,17 @@ import 'package:desejando_app/layers/infra/models/wish_model.dart';
 import 'package:mocktail/mocktail.dart';
 
 class FirebaseWishDataSourceSpy extends Mock implements IWishDataSource {
-  FirebaseWishDataSourceSpy({WishModel? data, bool get = false, bool save = false, bool delete = false}) {
-    if (get) mockGetById(data!);
+  FirebaseWishDataSourceSpy({WishModel? data, List<WishModel>? datas, bool get = false, bool save = false, bool delete = false}) {
+    if (get) {
+      if (data != null) mockGetById(data);
+      if (datas != null) mockGetAll(datas);
+    }
+
     if (save) {
       mockCreate(data!);
       mockUpdate(data);
     }
+
     if (delete) mockDelete();
   }
 
@@ -16,6 +21,12 @@ class FirebaseWishDataSourceSpy extends Mock implements IWishDataSource {
   When mockGetByIdCall() => when(() => getById(any()));
   void mockGetById(WishModel data) => mockGetByIdCall().thenAnswer((_) => Future.value(data));
   void mockGetByIdError({Exception? error}) => mockGetByIdCall().thenThrow(error ?? Exception("any_message"));
+  //endregion
+
+  //region getAll
+  When mockGetAllCall() => when(() => getAll(id: any(named: "id"), wishlistId: any(named: "wishlistId")));
+  void mockGetAll(List<WishModel> data) => mockGetAllCall().thenAnswer((_) => Future.value(data));
+  void mockGetAllError({Exception? error}) => mockGetAllCall().thenThrow(error ?? Exception("any_message"));
   //endregion
 
   //region create

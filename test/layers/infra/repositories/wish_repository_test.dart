@@ -59,6 +59,41 @@ void main() {
     });
   });
 
+  group("getAll", () {
+    final String id = faker.guid.guid();
+    final String wishlistId = faker.guid.guid();
+    final List<WishModel> wishesResult = ModelFactory.wishes();
+
+    setUp(() {
+      wishDataSourceSpy = FirebaseWishDataSourceSpy(datas: wishesResult, get: true);
+      sut = WishRepository(wishDataSource: wishDataSourceSpy);
+    });
+
+    test("Deve chamar GetAll no Datasource com valores corretos", () async {
+      await sut.getAll(id: id, wishlistId: wishlistId);
+      verify(() => wishDataSourceSpy.getAll(id: id, wishlistId: wishlistId));
+    });
+
+    test("Deve retornar List<WishEntity> com sucesso", () async {
+      final List<WishEntity> wishes = await sut.getAll(id: id, wishlistId: wishlistId);
+      expect(wishes.equals(wishesResult.map((e) => e.toEntity()).toList()), true);
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
+      wishDataSourceSpy.mockGetAllError(error: ConnectionExternalError());
+      final Future future = sut.getAll(id: id, wishlistId: wishlistId);
+
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      wishDataSourceSpy.mockGetAllError(error: Exception());
+      final Future future = sut.getAll(id: id, wishlistId: wishlistId);
+
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+  });
+
   group("create", () {
     final WishEntity wishRequest = EntityFactory.wish(withId: false);
     final WishModel wishResult = ModelFactory.wish();

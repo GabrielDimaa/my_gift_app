@@ -32,6 +32,12 @@ class FirebaseWishDataSource implements IWishDataSource {
   }
 
   @override
+  Future<List<WishModel>> getAll({required String id, required String wishlistId}) async {
+    // TODO: implement getAll
+    throw UnimplementedError();
+  }
+
+  @override
   Future<WishModel> create(WishModel model) async {
     try {
       final Map<String, dynamic> json = model.toJson();

@@ -5,8 +5,8 @@ import 'package:mocktail/mocktail.dart';
 class WishRepositorySpy extends Mock implements IWishRepository {
   WishRepositorySpy({WishEntity? data, List<WishEntity>? datas, bool get = false, bool save = false, bool delete = false}) {
     if (get) {
-      mockGetById(data!);
-      mockGetAll(datas!);
+      if (data != null) mockGetById(data);
+      if (datas != null) mockGetAll(datas);
     }
 
     if (save) {

@@ -18,7 +18,7 @@ void main() {
   final List<WishEntity> wishesResult = EntityFactory.wishes();
 
   setUp(() {
-    wishRepositorySpy = WishRepositorySpy(get: true, datas: wishesResult, data: EntityFactory.wish());
+    wishRepositorySpy = WishRepositorySpy(get: true, datas: wishesResult);
     sut = GetWishes(wishRepository: wishRepositorySpy);
   });
 
