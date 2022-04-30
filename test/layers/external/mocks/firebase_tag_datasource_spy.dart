@@ -8,7 +8,7 @@ class FirebaseTagDataSourceSpy extends Mock implements ITagDataSource {
   }
 
   //region getAll
-  When mockGetAllCall() => when(() => getAll());
+  When mockGetAllCall() => when(() => getAll(any()));
   void mockGetAll(List<TagModel> datas) => mockGetAllCall().thenAnswer((_) => Future.value(datas));
   void mockGetAllError({Exception? error}) => mockGetAllCall().thenThrow(error ?? Exception("any_message"));
 //endregion
