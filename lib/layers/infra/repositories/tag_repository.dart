@@ -20,4 +20,16 @@ class TagRepository implements ITagRepository {
       throw UnexpectedExternalError().toDomainError();
     }
   }
+
+  @override
+  Future<TagEntity> create(TagEntity entity) async {
+    // TODO: implement create
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<TagEntity> update(TagEntity entity) async {
+    // TODO: implement update
+    throw UnimplementedError();
+  }
 }

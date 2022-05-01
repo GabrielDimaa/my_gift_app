@@ -9,6 +9,8 @@ abstract class Translation {
   String get invalidArgumentError;
   String get notFoundError;
   String get invalidDataError;
+  String get nameTagEmptyError;
+  String get colorTagEmptyError;
   String get wishlistUninformedError;
   String get emailInUseError;
   String get emailNotVerifiedError;

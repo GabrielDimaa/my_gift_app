@@ -30,6 +30,12 @@ class PtBr implements Translation {
   String get invalidDataError => "Dados inválidos.";
 
   @override
+  String get nameTagEmptyError => "Nome da tag precisa ser informado.";
+
+  @override
+  String get colorTagEmptyError => "Cor da tag precisa ser informada.";
+
+  @override
   String get wishlistUninformedError => "Lista de desejos não informada.";
 
   @override
