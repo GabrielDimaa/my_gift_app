@@ -23,13 +23,25 @@ class TagRepository implements ITagRepository {
 
   @override
   Future<TagEntity> create(TagEntity entity) async {
-    // TODO: implement create
-    throw UnimplementedError();
+    try {
+      final TagModel tagModel = await tagDataSource.create(TagModel.fromEntity(entity));
+      return tagModel.toEntity();
+    } on ExternalError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedExternalError().toDomainError();
+    }
   }
 
   @override
   Future<TagEntity> update(TagEntity entity) async {
-    // TODO: implement update
-    throw UnimplementedError();
+    try {
+      final TagModel tagModel = await tagDataSource.update(TagModel.fromEntity(entity));
+      return tagModel.toEntity();
+    } on ExternalError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedExternalError().toDomainError();
+    }
   }
 }

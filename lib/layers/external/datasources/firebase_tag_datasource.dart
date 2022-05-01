@@ -40,4 +40,16 @@ class FirebaseTagDataSource implements ITagDataSource {
       throw UnexpectedExternalError();
     }
   }
+
+  @override
+  Future<TagModel> create(TagModel model) async {
+    // TODO: implement create
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<TagModel> update(TagModel model) async {
+    // TODO: implement update
+    throw UnimplementedError();
+  }
 }
