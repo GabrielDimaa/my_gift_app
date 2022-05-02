@@ -113,5 +113,12 @@ void main() {
       final Future future = sut.update(tagToUpdated);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
+
+    test("Deve throw NotFoundDomainError se NotFoundExternalError", () {
+      tagDataSourceSpy.mockUpdateError(error: NotFoundExternalError());
+
+      final Future future = sut.update(tagToUpdated);
+      expect(future, throwsA(isA<NotFoundDomainError>()));
+    });
   });
 }

@@ -88,5 +88,12 @@ void main() {
       final Future future = sut.save(tagToUpdated);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
+
+    test("Deve throw NotFoundDomainError", () {
+      tagRepositorySpy.mockUpdateError(error: NotFoundDomainError());
+
+      final Future future = sut.save(tagToUpdated);
+      expect(future, throwsA(isA<NotFoundDomainError>()));
+    });
   });
 }
