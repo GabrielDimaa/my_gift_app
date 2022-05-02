@@ -43,13 +43,37 @@ class FirebaseTagDataSource implements ITagDataSource {
 
   @override
   Future<TagModel> create(TagModel model) async {
-    // TODO: implement create
-    throw UnimplementedError();
+    try {
+      final Map<String, dynamic> json = model.toJson();
+
+      final doc = await firestore.collection(constantTagsReference).add(json);
+      json.addAll({'id': doc.id});
+
+      if (!TagModel.validateJson(json)) throw UnexpectedExternalError();
+
+      return TagModel.fromJson(json);
+    } on FirebaseException catch (e) {
+      throw e.getExternalError;
+    } on ExternalError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedExternalError();
+    }
   }
 
   @override
   Future<TagModel> update(TagModel model) async {
-    // TODO: implement update
-    throw UnimplementedError();
+    try {
+      final doc = firestore.collection(constantTagsReference).doc(model.id);
+      await doc.update(model.toJson());
+
+      return model;
+    } on FirebaseException catch (e) {
+      throw e.getExternalError;
+    } on ExternalError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedExternalError();
+    }
   }
 }

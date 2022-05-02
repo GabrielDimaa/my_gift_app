@@ -381,7 +381,7 @@ void main() {
 
     test("Deve chamar Update e retornar os valores com sucesso", () async {
       final WishModel wishResponse = await sut.update(wish);
-      expect(wishResponse, wish);
+      expect(wishResponse.equals(wish), true);
     });
 
     test("Deve throw AbortedExternalError se update() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
