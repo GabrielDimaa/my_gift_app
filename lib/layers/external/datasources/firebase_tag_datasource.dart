@@ -79,7 +79,15 @@ class FirebaseTagDataSource implements ITagDataSource {
 
   @override
   Future<void> delete(String id) async {
-    // TODO: implement delete
-    throw UnimplementedError();
+    try {
+      final doc = firestore.collection(constantTagsReference).doc(id);
+      await doc.delete();
+    } on FirebaseException catch (e) {
+      throw e.getExternalError;
+    } on ExternalError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedExternalError();
+    }
   }
 }
