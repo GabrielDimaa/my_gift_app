@@ -241,7 +241,6 @@ void main() {
 
   group("update", () {
     final TagModel tag = ModelFactory.tag();
-    final Map<String, dynamic> json = tag.toJson()..addAll({'id': tag.id});
 
     void mockFirebaseException(String code) => firestoreSpy.mockUpdateError(error: FirebaseException(plugin: "any_plugin", code: code));
 
