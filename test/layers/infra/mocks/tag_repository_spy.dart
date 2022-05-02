@@ -3,13 +3,15 @@ import 'package:desejando_app/layers/domain/entities/tag_entity.dart';
 import 'package:mocktail/mocktail.dart';
 
 class TagRepositorySpy extends Mock implements ITagRepository {
-  TagRepositorySpy({TagEntity? data, List<TagEntity>? datas, bool get = false, bool save = false}) {
+  TagRepositorySpy({TagEntity? data, List<TagEntity>? datas, bool get = false, bool save = false, bool delete = false}) {
     if (get) mockGetAll(datas!);
 
     if (save) {
       mockCreate(data!);
       mockUpdate(data);
     }
+
+    if (delete) mockDelete();
   }
 
   //region getAll
@@ -28,5 +30,11 @@ class TagRepositorySpy extends Mock implements ITagRepository {
   When mockUpdateCall() => when(() => update(any()));
   void mockUpdate(TagEntity datas) => mockUpdateCall().thenAnswer((_) => Future.value(datas));
   void mockUpdateError({Exception? error}) => mockUpdateCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region delete
+  When mockDeleteCall() => when(() => delete(any()));
+  void mockDelete() => mockDeleteCall().thenAnswer((_) => Future.value());
+  void mockDeleteError({Exception? error}) => mockDeleteCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

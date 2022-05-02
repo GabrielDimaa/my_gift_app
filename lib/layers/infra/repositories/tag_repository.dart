@@ -44,4 +44,10 @@ class TagRepository implements ITagRepository {
       throw UnexpectedExternalError().toDomainError();
     }
   }
+
+  @override
+  Future<void> delete(String id) async {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
 }
