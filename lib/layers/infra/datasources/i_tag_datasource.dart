@@ -4,4 +4,5 @@ abstract class ITagDataSource {
   Future<List<TagModel>> getAll(String userId);
   Future<TagModel> create(TagModel model);
   Future<TagModel> update(TagModel model);
+  Future<void> delete(String id);
 }

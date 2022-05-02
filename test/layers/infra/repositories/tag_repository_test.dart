@@ -121,4 +121,39 @@ void main() {
       expect(future, throwsA(isA<NotFoundDomainError>()));
     });
   });
+
+  group("delete", () {
+    final String tagId = faker.guid.guid();
+
+    setUp(() {
+      tagDataSourceSpy = FirebaseTagDataSourceSpy(delete: true);
+      sut = TagRepository(tagDataSource: tagDataSourceSpy);
+    });
+
+    test("Deve chamar delete com valores corretos", () async {
+      await sut.delete(tagId);
+      verify(() => tagDataSourceSpy.delete(tagId));
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
+      tagDataSourceSpy.mockDeleteError(error: ConnectionExternalError());
+
+      final Future future = sut.delete(tagId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      tagDataSourceSpy.mockDeleteError(error: Exception());
+
+      final Future future = sut.delete(tagId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw NotFoundDomainError se NotFoundExternalError", () {
+      tagDataSourceSpy.mockDeleteError(error: NotFoundExternalError());
+
+      final Future future = sut.delete(tagId);
+      expect(future, throwsA(isA<NotFoundDomainError>()));
+    });
+  });
 }
