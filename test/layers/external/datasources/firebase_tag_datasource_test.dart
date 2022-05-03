@@ -22,7 +22,7 @@ void main() {
     void mockFirebaseException(String code) => firestoreSpy.mockQueryGetError(FirebaseException(plugin: "any_plugin", code: code));
 
     setUp(() {
-      firestoreSpy = FirestoreFirestoreSpy.where(jsonList);
+      firestoreSpy = FirestoreFirestoreSpy(datas: jsonList, where: true);
       sut = FirebaseTagDataSource(firestore: firestoreSpy);
     });
 
@@ -135,7 +135,7 @@ void main() {
     void mockFirebaseException(String code) => firestoreSpy.mockAddError(data: json, error: FirebaseException(plugin: "any_plugin", code: code));
 
     setUp(() {
-      firestoreSpy = FirestoreFirestoreSpy.add(json);
+      firestoreSpy = FirestoreFirestoreSpy(data: json, add: true);
       sut = FirebaseTagDataSource(firestore: firestoreSpy);
     });
 
@@ -246,7 +246,7 @@ void main() {
     void mockFirebaseException(String code) => firestoreSpy.mockUpdateError(error: FirebaseException(plugin: "any_plugin", code: code));
 
     setUp(() {
-      firestoreSpy = FirestoreFirestoreSpy.update();
+      firestoreSpy = FirestoreFirestoreSpy(update: true);
       sut = FirebaseTagDataSource(firestore: firestoreSpy);
     });
 
@@ -357,7 +357,7 @@ void main() {
     void mockFirebaseException(String code) => firestoreSpy.mockDeleteError(FirebaseException(plugin: "any_plugin", code: code));
 
     setUp(() {
-      firestoreSpy = FirestoreFirestoreSpy.delete();
+      firestoreSpy = FirestoreFirestoreSpy(delete: true);
       sut = FirebaseTagDataSource(firestore: firestoreSpy);
     });
 

@@ -25,6 +25,7 @@ abstract class EntityFactory {
         id: withId ? id ?? faker.guid.guid() : null,
         description: faker.lorem.sentence(),
         wishes: wishes(),
+        tag: tag(),
       );
 
   static List<WishlistEntity> wishlists({int length = 4}) => List.generate(length, (_) => wishlist());

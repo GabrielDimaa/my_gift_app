@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../infra/datasources/i_wishlist_datasource.dart';
+import '../../infra/models/tag_model.dart';
 import '../../infra/models/wishlist_model.dart';
 import '../constants/collection_reference.dart';
 import '../helpers/errors/external_error.dart';
@@ -14,14 +15,31 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<WishlistModel> getById(String id) async {
     try {
-      final snapshot = await firestore.collection(constantWishlistsReference).doc(id).get();
+      //region wishlists
 
-      final Map<String, dynamic>? json = snapshot.data();
-      json?.addAll({'id': snapshot.id});
+      final snapshotWishlist = await firestore.collection(constantWishlistsReference).doc(id).get();
 
-      if (!WishlistModel.validateJson(json)) throw NotFoundExternalError();
+      final Map<String, dynamic>? jsonWishlist = snapshotWishlist.data()?..addAll({'id': snapshotWishlist.id});
+      if (jsonWishlist == null) throw NotFoundExternalError();
 
-      return WishlistModel.fromJson(json!);
+      //endregion
+
+      final List<Map<String, dynamic>?> jsonWishes = await _getWishes(jsonWishlist['id']);
+
+      final Map<String, dynamic>? jsonTag = await _getTag(jsonWishlist['tag_id']);
+      if (jsonTag == null) {
+        UnexpectedExternalError();
+      }
+
+      //Forma o Json completo para a WishlistModel
+      jsonWishlist.addAll({
+        'wishes': jsonWishes,
+        'tag': jsonTag,
+      });
+
+      if (!WishlistModel.validateJson(jsonWishlist)) throw UnexpectedExternalError();
+
+      return WishlistModel.fromJson(jsonWishlist);
     } on FirebaseException catch (e) {
       throw e.getExternalError;
     } on ExternalError {
@@ -34,13 +52,72 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<List<WishlistModel>> getAll(String userId) async {
     try {
-      final snapshot = await firestore.collection(constantWishlistsReference).where("user_id", isEqualTo: userId).get();
+      //region wishlists
+
+      final snapshotWishlist = await firestore.collection(constantWishlistsReference).where("user_id", isEqualTo: userId).get();
+
+      final jsonListWishlist = snapshotWishlist.docs.map<Map<String, dynamic>>((e) {
+        var json = e.data();
+        if (json.isEmpty) return json;
+        return json..addAll({'id': e.id});
+      }).toList();
+
+      //endregion
+
+      //region tags
+
+      final List<String> tagsId = [];
+      for (var json in jsonListWishlist) {
+        if (!tagsId.contains(json['tag_id'])) {
+          tagsId.add(json['tag_id']);
+        }
+      }
+
+      final snapshotTags = await firestore.collection(constantTagsReference).where(FieldPath.documentId, whereIn: tagsId).get();
+
+      final jsonListTags = snapshotTags.docs.map<Map<String, dynamic>>((e) {
+        var json = e.data();
+        if (json.isEmpty) return json;
+        return json..addAll({'id': e.id});
+      }).toList();
+
+      //endregion
+
+      //region WishlistModel
+
+      List<WishlistModel> wishlistsModel = [];
+      for (var json in jsonListWishlist) {
+        //Busca em jsonListaTags a tag correspondente.
+        json.addAll(jsonListTags.firstWhere((e) => e['id'] == json['tag_id']));
+
+        if (WishlistModel.validateJson(json)) {
+          wishlistsModel.add(WishlistModel.fromJson(json));
+        }
+      }
+
+      return wishlistsModel;
+
+      //endregion
+    } on FirebaseException catch (e) {
+      throw e.getExternalError;
+    } on ExternalError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedExternalError();
+    }
+  }
+
+  @override
+  Future<List<WishlistModel>> getByTag(TagModel tag) async {
+    try {
+      final snapshot = await firestore.collection(constantWishlistsReference).where("tag_id", isEqualTo: tag.id).get();
       final jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
         var json = e.data();
-        if (json.isEmpty) {
-          return json;
-        }
-        return json..addAll({'id': e.id});
+        if (json.isEmpty) return json;
+        return json..addAll({
+            'id': e.id,
+            'tag': tag.toJson()..addAll({'id': tag.id}),
+          });
       }).toList();
 
       List<WishlistModel> wishlistsModel = [];
@@ -68,11 +145,10 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       final col = firestore.collection(constantWishlistsReference);
       final doc = await col.add(json);
-      json.addAll({'id': doc.id});
 
-      if (!WishlistModel.validateJson(json)) throw UnexpectedExternalError();
+      model.clone(id: doc.id);
 
-      return WishlistModel.fromJson(json);
+      return model;
     } on FirebaseException catch (e) {
       throw e.getExternalError;
     } on ExternalError {
@@ -110,5 +186,24 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
     } catch (e) {
       throw UnexpectedExternalError();
     }
+  }
+
+  Future<List<Map<String, dynamic>?>> _getWishes(String wishlistId) async {
+    final snapshot = await firestore.collection(constantWishesReference).where("wishlist_id", isEqualTo: wishlistId).get();
+
+    final json = snapshot.docs.map<Map<String, dynamic>>((e) {
+      var json = e.data();
+      if (json.isEmpty) return json;
+      return json..addAll({'id': e.id});
+    }).toList();
+
+    return json;
+  }
+
+  Future<Map<String, dynamic>?> _getTag(String tagId) async {
+    final snapshot = await firestore.collection(constantTagsReference).doc(tagId).get();
+
+    final Map<String, dynamic>? jsonTag = snapshot.data();
+    return jsonTag?..addAll({'id': snapshot.id});
   }
 }

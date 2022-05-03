@@ -10,7 +10,10 @@ class WishlistRepositorySpy extends Mock implements IWishlistRepository {
       mockUpdate(data);
     }
 
-    if (datas != null) mockGetAll(datas);
+    if (datas != null) {
+      mockGetAll(datas);
+      mockGetByTag(datas);
+    }
 
     mockDelete();
   }
@@ -25,6 +28,12 @@ class WishlistRepositorySpy extends Mock implements IWishlistRepository {
   When mockGetAllCall() => when(() => getAll(any()));
   void mockGetAll(List<WishlistEntity> value) => mockGetAllCall().thenAnswer((_) => Future.value(value));
   void mockGetAllError({Exception? error}) => mockGetAllCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region getByTag
+  When mockGetByTagCall() => when(() => getByTag(any()));
+  void mockGetByTag(List<WishlistEntity> value) => mockGetByTagCall().thenAnswer((_) => Future.value(value));
+  void mockGetByTagError({Exception? error}) => mockGetByTagCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 
   //region create

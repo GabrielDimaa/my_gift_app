@@ -62,6 +62,22 @@ class WishModel {
     };
   }
 
+  WishModel clone({String? id}) {
+    return WishModel(
+      id: id ?? this.id,
+      wishlistId: wishlistId,
+      description: description,
+      image: image,
+      link: link,
+      note: note,
+      priceRangeInitial: priceRangeInitial,
+      priceRangeFinal: priceRangeFinal,
+      createdAt: createdAt,
+      expose: expose,
+      finished: finished,
+    );
+  }
+
   factory WishModel.fromEntity(WishEntity entity) {
     if (entity.wishlistId == null) throw InvalidDataExternalError();
 

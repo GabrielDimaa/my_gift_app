@@ -22,7 +22,7 @@ void main() {
     void mockFirebaseException(String code) => firestore.mockDocumentSnapshotError(FirebaseException(plugin: "any_plugin", code: code));
 
     setUp(() {
-      firestore = FirestoreFirestoreSpy.doc(json..addAll({'id': wishId}));
+      firestore = FirestoreFirestoreSpy(data: json..addAll({'id': wishId}), doc: true);
       sut = FirebaseWishDataSource(firestore: firestore);
     });
 
@@ -145,7 +145,7 @@ void main() {
     void mockFirebaseException(String code) => firestore.mockQueryGetError(FirebaseException(plugin: "any_plugin", code: code));
 
     setUp(() {
-      firestore = FirestoreFirestoreSpy.where(jsonList);
+      firestore = FirestoreFirestoreSpy(datas: jsonList, where: true);
       sut = FirebaseWishDataSource(firestore: firestore);
     });
 
@@ -261,7 +261,7 @@ void main() {
     void mockFirebaseException(String code) => firestore.mockAddError(data: json, error: FirebaseException(plugin: "any_plugin", code: code));
 
     setUp(() {
-      firestore = FirestoreFirestoreSpy.add(json);
+      firestore = FirestoreFirestoreSpy(data: json, add: true);
       sut = FirebaseWishDataSource(firestore: firestore);
     });
 
@@ -375,7 +375,7 @@ void main() {
     void mockFirebaseException(String code) => firestore.mockUpdateError(error: FirebaseException(plugin: "any_plugin", code: code));
 
     setUp(() {
-      firestore = FirestoreFirestoreSpy.update();
+      firestore = FirestoreFirestoreSpy(update: true);
       sut = FirebaseWishDataSource(firestore: firestore);
     });
 
@@ -489,7 +489,7 @@ void main() {
     void mockFirebaseException(String code) => firestore.mockDeleteError(FirebaseException(plugin: "any_plugin", code: code));
 
     setUp(() {
-      firestore = FirestoreFirestoreSpy.delete();
+      firestore = FirestoreFirestoreSpy(delete: true);
       sut = FirebaseWishDataSource(firestore: firestore);
     });
 

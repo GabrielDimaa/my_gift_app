@@ -37,9 +37,7 @@ class FirebaseWishDataSource implements IWishDataSource {
       final snapshot = await firestore.collection(constantWishesReference).where("wishlist_id", isEqualTo: wishlistId).get();
       final jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
         var json = e.data();
-        if (json.isEmpty) {
-          return json;
-        }
+        if (json.isEmpty) return json;
         return json..addAll({'id': e.id});
       }).toList();
 
@@ -64,14 +62,8 @@ class FirebaseWishDataSource implements IWishDataSource {
   @override
   Future<WishModel> create(WishModel model) async {
     try {
-      final Map<String, dynamic> json = model.toJson();
-
-      final doc = await firestore.collection(constantWishesReference).add(json);
-      json.addAll({'id': doc.id});
-
-      if (!WishModel.validateJson(json)) throw UnexpectedExternalError();
-
-      return WishModel.fromJson(json);
+      final doc = await firestore.collection(constantWishesReference).add(model.toJson());
+      return model.clone(id: doc.id);
     } on FirebaseException catch (e) {
       throw e.getExternalError;
     } on ExternalError {

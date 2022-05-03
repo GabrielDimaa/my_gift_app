@@ -4,88 +4,92 @@ import 'package:mocktail/mocktail.dart';
 
 class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
   late CollectionReferenceStubby collectionReferenceStubby;
-  late DocumentReferenceStubby documentReferenceStubby;
-  late DocumentSnapshotSpy documentSnapshotSpy;
-  late QuerySnapshotSpy querySnapshotSpy;
+  late DocumentReferenceStubby documentReferenceStubbyDoc;
+  late DocumentReferenceStubby documentReferenceStubbyAdd;
+  late DocumentReferenceStubby documentReferenceStubbyUpdate;
+  late DocumentReferenceStubby documentReferenceStubbyDelete;
+  late DocumentSnapshotSpy documentSnapshotSpyDoc;
+  late DocumentSnapshotSpy documentSnapshotSpyAdd;
+  late QuerySnapshotSpy querySnapshotSpyDoc;
   late QueryDocumentSnapshotSpy queryDocumentSnapshotSpy;
-  late QuerySpy querySpy;
+  late QuerySpy querySpyWhere;
 
-  FirestoreFirestoreSpy.doc(Map<String, dynamic> data) {
+  FirestoreFirestoreSpy({Map<String, dynamic>? data, List<Map<String, dynamic>>? datas, bool doc = false, bool docs = false, bool where = false, bool add = false, bool update = false, bool delete = false}) {
     collectionReferenceStubby = CollectionReferenceStubby();
-    documentReferenceStubby = DocumentReferenceStubby();
-    documentSnapshotSpy = DocumentSnapshotSpy(data);
-
     mockCollection();
-    mockDocument();
-    mockDocumentSnapshot();
+
+    //region doc
+    if (doc) {
+      if (data == null) throw Exception("Parâmetro data inválido!");
+
+      documentReferenceStubbyDoc = DocumentReferenceStubby();
+      documentSnapshotSpyDoc = DocumentSnapshotSpy(data);
+
+      mockDocument();
+      mockDocumentSnapshot();
+    }
+    //endregion
+
+    //region docs
+    if (docs) {
+      if (datas == null) throw Exception("Parâmetro datas inválido!");
+
+      querySnapshotSpyDoc = QuerySnapshotSpy(datas);
+      mockQuerySnapshot();
+    }
+    //endregion
+
+    //region where
+    if (where) {
+      if (datas == null) throw Exception("Parâmetro datas inválido!");
+
+      querySpyWhere = QuerySpy();
+
+      mockWhere();
+      mockQueryGet(QuerySnapshotSpy(datas));
+    }
+    //endregion
+
+    //region add
+    if (add) {
+      if (data == null) throw Exception("Parâmetro datas inválido!");
+
+      documentReferenceStubbyAdd = DocumentReferenceStubby(docId: data['id']);
+      documentSnapshotSpyAdd = DocumentSnapshotSpy(data);
+
+      mockDocumentAdd();
+      mockAdd();
+    }
+    //endregion
+
+    //region update
+    if (update) {
+      documentReferenceStubbyUpdate = DocumentReferenceStubby();
+
+      mockDocumentUpdate();
+      mockUpdate();
+    }
+    //endregion
+
+    //region delete
+    if (delete) {
+      documentReferenceStubbyDelete = DocumentReferenceStubby();
+
+      mockDocumentDelete();
+      mockDelete();
+    }
+    //endregion
   }
-
-  FirestoreFirestoreSpy.where(List<Map<String, dynamic>> datas) {
-    collectionReferenceStubby = CollectionReferenceStubby();
-    querySpy = QuerySpy();
-
-    mockCollection();
-    mockWhere();
-    mockQueryGet(QuerySnapshotSpy(datas));
-  }
-
-  FirestoreFirestoreSpy.docs(List<Map<String, dynamic>> datas) {
-    collectionReferenceStubby = CollectionReferenceStubby();
-    querySnapshotSpy = QuerySnapshotSpy(datas);
-
-    mockCollection();
-    mockQuerySnapshot();
-  }
-
-  FirestoreFirestoreSpy.add(Map<String, dynamic> data) {
-    collectionReferenceStubby = CollectionReferenceStubby();
-    documentReferenceStubby = DocumentReferenceStubby(docId: data['id']);
-    documentSnapshotSpy = DocumentSnapshotSpy(data);
-
-    mockCollection();
-    mockDocument();
-    mockAdd();
-  }
-
-  FirestoreFirestoreSpy.update() {
-    collectionReferenceStubby = CollectionReferenceStubby();
-    documentReferenceStubby = DocumentReferenceStubby();
-
-    mockCollection();
-    mockDocument();
-    mockUpdate();
-  }
-
-  FirestoreFirestoreSpy.delete() {
-    collectionReferenceStubby = CollectionReferenceStubby();
-    documentReferenceStubby = DocumentReferenceStubby();
-
-    mockCollection();
-    mockDocument();
-    mockDelete();
-  }
-
-  // FirestoreFirestoreSpy.batch() {
-  //   collectionReferenceStubby = CollectionReferenceStubby();
-  //   documentReferenceStubby = DocumentReferenceStubby();
-  //   batchStubby = WriteBatchStubby();
-  //
-  //   mockCollection();
-  //   mockDocumentTeste();
-  //   mockBatch();
-  //   mockSet();
-  //   mockCommit();
-  // }
 
   When _mockCollectionCall() => when(() => collection(any()));
   void mockCollection() => _mockCollectionCall().thenReturn(collectionReferenceStubby);
 
   //region doc
   When _mockDocumentCall() => when(() => collectionReferenceStubby.doc(any()));
-  void mockDocument() => _mockDocumentCall().thenReturn(documentReferenceStubby);
+  void mockDocument() => _mockDocumentCall().thenReturn(documentReferenceStubbyDoc);
 
-  When _mockDocumentSnapshotCall() => when(() => documentReferenceStubby.get());
-  void mockDocumentSnapshot() => _mockDocumentSnapshotCall().thenAnswer((_) => Future.value(documentSnapshotSpy));
+  When _mockDocumentSnapshotCall() => when(() => documentReferenceStubbyDoc.get());
+  void mockDocumentSnapshot() => _mockDocumentSnapshotCall().thenAnswer((_) => Future.value(documentSnapshotSpyDoc));
   void mockDocumentSnapshotWithParameters(DocumentSnapshotSpy snapshot) => _mockDocumentSnapshotCall().thenAnswer((_) => Future.value(snapshot));
   void mockDocumentSnapshotError(FirebaseException error) => _mockDocumentSnapshotCall().thenThrow(error);
   //endregion
@@ -93,7 +97,7 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
   //region docs
   When _mockQuerySnapshotCall() => when(() => collectionReferenceStubby.get());
   void mockQuerySnapshot({List<Map<String, dynamic>>? datas}) {
-    return _mockQuerySnapshotCall().thenAnswer((_) => Future.value(datas != null ? QuerySnapshotSpy(datas) : querySnapshotSpy));
+    return _mockQuerySnapshotCall().thenAnswer((_) => Future.value(datas != null ? QuerySnapshotSpy(datas) : querySnapshotSpyDoc));
   }
   //endregion
 
@@ -112,43 +116,38 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
     whereIn: any(named: "whereIn"),
     whereNotIn: any(named: "whereNotIn"),
   ));
-  void mockWhere() => _mockWhereCall().thenReturn(querySpy);
+  void mockWhere() => _mockWhereCall().thenReturn(querySpyWhere);
 
-  When _mockQueryGetCall() => when(() => querySpy.get());
+  When _mockQueryGetCall() => when(() => querySpyWhere.get());
   void mockQueryGet(QuerySnapshotSpy snapshot) => _mockQueryGetCall().thenAnswer((_) => Future.value(snapshot));
   void mockQueryGetError(Exception error) => _mockQueryGetCall().thenThrow(error);
   //endregion
 
   //region add
   When _mockAddCall() => when(() => collectionReferenceStubby.add(any()));
-  void mockAdd() => _mockAddCall().thenAnswer((_) => Future.value(documentReferenceStubby));
+  void mockAdd() => _mockAddCall().thenAnswer((_) => Future.value(documentReferenceStubbyAdd));
   void mockAddError({required Map<String, dynamic> data, required Exception error}) => _mockAddCall().thenThrow(error);
+
+  When _mockDocumentAddCall() => when(() => collectionReferenceStubby.doc(any()));
+  void mockDocumentAdd() => _mockDocumentAddCall().thenReturn(documentReferenceStubbyAdd);
   //endregion
 
   //region update
-  When _mockUpdateCall() => when(() => documentReferenceStubby.update(any()));
+  When _mockUpdateCall() => when(() => documentReferenceStubbyUpdate.update(any()));
   void mockUpdate() => _mockUpdateCall().thenAnswer((_) => Future.value());
   void mockUpdateError({required Exception error}) => _mockUpdateCall().thenThrow(error);
+
+  When _mockDocumentUpdateCall() => when(() => collectionReferenceStubby.doc(any()));
+  void mockDocumentUpdate() => _mockDocumentUpdateCall().thenReturn(documentReferenceStubbyUpdate);
   //endregion
 
   //region delete
-  When _mockDeleteCall() => when(() => documentReferenceStubby.delete());
+  When _mockDeleteCall() => when(() => documentReferenceStubbyDelete.delete());
   void mockDelete() => _mockDeleteCall().thenAnswer((_) => Future.value());
   void mockDeleteError(Exception error) => _mockDeleteCall().thenThrow(error);
-  //endregion
 
-  //region batch
-  // When _mockBatchCall() => when(() => batch());
-  // void mockBatch() => _mockBatchCall().thenReturn(batchStubby);
-  //
-  // When _mockSetCall() => when(() => batchStubby.set(collectionReferenceStubby.doc(), any()));
-  // void mockSet() => _mockSetCall().thenAnswer((_) => Future.value());
-  //
-  // When _mockCommitCall() => when(() => batchStubby.commit());
-  // void mockCommit() => _mockCommitCall().thenAnswer((_) => Future.value());
-  //
-  // When _mockDocumentTesteCall() => when(() => collectionReferenceStubby.doc());
-  // void mockDocumentTeste() => _mockDocumentTesteCall().thenReturn(documentReferenceStubby);
+  When _mockDocumentDeleteCall() => when(() => collectionReferenceStubby.doc(any()));
+  void mockDocumentDelete() => _mockDocumentDeleteCall().thenReturn(documentReferenceStubbyDelete);
   //endregion
 }
 

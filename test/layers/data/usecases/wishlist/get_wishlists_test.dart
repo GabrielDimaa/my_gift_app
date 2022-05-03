@@ -20,6 +20,8 @@ void main() {
     sut = GetWishlists(wishlistRepository: wishlistRepositorySpy);
   });
 
+  setUpAll(() => registerFallbackValue(EntityFactory.tag()));
+
   test("Deve chamar getAll com valores corretos", () async {
     await sut.get(userId);
     verify(() => wishlistRepositorySpy.getAll(userId));
