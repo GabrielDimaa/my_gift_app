@@ -24,12 +24,18 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       //endregion
 
+      //region wishes
+
       final List<Map<String, dynamic>?> jsonWishes = await _getWishes(jsonWishlist['id']);
 
+      //endregion
+
+      //region tag
+
       final Map<String, dynamic>? jsonTag = await _getTag(jsonWishlist['tag_id']);
-      if (jsonTag == null) {
-        UnexpectedExternalError();
-      }
+      if (!TagModel.validateJson(jsonTag)) throw NotFoundExternalError();
+
+      //endregion
 
       //Forma o Json completo para a WishlistModel
       jsonWishlist.addAll({
@@ -62,6 +68,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
         return json..addAll({'id': e.id});
       }).toList();
 
+      if (jsonListWishlist.isEmpty) return [];
+
       //endregion
 
       //region tags
@@ -87,8 +95,9 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       List<WishlistModel> wishlistsModel = [];
       for (var json in jsonListWishlist) {
-        //Busca em jsonListaTags a tag correspondente.
-        json.addAll(jsonListTags.firstWhere((e) => e['id'] == json['tag_id']));
+        //Busca em jsonListTags a tag correspondente.
+        var tag = jsonListTags.firstWhere((e) => e['id'] == json['tag_id'], orElse: () => throw UnexpectedExternalError());
+        json.addAll({'tag': tag});
 
         if (WishlistModel.validateJson(json)) {
           wishlistsModel.add(WishlistModel.fromJson(json));
@@ -142,13 +151,9 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   Future<WishlistModel> create(WishlistModel model) async {
     try {
       final Map<String, dynamic> json = model.toJson();
+      final doc = await firestore.collection(constantWishlistsReference).add(json);
 
-      final col = firestore.collection(constantWishlistsReference);
-      final doc = await col.add(json);
-
-      model.clone(id: doc.id);
-
-      return model;
+      return model.clone(id: doc.id);
     } on FirebaseException catch (e) {
       throw e.getExternalError;
     } on ExternalError {

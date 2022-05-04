@@ -31,6 +31,18 @@ void main() {
       expect(tagsResponse.equals(tags), true);
     });
 
+    test("Deve chamar getAll e ignorando dados inválidos", () async {
+      final List<Map<String, dynamic>> jsonListTest = jsonList.map((e) => e).toList();
+
+      var firestoreTest = FirestoreFirestoreSpy(datas: [{'id': "any_id", 'name': "any_tag"}, ...jsonListTest], where: true);
+      var sutTest = FirebaseTagDataSource(firestore: firestoreTest);
+
+      final List<TagModel> tagsResponse = await sutTest.getAll(userId);
+      expect(tagsResponse.equals(tags), true);
+      expect(!tagsResponse.any((e) => e.id == "any_id"), true);
+      expect(jsonListTest.length, tagsResponse.length);
+    });
+
     test("Deve throw AbortedExternalError se getAll() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
       mockFirebaseException("ABORTED");
       Future future = sut.getAll(userId);
@@ -141,7 +153,8 @@ void main() {
 
     test("Deve chamar create e retornar os valores com sucesso", () async {
       final TagModel tagResponse = await sut.create(tag);
-      expect(tagResponse.equals(TagModel.fromJson(tag.toJson()..addAll({'id': tagId}))), true);
+      expect(tagResponse.id == tagId, true);
+      expect(tagResponse.equals(tag.clone(id: tagId)), true);
     });
 
     test("Deve throw AbortedExternalError se add() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {

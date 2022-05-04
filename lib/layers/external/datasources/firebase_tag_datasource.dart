@@ -45,13 +45,9 @@ class FirebaseTagDataSource implements ITagDataSource {
   Future<TagModel> create(TagModel model) async {
     try {
       final Map<String, dynamic> json = model.toJson();
-
       final doc = await firestore.collection(constantTagsReference).add(json);
-      json.addAll({'id': doc.id});
 
-      if (!TagModel.validateJson(json)) throw UnexpectedExternalError();
-
-      return TagModel.fromJson(json);
+      return model.clone(id: doc.id);
     } on FirebaseException catch (e) {
       throw e.getExternalError;
     } on ExternalError {

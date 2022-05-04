@@ -1,5 +1,3 @@
-
-
 import '../../domain/entities/tag_entity.dart';
 
 class TagModel {
@@ -26,6 +24,14 @@ class TagModel {
       'name': name,
       'color': color,
     };
+  }
+
+  TagModel clone({String? id}) {
+    return TagModel(
+      id: id ?? this.id,
+      name: name,
+      color: color,
+    );
   }
 
   factory TagModel.fromEntity(TagEntity entity) {

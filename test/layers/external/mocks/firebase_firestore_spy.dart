@@ -23,7 +23,7 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
       if (data == null) throw Exception("Parâmetro data inválido!");
 
       documentReferenceStubbyDoc = DocumentReferenceStubby();
-      documentSnapshotSpyDoc = DocumentSnapshotSpy(data);
+      documentSnapshotSpyDoc = DocumentSnapshotSpy({...data});
 
       mockDocument();
       mockDocumentSnapshot();
@@ -46,7 +46,7 @@ class FirestoreFirestoreSpy extends Mock implements FirebaseFirestore {
       querySpyWhere = QuerySpy();
 
       mockWhere();
-      mockQueryGet(QuerySnapshotSpy(datas));
+      mockQueryGet(QuerySnapshotSpy([...datas]));
     }
     //endregion
 
@@ -168,8 +168,9 @@ class DocumentSnapshotSpy extends Mock implements DocumentSnapshot<Map<String, d
   Map<String, dynamic>? json;
 
   DocumentSnapshotSpy(Map<String, dynamic>? json) {
-    idJson = json?['id'];
-    this.json = json?..remove('id');
+    var _json = json == null ? null : {...json};
+    idJson = _json?['id'];
+    this.json = _json?..remove('id');
   }
 
   @override
@@ -199,7 +200,7 @@ class QuerySnapshotSpy extends Mock implements QuerySnapshot<Map<String, dynamic
   late List<QueryDocumentSnapshotSpy> docsResults;
 
   QuerySnapshotSpy(List<Map<String, dynamic>> listJson) {
-    docsResults = listJson.map((e) => QueryDocumentSnapshotSpy(e)).toList();
+    docsResults = listJson.map((e) => QueryDocumentSnapshotSpy({...e})).toList();
   }
 
   @override

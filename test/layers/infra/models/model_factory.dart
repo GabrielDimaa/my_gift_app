@@ -21,14 +21,14 @@ abstract class ModelFactory {
 
   static List<WishModel> wishes({String? wishlistId, int length = 4}) => List.generate(length, (_) => wish(wishlistId: wishlistId));
 
-  static WishlistModel wishlist({String? id, bool withId = true}) => WishlistModel(
+  static WishlistModel wishlist({String? id, bool withId = true, bool withWishes = true}) => WishlistModel(
         id: withId ? id ?? faker.guid.guid() : null,
         description: faker.lorem.sentence(),
-        wishes: wishes(wishlistId: id),
+        wishes: withWishes ? wishes(wishlistId: id) : [],
         tag: tag(),
       );
 
-  static List<WishlistModel> wishlists({int length = 4}) => List.generate(length, (_) => wishlist());
+  static List<WishlistModel> wishlists({bool withWishes = true, int length = 4}) => List.generate(length, (_) => wishlist(withWishes: false));
 
   static UserModel user({bool emailVerified = true, bool withId = true, String? password = "12345678"}) => UserModel(
         id: withId ? faker.guid.guid() : null,
@@ -40,8 +40,8 @@ abstract class ModelFactory {
         password: password,
       );
 
-  static TagModel tag({bool withId = true}) => TagModel(
-        id: withId ? faker.guid.guid() : null,
+  static TagModel tag({String? id, bool withId = true}) => TagModel(
+        id: withId ? id ?? faker.guid.guid() : null,
         name: faker.lorem.word(),
         color: "#00000",
       );

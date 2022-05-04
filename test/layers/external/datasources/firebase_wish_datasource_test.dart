@@ -31,6 +31,17 @@ void main() {
       expect(wishResponse.equals(wish), true);
     });
 
+    test("Deve throw NotFoundExternalError se retornar dados inválidos", () {
+      firestore.mockDocumentSnapshotWithParameters(DocumentSnapshotSpy({
+        'id': "any_id",
+        'wishlist_id': 'any_wishlistId',
+        'description': 'any_description',
+      }));
+
+      final Future future = sut.getById(wishId);
+      expect(future, throwsA(isA<NotFoundExternalError>()));
+    });
+
     test("Deve throw NotFoundExternalError se data() retornar null", () {
       firestore.mockDocumentSnapshotWithParameters(DocumentSnapshotSpy(null));
 
@@ -152,6 +163,18 @@ void main() {
     test("Deve chamar GetByWishlist e retornar os valores com sucesso", () async {
       final List<WishModel> wishesResponse = await sut.getByWishlist(wishlistId);
       expect(wishesResponse.equals(wishlists), true);
+    });
+
+    test("Deve chamar getAll e ignorando dados inválidos", () async {
+      final List<Map<String, dynamic>> jsonListTest = jsonList.map((e) => e).toList();
+
+      var firestoreTest = FirestoreFirestoreSpy(datas: [{'id': "any_id", 'description': "any_description"}, ...jsonListTest], where: true);
+      var sutTest = FirebaseWishDataSource(firestore: firestoreTest);
+
+      final List<WishModel> wishesResponse = await sutTest.getByWishlist(wishlistId);
+      expect(wishesResponse.equals(wishlists), true);
+      expect(!wishesResponse.any((e) => e.id == "any_id"), true);
+      expect(wishesResponse.length, jsonListTest.length);
     });
 
     test("Deve throw AbortedExternalError se get() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
