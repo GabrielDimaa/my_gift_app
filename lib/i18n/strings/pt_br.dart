@@ -84,6 +84,12 @@ class PtBr implements Translation {
   String get saveError => "Houve um erro ao salvar.";
 
   @override
-  String get deleteError => "Não foi possível excluir. Tente novamente";
+  String get deleteError => "Não foi possível excluir. Tente novamente.";
+
+  @override
+  String get uploadImageError => "Não foi possível salvar a imagem. Tente novamente.";
+
+  @override
+  String get deleteImageError => "Não foi possível remover a imagem. Tente novamente.";
   //endregion
 }

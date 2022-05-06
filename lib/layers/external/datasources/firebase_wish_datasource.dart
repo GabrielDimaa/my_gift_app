@@ -62,6 +62,16 @@ class FirebaseWishDataSource implements IWishDataSource {
   @override
   Future<WishModel> create(WishModel model) async {
     try {
+      // TODO: implementar upload de imagens nos datasources
+      // if (model.image?.isNotEmpty ?? false) {
+      //   try {
+      //     final path = "/wishes/${DateTime.now().millisecondsSinceEpoch}_${model.image}";
+      //     final String urlImage = await storage.upload(path, File(model.image!));
+      //
+      //     model.image = urlImage;
+      //   } catch (_) {}
+      // }
+
       final doc = await firestore.collection(constantWishesReference).add(model.toJson());
       return model.clone(id: doc.id);
     } on FirebaseException catch (e) {

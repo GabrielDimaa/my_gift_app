@@ -1,4 +1,5 @@
 import 'package:desejando_app/layers/domain/entities/tag_entity.dart';
+import 'package:desejando_app/layers/infra/models/tag_model.dart';
 
 import '../../infra/models/wishlist_model.dart';
 import '../../data/repositories/i_wishlist_repository.dart';
@@ -37,8 +38,14 @@ class WishlistRepository implements IWishlistRepository {
 
   @override
   Future<List<WishlistEntity>> getByTag(TagEntity tag) async {
-    // TODO: implement getByTag
-    throw UnimplementedError();
+    try {
+      final List<WishlistModel> wishlistsModels = await wishlistDataSource.getByTag(TagModel.fromEntity(tag));
+      return wishlistsModels.map((e) => e.toEntity()).toList();
+    } on ExternalError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedExternalError().toDomainError();
+    }
   }
 
   @override

@@ -28,5 +28,7 @@ abstract class Translation {
   String get getError;
   String get saveError;
   String get deleteError;
+  String get uploadImageError;
+  String get deleteImageError;
   //endregion
 }

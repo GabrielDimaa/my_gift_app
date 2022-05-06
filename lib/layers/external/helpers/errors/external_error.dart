@@ -6,8 +6,12 @@ abstract class ExternalError implements Exception {
 }
 
 class UnexpectedExternalError extends ExternalError {
+  final String? message;
+
+  UnexpectedExternalError({this.message});
+
   @override
-  DomainError toDomainError() => UnexpectedDomainError(R.string.unexpectedError);
+  DomainError toDomainError() => UnexpectedDomainError(message ?? R.string.unexpectedError);
 }
 
 class ConnectionExternalError extends ExternalError {

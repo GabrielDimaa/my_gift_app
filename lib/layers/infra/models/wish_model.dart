@@ -3,21 +3,21 @@ import '../../domain/entities/wish_entity.dart';
 
 class WishModel {
   final String? id;
-  final String wishlistId;
-  final String description;
-  final String? image;
-  final String? link;
-  final String? note;
+  String wishlistId;
+  String description;
+  String? image;
+  String? link;
+  String? note;
 
-  final double priceRangeInitial;
-  final double priceRangeFinal;
+  double priceRangeInitial;
+  double priceRangeFinal;
 
-  final DateTime createdAt;
+  DateTime createdAt;
 
-  final bool expose;
-  final bool finished;
+  bool expose;
+  bool finished;
 
-  const WishModel({
+  WishModel({
     this.id,
     required this.wishlistId,
     required this.description,
