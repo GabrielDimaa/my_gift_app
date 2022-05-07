@@ -16,10 +16,10 @@ class WishlistRepository implements IWishlistRepository {
     try {
       final WishlistModel wishlistModel = await wishlistDataSource.getById(id);
       return wishlistModel.toEntity();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -28,10 +28,10 @@ class WishlistRepository implements IWishlistRepository {
     try {
       final List<WishlistModel> wishlistsModel = await wishlistDataSource.getAll(userId);
       return wishlistsModel.map((e) => e.toEntity()).toList();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -40,10 +40,10 @@ class WishlistRepository implements IWishlistRepository {
     try {
       final List<WishlistModel> wishlistsModels = await wishlistDataSource.getByTag(TagModel.fromEntity(tag));
       return wishlistsModels.map((e) => e.toEntity()).toList();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -52,10 +52,10 @@ class WishlistRepository implements IWishlistRepository {
     try {
       final WishlistModel wishlistModel = await wishlistDataSource.create(WishlistModel.fromEntity(entity));
       return wishlistModel.toEntity();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -64,10 +64,10 @@ class WishlistRepository implements IWishlistRepository {
     try {
       final WishlistModel wishlistModel = await wishlistDataSource.update(WishlistModel.fromEntity(entity));
       return wishlistModel.toEntity();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -75,10 +75,10 @@ class WishlistRepository implements IWishlistRepository {
   Future<void> delete(String id) async {
     try {
       await wishlistDataSource.delete(id);
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 }

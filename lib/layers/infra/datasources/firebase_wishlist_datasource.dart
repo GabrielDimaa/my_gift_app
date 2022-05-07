@@ -20,7 +20,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       final snapshotWishlist = await firestore.collection(constantWishlistsReference).doc(id).get();
 
       final Map<String, dynamic>? jsonWishlist = snapshotWishlist.data()?..addAll({'id': snapshotWishlist.id});
-      if (jsonWishlist == null) throw NotFoundExternalError();
+      if (jsonWishlist == null) throw NotFoundInfraError();
 
       //endregion
 
@@ -33,7 +33,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       //region tag
 
       final Map<String, dynamic>? jsonTag = await _getTag(jsonWishlist['tag_id']);
-      if (!TagModel.validateJson(jsonTag)) throw NotFoundExternalError();
+      if (!TagModel.validateJson(jsonTag)) throw NotFoundInfraError();
 
       //endregion
 
@@ -43,15 +43,15 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
         'tag': jsonTag,
       });
 
-      if (!WishlistModel.validateJson(jsonWishlist)) throw UnexpectedExternalError();
+      if (!WishlistModel.validateJson(jsonWishlist)) throw UnexpectedInfraError();
 
       return WishlistModel.fromJson(jsonWishlist);
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -96,7 +96,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       List<WishlistModel> wishlistsModel = [];
       for (var json in jsonListWishlist) {
         //Busca em jsonListTags a tag correspondente.
-        var tag = jsonListTags.firstWhere((e) => e['id'] == json['tag_id'], orElse: () => throw UnexpectedExternalError());
+        var tag = jsonListTags.firstWhere((e) => e['id'] == json['tag_id'], orElse: () => throw UnexpectedInfraError());
         json.addAll({'tag': tag});
 
         if (WishlistModel.validateJson(json)) {
@@ -108,11 +108,11 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       //endregion
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -139,11 +139,11 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       return wishlistsModel;
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -155,11 +155,11 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       return model.clone(id: doc.id);
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -171,11 +171,11 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       return model;
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -185,11 +185,11 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       final doc = firestore.collection(constantWishlistsReference).doc(id);
       await doc.delete();
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 

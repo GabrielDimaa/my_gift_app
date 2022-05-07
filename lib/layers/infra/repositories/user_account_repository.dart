@@ -15,10 +15,10 @@ class UserAccountRepository implements IUserAccountRepository {
     try {
       final UserModel userModel = await userAccountDataSource.authWithEmail(params);
       return userModel.toEntity();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -27,10 +27,10 @@ class UserAccountRepository implements IUserAccountRepository {
     try {
       final UserModel userModel = await userAccountDataSource.signUpWithEmail(UserModel.fromEntity(entity));
       return userModel.toEntity();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 }

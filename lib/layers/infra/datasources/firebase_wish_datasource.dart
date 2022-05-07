@@ -19,15 +19,15 @@ class FirebaseWishDataSource implements IWishDataSource {
       final Map<String, dynamic>? json = snapshot.data();
       json?.addAll({'id': snapshot.id});
 
-      if (!WishModel.validateJson(json)) throw NotFoundExternalError();
+      if (!WishModel.validateJson(json)) throw NotFoundInfraError();
 
       return WishModel.fromJson(json!);
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -51,11 +51,11 @@ class FirebaseWishDataSource implements IWishDataSource {
 
       return wishesModel;
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -75,11 +75,11 @@ class FirebaseWishDataSource implements IWishDataSource {
       final doc = await firestore.collection(constantWishesReference).add(model.toJson());
       return model.clone(id: doc.id);
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -91,11 +91,11 @@ class FirebaseWishDataSource implements IWishDataSource {
 
       return model;
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -105,11 +105,11 @@ class FirebaseWishDataSource implements IWishDataSource {
       final doc = firestore.collection(constantWishesReference).doc(id);
       await doc.delete();
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 }

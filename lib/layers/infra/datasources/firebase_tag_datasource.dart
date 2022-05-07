@@ -33,11 +33,11 @@ class FirebaseTagDataSource implements ITagDataSource {
 
       return tagsModel;
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -49,11 +49,11 @@ class FirebaseTagDataSource implements ITagDataSource {
 
       return model.clone(id: doc.id);
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -65,11 +65,11 @@ class FirebaseTagDataSource implements ITagDataSource {
 
       return model;
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
@@ -79,11 +79,11 @@ class FirebaseTagDataSource implements ITagDataSource {
       final doc = firestore.collection(constantTagsReference).doc(id);
       await doc.delete();
     } on FirebaseException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 }

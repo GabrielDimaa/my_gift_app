@@ -1,102 +1,102 @@
 import '../../../i18n/resources.dart';
 import '../../domain/helpers/errors/domain_error.dart';
 
-abstract class ExternalError implements Exception {
+abstract class InfraError implements Exception {
   DomainError toDomainError();
 }
 
-class UnexpectedExternalError extends ExternalError {
+class UnexpectedInfraError extends InfraError {
   final String? message;
 
-  UnexpectedExternalError({this.message});
+  UnexpectedInfraError({this.message});
 
   @override
   DomainError toDomainError() => UnexpectedDomainError(message ?? R.string.unexpectedError);
 }
 
-class ConnectionExternalError extends ExternalError {
+class ConnectionInfraError extends InfraError {
   @override
   DomainError toDomainError() => UnexpectedDomainError(R.string.connectionError);
 }
 
-class AbortedExternalError extends ExternalError {
+class AbortedInfraError extends InfraError {
   @override
   DomainError toDomainError() => UnexpectedDomainError(R.string.abortedError);
 }
 
-class CancelledExternalError extends ExternalError {
+class CancelledInfraError extends InfraError {
   @override
   DomainError toDomainError() => UnexpectedDomainError(R.string.cancelledError);
 }
 
-class InternalExternalError extends ExternalError {
+class InternalInfraError extends InfraError {
   @override
   DomainError toDomainError() => UnexpectedDomainError(R.string.internalError);
 }
 
-class InvalidArgumentExternalError extends ExternalError {
+class InvalidArgumentInfraError extends InfraError {
   @override
   DomainError toDomainError() => UnexpectedDomainError(R.string.invalidArgumentError);
 }
 
-class PermissionDeniedExternalError extends ExternalError {
+class PermissionDeniedInfraError extends InfraError {
   @override
   DomainError toDomainError() => UnexpectedDomainError(R.string.permissionDeniedError);
 }
 
-class UnauthenticatedExternalError extends ExternalError {
+class UnauthenticatedInfraError extends InfraError {
   @override
   DomainError toDomainError() => UnexpectedDomainError(R.string.unauthenticatedError);
 }
 
-class UnavailableExternalError extends ExternalError {
+class UnavailableInfraError extends InfraError {
   @override
   DomainError toDomainError() => UnexpectedDomainError(R.string.unavailableError);
 }
 
-class ResourceExhaustedExternalError extends ExternalError {
+class ResourceExhaustedInfraError extends InfraError {
   @override
   DomainError toDomainError() => UnexpectedDomainError(R.string.resourceExhaustedError);
 }
 
-class AlreadyExistsExternalError extends ExternalError {
+class AlreadyExistsInfraError extends InfraError {
   @override
   DomainError toDomainError() => AlreadyExistsDomainError();
 }
 
-class NotFoundExternalError extends ExternalError {
+class NotFoundInfraError extends InfraError {
   @override
   DomainError toDomainError() => NotFoundDomainError();
 }
 
-class InvalidDataExternalError extends ExternalError {
+class InvalidDataInfraError extends InfraError {
   @override
   DomainError toDomainError() => ValidationDomainError();
 }
 
 //region Auth
 
-class EmailInvalidExternalError extends ExternalError {
+class EmailInvalidInfraError extends InfraError {
   @override
   DomainError toDomainError() => EmailInvalidDomainError();
 }
 
-class EmailInUseExternalError extends ExternalError {
+class EmailInUseInfraError extends InfraError {
   @override
   DomainError toDomainError() => EmailInUseDomainError();
 }
 
-class EmailNotVerifiedExternalError extends ExternalError {
+class EmailNotVerifiedInfraError extends InfraError {
   @override
   DomainError toDomainError() => EmailNotVerifiedDomainError();
 }
 
-class WrongPasswordExternalError extends ExternalError {
+class WrongPasswordInfraError extends InfraError {
   @override
   DomainError toDomainError() => PasswordDomainError();
 }
 
-class InvalidActionExternalError extends ExternalError {
+class InvalidActionInfraError extends InfraError {
   @override
   DomainError toDomainError() => InvalidActionDomainError();
 }

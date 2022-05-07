@@ -18,7 +18,7 @@ class FirebaseStorageDataSource implements IStorageDataSource {
 
     return await uploadTask
         .then((snapshot) => snapshot.ref.getDownloadURL())
-        .catchError(throw UnexpectedExternalError(message: R.string.uploadImageError));
+        .catchError(throw UnexpectedInfraError(message: R.string.uploadImageError));
   }
 
   @override
@@ -27,7 +27,7 @@ class FirebaseStorageDataSource implements IStorageDataSource {
       final storage = firebaseStorage.ref().child(path);
       await storage.delete();
     } catch (e) {
-      throw UnexpectedExternalError(message: R.string.deleteImageError);
+      throw UnexpectedInfraError(message: R.string.deleteImageError);
     }
   }
 }

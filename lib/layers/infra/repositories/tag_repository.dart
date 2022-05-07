@@ -14,10 +14,10 @@ class TagRepository implements ITagRepository {
     try {
       final List<TagModel> tagsModel = await tagDataSource.getAll(userId);
       return tagsModel.map((e) => e.toEntity()).toList();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -26,10 +26,10 @@ class TagRepository implements ITagRepository {
     try {
       final TagModel tagModel = await tagDataSource.create(TagModel.fromEntity(entity));
       return tagModel.toEntity();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -38,10 +38,10 @@ class TagRepository implements ITagRepository {
     try {
       final TagModel tagModel = await tagDataSource.update(TagModel.fromEntity(entity));
       return tagModel.toEntity();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -49,10 +49,10 @@ class TagRepository implements ITagRepository {
   Future<void> delete(String id) async {
     try {
       await tagDataSource.delete(id);
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 }

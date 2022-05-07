@@ -41,56 +41,56 @@ void main() {
     });
 
     test("Deve throw NotFoundDomainError", () {
-      userAccountDataSourceSpy.mockAuthWithEmailError(NotFoundExternalError());
+      userAccountDataSourceSpy.mockAuthWithEmailError(NotFoundInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
       expect(future, throwsA(isA<NotFoundDomainError>()));
     });
 
     test("Deve throw PasswordDomainError", () {
-      userAccountDataSourceSpy.mockAuthWithEmailError(WrongPasswordExternalError());
+      userAccountDataSourceSpy.mockAuthWithEmailError(WrongPasswordInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
       expect(future, throwsA(isA<PasswordDomainError>()));
     });
 
     test("Deve throw EmailNotVerifiedDomainError", () {
-      userAccountDataSourceSpy.mockAuthWithEmailError(EmailNotVerifiedExternalError());
+      userAccountDataSourceSpy.mockAuthWithEmailError(EmailNotVerifiedInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
       expect(future, throwsA(isA<EmailNotVerifiedDomainError>()));
     });
 
     test("Deve throw EmailInvalidDomainError", () {
-      userAccountDataSourceSpy.mockAuthWithEmailError(EmailInvalidExternalError());
+      userAccountDataSourceSpy.mockAuthWithEmailError(EmailInvalidInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
       expect(future, throwsA(isA<EmailInvalidDomainError>()));
     });
 
     test("Deve throw UnexpectedDomainError", () {
-      userAccountDataSourceSpy.mockAuthWithEmailError(UnexpectedExternalError());
+      userAccountDataSourceSpy.mockAuthWithEmailError(UnexpectedInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
     test("Deve throw UnexpectedDomainError", () {
-      userAccountDataSourceSpy.mockAuthWithEmailError(ConnectionExternalError());
+      userAccountDataSourceSpy.mockAuthWithEmailError(ConnectionInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
     test("Deve throw UnexpectedDomainError", () {
-      userAccountDataSourceSpy.mockAuthWithEmailError(CancelledExternalError());
+      userAccountDataSourceSpy.mockAuthWithEmailError(CancelledInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
     test("Deve throw UnexpectedDomainError", () {
-      userAccountDataSourceSpy.mockAuthWithEmailError(InternalExternalError());
+      userAccountDataSourceSpy.mockAuthWithEmailError(InternalInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
@@ -104,42 +104,42 @@ void main() {
     });
 
     test("Deve throw UnexpectedDomainError", () {
-      userAccountDataSourceSpy.mockSignUpWithEmailError(UnexpectedExternalError());
+      userAccountDataSourceSpy.mockSignUpWithEmailError(UnexpectedInfraError());
       final Future future = sut.signUpWithEmail(userModel.toEntity());
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
     test("Deve throw UnexpectedDomainError", () {
-      userAccountDataSourceSpy.mockSignUpWithEmailError(ConnectionExternalError());
+      userAccountDataSourceSpy.mockSignUpWithEmailError(ConnectionInfraError());
       final Future future = sut.signUpWithEmail(userModel.toEntity());
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
     test("Deve throw UnexpectedDomainError", () {
-      userAccountDataSourceSpy.mockSignUpWithEmailError(InternalExternalError());
+      userAccountDataSourceSpy.mockSignUpWithEmailError(InternalInfraError());
       final Future future = sut.signUpWithEmail(userModel.toEntity());
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
     test("Deve throw EmailInvalidDomainError", () {
-      userAccountDataSourceSpy.mockSignUpWithEmailError(EmailInvalidExternalError());
+      userAccountDataSourceSpy.mockSignUpWithEmailError(EmailInvalidInfraError());
       final Future future = sut.signUpWithEmail(userModel.toEntity());
 
       expect(future, throwsA(isA<EmailInvalidDomainError>()));
     });
 
     test("Deve throw EmailInUseDomainError", () {
-      userAccountDataSourceSpy.mockSignUpWithEmailError(EmailInUseExternalError());
+      userAccountDataSourceSpy.mockSignUpWithEmailError(EmailInUseInfraError());
       final Future future = sut.signUpWithEmail(userModel.toEntity());
 
       expect(future, throwsA(isA<EmailInUseDomainError>()));
     });
 
     test("Deve throw PasswordDomainError", () {
-      userAccountDataSourceSpy.mockSignUpWithEmailError(WrongPasswordExternalError());
+      userAccountDataSourceSpy.mockSignUpWithEmailError(WrongPasswordInfraError());
       final Future future = sut.signUpWithEmail(userModel.toEntity());
 
       expect(future, throwsA(isA<PasswordDomainError>()));

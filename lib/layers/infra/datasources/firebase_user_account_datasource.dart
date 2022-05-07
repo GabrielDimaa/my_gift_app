@@ -18,22 +18,22 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       final UserCredential credential = await firebaseAuth.signInWithEmailAndPassword(email: params.email, password: params.password);
       final UserModel? user = credential.toModel();
 
-      if (user == null) throw NotFoundExternalError();
+      if (user == null) throw NotFoundInfraError();
 
       return user;
     } on FirebaseAuthException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 
   @override
   Future<UserModel> signUpWithEmail(UserModel model) async {
     try {
-      if (model.password == null) throw WrongPasswordExternalError();
+      if (model.password == null) throw WrongPasswordInfraError();
 
       final UserCredential credential = await firebaseAuth.createUserWithEmailAndPassword(email: model.email, password: model.password!);
       final UserModel? user = credential.toModel();
@@ -42,11 +42,11 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
 
       return user;
     } on FirebaseAuthException catch (e) {
-      throw e.getExternalError;
-    } on ExternalError {
+      throw e.getInfraError;
+    } on InfraError {
       rethrow;
     } catch (e) {
-      throw UnexpectedExternalError();
+      throw UnexpectedInfraError();
     }
   }
 }

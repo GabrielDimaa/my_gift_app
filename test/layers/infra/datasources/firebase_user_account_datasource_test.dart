@@ -54,59 +54,59 @@ void main() {
       expect(userResponse.phone, userResult.phone);
     });
 
-    test("Deve retornar NotFoundExternalError se signIn retornar credential.user null", () {
+    test("Deve retornar NotFoundInfraError se signIn retornar credential.user null", () {
       firebaseAuthSpy.mockSignInWithEmailAndPassword(email: loginParams.email, password: loginParams.password, user: null);
 
       final Future future = sut.authWithEmail(loginParams);
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve retornar NotFoundExternalError se error user-not-found e account-exists-with-different-credential", () {
+    test("Deve retornar NotFoundInfraError se error user-not-found e account-exists-with-different-credential", () {
       mockFirebaseException("user-not-found");
       Future future = sut.authWithEmail(loginParams);
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
 
       mockFirebaseException("account-exists-with-different-credential");
       future = sut.authWithEmail(loginParams);
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve retornar WrongPasswordExternalError se error wrong-password", () {
+    test("Deve retornar WrongPasswordInfraError se error wrong-password", () {
       mockFirebaseException("wrong-password");
       final Future future = sut.authWithEmail(loginParams);
-      expect(future, throwsA(isA<WrongPasswordExternalError>()));
+      expect(future, throwsA(isA<WrongPasswordInfraError>()));
     });
 
-    test("Deve retornar EmailInvalidExternalError se error invalid-email", () {
+    test("Deve retornar EmailInvalidInfraError se error invalid-email", () {
       mockFirebaseException("invalid-email");
       final Future future = sut.authWithEmail(loginParams);
-      expect(future, throwsA(isA<EmailInvalidExternalError>()));
+      expect(future, throwsA(isA<EmailInvalidInfraError>()));
     });
 
-    test("Deve retornar EmailInUseExternalError se error email-already-in-use", () {
+    test("Deve retornar EmailInUseInfraError se error email-already-in-use", () {
       mockFirebaseException("email-already-in-use");
       final Future future = sut.authWithEmail(loginParams);
-      expect(future, throwsA(isA<EmailInUseExternalError>()));
+      expect(future, throwsA(isA<EmailInUseInfraError>()));
     });
 
-    test("Deve retornar NotFoundExternalError se error invalid-credential", () {
+    test("Deve retornar NotFoundInfraError se error invalid-credential", () {
       mockFirebaseException("invalid-credential");
       final Future future = sut.authWithEmail(loginParams);
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve retornar InvalidActionExternalError se error invalid-verification-code, invalid-action-code e expired-action-code", () {
+    test("Deve retornar InvalidActionInfraError se error invalid-verification-code, invalid-action-code e expired-action-code", () {
       mockFirebaseException("invalid-verification-code");
       Future future = sut.authWithEmail(loginParams);
-      expect(future, throwsA(isA<InvalidActionExternalError>()));
+      expect(future, throwsA(isA<InvalidActionInfraError>()));
 
       mockFirebaseException("invalid-action-code");
       future = sut.authWithEmail(loginParams);
-      expect(future, throwsA(isA<InvalidActionExternalError>()));
+      expect(future, throwsA(isA<InvalidActionInfraError>()));
 
       mockFirebaseException("expired-action-code");
       future = sut.authWithEmail(loginParams);
-      expect(future, throwsA(isA<InvalidActionExternalError>()));
+      expect(future, throwsA(isA<InvalidActionInfraError>()));
     });
   });
 
@@ -155,37 +155,37 @@ void main() {
       expect(userResponse.phone, userResult.phone);
     });
 
-    test("Deve throw WrongPasswordExternalError se password for igual a null", () {
+    test("Deve throw WrongPasswordInfraError se password for igual a null", () {
       final Future future = sut.signUpWithEmail(ModelFactory.user(password: null));
-      expect(future, throwsA(isA<WrongPasswordExternalError>()));
+      expect(future, throwsA(isA<WrongPasswordInfraError>()));
     });
 
-    test("Deve throw UnexpectedExternalError se credential.user for igual a null", () {
+    test("Deve throw UnexpectedInfraError se credential.user for igual a null", () {
       firebaseAuthSpy.mockCreateUserWithEmailAndPassword(email: userRequest.email, password: userRequest.password!);
 
       final Future future = sut.signUpWithEmail(userRequest);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
     });
 
-    test("Deve retornar EmailInvalidExternalError se error invalid-email", () {
+    test("Deve retornar EmailInvalidInfraError se error invalid-email", () {
       mockFirebaseException("invalid-email");
 
       final Future future = sut.signUpWithEmail(userRequest);
-      expect(future, throwsA(isA<EmailInvalidExternalError>()));
+      expect(future, throwsA(isA<EmailInvalidInfraError>()));
     });
 
-    test("Deve retornar EmailInUseExternalError se error email-already-in-use", () {
+    test("Deve retornar EmailInUseInfraError se error email-already-in-use", () {
       mockFirebaseException("email-already-in-use");
 
       final Future future = sut.signUpWithEmail(userRequest);
-      expect(future, throwsA(isA<EmailInUseExternalError>()));
+      expect(future, throwsA(isA<EmailInUseInfraError>()));
     });
 
-    test("Deve retornar UnexpectedExternalError se error desconhecido", () {
+    test("Deve retornar UnexpectedInfraError se error desconhecido", () {
       mockFirebaseException("any_error");
 
       final Future future = sut.signUpWithEmail(userRequest);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
     });
   });
 }

@@ -79,7 +79,7 @@ class WishModel {
   }
 
   factory WishModel.fromEntity(WishEntity entity) {
-    if (entity.wishlistId == null) throw InvalidDataExternalError();
+    if (entity.wishlistId == null) throw InvalidDataInfraError();
 
     return WishModel(
       id: entity.id,
@@ -97,7 +97,7 @@ class WishModel {
   }
 
   factory WishModel.fromJson(Map<String, dynamic> json) {
-    if (json['wishlist_id'] == null) throw InvalidDataExternalError();
+    if (json['wishlist_id'] == null) throw InvalidDataInfraError();
 
     return WishModel(
       id: json['id'],

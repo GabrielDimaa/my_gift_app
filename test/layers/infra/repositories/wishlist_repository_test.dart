@@ -37,8 +37,8 @@ void main() {
       expect(wishlist.equals(wishlistResult.toEntity()), true);
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
-      wishlistDataSourceSpy.mockGetByIdError(error: ConnectionExternalError());
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      wishlistDataSourceSpy.mockGetByIdError(error: ConnectionInfraError());
 
       final Future future = sut.getById(wishlistId);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
@@ -51,8 +51,8 @@ void main() {
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
-    test("Deve throw NotFoundDomainError se NotFoundExternalError", () {
-      wishlistDataSourceSpy.mockGetByIdError(error: NotFoundExternalError());
+    test("Deve throw NotFoundDomainError se NotFoundInfraError", () {
+      wishlistDataSourceSpy.mockGetByIdError(error: NotFoundInfraError());
 
       final Future future = sut.getById(wishlistId);
       expect(future, throwsA(isA<NotFoundDomainError>()));
@@ -78,8 +78,8 @@ void main() {
       expect(wishlist.equals(wishlistsResult.map((e) => e.toEntity()).toList()), true);
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
-      wishlistDataSourceSpy.mockGetAllError(error: ConnectionExternalError());
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      wishlistDataSourceSpy.mockGetAllError(error: ConnectionInfraError());
 
       final Future future = sut.getAll(userId);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
@@ -92,8 +92,8 @@ void main() {
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
-    test("Deve throw NotFoundDomainError se NotFoundExternalError", () {
-      wishlistDataSourceSpy.mockGetAllError(error: NotFoundExternalError());
+    test("Deve throw NotFoundDomainError se NotFoundInfraError", () {
+      wishlistDataSourceSpy.mockGetAllError(error: NotFoundInfraError());
 
       final Future future = sut.getAll(userId);
       expect(future, throwsA(isA<NotFoundDomainError>()));
@@ -116,8 +116,8 @@ void main() {
       expect(wishlist.equals(modelResult.toEntity()), true);
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
-      wishlistDataSourceSpy.mockCreateError(error: ConnectionExternalError());
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      wishlistDataSourceSpy.mockCreateError(error: ConnectionInfraError());
 
       final Future future = sut.create(entity);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
@@ -131,7 +131,7 @@ void main() {
     });
 
     test("Deve throw AlreadyExistsDomainError", () {
-    wishlistDataSourceSpy.mockCreateError(error: AlreadyExistsExternalError());
+    wishlistDataSourceSpy.mockCreateError(error: AlreadyExistsInfraError());
 
     final Future future = sut.create(entity);
     expect(future, throwsA(isA<AlreadyExistsDomainError>()));
@@ -156,8 +156,8 @@ void main() {
       expect(wishlist.id, entity.id);
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
-      wishlistDataSourceSpy.mockUpdateError(error: ConnectionExternalError());
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      wishlistDataSourceSpy.mockUpdateError(error: ConnectionInfraError());
 
       final Future future = sut.update(entity);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
@@ -171,14 +171,14 @@ void main() {
     });
 
     test("Deve throw AlreadyExistsDomainError", () {
-      wishlistDataSourceSpy.mockUpdateError(error: AlreadyExistsExternalError());
+      wishlistDataSourceSpy.mockUpdateError(error: AlreadyExistsInfraError());
 
       final Future future = sut.update(entity);
       expect(future, throwsA(isA<AlreadyExistsDomainError>()));
     });
 
     test("Deve throw NotFoundDomainError", () {
-      wishlistDataSourceSpy.mockUpdateError(error: NotFoundExternalError());
+      wishlistDataSourceSpy.mockUpdateError(error: NotFoundInfraError());
 
       final Future future = sut.update(entity);
       expect(future, throwsA(isA<NotFoundDomainError>()));
@@ -198,8 +198,8 @@ void main() {
       verify(() => wishlistDataSourceSpy.delete(wishlistId));
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionExternalError", () {
-      wishlistDataSourceSpy.mockDeleteError(error: ConnectionExternalError());
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      wishlistDataSourceSpy.mockDeleteError(error: ConnectionInfraError());
 
       final Future future = sut.delete(wishlistId);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
@@ -213,7 +213,7 @@ void main() {
     });
 
     test("Deve throw NotFoundDomainError", () {
-      wishlistDataSourceSpy.mockDeleteError(error: NotFoundExternalError());
+      wishlistDataSourceSpy.mockDeleteError(error: NotFoundInfraError());
 
       final Future future = sut.delete(wishlistId);
       expect(future, throwsA(isA<NotFoundDomainError>()));

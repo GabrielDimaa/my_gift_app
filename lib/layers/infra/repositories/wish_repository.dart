@@ -14,10 +14,10 @@ class WishRepository implements IWishRepository {
     try {
       final WishModel wishModel = await wishDataSource.getById(id);
       return wishModel.toEntity();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -26,10 +26,10 @@ class WishRepository implements IWishRepository {
     try {
       final List<WishModel> wishesModel = await wishDataSource.getByWishlist(wishlistId);
       return wishesModel.map((e) => e.toEntity()).toList();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -38,10 +38,10 @@ class WishRepository implements IWishRepository {
     try {
       final WishModel wishModel = await wishDataSource.create(WishModel.fromEntity(entity));
       return wishModel.toEntity();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -50,10 +50,10 @@ class WishRepository implements IWishRepository {
     try {
       final WishModel wishModel = await wishDataSource.update(WishModel.fromEntity(entity));
       return wishModel.toEntity();
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -61,10 +61,10 @@ class WishRepository implements IWishRepository {
   Future<void> delete(String id) async {
     try {
       await wishDataSource.delete(id);
-    } on ExternalError catch (e) {
+    } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
-      throw UnexpectedExternalError().toDomainError();
+      throw UnexpectedInfraError().toDomainError();
     }
   }
 }

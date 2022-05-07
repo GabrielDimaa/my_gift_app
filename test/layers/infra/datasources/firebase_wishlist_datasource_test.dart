@@ -41,113 +41,113 @@ void main() {
       expect(wishlistResponse.equals(wishlist), true);
     });
 
-    test("Deve throw NotFoundExternalError se data() retornar null", () {
+    test("Deve throw NotFoundInfraError se data() retornar null", () {
       firestore.mockDocumentSnapshotWithParameters(DocumentSnapshotSpy(null));
 
       final Future future = sut.getById(wishlistId);
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve throw NotFoundExternalError se retornar tag igual a null", () {
+    test("Deve throw NotFoundInfraError se retornar tag igual a null", () {
       mockGet(value: DocumentSnapshotSpy(null));
 
       final Future future = sut.getById(wishlistId);
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve throw AbortedExternalError se get() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
+    test("Deve throw AbortedInfraError se get() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
       mockFirebaseException("ABORTED");
       Future future = sut.getById(wishlistId);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
 
       mockFirebaseException("FAILED_PRECONDITION");
       future = sut.getById(wishlistId);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
     });
 
-    test("Deve throw AlreadyExistsExternalError se get() retornar FirebaseException com code ALREADY_EXISTS", () {
+    test("Deve throw AlreadyExistsInfraError se get() retornar FirebaseException com code ALREADY_EXISTS", () {
       mockFirebaseException("ALREADY_EXISTS");
       final Future future = sut.getById(wishlistId);
 
-      expect(future, throwsA(isA<AlreadyExistsExternalError>()));
+      expect(future, throwsA(isA<AlreadyExistsInfraError>()));
     });
 
-    test("Deve throw CancelledExternalError se get() retornar FirebaseException com code CANCELLED", () {
+    test("Deve throw CancelledInfraError se get() retornar FirebaseException com code CANCELLED", () {
       mockFirebaseException("CANCELLED");
       final Future future = sut.getById(wishlistId);
 
-      expect(future, throwsA(isA<CancelledExternalError>()));
+      expect(future, throwsA(isA<CancelledInfraError>()));
     });
 
-    test("Deve throw InternalExternalError se get() retornar FirebaseException com code INTERNAL", () {
+    test("Deve throw InternalInfraError se get() retornar FirebaseException com code INTERNAL", () {
       mockFirebaseException("INTERNAL");
       final Future future = sut.getById(wishlistId);
 
-      expect(future, throwsA(isA<InternalExternalError>()));
+      expect(future, throwsA(isA<InternalInfraError>()));
     });
 
-    test("Deve throw InvalidArgumentExternalError se get() retornar FirebaseException com code INVALID_ARGUMENT", () {
+    test("Deve throw InvalidArgumentInfraError se get() retornar FirebaseException com code INVALID_ARGUMENT", () {
       mockFirebaseException("INVALID_ARGUMENT");
       final Future future = sut.getById(wishlistId);
 
-      expect(future, throwsA(isA<InvalidArgumentExternalError>()));
+      expect(future, throwsA(isA<InvalidArgumentInfraError>()));
     });
 
-    test("Deve throw NotFoundExternalError se get() retornar FirebaseException com code NOT_FOUND", () {
+    test("Deve throw NotFoundInfraError se get() retornar FirebaseException com code NOT_FOUND", () {
       mockFirebaseException("NOT_FOUND");
       final Future future = sut.getById(wishlistId);
 
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve throw PermissionDeniedExternalError se get() retornar FirebaseException com code PERMISSION_DENIED", () {
+    test("Deve throw PermissionDeniedInfraError se get() retornar FirebaseException com code PERMISSION_DENIED", () {
       mockFirebaseException("PERMISSION_DENIED");
       final Future future = sut.getById(wishlistId);
 
-      expect(future, throwsA(isA<PermissionDeniedExternalError>()));
+      expect(future, throwsA(isA<PermissionDeniedInfraError>()));
     });
 
-    test("Deve throw ResourceExhaustedExternalError se get() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
+    test("Deve throw ResourceExhaustedInfraError se get() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
       mockFirebaseException("RESOURCE_EXHAUSTED");
       final Future future = sut.getById(wishlistId);
 
-      expect(future, throwsA(isA<ResourceExhaustedExternalError>()));
+      expect(future, throwsA(isA<ResourceExhaustedInfraError>()));
     });
 
-    test("Deve throw UnauthenticatedExternalError se get() retornar FirebaseException com code UNAUTHENTICATED", () {
+    test("Deve throw UnauthenticatedInfraError se get() retornar FirebaseException com code UNAUTHENTICATED", () {
       mockFirebaseException("UNAUTHENTICATED");
       final Future future = sut.getById(wishlistId);
 
-      expect(future, throwsA(isA<UnauthenticatedExternalError>()));
+      expect(future, throwsA(isA<UnauthenticatedInfraError>()));
     });
 
-    test("Deve throw UnavailableExternalError se get() retornar FirebaseException com code UNAVAILABLE", () {
+    test("Deve throw UnavailableInfraError se get() retornar FirebaseException com code UNAVAILABLE", () {
       mockFirebaseException("UNAVAILABLE");
       final Future future = sut.getById(wishlistId);
 
-      expect(future, throwsA(isA<UnavailableExternalError>()));
+      expect(future, throwsA(isA<UnavailableInfraError>()));
     });
 
-    test("Deve throw UnexpectedExternalError se get() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
+    test("Deve throw UnexpectedInfraError se get() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
       mockFirebaseException("DATA_LOSS");
       Future future = sut.getById(wishlistId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("DEADLINE_EXCEEDED");
       future = sut.getById(wishlistId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("OUT_OF_RANGE");
       future = sut.getById(wishlistId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNIMPLEMENTED");
       future = sut.getById(wishlistId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNKNOWN");
       future = sut.getById(wishlistId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
     });
   });
 
@@ -188,106 +188,106 @@ void main() {
       expect(wishlistsResponse.equals(wishlists), true);
     });
 
-    test("Deve throw UnexpectedExternalError se retornar tags inválidas", () {
+    test("Deve throw UnexpectedInfraError se retornar tags inválidas", () {
       mockGet(snapshot: QuerySnapshotSpy([{'id': "any_id"}]));
 
       final Future future = sut.getAll(userId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
     });
 
-    test("Deve throw AbortedExternalError se get() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
+    test("Deve throw AbortedInfraError se get() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
       mockFirebaseException("ABORTED");
       Future future = sut.getAll(userId);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
 
       mockFirebaseException("FAILED_PRECONDITION");
       future = sut.getAll(userId);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
     });
 
-    test("Deve throw AlreadyExistsExternalError se get() retornar FirebaseException com code ALREADY_EXISTS", () {
+    test("Deve throw AlreadyExistsInfraError se get() retornar FirebaseException com code ALREADY_EXISTS", () {
       mockFirebaseException("ALREADY_EXISTS");
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<AlreadyExistsExternalError>()));
+      expect(future, throwsA(isA<AlreadyExistsInfraError>()));
     });
 
-    test("Deve throw CancelledExternalError se get() retornar FirebaseException com code CANCELLED", () {
+    test("Deve throw CancelledInfraError se get() retornar FirebaseException com code CANCELLED", () {
       mockFirebaseException("CANCELLED");
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<CancelledExternalError>()));
+      expect(future, throwsA(isA<CancelledInfraError>()));
     });
 
-    test("Deve throw InternalExternalError se get() retornar FirebaseException com code INTERNAL", () {
+    test("Deve throw InternalInfraError se get() retornar FirebaseException com code INTERNAL", () {
       mockFirebaseException("INTERNAL");
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<InternalExternalError>()));
+      expect(future, throwsA(isA<InternalInfraError>()));
     });
 
-    test("Deve throw InvalidArgumentExternalError se get() retornar FirebaseException com code INVALID_ARGUMENT", () {
+    test("Deve throw InvalidArgumentInfraError se get() retornar FirebaseException com code INVALID_ARGUMENT", () {
       mockFirebaseException("INVALID_ARGUMENT");
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<InvalidArgumentExternalError>()));
+      expect(future, throwsA(isA<InvalidArgumentInfraError>()));
     });
 
-    test("Deve throw NotFoundExternalError se get() retornar FirebaseException com code NOT_FOUND", () {
+    test("Deve throw NotFoundInfraError se get() retornar FirebaseException com code NOT_FOUND", () {
       mockFirebaseException("NOT_FOUND");
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve throw PermissionDeniedExternalError se get() retornar FirebaseException com code PERMISSION_DENIED", () {
+    test("Deve throw PermissionDeniedInfraError se get() retornar FirebaseException com code PERMISSION_DENIED", () {
       mockFirebaseException("PERMISSION_DENIED");
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<PermissionDeniedExternalError>()));
+      expect(future, throwsA(isA<PermissionDeniedInfraError>()));
     });
 
-    test("Deve throw ResourceExhaustedExternalError se get() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
+    test("Deve throw ResourceExhaustedInfraError se get() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
       mockFirebaseException("RESOURCE_EXHAUSTED");
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<ResourceExhaustedExternalError>()));
+      expect(future, throwsA(isA<ResourceExhaustedInfraError>()));
     });
 
-    test("Deve throw UnauthenticatedExternalError se get() retornar FirebaseException com code UNAUTHENTICATED", () {
+    test("Deve throw UnauthenticatedInfraError se get() retornar FirebaseException com code UNAUTHENTICATED", () {
       mockFirebaseException("UNAUTHENTICATED");
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<UnauthenticatedExternalError>()));
+      expect(future, throwsA(isA<UnauthenticatedInfraError>()));
     });
 
-    test("Deve throw UnavailableExternalError se get() retornar FirebaseException com code UNAVAILABLE", () {
+    test("Deve throw UnavailableInfraError se get() retornar FirebaseException com code UNAVAILABLE", () {
       mockFirebaseException("UNAVAILABLE");
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<UnavailableExternalError>()));
+      expect(future, throwsA(isA<UnavailableInfraError>()));
     });
 
-    test("Deve throw UnexpectedExternalError se get() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
+    test("Deve throw UnexpectedInfraError se get() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
       mockFirebaseException("DATA_LOSS");
       Future future = sut.getAll(userId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("DEADLINE_EXCEEDED");
       future = sut.getAll(userId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("OUT_OF_RANGE");
       future = sut.getAll(userId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNIMPLEMENTED");
       future = sut.getAll(userId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNKNOWN");
       future = sut.getAll(userId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
     });
   });
 
@@ -311,99 +311,99 @@ void main() {
       expect(wishlistsResponse.equals(wishlists), true);
     });
 
-    test("Deve throw AbortedExternalError se get() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
+    test("Deve throw AbortedInfraError se get() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
       mockFirebaseException("ABORTED");
       Future future = sut.getByTag(tag);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
 
       mockFirebaseException("FAILED_PRECONDITION");
       future = sut.getByTag(tag);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
     });
 
-    test("Deve throw AlreadyExistsExternalError se get() retornar FirebaseException com code ALREADY_EXISTS", () {
+    test("Deve throw AlreadyExistsInfraError se get() retornar FirebaseException com code ALREADY_EXISTS", () {
       mockFirebaseException("ALREADY_EXISTS");
       final Future future = sut.getByTag(tag);
 
-      expect(future, throwsA(isA<AlreadyExistsExternalError>()));
+      expect(future, throwsA(isA<AlreadyExistsInfraError>()));
     });
 
-    test("Deve throw CancelledExternalError se get() retornar FirebaseException com code CANCELLED", () {
+    test("Deve throw CancelledInfraError se get() retornar FirebaseException com code CANCELLED", () {
       mockFirebaseException("CANCELLED");
       final Future future = sut.getByTag(tag);
 
-      expect(future, throwsA(isA<CancelledExternalError>()));
+      expect(future, throwsA(isA<CancelledInfraError>()));
     });
 
-    test("Deve throw InternalExternalError se get() retornar FirebaseException com code INTERNAL", () {
+    test("Deve throw InternalInfraError se get() retornar FirebaseException com code INTERNAL", () {
       mockFirebaseException("INTERNAL");
       final Future future = sut.getByTag(tag);
 
-      expect(future, throwsA(isA<InternalExternalError>()));
+      expect(future, throwsA(isA<InternalInfraError>()));
     });
 
-    test("Deve throw InvalidArgumentExternalError se get() retornar FirebaseException com code INVALID_ARGUMENT", () {
+    test("Deve throw InvalidArgumentInfraError se get() retornar FirebaseException com code INVALID_ARGUMENT", () {
       mockFirebaseException("INVALID_ARGUMENT");
       final Future future = sut.getByTag(tag);
 
-      expect(future, throwsA(isA<InvalidArgumentExternalError>()));
+      expect(future, throwsA(isA<InvalidArgumentInfraError>()));
     });
 
-    test("Deve throw NotFoundExternalError se get() retornar FirebaseException com code NOT_FOUND", () {
+    test("Deve throw NotFoundInfraError se get() retornar FirebaseException com code NOT_FOUND", () {
       mockFirebaseException("NOT_FOUND");
       final Future future = sut.getByTag(tag);
 
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve throw PermissionDeniedExternalError se get() retornar FirebaseException com code PERMISSION_DENIED", () {
+    test("Deve throw PermissionDeniedInfraError se get() retornar FirebaseException com code PERMISSION_DENIED", () {
       mockFirebaseException("PERMISSION_DENIED");
       final Future future = sut.getByTag(tag);
 
-      expect(future, throwsA(isA<PermissionDeniedExternalError>()));
+      expect(future, throwsA(isA<PermissionDeniedInfraError>()));
     });
 
-    test("Deve throw ResourceExhaustedExternalError se get() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
+    test("Deve throw ResourceExhaustedInfraError se get() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
       mockFirebaseException("RESOURCE_EXHAUSTED");
       final Future future = sut.getByTag(tag);
 
-      expect(future, throwsA(isA<ResourceExhaustedExternalError>()));
+      expect(future, throwsA(isA<ResourceExhaustedInfraError>()));
     });
 
-    test("Deve throw UnauthenticatedExternalError se get() retornar FirebaseException com code UNAUTHENTICATED", () {
+    test("Deve throw UnauthenticatedInfraError se get() retornar FirebaseException com code UNAUTHENTICATED", () {
       mockFirebaseException("UNAUTHENTICATED");
       final Future future = sut.getByTag(tag);
 
-      expect(future, throwsA(isA<UnauthenticatedExternalError>()));
+      expect(future, throwsA(isA<UnauthenticatedInfraError>()));
     });
 
-    test("Deve throw UnavailableExternalError se get() retornar FirebaseException com code UNAVAILABLE", () {
+    test("Deve throw UnavailableInfraError se get() retornar FirebaseException com code UNAVAILABLE", () {
       mockFirebaseException("UNAVAILABLE");
       final Future future = sut.getByTag(tag);
 
-      expect(future, throwsA(isA<UnavailableExternalError>()));
+      expect(future, throwsA(isA<UnavailableInfraError>()));
     });
 
-    test("Deve throw UnexpectedExternalError se get() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
+    test("Deve throw UnexpectedInfraError se get() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
       mockFirebaseException("DATA_LOSS");
       Future future = sut.getByTag(tag);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("DEADLINE_EXCEEDED");
       future = sut.getByTag(tag);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("OUT_OF_RANGE");
       future = sut.getByTag(tag);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNIMPLEMENTED");
       future = sut.getByTag(tag);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNKNOWN");
       future = sut.getByTag(tag);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
     });
   });
 
@@ -427,99 +427,99 @@ void main() {
       expect(wishResponse.equals(wishlist.clone(id: wishlistId)), true);
     });
 
-    test("Deve throw AbortedExternalError se add() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
+    test("Deve throw AbortedInfraError se add() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
       mockFirebaseException("ABORTED");
       Future future = sut.create(wishlist);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
 
       mockFirebaseException("FAILED_PRECONDITION");
       future = sut.create(wishlist);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
     });
 
-    test("Deve throw AlreadyExistsExternalError se add() retornar FirebaseException com code ALREADY_EXISTS", () {
+    test("Deve throw AlreadyExistsInfraError se add() retornar FirebaseException com code ALREADY_EXISTS", () {
       mockFirebaseException("ALREADY_EXISTS");
       final Future future = sut.create(wishlist);
 
-      expect(future, throwsA(isA<AlreadyExistsExternalError>()));
+      expect(future, throwsA(isA<AlreadyExistsInfraError>()));
     });
 
-    test("Deve throw CancelledExternalError se add() retornar FirebaseException com code CANCELLED", () {
+    test("Deve throw CancelledInfraError se add() retornar FirebaseException com code CANCELLED", () {
       mockFirebaseException("CANCELLED");
       final Future future = sut.create(wishlist);
 
-      expect(future, throwsA(isA<CancelledExternalError>()));
+      expect(future, throwsA(isA<CancelledInfraError>()));
     });
 
-    test("Deve throw InternalExternalError se add() retornar FirebaseException com code INTERNAL", () {
+    test("Deve throw InternalInfraError se add() retornar FirebaseException com code INTERNAL", () {
       mockFirebaseException("INTERNAL");
       final Future future = sut.create(wishlist);
 
-      expect(future, throwsA(isA<InternalExternalError>()));
+      expect(future, throwsA(isA<InternalInfraError>()));
     });
 
-    test("Deve throw InvalidArgumentExternalError se add() retornar FirebaseException com code INVALID_ARGUMENT", () {
+    test("Deve throw InvalidArgumentInfraError se add() retornar FirebaseException com code INVALID_ARGUMENT", () {
       mockFirebaseException("INVALID_ARGUMENT");
       final Future future = sut.create(wishlist);
 
-      expect(future, throwsA(isA<InvalidArgumentExternalError>()));
+      expect(future, throwsA(isA<InvalidArgumentInfraError>()));
     });
 
-    test("Deve throw NotFoundExternalError se add() retornar FirebaseException com code NOT_FOUND", () {
+    test("Deve throw NotFoundInfraError se add() retornar FirebaseException com code NOT_FOUND", () {
       mockFirebaseException("NOT_FOUND");
       final Future future = sut.create(wishlist);
 
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve throw PermissionDeniedExternalError se add() retornar FirebaseException com code PERMISSION_DENIED", () {
+    test("Deve throw PermissionDeniedInfraError se add() retornar FirebaseException com code PERMISSION_DENIED", () {
       mockFirebaseException("PERMISSION_DENIED");
       final Future future = sut.create(wishlist);
 
-      expect(future, throwsA(isA<PermissionDeniedExternalError>()));
+      expect(future, throwsA(isA<PermissionDeniedInfraError>()));
     });
 
-    test("Deve throw ResourceExhaustedExternalError se add() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
+    test("Deve throw ResourceExhaustedInfraError se add() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
       mockFirebaseException("RESOURCE_EXHAUSTED");
       final Future future = sut.create(wishlist);
 
-      expect(future, throwsA(isA<ResourceExhaustedExternalError>()));
+      expect(future, throwsA(isA<ResourceExhaustedInfraError>()));
     });
 
-    test("Deve throw UnauthenticatedExternalError se add() retornar FirebaseException com code UNAUTHENTICATED", () {
+    test("Deve throw UnauthenticatedInfraError se add() retornar FirebaseException com code UNAUTHENTICATED", () {
       mockFirebaseException("UNAUTHENTICATED");
       final Future future = sut.create(wishlist);
 
-      expect(future, throwsA(isA<UnauthenticatedExternalError>()));
+      expect(future, throwsA(isA<UnauthenticatedInfraError>()));
     });
 
-    test("Deve throw UnavailableExternalError se add() retornar FirebaseException com code UNAVAILABLE", () {
+    test("Deve throw UnavailableInfraError se add() retornar FirebaseException com code UNAVAILABLE", () {
       mockFirebaseException("UNAVAILABLE");
       final Future future = sut.create(wishlist);
 
-      expect(future, throwsA(isA<UnavailableExternalError>()));
+      expect(future, throwsA(isA<UnavailableInfraError>()));
     });
 
-    test("Deve throw UnexpectedExternalError se add() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
+    test("Deve throw UnexpectedInfraError se add() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
       mockFirebaseException("DATA_LOSS");
       Future future = sut.create(wishlist);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("DEADLINE_EXCEEDED");
       future = sut.create(wishlist);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("OUT_OF_RANGE");
       future = sut.create(wishlist);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNIMPLEMENTED");
       future = sut.create(wishlist);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNKNOWN");
       future = sut.create(wishlist);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
     });
   });
 
@@ -541,99 +541,99 @@ void main() {
       expect(wishlistResponse, wishlist);
     });
 
-    test("Deve throw AbortedExternalError se update() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
+    test("Deve throw AbortedInfraError se update() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
       mockFirebaseException("ABORTED");
       Future future = sut.update(wishlist);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
 
       mockFirebaseException("FAILED_PRECONDITION");
       future = sut.update(wishlist);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
     });
 
-    test("Deve throw AlreadyExistsExternalError se update() retornar FirebaseException com code ALREADY_EXISTS", () {
+    test("Deve throw AlreadyExistsInfraError se update() retornar FirebaseException com code ALREADY_EXISTS", () {
       mockFirebaseException("ALREADY_EXISTS");
       final Future future = sut.update(wishlist);
 
-      expect(future, throwsA(isA<AlreadyExistsExternalError>()));
+      expect(future, throwsA(isA<AlreadyExistsInfraError>()));
     });
 
-    test("Deve throw CancelledExternalError se update() retornar FirebaseException com code CANCELLED", () {
+    test("Deve throw CancelledInfraError se update() retornar FirebaseException com code CANCELLED", () {
       mockFirebaseException("CANCELLED");
       final Future future = sut.update(wishlist);
 
-      expect(future, throwsA(isA<CancelledExternalError>()));
+      expect(future, throwsA(isA<CancelledInfraError>()));
     });
 
-    test("Deve throw InternalExternalError se update() retornar FirebaseException com code INTERNAL", () {
+    test("Deve throw InternalInfraError se update() retornar FirebaseException com code INTERNAL", () {
       mockFirebaseException("INTERNAL");
       final Future future = sut.update(wishlist);
 
-      expect(future, throwsA(isA<InternalExternalError>()));
+      expect(future, throwsA(isA<InternalInfraError>()));
     });
 
-    test("Deve throw InvalidArgumentExternalError se update() retornar FirebaseException com code INVALID_ARGUMENT", () {
+    test("Deve throw InvalidArgumentInfraError se update() retornar FirebaseException com code INVALID_ARGUMENT", () {
       mockFirebaseException("INVALID_ARGUMENT");
       final Future future = sut.update(wishlist);
 
-      expect(future, throwsA(isA<InvalidArgumentExternalError>()));
+      expect(future, throwsA(isA<InvalidArgumentInfraError>()));
     });
 
-    test("Deve throw NotFoundExternalError se update() retornar FirebaseException com code NOT_FOUND", () {
+    test("Deve throw NotFoundInfraError se update() retornar FirebaseException com code NOT_FOUND", () {
       mockFirebaseException("NOT_FOUND");
       final Future future = sut.update(wishlist);
 
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve throw PermissionDeniedExternalError se update() retornar FirebaseException com code PERMISSION_DENIED", () {
+    test("Deve throw PermissionDeniedInfraError se update() retornar FirebaseException com code PERMISSION_DENIED", () {
       mockFirebaseException("PERMISSION_DENIED");
       final Future future = sut.update(wishlist);
 
-      expect(future, throwsA(isA<PermissionDeniedExternalError>()));
+      expect(future, throwsA(isA<PermissionDeniedInfraError>()));
     });
 
-    test("Deve throw ResourceExhaustedExternalError se update() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
+    test("Deve throw ResourceExhaustedInfraError se update() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
       mockFirebaseException("RESOURCE_EXHAUSTED");
       final Future future = sut.update(wishlist);
 
-      expect(future, throwsA(isA<ResourceExhaustedExternalError>()));
+      expect(future, throwsA(isA<ResourceExhaustedInfraError>()));
     });
 
-    test("Deve throw UnauthenticatedExternalError se update() retornar FirebaseException com code UNAUTHENTICATED", () {
+    test("Deve throw UnauthenticatedInfraError se update() retornar FirebaseException com code UNAUTHENTICATED", () {
       mockFirebaseException("UNAUTHENTICATED");
       final Future future = sut.update(wishlist);
 
-      expect(future, throwsA(isA<UnauthenticatedExternalError>()));
+      expect(future, throwsA(isA<UnauthenticatedInfraError>()));
     });
 
-    test("Deve throw UnavailableExternalError se update() retornar FirebaseException com code UNAVAILABLE", () {
+    test("Deve throw UnavailableInfraError se update() retornar FirebaseException com code UNAVAILABLE", () {
       mockFirebaseException("UNAVAILABLE");
       final Future future = sut.update(wishlist);
 
-      expect(future, throwsA(isA<UnavailableExternalError>()));
+      expect(future, throwsA(isA<UnavailableInfraError>()));
     });
 
-    test("Deve throw UnexpectedExternalError se update() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
+    test("Deve throw UnexpectedInfraError se update() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
       mockFirebaseException("DATA_LOSS");
       Future future = sut.update(wishlist);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("DEADLINE_EXCEEDED");
       future = sut.update(wishlist);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("OUT_OF_RANGE");
       future = sut.update(wishlist);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNIMPLEMENTED");
       future = sut.update(wishlist);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNKNOWN");
       future = sut.update(wishlist);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
     });
   });
 
@@ -655,99 +655,99 @@ void main() {
       verify(() => firestore.collection(constantWishlistsReference).doc(wishlistId).delete());
     });
 
-    test("Deve throw AbortedExternalError se delete() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
+    test("Deve throw AbortedInfraError se delete() retornar FirebaseException com code ABORTED e FAILED_PRECONDITION", () {
       mockFirebaseException("ABORTED");
       Future future = sut.delete(wishlistId);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
 
       mockFirebaseException("FAILED_PRECONDITION");
       future = sut.delete(wishlistId);
-      expect(future, throwsA(isA<AbortedExternalError>()));
+      expect(future, throwsA(isA<AbortedInfraError>()));
     });
 
-    test("Deve throw AlreadyExistsExternalError se delete() retornar FirebaseException com code ALREADY_EXISTS", () {
+    test("Deve throw AlreadyExistsInfraError se delete() retornar FirebaseException com code ALREADY_EXISTS", () {
       mockFirebaseException("ALREADY_EXISTS");
       final Future future = sut.delete(wishlistId);
 
-      expect(future, throwsA(isA<AlreadyExistsExternalError>()));
+      expect(future, throwsA(isA<AlreadyExistsInfraError>()));
     });
 
-    test("Deve throw CancelledExternalError se delete() retornar FirebaseException com code CANCELLED", () {
+    test("Deve throw CancelledInfraError se delete() retornar FirebaseException com code CANCELLED", () {
       mockFirebaseException("CANCELLED");
       final Future future = sut.delete(wishlistId);
 
-      expect(future, throwsA(isA<CancelledExternalError>()));
+      expect(future, throwsA(isA<CancelledInfraError>()));
     });
 
-    test("Deve throw InternalExternalError se delete() retornar FirebaseException com code INTERNAL", () {
+    test("Deve throw InternalInfraError se delete() retornar FirebaseException com code INTERNAL", () {
       mockFirebaseException("INTERNAL");
       final Future future = sut.delete(wishlistId);
 
-      expect(future, throwsA(isA<InternalExternalError>()));
+      expect(future, throwsA(isA<InternalInfraError>()));
     });
 
-    test("Deve throw InvalidArgumentExternalError se delete() retornar FirebaseException com code INVALID_ARGUMENT", () {
+    test("Deve throw InvalidArgumentInfraError se delete() retornar FirebaseException com code INVALID_ARGUMENT", () {
       mockFirebaseException("INVALID_ARGUMENT");
       final Future future = sut.delete(wishlistId);
 
-      expect(future, throwsA(isA<InvalidArgumentExternalError>()));
+      expect(future, throwsA(isA<InvalidArgumentInfraError>()));
     });
 
-    test("Deve throw NotFoundExternalError se delete() retornar FirebaseException com code NOT_FOUND", () {
+    test("Deve throw NotFoundInfraError se delete() retornar FirebaseException com code NOT_FOUND", () {
       mockFirebaseException("NOT_FOUND");
       final Future future = sut.delete(wishlistId);
 
-      expect(future, throwsA(isA<NotFoundExternalError>()));
+      expect(future, throwsA(isA<NotFoundInfraError>()));
     });
 
-    test("Deve throw PermissionDeniedExternalError se delete() retornar FirebaseException com code PERMISSION_DENIED", () {
+    test("Deve throw PermissionDeniedInfraError se delete() retornar FirebaseException com code PERMISSION_DENIED", () {
       mockFirebaseException("PERMISSION_DENIED");
       final Future future = sut.delete(wishlistId);
 
-      expect(future, throwsA(isA<PermissionDeniedExternalError>()));
+      expect(future, throwsA(isA<PermissionDeniedInfraError>()));
     });
 
-    test("Deve throw ResourceExhaustedExternalError se delete() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
+    test("Deve throw ResourceExhaustedInfraError se delete() retornar FirebaseException com code RESOURCE_EXHAUSTED", () {
       mockFirebaseException("RESOURCE_EXHAUSTED");
       final Future future = sut.delete(wishlistId);
 
-      expect(future, throwsA(isA<ResourceExhaustedExternalError>()));
+      expect(future, throwsA(isA<ResourceExhaustedInfraError>()));
     });
 
-    test("Deve throw UnauthenticatedExternalError se delete() retornar FirebaseException com code UNAUTHENTICATED", () {
+    test("Deve throw UnauthenticatedInfraError se delete() retornar FirebaseException com code UNAUTHENTICATED", () {
       mockFirebaseException("UNAUTHENTICATED");
       final Future future = sut.delete(wishlistId);
 
-      expect(future, throwsA(isA<UnauthenticatedExternalError>()));
+      expect(future, throwsA(isA<UnauthenticatedInfraError>()));
     });
 
-    test("Deve throw UnavailableExternalError se delete() retornar FirebaseException com code UNAVAILABLE", () {
+    test("Deve throw UnavailableInfraError se delete() retornar FirebaseException com code UNAVAILABLE", () {
       mockFirebaseException("UNAVAILABLE");
       final Future future = sut.delete(wishlistId);
 
-      expect(future, throwsA(isA<UnavailableExternalError>()));
+      expect(future, throwsA(isA<UnavailableInfraError>()));
     });
 
-    test("Deve throw UnexpectedExternalError se delete() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
+    test("Deve throw UnexpectedInfraError se delete() retornar FirebaseException com code DATA_LOSS, DEADLINE_EXCEEDED, OUT_OF_RANGE, UNIMPLEMENTED e UNKNOWN", () {
       mockFirebaseException("DATA_LOSS");
       Future future = sut.delete(wishlistId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("DEADLINE_EXCEEDED");
       future = sut.delete(wishlistId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("OUT_OF_RANGE");
       future = sut.delete(wishlistId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNIMPLEMENTED");
       future = sut.delete(wishlistId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
 
       mockFirebaseException("UNKNOWN");
       future = sut.delete(wishlistId);
-      expect(future, throwsA(isA<UnexpectedExternalError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
     });
   });
 }

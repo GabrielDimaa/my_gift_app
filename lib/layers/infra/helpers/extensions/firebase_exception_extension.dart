@@ -24,25 +24,25 @@ https://firebase.google.com/docs/reference/android/com/google/firebase/firestore
  */
 
 extension FirebaseExceptionExtension on FirebaseException {
-  ExternalError get getExternalError {
+  InfraError get getInfraError {
     switch(code.toUpperCase()) {
-      case "ABORTED": return AbortedExternalError();
-      case "ALREADY_EXISTS": return AlreadyExistsExternalError();
-      case "CANCELLED": return CancelledExternalError();
-      case "DATA_LOSS": return UnexpectedExternalError();
-      case "DEADLINE_EXCEEDED": return UnexpectedExternalError();
-      case "FAILED_PRECONDITION": return AbortedExternalError();
-      case "INTERNAL": return InternalExternalError();
-      case "INVALID_ARGUMENT": return InvalidArgumentExternalError();
-      case "NOT_FOUND": return NotFoundExternalError();
-      case "OUT_OF_RANGE": return UnexpectedExternalError();
-      case "PERMISSION_DENIED": return PermissionDeniedExternalError();
-      case "RESOURCE_EXHAUSTED": return ResourceExhaustedExternalError();
-      case "UNAUTHENTICATED": return UnauthenticatedExternalError();
-      case "UNAVAILABLE": return UnavailableExternalError();
-      case "UNIMPLEMENTED": return UnexpectedExternalError();
-      case "UNKNOWN": return UnexpectedExternalError();
-      default: return UnexpectedExternalError();
+      case "ABORTED": return AbortedInfraError();
+      case "ALREADY_EXISTS": return AlreadyExistsInfraError();
+      case "CANCELLED": return CancelledInfraError();
+      case "DATA_LOSS": return UnexpectedInfraError();
+      case "DEADLINE_EXCEEDED": return UnexpectedInfraError();
+      case "FAILED_PRECONDITION": return AbortedInfraError();
+      case "INTERNAL": return InternalInfraError();
+      case "INVALID_ARGUMENT": return InvalidArgumentInfraError();
+      case "NOT_FOUND": return NotFoundInfraError();
+      case "OUT_OF_RANGE": return UnexpectedInfraError();
+      case "PERMISSION_DENIED": return PermissionDeniedInfraError();
+      case "RESOURCE_EXHAUSTED": return ResourceExhaustedInfraError();
+      case "UNAUTHENTICATED": return UnauthenticatedInfraError();
+      case "UNAVAILABLE": return UnavailableInfraError();
+      case "UNIMPLEMENTED": return UnexpectedInfraError();
+      case "UNKNOWN": return UnexpectedInfraError();
+      default: return UnexpectedInfraError();
     }
   }
 }
