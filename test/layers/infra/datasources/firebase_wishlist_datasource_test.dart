@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:desejando_app/layers/infra/constants/collection_reference.dart';
+import 'package:desejando_app/layers/infra/datasources/constants/collection_reference.dart';
 import 'package:desejando_app/layers/infra/datasources/firebase_wishlist_datasource.dart';
 import 'package:desejando_app/layers/infra/errors/infra_error.dart';
 import 'package:desejando_app/layers/infra/models/tag_model.dart';
