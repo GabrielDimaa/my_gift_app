@@ -1,6 +1,6 @@
-import 'package:desejando_app/layers/data/repositories/i_user_account_repository.dart';
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
+import 'package:desejando_app/layers/domain/repositories/i_user_account_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
 class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {

@@ -1,7 +1,7 @@
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
-import 'package:desejando_app/layers/external/helpers/errors/external_error.dart';
+import 'package:desejando_app/layers/infra/errors/infra_error.dart';
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:desejando_app/layers/infra/repositories/user_account_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,7 +9,7 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../domain/entities/entity_extension.dart';
 import '../../domain/params_factory.dart';
-import '../../external/mocks/firebase_user_account_datasource_spy.dart';
+import '../datasources/mocks/firebase_user_account_datasource_spy.dart';
 import '../models/model_factory.dart';
 
 void main() {

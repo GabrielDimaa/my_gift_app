@@ -1,5 +1,5 @@
-import '../../external/helpers/errors/external_error.dart';
 import '../../domain/entities/wish_entity.dart';
+import '../errors/infra_error.dart';
 
 class WishModel {
   final String? id;

@@ -1,11 +1,10 @@
-import 'package:desejando_app/layers/domain/entities/tag_entity.dart';
-import 'package:desejando_app/layers/infra/models/tag_model.dart';
-
+import '../../domain/entities/tag_entity.dart';
+import '../../domain/repositories/i_wishlist_repository.dart';
 import '../../infra/models/wishlist_model.dart';
-import '../../data/repositories/i_wishlist_repository.dart';
 import '../../domain/entities/wishlist_entity.dart';
-import '../../external/helpers/errors/external_error.dart';
 import '../datasources/i_wishlist_datasource.dart';
+import '../errors/infra_error.dart';
+import '../models/tag_model.dart';
 
 class WishlistRepository implements IWishlistRepository {
   final IWishlistDataSource wishlistDataSource;
