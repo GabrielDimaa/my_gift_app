@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      const SizedBoxDefault(2),
+                      const SizedBox(height: 18),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
@@ -85,17 +85,17 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ],
                       ),
-                      const SizedBoxDefault(2),
+                      const SizedBox(height: 18),
                       TextFieldDefault(
                         label: R.string.email,
                         hint: R.string.emailHint,
                       ),
-                      const SizedBoxDefault(3),
+                      const SizedBoxDefault(2),
                       TextFieldDefault(
                         label: R.string.password,
                         hint: R.string.passwordHint,
                       ),
-                      const SizedBoxDefault(4),
+                      const SizedBoxDefault(5),
                       ElevatedButton(
                         child: Text(R.string.enter),
                         onPressed: () {

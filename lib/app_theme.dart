@@ -89,33 +89,35 @@ class AppTheme extends StatelessWidget {
       );
 
   TextTheme get _textThemeLight => TextTheme(
-      headline6: TextStyle(color: dark, fontSize: 22, fontWeight: FontWeight.w600),
-      headline5: TextStyle(color: dark, fontSize: 28, fontWeight: FontWeight.w700),
-      headline4: TextStyle(color: dark, fontSize: 34, fontWeight: FontWeight.w800),
-      subtitle2: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w700),
-      subtitle1: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w400),
-      button: TextStyle(color: dark, fontSize: 20, fontWeight: FontWeight.w700),
-      bodyText2: TextStyle(color: dark, fontSize: 16, fontWeight: FontWeight.w400),
-      bodyText1: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w500),
-      caption: TextStyle(color: dark, fontSize: 14, fontWeight: FontWeight.w300));
+        headline6: TextStyle(color: dark, fontSize: 22, fontWeight: FontWeight.w600),
+        headline5: TextStyle(color: dark, fontSize: 28, fontWeight: FontWeight.w700),
+        headline4: TextStyle(color: dark, fontSize: 34, fontWeight: FontWeight.w800),
+        subtitle2: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w700),
+        subtitle1: TextStyle(color: dark, fontSize: 16, fontWeight: FontWeight.w400),
+        button: TextStyle(color: dark, fontSize: 20, fontWeight: FontWeight.w700),
+        bodyText2: TextStyle(color: dark, fontSize: 16, fontWeight: FontWeight.w400),
+        bodyText1: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w400),
+        caption: TextStyle(color: dark, fontSize: 14, fontWeight: FontWeight.w300),
+      );
 
   TextTheme get _textThemeDark => TextTheme(
-      headline6: TextStyle(color: light, fontSize: 22, fontWeight: FontWeight.w600),
-      headline5: TextStyle(color: light, fontSize: 28, fontWeight: FontWeight.w700),
-      headline4: TextStyle(color: light, fontSize: 34, fontWeight: FontWeight.w800),
-      subtitle2: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w700),
-      subtitle1: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w400),
-      button: TextStyle(color: light, fontSize: 20, fontWeight: FontWeight.w700),
-      bodyText2: TextStyle(color: light, fontSize: 16, fontWeight: FontWeight.w400),
-      bodyText1: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w400),
-      caption: TextStyle(color: light, fontSize: 14, fontWeight: FontWeight.w300));
+        headline6: TextStyle(color: light, fontSize: 22, fontWeight: FontWeight.w600),
+        headline5: TextStyle(color: light, fontSize: 28, fontWeight: FontWeight.w700),
+        headline4: TextStyle(color: light, fontSize: 34, fontWeight: FontWeight.w800),
+        subtitle2: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w700),
+        subtitle1: TextStyle(color: light, fontSize: 16, fontWeight: FontWeight.w400),
+        button: TextStyle(color: light, fontSize: 20, fontWeight: FontWeight.w700),
+        bodyText2: TextStyle(color: light, fontSize: 16, fontWeight: FontWeight.w400),
+        bodyText1: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w400),
+        caption: TextStyle(color: light, fontSize: 14, fontWeight: FontWeight.w300),
+      );
 
   ElevatedButtonThemeData get _elevatedButtonTheme => ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: 4,
           primary: primary,
           onPrimary: light,
-          padding: const EdgeInsets.all(26),
+          padding: const EdgeInsets.all(16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         ),
       );
@@ -123,15 +125,14 @@ class AppTheme extends StatelessWidget {
   TextButtonThemeData get _textButtonTheme => TextButtonThemeData(
         style: TextButton.styleFrom(
           primary: secondary,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         ),
       );
 
   InputDecorationTheme get _inputDecorationThemeDark => InputDecorationTheme(
-        isDense: false,
         filled: true,
         fillColor: surface,
-        contentPadding: const EdgeInsets.all(20),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
         hintStyle: const TextStyle(color: Color(0xFFC1C1C1), fontWeight: FontWeight.w300),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
