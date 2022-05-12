@@ -16,6 +16,7 @@ dependencies:
   firebase_auth: ^3.3.14
   firebase_core: ^1.14.1
   firebase_storage: ^10.2.15
+  get: ^4.6.1
 
 dev_dependencies:
   flutter_test:
@@ -28,7 +29,7 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: Lexend
+    - family: Sarabun
       fonts:
         - asset: assets/fonts/Sarabun-ExtraBold.ttf
           weight: 800

@@ -1,6 +1,38 @@
-import 'package:desejando_app/i18n/translation.dart';
+import '../translation.dart';
 
 class PtBr implements Translation {
+  //region General
+  @override
+  String get login => "Login";
+
+  @override
+  String get loginWithGoogle => "Entrar com o Google";
+
+  @override
+  String get loginOu => "ou";
+
+  @override
+  String get email => "Email";
+
+  @override
+  String get emailHint => "Digite seu email";
+
+  @override
+  String get password => "Senha";
+
+  @override
+  String get passwordHint => "Digite sua senha";
+
+  @override
+  String get enter => "Entrar";
+
+  @override
+  String get doNotHaveAccount => "Não tem uma conta?";
+
+  @override
+  String get register => "Cadastrar-se";
+  //endregion
+
   //region Error
   @override
   String get unexpectedError => "Aconteceu algo inesperado.";
