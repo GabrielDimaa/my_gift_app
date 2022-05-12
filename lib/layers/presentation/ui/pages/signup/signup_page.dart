@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
-import '../../../presenters/login/getx_login_presenter.dart';
-import '../../../presenters/login/login_presenter.dart';
 import '../../components/sized_box_default.dart';
 import '../../components/text_field_default.dart';
 import '../widgets/button_login_with_widget.dart';
 import '../widgets/divider_or_widget.dart';
 import '../widgets/header_widget.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignupPage extends StatefulWidget {
+  const SignupPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  //final LoginPresenter presenter = Get.find<GetxLoginPresenter>();
-
+class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +29,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      HeaderWidget(text: R.string.login),
+                      HeaderWidget(text: R.string.register),
                       const SizedBoxDefault(4),
                       ButtonLoginWithWidget(
-                        text: R.string.loginWithGoogle,
+                        text: R.string.signupWithGoogle,
                         icon: Icons.facebook,
                         onPressed: () {
                           // TODO: Implementar Entrar com o Google
@@ -48,19 +43,19 @@ class _LoginPageState extends State<LoginPage> {
                       const DividerOrWidget(),
                       const SizedBox(height: 18),
                       TextFieldDefault(
-                        label: R.string.email,
-                        hint: R.string.emailHint,
+                        label: R.string.name,
+                        hint: R.string.nameHint,
                       ),
                       const SizedBoxDefault(2),
                       TextFieldDefault(
-                        label: R.string.password,
-                        hint: R.string.passwordHint,
+                        label: R.string.email,
+                        hint: R.string.emailHint,
                       ),
                       const SizedBoxDefault(5),
                       ElevatedButton(
-                        child: Text(R.string.enter),
+                        child: Text(R.string.advance),
                         onPressed: () {
-                          // TODO: Implementar Entrar
+                          // TODO: Implementar Avançar
                         },
                       ),
                       const SizedBoxDefault(2),
@@ -68,9 +63,9 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(R.string.doNotHaveAccount, style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 16)),
+                          Text(R.string.alreadyHaveAccount, style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 16)),
                           TextButton(
-                            child: Text(R.string.register, style: const TextStyle(fontSize: 16)),
+                            child: Text(R.string.makeLogin, style: const TextStyle(fontSize: 16)),
                             onPressed: () {
                               // TODO: Implementar cadastrar-se
                             },
@@ -80,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

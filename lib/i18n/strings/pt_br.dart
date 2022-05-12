@@ -9,6 +9,9 @@ class PtBr implements Translation {
   String get loginWithGoogle => "Entrar com o Google";
 
   @override
+  String get signupWithGoogle => "Cadastrar-se com o Google";
+
+  @override
   String get loginOu => "ou";
 
   @override
@@ -24,13 +27,28 @@ class PtBr implements Translation {
   String get passwordHint => "Digite sua senha";
 
   @override
+  String get name => "Nome";
+
+  @override
+  String get nameHint => "Digite seu nome completo";
+
+  @override
   String get enter => "Entrar";
+
+  @override
+  String get advance => "Avançar";
 
   @override
   String get doNotHaveAccount => "Não tem uma conta?";
 
   @override
+  String get alreadyHaveAccount => "Já possui uma conta?";
+
+  @override
   String get register => "Cadastrar-se";
+
+  @override
+  String get makeLogin => "Fazer login";
   //endregion
 
   //region Error

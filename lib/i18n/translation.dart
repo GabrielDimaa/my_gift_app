@@ -2,14 +2,20 @@ abstract class Translation {
   //region General
   String get login;
   String get loginWithGoogle;
+  String get signupWithGoogle;
   String get loginOu;
   String get email;
   String get emailHint;
   String get password;
   String get passwordHint;
+  String get name;
+  String get nameHint;
   String get enter;
+  String get advance;
   String get doNotHaveAccount;
+  String get alreadyHaveAccount;
   String get register;
+  String get makeLogin;
   //endregion
 
   //region Errors
