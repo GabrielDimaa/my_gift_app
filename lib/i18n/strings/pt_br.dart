@@ -39,6 +39,12 @@ class PtBr implements Translation {
   String get nameHint => "Digite seu nome completo";
 
   @override
+  String get photo => "Foto";
+
+  @override
+  String get addPhotoProfile => "Adicionar foto de perfil";
+
+  @override
   String get enter => "Entrar";
 
   @override
@@ -55,6 +61,9 @@ class PtBr implements Translation {
 
   @override
   String get makeLogin => "Fazer login";
+
+  @override
+  String get createAccount => "Criar conta";
   //endregion
 
   //region Error

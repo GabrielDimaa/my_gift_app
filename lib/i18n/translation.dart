@@ -12,12 +12,15 @@ abstract class Translation {
   String get confirmPasswordHint;
   String get name;
   String get nameHint;
+  String get photo;
+  String get addPhotoProfile;
   String get enter;
   String get advance;
   String get doNotHaveAccount;
   String get alreadyHaveAccount;
   String get register;
   String get makeLogin;
+  String get createAccount;
   //endregion
 
   //region Errors
