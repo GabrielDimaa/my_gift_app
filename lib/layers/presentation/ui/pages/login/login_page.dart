@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                           "assets/icons/google.svg",
                           width: 22,
                           height: 22,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onBackground,
                         ),
                         onPressed: () {
                           // TODO: Implementar Entrar com o Google

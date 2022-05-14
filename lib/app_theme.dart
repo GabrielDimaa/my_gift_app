@@ -11,18 +11,26 @@ class AppTheme extends StatelessWidget {
       title: 'Desejando',
       debugShowCheckedModeBanner: false,
       initialRoute: "/signup_photo",
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           elevation: 0,
+          iconTheme: IconThemeData(
+            color: dark,
+          ),
         ),
         brightness: Brightness.light,
         colorScheme: _colorSchemeLight,
         scaffoldBackgroundColor: light,
         textTheme: _textThemeLight,
         fontFamily: 'Sarabun',
+        textSelectionTheme: TextSelectionThemeData(cursorColor: secondary),
         elevatedButtonTheme: _elevatedButtonTheme,
         textButtonTheme: _textButtonTheme,
+        inputDecorationTheme: _inputDecorationThemeLight,
+        iconTheme: IconThemeData(
+          color: dark,
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -34,6 +42,9 @@ class AppTheme extends StatelessWidget {
         inputDecorationTheme: _inputDecorationThemeDark,
         elevatedButtonTheme: _elevatedButtonTheme,
         textButtonTheme: _textButtonTheme,
+        iconTheme: IconThemeData(
+          color: light,
+        ),
       ),
       getPages: Routes().getRoutes(),
     );
@@ -53,7 +64,9 @@ class AppTheme extends StatelessWidget {
 
   Color get error => const Color(0xFFE54B4B);
 
-  Color get surface => const Color(0xFF303134);
+  Color get surfaceDark => const Color(0xFF303134);
+
+  Color get surfaceLight => const Color(0xFFD6D6D6);
 
   ColorScheme get _colorSchemeLight => ColorScheme.dark(
         brightness: Brightness.light,
@@ -69,7 +82,7 @@ class AppTheme extends StatelessWidget {
         onError: error,
         background: light,
         onBackground: dark,
-        surface: surface,
+        surface: surfaceLight,
         onSurface: light,
       );
 
@@ -87,7 +100,7 @@ class AppTheme extends StatelessWidget {
         onError: error,
         background: dark,
         onBackground: light,
-        surface: surface,
+        surface: surfaceDark,
         onSurface: light,
       );
 
@@ -134,7 +147,7 @@ class AppTheme extends StatelessWidget {
 
   InputDecorationTheme get _inputDecorationThemeDark => InputDecorationTheme(
         filled: true,
-        fillColor: surface,
+        fillColor: surfaceDark,
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
         hintStyle: const TextStyle(color: Color(0xFFC1C1C1), fontWeight: FontWeight.w300),
         enabledBorder: OutlineInputBorder(
@@ -156,6 +169,32 @@ class AppTheme extends StatelessWidget {
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
           borderSide: BorderSide(color: error),
+        ),
+        errorStyle: TextStyle(color: error),
+      );
+
+  InputDecorationTheme get _inputDecorationThemeLight => InputDecorationTheme(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+        hintStyle: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.w300),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide(color: dark, width: 2),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide(color: secondary, width: 2),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide(color: dark),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide(color: error, width: 2),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide(color: error, width: 2),
         ),
         errorStyle: TextStyle(color: error),
       );
