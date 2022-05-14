@@ -27,6 +27,12 @@ class PtBr implements Translation {
   String get passwordHint => "Digite sua senha";
 
   @override
+  String get confirmPassword => "Confirmar senha";
+
+  @override
+  String get confirmPasswordHint => "Confirme sua senha";
+
+  @override
   String get name => "Nome";
 
   @override

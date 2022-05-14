@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../../i18n/resources.dart';
+import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import '../../components/text_field_default.dart';
 import '../widgets/button_login_with_widget.dart';
@@ -20,7 +22,7 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
+          padding: const PaddingDefault(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -33,7 +35,12 @@ class _SignupPageState extends State<SignupPage> {
                       const SizedBoxDefault(4),
                       ButtonLoginWithWidget(
                         text: R.string.signupWithGoogle,
-                        icon: Icons.facebook,
+                        icon: SvgPicture.asset(
+                          "assets/icons/google.svg",
+                          width: 22,
+                          height: 22,
+                          color: Colors.white,
+                        ),
                         onPressed: () {
                           // TODO: Implementar Entrar com o Google
                           // TODO: Ícone do Google

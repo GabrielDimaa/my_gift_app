@@ -8,6 +8,8 @@ abstract class Translation {
   String get emailHint;
   String get password;
   String get passwordHint;
+  String get confirmPassword;
+  String get confirmPasswordHint;
   String get name;
   String get nameHint;
   String get enter;

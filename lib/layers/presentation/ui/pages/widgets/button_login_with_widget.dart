@@ -4,7 +4,7 @@ import '../../components/sized_box_default.dart';
 
 class ButtonLoginWithWidget extends StatelessWidget {
   final String text;
-  final IconData icon;
+  final Widget icon;
   final VoidCallback onPressed;
 
   const ButtonLoginWithWidget({
@@ -30,7 +30,7 @@ class ButtonLoginWithWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon),
+            icon,
             const SizedBoxDefault.horizontal(),
             Text(text, style: Theme.of(context).textTheme.bodyText1),
           ],

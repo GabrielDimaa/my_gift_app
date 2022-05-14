@@ -10,9 +10,12 @@ class AppTheme extends StatelessWidget {
     return GetMaterialApp(
       title: 'Desejando',
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      initialRoute: "/signup_password",
       themeMode: ThemeMode.dark,
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+        ),
         brightness: Brightness.light,
         colorScheme: _colorSchemeLight,
         scaffoldBackgroundColor: light,
