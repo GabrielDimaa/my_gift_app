@@ -15,7 +15,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   @override
   Future<UserModel> authWithEmail(LoginParams params) async {
     try {
-      final UserCredential credential = await firebaseAuth.signInWithEmailAndPassword(email: params.email, password: params.password);
+      final UserCredential credential = await firebaseAuth.signInWithEmailAndPassword(email: params.email!, password: params.password!);
       final UserModel? user = credential.toModel();
 
       if (user == null) throw NotFoundInfraError();

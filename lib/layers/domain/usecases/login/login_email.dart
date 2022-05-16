@@ -13,8 +13,9 @@ class LoginEmail implements ILoginEmail {
   @override
   Future<UserEntity> auth(LoginParams params) async {
     try {
-      final UserEntity user = await userAccountRepository.authWithEmail(params);
+      validate(params);
 
+      final UserEntity user = await userAccountRepository.authWithEmail(params);
       if (!user.emailVerified) throw EmailNotVerifiedDomainError();
 
       return user;
@@ -24,5 +25,10 @@ class LoginEmail implements ILoginEmail {
     } catch (e) {
       throw UnexpectedDomainError(R.string.loginError);
     }
+  }
+
+  void validate(LoginParams params) {
+    if (params.email == null || params.email!.isEmpty) throw ValidationDomainError(message: R.string.emailNotInformedError);
+    if (params.password == null || params.password!.isEmpty) throw ValidationDomainError(message: R.string.passwordNotInformedError);
   }
 }

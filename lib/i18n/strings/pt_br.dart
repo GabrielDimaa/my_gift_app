@@ -66,6 +66,17 @@ class PtBr implements Translation {
   String get createAccount => "Criar conta";
   //endregion
 
+  //region Validation
+  @override
+  String get requiredField => "Campo obrigatório!";
+
+  @override
+  String get emailInvalidField => "Email inválido!";
+
+  @override
+  String get shortPasswordField => "Senha deve conter pelo menos 8 caracteres!";
+  //endregion
+
   //region Error
   @override
   String get unexpectedError => "Aconteceu algo inesperado.";
@@ -113,7 +124,13 @@ class PtBr implements Translation {
   String get emailInvalidError => "Email inválido.";
 
   @override
+  String get emailNotInformedError => "Email não informado.";
+
+  @override
   String get passwordError => "Senha inválida.";
+
+  @override
+  String get passwordNotInformedError => "Senha não informada.";
 
   @override
   String get shortPasswordError => "Senha muito curta.";

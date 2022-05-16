@@ -23,6 +23,12 @@ abstract class Translation {
   String get createAccount;
   //endregion
 
+  //region Validation
+  String get requiredField;
+  String get emailInvalidField;
+  String get shortPasswordField;
+  //endregion
+
   //region Errors
   String get unexpectedError;
   String get connectionError;
@@ -39,7 +45,9 @@ abstract class Translation {
   String get emailInUseError;
   String get emailNotVerifiedError;
   String get emailInvalidError;
+  String get emailNotInformedError;
   String get passwordError;
+  String get passwordNotInformedError;
   String get shortPasswordError;
   String get permissionDeniedError;
   String get unauthenticatedError;

@@ -10,15 +10,9 @@ class AppTheme extends StatelessWidget {
     return GetMaterialApp(
       title: 'Desejando',
       debugShowCheckedModeBanner: false,
-      initialRoute: "/signup_photo",
-      themeMode: ThemeMode.light,
+      initialRoute: "/login",
+      themeMode: ThemeMode.dark,
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          elevation: 0,
-          iconTheme: IconThemeData(
-            color: dark,
-          ),
-        ),
         brightness: Brightness.light,
         colorScheme: _colorSchemeLight,
         scaffoldBackgroundColor: light,
@@ -28,8 +22,21 @@ class AppTheme extends StatelessWidget {
         elevatedButtonTheme: _elevatedButtonTheme,
         textButtonTheme: _textButtonTheme,
         inputDecorationTheme: _inputDecorationThemeLight,
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+          iconTheme: IconThemeData(
+            color: dark,
+          ),
+        ),
         iconTheme: IconThemeData(
           color: dark,
+        ),
+        dialogBackgroundColor: light,
+        dialogTheme: DialogTheme(
+          backgroundColor: light,
+          elevation: 4,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+          contentTextStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         ),
       ),
       darkTheme: ThemeData(
@@ -44,6 +51,13 @@ class AppTheme extends StatelessWidget {
         textButtonTheme: _textButtonTheme,
         iconTheme: IconThemeData(
           color: light,
+        ),
+        dialogBackgroundColor: dark,
+        dialogTheme: DialogTheme(
+          backgroundColor: dark,
+          elevation: 4,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+          contentTextStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         ),
       ),
       getPages: Routes().getRoutes(),
@@ -164,11 +178,11 @@ class AppTheme extends StatelessWidget {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: error),
+          borderSide: BorderSide(color: error, width: 2),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: error),
+          borderSide: BorderSide(color: error, width: 2),
         ),
         errorStyle: TextStyle(color: error),
       );
