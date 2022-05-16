@@ -75,6 +75,9 @@ class PtBr implements Translation {
 
   @override
   String get shortPasswordField => "Senha deve conter pelo menos 8 caracteres!";
+
+  @override
+  String get passwordsNotMatchField => "As senhas não coincidem";
   //endregion
 
   //region Error

@@ -9,9 +9,9 @@ import '../../components/form/validators/input_validators.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import '../../components/form/text_field_default.dart';
-import '../widgets/button_login_with_widget.dart';
-import '../widgets/divider_or_widget.dart';
-import '../widgets/header_widget.dart';
+import './widgets/button_login_with_widget.dart';
+import './widgets/header_widget.dart';
+import './widgets/divider_or_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

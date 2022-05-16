@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../components/sized_box_default.dart';
+import '../../../components/sized_box_default.dart';
 
 class HeaderWidget extends StatelessWidget {
   final String text;

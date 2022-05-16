@@ -39,8 +39,25 @@ class InputPasswordValidator implements IInputValidator {
   @override
   String? validate(String? value) {
     if (value == null || value.isEmpty) return _requiredField;
-
     if (value.length < 8) return _message;
+
+    return null;
+  }
+}
+
+class InputConfirmPasswordValidator implements IInputValidator {
+  final String? password;
+
+  InputConfirmPasswordValidator(this.password);
+
+  @override
+  String get _message => R.string.shortPasswordField;
+
+  @override
+  String? validate(String? value) {
+    if (value == null || value.isEmpty) return _requiredField;
+    if (value.length < 8) return _message;
+    if (value != password) return R.string.passwordsNotMatchField;
 
     return null;
   }

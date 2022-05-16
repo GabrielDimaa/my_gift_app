@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../i18n/resources.dart';
+import '../../../../../../i18n/resources.dart';
 
 class DividerOrWidget extends StatelessWidget {
   const DividerOrWidget({Key? key}) : super(key: key);
