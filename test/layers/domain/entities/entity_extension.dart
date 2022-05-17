@@ -53,7 +53,6 @@ extension UserExtension on UserEntity {
   bool equals(UserEntity entity) {
     return entity.id == id &&
         entity.email == email &&
-        entity.phone == phone &&
         entity.password == password &&
         entity.name == name &&
         entity.photo == photo &&

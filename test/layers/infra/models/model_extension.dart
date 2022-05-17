@@ -53,7 +53,6 @@ extension UserModelExtension on UserModel {
   bool equals(UserModel model) {
     return model.id == id &&
         model.email == email &&
-        model.phone == phone &&
         model.password == password &&
         model.name == name &&
         model.photo == photo &&

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../../../extensions/string_extension.dart';
 import '../../../../i18n/resources.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/helpers/errors/domain_error.dart';

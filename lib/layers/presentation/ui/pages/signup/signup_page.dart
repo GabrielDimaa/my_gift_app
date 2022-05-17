@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/signup/getx_signup_presenter.dart';
 import '../../components/dialogs/error_dialog.dart';
+import '../../components/form/mask/input_mask.dart';
 import '../../components/form/validators/input_validators.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
@@ -80,7 +81,7 @@ class _SignupPageState extends State<SignupPage> {
                               label: R.string.email,
                               hint: R.string.emailHint,
                               controller: _emailController,
-                              textInputAction: TextInputAction.done,
+                              textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.emailAddress,
                               onSaved: presenter.viewModel.setEmail,
                               validator: InputEmailValidator().validate,

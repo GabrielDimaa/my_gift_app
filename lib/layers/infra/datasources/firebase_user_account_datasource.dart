@@ -36,6 +36,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       if (model.password == null) throw WrongPasswordInfraError();
 
       final UserCredential credential = await firebaseAuth.createUserWithEmailAndPassword(email: model.email, password: model.password!);
+
       final UserModel? user = credential.toModel();
 
       if (user == null) throw Exception();

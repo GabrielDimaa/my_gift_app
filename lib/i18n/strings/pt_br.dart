@@ -74,10 +74,13 @@ class PtBr implements Translation {
   String get emailInvalidField => "Email inválido!";
 
   @override
+  String get phoneInvalidField => "Número inválido!";
+
+  @override
   String get shortPasswordField => "Senha deve conter pelo menos 8 caracteres!";
 
   @override
-  String get passwordsNotMatchField => "As senhas não coincidem";
+  String get passwordsNotMatchField => "As senhas não coincidem!";
   //endregion
 
   //region Error

@@ -58,7 +58,6 @@ class UserMock extends Mock implements User {
   late String _displayName;
   late String _email;
   late bool _emailVerified;
-  late String _phoneNumber;
   String? _photoURL;
 
   UserMock({
@@ -73,7 +72,6 @@ class UserMock extends Mock implements User {
     _displayName = displayName ?? faker.person.name();
     _email = email ?? faker.internet.email();
     _emailVerified = emailVerified ?? true;
-    _phoneNumber = phoneNumber ?? faker.phoneNumber.random.fromPattern(["(##)#####-####"]);
     _photoURL = photoURL ?? faker.internet.httpsUrl();
   }
 
@@ -88,9 +86,6 @@ class UserMock extends Mock implements User {
 
   @override
   bool get emailVerified => _emailVerified;
-
-  @override
-  String? get phoneNumber => _phoneNumber;
 
   @override
   String? get photoURL => _photoURL;

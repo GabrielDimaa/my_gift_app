@@ -26,6 +26,7 @@ abstract class Translation {
   //region Validation
   String get requiredField;
   String get emailInvalidField;
+  String get phoneInvalidField;
   String get shortPasswordField;
   String get passwordsNotMatchField;
   //endregion

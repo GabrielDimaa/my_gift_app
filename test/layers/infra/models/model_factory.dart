@@ -34,7 +34,6 @@ abstract class ModelFactory {
         id: withId ? faker.guid.guid() : null,
         name: faker.person.name(),
         email: faker.internet.email(),
-        phone: faker.phoneNumber.random.fromPattern(["(##)#####-####"]),
         photo: faker.internet.httpsUrl(),
         emailVerified: emailVerified,
         password: password,

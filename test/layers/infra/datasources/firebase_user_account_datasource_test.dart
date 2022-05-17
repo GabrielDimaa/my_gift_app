@@ -25,7 +25,6 @@ void main() {
         id: userFirebase.uid,
         name: userFirebase.displayName!,
         email: userFirebase.email!,
-        phone: userFirebase.phoneNumber!,
         photo: userFirebase.photoURL,
         emailVerified: userFirebase.emailVerified,
       );
@@ -51,7 +50,6 @@ void main() {
       final UserModel userResponse = await sut.authWithEmail(loginParams);
       expect(userResponse.id, userResult.id);
       expect(userResponse.email, userResult.email);
-      expect(userResponse.phone, userResult.phone);
     });
 
     test("Deve retornar NotFoundInfraError se signIn retornar credential.user null", () {
@@ -124,7 +122,6 @@ void main() {
         id: userFirebase.uid,
         name: userFirebase.displayName!,
         email: userFirebase.email!,
-        phone: userFirebase.phoneNumber!,
         photo: userFirebase.photoURL,
         emailVerified: userFirebase.emailVerified,
       );
@@ -152,7 +149,6 @@ void main() {
       final UserModel userResponse = await sut.signUpWithEmail(userRequest);
       expect(userResponse.id, userResult.id);
       expect(userResponse.email, userResult.email);
-      expect(userResponse.phone, userResult.phone);
     });
 
     test("Deve throw WrongPasswordInfraError se password for igual a null", () {

@@ -7,7 +7,6 @@ class SignupViewModel {
   RxnString email = RxnString();
   RxnString password = RxnString();
   RxnString confirmPassword = RxnString();
-  RxnString phone = RxnString();
 
   void setName(String? value) => name.value = value;
 
@@ -17,13 +16,10 @@ class SignupViewModel {
 
   void setConfirmPassword(String? value) => confirmPassword.value = value;
 
-  void setPhone(String? value) => phone.value = value;
-
   UserEntity toEntity() {
     return UserEntity(
       name: name.value!,
       email: email.value!,
-      phone: phone.value!,
       emailVerified: false,
       password: password.value!,
     );
