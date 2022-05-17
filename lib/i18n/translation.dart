@@ -49,6 +49,7 @@ abstract class Translation {
   String get emailNotInformedError;
   String get passwordError;
   String get passwordNotInformedError;
+  String get nameNotInformedError;
   String get shortPasswordError;
   String get permissionDeniedError;
   String get unauthenticatedError;

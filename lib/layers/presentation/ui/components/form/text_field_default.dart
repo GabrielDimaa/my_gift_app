@@ -13,6 +13,7 @@ class TextFieldDefault extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
   final Function(String)? onFieldSubmitted;
+  final TextCapitalization textCapitalization;
 
   const TextFieldDefault({
     Key? key,
@@ -27,6 +28,7 @@ class TextFieldDefault extends StatelessWidget {
     this.textInputAction,
     this.keyboardType,
     this.onFieldSubmitted,
+    this.textCapitalization = TextCapitalization.sentences,
   }) : super(key: key);
 
   @override
@@ -48,7 +50,7 @@ class TextFieldDefault extends StatelessWidget {
           obscureText: obscureText,
           textInputAction: textInputAction,
           keyboardType: keyboardType,
-          textCapitalization: TextCapitalization.sentences,
+          textCapitalization: textCapitalization,
           onFieldSubmitted: onFieldSubmitted,
           decoration: InputDecoration(
             hintText: hint,

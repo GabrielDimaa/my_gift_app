@@ -1,8 +1,11 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
+import '../../../presenters/signup/getx_signup_presenter.dart';
 import '../../components/app_bar/app_bar_default.dart';
+import '../../components/dialogs/error_dialog.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 
@@ -14,6 +17,8 @@ class SignupPhotoPage extends StatefulWidget {
 }
 
 class _SignupPhotoPageState extends State<SignupPhotoPage> {
+  final GetxSignupPresenter presenter = Get.find<GetxSignupPresenter>();
+
   double get radius => 18;
 
   @override
@@ -67,8 +72,12 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
               ),
               ElevatedButton(
                 child: Text(R.string.createAccount),
-                onPressed: () {
-                  // TODO: Implementar Avançar
+                onPressed: () async {
+                  try {
+                    await presenter.signup();
+                  } catch (e) {
+                    ErrorDialog.show(context: context, content: e.toString());
+                  }
                 },
               ),
             ],

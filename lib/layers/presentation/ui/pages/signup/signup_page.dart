@@ -21,7 +21,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final GetxSignupPresenter _presenter = Get.find<GetxSignupPresenter>();
+  final GetxSignupPresenter presenter = Get.find<GetxSignupPresenter>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -53,7 +53,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         onPressed: () async {
                           try {
-                            await _presenter.signupWithGoogle();
+                            await presenter.signupWithGoogle();
                           } catch (e) {
                             ErrorDialog.show(context: context, content: e.toString());
                           }
@@ -72,8 +72,8 @@ class _SignupPageState extends State<SignupPage> {
                               controller: _nameController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
-                              onSaved: _presenter.viewModel.setName,
-                              validator: InputEmailValidator().validate,
+                              onSaved: presenter.viewModel.setName,
+                              validator: InputRequiredValidator().validate,
                             ),
                             const SizedBoxDefault(2),
                             TextFieldDefault(
@@ -82,8 +82,9 @@ class _SignupPageState extends State<SignupPage> {
                               controller: _emailController,
                               textInputAction: TextInputAction.done,
                               keyboardType: TextInputType.emailAddress,
-                              onSaved: _presenter.viewModel.setEmail,
+                              onSaved: presenter.viewModel.setEmail,
                               validator: InputEmailValidator().validate,
+                              textCapitalization: TextCapitalization.none,
                             ),
                           ],
                         ),
@@ -101,7 +102,7 @@ class _SignupPageState extends State<SignupPage> {
                           Text(R.string.alreadyHaveAccount, style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 16)),
                           TextButton(
                             child: Text(R.string.makeLogin, style: const TextStyle(fontSize: 16)),
-                            onPressed: () async => await _presenter.navigateToLogin(),
+                            onPressed: () async => await presenter.navigateToLogin(),
                           ),
                         ],
                       ),
@@ -119,7 +120,7 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> _advance() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await _presenter.navigateToSignupPassword();
+      await presenter.navigateToSignupPassword();
     }
   }
 }

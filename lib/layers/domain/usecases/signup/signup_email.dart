@@ -12,7 +12,7 @@ class SignUpEmail implements ISignUpEmail {
   @override
   Future<UserEntity> signUp(UserEntity entity) async {
     try {
-      if ((entity.password?.trim().length ?? 0) < 8) throw PasswordDomainError(message: R.string.shortPasswordError);
+      if ((entity.password?.length ?? 0) < 8) throw PasswordDomainError(message: R.string.shortPasswordError);
 
       return await userAccountRepository.signUpWithEmail(entity);
     } on DomainError {

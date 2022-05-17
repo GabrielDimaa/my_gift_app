@@ -1,9 +1,9 @@
 class LoginParams {
-  final String? email;
-  final String? password;
+  final String email;
+  final String password;
 
   LoginParams({
-    this.email,
-    this.password,
+    required this.email,
+    required this.password,
   });
 }

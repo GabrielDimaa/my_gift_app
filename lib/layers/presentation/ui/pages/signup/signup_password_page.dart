@@ -1,10 +1,10 @@
-import 'package:desejando_app/layers/presentation/ui/components/form/validators/input_validators.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/signup/getx_signup_presenter.dart';
 import '../../components/app_bar/app_bar_default.dart';
+import '../../components/form/validators/input_validators.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import '../../components/form/text_field_default.dart';
@@ -17,7 +17,7 @@ class SignupPasswordPage extends StatefulWidget {
 }
 
 class _SignupPasswordPageState extends State<SignupPasswordPage> {
-  final GetxSignupPresenter _presenter = Get.find<GetxSignupPresenter>();
+  final GetxSignupPresenter presenter = Get.find<GetxSignupPresenter>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
@@ -48,8 +48,9 @@ class _SignupPasswordPageState extends State<SignupPasswordPage> {
                               controller: _passwordController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.visiblePassword,
-                              onSaved: _presenter.viewModel.setPassword,
+                              onSaved: presenter.viewModel.setPassword,
                               validator: InputPasswordValidator().validate,
+                              obscureText: true,
                             ),
                             const SizedBoxDefault(3),
                             TextFieldDefault(
@@ -58,8 +59,9 @@ class _SignupPasswordPageState extends State<SignupPasswordPage> {
                               controller: _confirmPasswordController,
                               textInputAction: TextInputAction.done,
                               keyboardType: TextInputType.visiblePassword,
-                              onSaved: _presenter.viewModel.setConfirmPassword,
-                              validator: InputConfirmPasswordValidator(_passwordController.text).validate,
+                              onSaved: presenter.viewModel.setConfirmPassword,
+                              validator: (String? value) => InputConfirmPasswordValidator(_passwordController.text).validate(value),
+                              obscureText: true,
                             ),
                           ],
                         ),
@@ -82,7 +84,7 @@ class _SignupPasswordPageState extends State<SignupPasswordPage> {
   Future<void> _advance() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await _presenter.navigateToSignupPhoto();
+      await presenter.navigateToSignupPhoto();
     }
   }
 }

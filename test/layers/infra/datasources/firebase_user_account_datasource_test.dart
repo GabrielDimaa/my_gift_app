@@ -34,7 +34,7 @@ void main() {
     void mockFirebaseException(String code) => firebaseAuthSpy.mockSignInWithEmailAndPasswordError(FirebaseAuthException(code: code));
 
     setUp(() async {
-      firebaseAuthSpy = FirebaseAuthSpy(email: loginParams.email!, password: loginParams.password!);
+      firebaseAuthSpy = FirebaseAuthSpy(email: loginParams.email, password: loginParams.password);
       sut = FirebaseUserAccountDataSource(firebaseAuth: firebaseAuthSpy);
 
       userResultMock();
@@ -42,11 +42,11 @@ void main() {
 
     test("Deve chamar signInWithEmailAndPassword com valores corretos", () async {
       await sut.authWithEmail(loginParams);
-      verify(() => firebaseAuthSpy.signInWithEmailAndPassword(email: loginParams.email!, password: loginParams.password!));
+      verify(() => firebaseAuthSpy.signInWithEmailAndPassword(email: loginParams.email, password: loginParams.password));
     });
 
     test("Deve retornar UserModel com sucesso", () async {
-      firebaseAuthSpy.mockSignInWithEmailAndPassword(email: loginParams.email!, password: loginParams.password!, user: userFirebase);
+      firebaseAuthSpy.mockSignInWithEmailAndPassword(email: loginParams.email, password: loginParams.password, user: userFirebase);
 
       final UserModel userResponse = await sut.authWithEmail(loginParams);
       expect(userResponse.id, userResult.id);
@@ -55,7 +55,7 @@ void main() {
     });
 
     test("Deve retornar NotFoundInfraError se signIn retornar credential.user null", () {
-      firebaseAuthSpy.mockSignInWithEmailAndPassword(email: loginParams.email!, password: loginParams.password!, user: null);
+      firebaseAuthSpy.mockSignInWithEmailAndPassword(email: loginParams.email, password: loginParams.password, user: null);
 
       final Future future = sut.authWithEmail(loginParams);
       expect(future, throwsA(isA<NotFoundInfraError>()));

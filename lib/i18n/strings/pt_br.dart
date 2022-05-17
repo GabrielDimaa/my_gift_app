@@ -136,6 +136,9 @@ class PtBr implements Translation {
   String get passwordNotInformedError => "Senha não informada.";
 
   @override
+  String get nameNotInformedError => "Nome não informado.";
+
+  @override
   String get shortPasswordError => "Senha muito curta.";
 
   @override
