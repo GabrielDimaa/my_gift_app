@@ -41,7 +41,37 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
 
       if (user == null) throw Exception();
 
+      await sendVerificationEmail();
+
       return user;
+    } on FirebaseAuthException catch (e) {
+      throw e.getInfraError;
+    } on InfraError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedInfraError();
+    }
+  }
+
+  @override
+  Future<void> sendVerificationEmail() async {
+    try {
+      if (firebaseAuth.currentUser == null) throw Exception();
+      await firebaseAuth.currentUser?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      throw e.getInfraError;
+    } on InfraError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedInfraError();
+    }
+  }
+
+  @override
+  Future<bool> checkEmailVerified(String userId) async {
+    try {
+      if (firebaseAuth.currentUser == null) throw Exception();
+      return firebaseAuth.currentUser!.emailVerified;
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
     } on InfraError {

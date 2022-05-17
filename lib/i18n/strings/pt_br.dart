@@ -163,6 +163,12 @@ class PtBr implements Translation {
   String get signUpError => "Não foi possível criar sua conta de usuário. Tente novamente.";
 
   @override
+  String get sendVerificationEmailError => "Não foi possível enviar email de verificação. Tente novamente.";
+
+  @override
+  String get checkEmailVerifiedError => "Não foi possível averiguar a confirmação de email. Tente novamente.";
+
+  @override
   String get loginNotFoundError => "Email ou senha estão incorretos.";
 
   @override

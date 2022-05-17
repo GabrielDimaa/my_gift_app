@@ -33,4 +33,26 @@ class UserAccountRepository implements IUserAccountRepository {
       throw UnexpectedInfraError().toDomainError();
     }
   }
+
+  @override
+  Future<void> sendVerificationEmail() async {
+    try {
+      await userAccountDataSource.sendVerificationEmail();
+    } on InfraError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedInfraError().toDomainError();
+    }
+  }
+
+  @override
+  Future<bool> checkEmailVerified(String userId) async {
+    try {
+      return await userAccountDataSource.checkEmailVerified(userId);
+    } on InfraError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedInfraError().toDomainError();
+    }
+  }
 }

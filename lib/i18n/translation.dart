@@ -58,6 +58,8 @@ abstract class Translation {
   String get resourceExhaustedError;
   String get loginError;
   String get signUpError;
+  String get sendVerificationEmailError;
+  String get checkEmailVerifiedError;
   String get loginNotFoundError;
   String get actionCodeError;
   String get getError;
