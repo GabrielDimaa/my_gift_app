@@ -1,4 +1,4 @@
-import 'package:desejando_app/layers/domain/usecases/wishlist/delete_wishlist.dart';
+import 'package:desejando_app/layers/domain/usecases/implements/wishlist/delete_wishlist.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';

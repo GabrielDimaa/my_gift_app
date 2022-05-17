@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-import '../layers/domain/usecases/login/login_email.dart';
-import '../layers/domain/usecases/signup/signup_email.dart';
+import '../layers/domain/usecases/implements/login/login_email.dart';
+import '../layers/domain/usecases/implements/signup/signup_email.dart';
 import '../layers/infra/datasources/firebase_user_account_datasource.dart';
 import '../layers/infra/repositories/user_account_repository.dart';
 import '../layers/presentation/presenters/login/getx_login_presenter.dart';

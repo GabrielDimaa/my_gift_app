@@ -4,7 +4,7 @@ import './signup_presenter.dart';
 import '../../../../i18n/resources.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/helpers/errors/domain_error.dart';
-import '../../../domain/usecases/signup/i_signup_email.dart';
+import '../../../domain/usecases/abstracts/signup/i_signup_email.dart';
 import '../../helpers/mixins/loading_manager.dart';
 import '../../ui/pages/login/login_page.dart';
 import '../../ui/pages/signup/signup_password_page.dart';

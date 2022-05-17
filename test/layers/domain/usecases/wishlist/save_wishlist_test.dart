@@ -1,4 +1,4 @@
-import 'package:desejando_app/layers/domain/usecases/wishlist/save_wishlist.dart';
+import 'package:desejando_app/layers/domain/usecases/implements/wishlist/save_wishlist.dart';
 import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
 import 'package:desejando_app/layers/domain/entities/wishlist_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
