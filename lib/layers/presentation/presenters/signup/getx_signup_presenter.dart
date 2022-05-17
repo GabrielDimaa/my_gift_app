@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../../../extensions/string_extension.dart';
+import './signup_presenter.dart';
 import '../../../../i18n/resources.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/helpers/errors/domain_error.dart';
@@ -10,7 +10,6 @@ import '../../ui/pages/login/login_page.dart';
 import '../../ui/pages/signup/signup_password_page.dart';
 import '../../ui/pages/signup/signup_photo_page.dart';
 import '../../viewmodels/signup_viewmodel.dart';
-import './signup_presenter.dart';
 
 class GetxSignupPresenter extends GetxController with LoadingManager implements SignupPresenter {
   final ISignUpEmail signUpEmail;

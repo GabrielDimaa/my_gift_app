@@ -1,5 +1,3 @@
-import 'package:desejando_app/extensions/string_extension.dart';
-
 import '../../../../../../i18n/resources.dart';
 
 final String _requiredField = R.string.requiredField;

@@ -5,14 +5,13 @@ import 'package:get/get.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/signup/getx_signup_presenter.dart';
 import '../../components/dialogs/error_dialog.dart';
-import '../../components/form/mask/input_mask.dart';
+import '../../components/form/text_field_default.dart';
 import '../../components/form/validators/input_validators.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
-import '../../components/form/text_field_default.dart';
+import '../login/widgets/button_login_with_widget.dart';
 import '../login/widgets/divider_or_widget.dart';
 import '../login/widgets/header_widget.dart';
-import '../login/widgets/button_login_with_widget.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
