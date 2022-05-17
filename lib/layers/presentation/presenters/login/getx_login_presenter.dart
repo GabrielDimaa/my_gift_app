@@ -46,6 +46,6 @@ class GetxLoginPresenter extends GetxController with LoadingManager implements L
 
   @override
   Future<void> navigateToSignUp() async {
-    await Get.to(() => const SignupPage());
+    await Get.off(() => const SignupPage());
   }
 }

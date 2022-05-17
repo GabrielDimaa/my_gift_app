@@ -19,25 +19,25 @@ class Injection {
 
   void setup() {
     //Firebase
-    Get.lazyPut(() => FirebaseAuth.instance);
+    Get.lazyPut(() => FirebaseAuth.instance, fenix: true);
     //endregion
 
     //region DataSource
-    Get.lazyPut(() => FirebaseUserAccountDataSource(firebaseAuth: Get.find<FirebaseAuth>()));
+    Get.lazyPut(() => FirebaseUserAccountDataSource(firebaseAuth: Get.find<FirebaseAuth>()), fenix: true);
     //endregion
 
     //region Repository
-    Get.lazyPut(() => UserAccountRepository(userAccountDataSource: Get.find<FirebaseUserAccountDataSource>()));
+    Get.lazyPut(() => UserAccountRepository(userAccountDataSource: Get.find<FirebaseUserAccountDataSource>()), fenix: true);
     //endregion
 
     //region UseCases
-    Get.lazyPut(() => LoginEmail(userAccountRepository: Get.find<UserAccountRepository>()));
-    Get.lazyPut(() => SignUpEmail(userAccountRepository: Get.find<UserAccountRepository>()));
+    Get.lazyPut(() => LoginEmail(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
+    Get.lazyPut(() => SignUpEmail(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     //endregion
 
     //region Presenters
-    Get.lazyPut(() => GetxLoginPresenter(loginWithEmail: Get.find<LoginEmail>()));
-    Get.lazyPut(() => GetxSignupPresenter(signUpEmail: Get.find<SignUpEmail>()));
+    Get.lazyPut(() => GetxLoginPresenter(loginWithEmail: Get.find<LoginEmail>()), fenix: true);
+    Get.lazyPut(() => GetxSignupPresenter(signUpEmail: Get.find<SignUpEmail>()), fenix: true);
     //endregion
   }
 }
