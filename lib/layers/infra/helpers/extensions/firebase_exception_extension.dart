@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../errors/infra_error.dart';
+import '../../helpers/errors/infra_error.dart';
 
 /*
 [ABORTED] A operação foi abortada, normalmente devido a um problema de simultaneidade, como abortos de transações, etc.

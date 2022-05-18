@@ -1,6 +1,6 @@
 import 'package:desejando_app/layers/domain/entities/wishlist_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
-import 'package:desejando_app/layers/infra/errors/infra_error.dart';
+import 'package:desejando_app/layers/infra/helpers/errors/infra_error.dart';
 import 'package:desejando_app/layers/infra/models/wishlist_model.dart';
 import 'package:desejando_app/layers/infra/repositories/wishlist_repository.dart';
 import 'package:faker/faker.dart';

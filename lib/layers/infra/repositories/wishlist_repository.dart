@@ -3,7 +3,7 @@ import '../../domain/repositories/i_wishlist_repository.dart';
 import '../../infra/models/wishlist_model.dart';
 import '../../domain/entities/wishlist_entity.dart';
 import '../datasources/i_wishlist_datasource.dart';
-import '../errors/infra_error.dart';
+import '../helpers/errors/infra_error.dart';
 import '../models/tag_model.dart';
 
 class WishlistRepository implements IWishlistRepository {

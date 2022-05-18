@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../../../i18n/resources.dart';
-import '../../errors/infra_error.dart';
+import '../../helpers/errors/infra_error.dart';
 import './i_storage_datasource.dart';
 
 class FirebaseStorageDataSource implements IStorageDataSource {

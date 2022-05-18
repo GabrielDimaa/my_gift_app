@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../helpers/extensions/firebase_exception_extension.dart';
 import './constants/collection_reference.dart';
-import '../errors/infra_error.dart';
+import '../helpers/errors/infra_error.dart';
 import 'i_wishlist_datasource.dart';
 import '../models/tag_model.dart';
 import '../models/wishlist_model.dart';

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:desejando_app/layers/infra/datasources/firebase_wish_datasource.dart';
-import 'package:desejando_app/layers/infra/errors/infra_error.dart';
+import 'package:desejando_app/layers/infra/helpers/errors/infra_error.dart';
 import 'package:desejando_app/layers/infra/models/wish_model.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,6 +1,6 @@
 import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
 import 'package:desejando_app/layers/infra/datasources/firebase_user_account_datasource.dart';
-import 'package:desejando_app/layers/infra/errors/infra_error.dart';
+import 'package:desejando_app/layers/infra/helpers/errors/infra_error.dart';
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';

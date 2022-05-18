@@ -1,7 +1,7 @@
 import '../../domain/entities/tag_entity.dart';
 import '../../domain/repositories/i_tag_repository.dart';
 import '../datasources/i_tag_datasource.dart';
-import '../errors/infra_error.dart';
+import '../helpers/errors/infra_error.dart';
 import '../models/tag_model.dart';
 
 class TagRepository implements ITagRepository {

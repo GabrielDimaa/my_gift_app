@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../errors/infra_error.dart';
+import '../../helpers/errors/infra_error.dart';
 
 
 extension FirebaseAuthExceptionExtension on FirebaseAuthException {

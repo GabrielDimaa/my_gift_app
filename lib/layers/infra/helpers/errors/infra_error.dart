@@ -1,5 +1,5 @@
-import '../../../i18n/resources.dart';
-import '../../domain/helpers/errors/domain_error.dart';
+import '../../../../i18n/resources.dart';
+import '../../../domain/helpers/errors/domain_error.dart';
 
 abstract class InfraError implements Exception {
   DomainError toDomainError();
