@@ -18,6 +18,7 @@ void main() {
 
   final LoginParams loginParams = ParamsFactory.login();
   final UserModel userModel = ModelFactory.user();
+  final String userId = userModel.id!;
 
   setUp(() {
     userAccountDataSourceSpy = FirebaseUserAccountDataSourceSpy(userModel);
@@ -143,6 +144,90 @@ void main() {
       final Future future = sut.signUpWithEmail(userModel.toEntity());
 
       expect(future, throwsA(isA<PasswordDomainError>()));
+    });
+  });
+
+  group("sendVerificationEmail", () {
+    test("Deve chamar sendVerificationEmail com valores corretos", () async {
+      await sut.sendVerificationEmail(userId);
+      verify(() => userAccountDataSourceSpy.sendVerificationEmail(userId));
+    });
+
+    test("Deve throw sendVerificationEmail", () {
+      userAccountDataSourceSpy.mockSendVerificationEmailError(NotFoundInfraError());
+      final Future future = sut.sendVerificationEmail(userId);
+
+      expect(future, throwsA(isA<NotFoundDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      userAccountDataSourceSpy.mockSendVerificationEmailError(UnexpectedInfraError());
+
+      final Future future = sut.sendVerificationEmail(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      userAccountDataSourceSpy.mockSendVerificationEmailError(ConnectionInfraError());
+
+      final Future future = sut.sendVerificationEmail(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError se CancelledInfraError", () {
+      userAccountDataSourceSpy.mockSendVerificationEmailError(CancelledInfraError());
+
+      final Future future = sut.sendVerificationEmail(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError se InternalInfraError", () {
+      userAccountDataSourceSpy.mockSendVerificationEmailError(InternalInfraError());
+
+      final Future future = sut.sendVerificationEmail(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+  });
+
+  group("checkEmailVerified", () {
+    test("Deve chamar sendVerificationEmail com valores corretos", () async {
+      await sut.checkEmailVerified(userId);
+      verify(() => userAccountDataSourceSpy.checkEmailVerified(userId));
+    });
+
+    test("Deve throw sendVerificationEmail", () {
+      userAccountDataSourceSpy.mockCheckEmailVerifiedError(NotFoundInfraError());
+      final Future future = sut.checkEmailVerified(userId);
+
+      expect(future, throwsA(isA<NotFoundDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      userAccountDataSourceSpy.mockCheckEmailVerifiedError(UnexpectedInfraError());
+
+      final Future future = sut.checkEmailVerified(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      userAccountDataSourceSpy.mockCheckEmailVerifiedError(ConnectionInfraError());
+
+      final Future future = sut.checkEmailVerified(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError se CancelledInfraError", () {
+      userAccountDataSourceSpy.mockCheckEmailVerifiedError(CancelledInfraError());
+
+      final Future future = sut.checkEmailVerified(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError se InternalInfraError", () {
+      userAccountDataSourceSpy.mockCheckEmailVerifiedError(InternalInfraError());
+
+      final Future future = sut.checkEmailVerified(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
   });
 }

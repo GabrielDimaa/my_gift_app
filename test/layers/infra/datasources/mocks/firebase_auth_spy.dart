@@ -89,4 +89,9 @@ class UserMock extends Mock implements User {
 
   @override
   String? get photoURL => _photoURL;
+
+  @override
+  Future<void> sendEmailVerification([ActionCodeSettings? actionCodeSettings]) async {
+    await Future.value();
+  }
 }
