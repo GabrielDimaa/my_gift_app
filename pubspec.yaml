@@ -19,6 +19,8 @@ dependencies:
   firebase_storage: ^10.2.15
   flutter_svg: ^1.0.3
   get: ^4.6.1
+  image_cropper: ^2.0.3
+  image_picker: ^0.8.5+3
   mask_text_input_formatter: ^2.3.0
 
 dev_dependencies:

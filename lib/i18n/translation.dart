@@ -41,6 +41,7 @@ abstract class Translation {
   String get invalidArgumentError;
   String get notFoundError;
   String get invalidDataError;
+  String get withoutPermissionError;
   String get nameTagEmptyError;
   String get colorTagEmptyError;
   String get wishlistUninformedError;

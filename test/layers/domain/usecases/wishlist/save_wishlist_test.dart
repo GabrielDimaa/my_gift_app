@@ -7,8 +7,8 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../domain/entities/entity_extension.dart';
 import '../../../domain/entities/entity_factory.dart';
-import '../../../infra/mocks/wish_repository_spy.dart';
-import '../../../infra/mocks/wishlist_repository_spy.dart';
+import '../../../infra/repositories/mocks/wish_repository_spy.dart';
+import '../../../infra/repositories/mocks/wishlist_repository_spy.dart';
 
 void main() {
   late SaveWishlist sut;

@@ -4,7 +4,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../infra/mocks/tag_repository_spy.dart';
+import '../../../infra/repositories/mocks/tag_repository_spy.dart';
 
 void main() {
   late DeleteTag sut;

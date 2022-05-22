@@ -6,7 +6,7 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../domain/entities/entity_extension.dart';
 import '../../../domain/entities/entity_factory.dart';
-import '../../../infra/mocks/tag_repository_spy.dart';
+import '../../../infra/repositories/mocks/tag_repository_spy.dart';
 
 void main() {
   late SaveTag sut;

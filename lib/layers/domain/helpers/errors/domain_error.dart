@@ -32,6 +32,13 @@ class ValidationDomainError extends DomainError {
   ValidationDomainError({String? message}) : message = message ?? R.string.invalidDataError;
 }
 
+class WithoutPermissionDomainError extends DomainError {
+  @override
+  final String message;
+
+  WithoutPermissionDomainError({String? message}) : message = message ?? R.string.withoutPermissionError;
+}
+
 //region Auth
 class EmailInUseDomainError extends DomainError {
   @override

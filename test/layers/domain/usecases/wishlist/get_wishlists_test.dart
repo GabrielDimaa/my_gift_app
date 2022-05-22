@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../domain/entities/entity_factory.dart';
-import '../../../infra/mocks/wishlist_repository_spy.dart';
+import '../../../infra/repositories/mocks/wishlist_repository_spy.dart';
 
 void main() {
   late GetWishlists sut;

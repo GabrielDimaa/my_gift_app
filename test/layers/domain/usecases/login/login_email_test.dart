@@ -7,7 +7,7 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../domain/entities/entity_factory.dart';
 import '../../../domain/params_factory.dart';
-import '../../../infra/mocks/user_account_repository_spy.dart';
+import '../../../infra/repositories/mocks/user_account_repository_spy.dart';
 
 void main() {
   late LoginEmail sut;

@@ -112,6 +112,9 @@ class PtBr implements Translation {
   String get invalidDataError => "Dados inválidos.";
 
   @override
+  String get withoutPermissionError => "Sem permissão.";
+
+  @override
   String get nameTagEmptyError => "Nome da tag precisa ser informado.";
 
   @override

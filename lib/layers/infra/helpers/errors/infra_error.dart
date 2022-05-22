@@ -74,6 +74,11 @@ class InvalidDataInfraError extends InfraError {
   DomainError toDomainError() => ValidationDomainError();
 }
 
+class WithoutPermissionInfraError extends InfraError {
+  @override
+  DomainError toDomainError() => WithoutPermissionDomainError();
+}
+
 //region Auth
 
 class EmailInvalidInfraError extends InfraError {

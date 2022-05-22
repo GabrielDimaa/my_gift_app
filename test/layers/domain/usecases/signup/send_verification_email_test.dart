@@ -4,7 +4,7 @@ import 'package:desejando_app/layers/domain/usecases/implements/signup/send_veri
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../infra/mocks/user_account_repository_spy.dart';
+import '../../../infra/repositories/mocks/user_account_repository_spy.dart';
 import '../../entities/entity_factory.dart';
 
 void main() {

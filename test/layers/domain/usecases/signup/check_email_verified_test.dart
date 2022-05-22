@@ -5,7 +5,7 @@ import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../infra/mocks/user_account_repository_spy.dart';
+import '../../../infra/repositories/mocks/user_account_repository_spy.dart';
 import '../../entities/entity_factory.dart';
 
 void main() {
