@@ -9,9 +9,9 @@ class SendVerificationEmail implements ISendVerificationEmail {
   SendVerificationEmail({required this.userAccountRepository});
 
   @override
-  Future<void> send() async {
+  Future<void> send(String userId) async {
     try {
-      await userAccountRepository.sendVerificationEmail();
+      await userAccountRepository.sendVerificationEmail(userId);
     } on DomainError {
       rethrow;
     } catch (e) {

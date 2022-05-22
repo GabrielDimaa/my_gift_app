@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../helpers/errors/infra_error.dart';
 import '../helpers/extensions/firebase_auth_exception_extension.dart';
 import '../helpers/extensions/firebase_user_credential_extension.dart';
 import '../../domain/helpers/params/login_params.dart';
-import '../errors/infra_error.dart';
+import '../helpers/errors/infra_error.dart';
 import 'i_user_account_datasource.dart';
 import '../models/user_model.dart';
 
@@ -37,13 +38,13 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
 
       final UserCredential credential = await firebaseAuth.createUserWithEmailAndPassword(email: model.email, password: model.password!);
 
-      final UserModel? user = credential.toModel();
-
+      User? user = firebaseAuth.currentUser;
       if (user == null) throw Exception();
 
-      await sendVerificationEmail();
+      await user.updateDisplayName(model.name);
+      await sendVerificationEmail(user.uid);
 
-      return user;
+      return model.clone(user.uid);
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
     } on InfraError {
@@ -54,7 +55,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   }
 
   @override
-  Future<void> sendVerificationEmail() async {
+  Future<void> sendVerificationEmail(String userId) async {
     try {
       if (firebaseAuth.currentUser == null) throw Exception();
       await firebaseAuth.currentUser?.sendEmailVerification();

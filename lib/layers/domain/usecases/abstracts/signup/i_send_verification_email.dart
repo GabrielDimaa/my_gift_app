@@ -1,3 +1,3 @@
 abstract class ISendVerificationEmail {
-  Future<void> send();
+  Future<void> send(String userId);
 }

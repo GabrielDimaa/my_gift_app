@@ -28,6 +28,17 @@ class UserModel {
     );
   }
 
+  UserModel clone(String? id) {
+    return UserModel(
+      id: id ?? this.id,
+      name: name,
+      email: email,
+      photo: photo,
+      emailVerified: emailVerified,
+      password: password,
+    );
+  }
+
   factory UserModel.fromEntity(UserEntity entity) {
     return UserModel(
       id: entity.id,

@@ -2,7 +2,7 @@ import '../../domain/entities/user_entity.dart';
 import '../../domain/helpers/params/login_params.dart';
 import '../../domain/repositories/i_user_account_repository.dart';
 import '../datasources/i_user_account_datasource.dart';
-import '../errors/infra_error.dart';
+import '../helpers/errors/infra_error.dart';
 import '../models/user_model.dart';
 
 class UserAccountRepository implements IUserAccountRepository {
@@ -35,9 +35,9 @@ class UserAccountRepository implements IUserAccountRepository {
   }
 
   @override
-  Future<void> sendVerificationEmail() async {
+  Future<void> sendVerificationEmail(String userId) async {
     try {
-      await userAccountDataSource.sendVerificationEmail();
+      await userAccountDataSource.sendVerificationEmail(userId);
     } on InfraError catch (e) {
       throw e.toDomainError();
     } catch (e) {
