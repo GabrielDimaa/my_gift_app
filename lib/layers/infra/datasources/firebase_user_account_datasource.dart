@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../domain/helpers/params/login_params.dart';
 import '../helpers/errors/infra_error.dart';
 import '../helpers/extensions/firebase_auth_exception_extension.dart';
 import '../helpers/extensions/firebase_user_credential_extension.dart';
-import '../../domain/helpers/params/login_params.dart';
-import '../helpers/errors/infra_error.dart';
-import 'i_user_account_datasource.dart';
 import '../models/user_model.dart';
+import 'i_user_account_datasource.dart';
 
 class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   final FirebaseAuth firebaseAuth;
@@ -36,7 +35,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
     try {
       if (model.password == null) throw WrongPasswordInfraError();
 
-      final UserCredential credential = await firebaseAuth.createUserWithEmailAndPassword(email: model.email, password: model.password!);
+      await firebaseAuth.createUserWithEmailAndPassword(email: model.email, password: model.password!);
 
       User? user = firebaseAuth.currentUser;
       if (user == null) throw Exception();

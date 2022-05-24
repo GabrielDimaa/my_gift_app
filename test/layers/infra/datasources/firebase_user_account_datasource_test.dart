@@ -113,19 +113,19 @@ void main() {
     late FirebaseAuthSpy firebaseAuthSpy;
 
     final UserModel userRequest = ModelFactory.user(withId: false);
-    late UserModel userResult;
-    late UserMock userFirebase;
+    // late UserModel userResult;
+    // late UserMock userFirebase;
 
-    void userResultMock() {
-      userFirebase = UserMock();
-      userResult = UserModel(
-        id: userFirebase.uid,
-        name: userFirebase.displayName!,
-        email: userFirebase.email!,
-        photo: userFirebase.photoURL,
-        emailVerified: userFirebase.emailVerified,
-      );
-    }
+    // void userResultMock() {
+    //   userFirebase = UserMock();
+    //   userResult = UserModel(
+    //     id: userFirebase.uid,
+    //     name: userFirebase.displayName!,
+    //     email: userFirebase.email!,
+    //     photo: userFirebase.photoURL,
+    //     emailVerified: userFirebase.emailVerified,
+    //   );
+    // }
 
     void mockFirebaseException(String code) => firebaseAuthSpy.mockCreateUserWithEmailAndPasswordError(FirebaseAuthException(code: code));
 
@@ -133,7 +133,7 @@ void main() {
       firebaseAuthSpy = FirebaseAuthSpy(email: userRequest.email, password: userRequest.password!);
       sut = FirebaseUserAccountDataSource(firebaseAuth: firebaseAuthSpy);
 
-      userResultMock();
+      //userResultMock();
     });
 
     // TODO: Comentado pq foi alterado o datasource e não foi implementado os mocks necessários
