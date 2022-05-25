@@ -17,7 +17,7 @@ void main() {
 
   setUp(() {
     imageCropperSpy = ImageCropperSpy(file: CroppedFile(path));
-    sut = ImageCropperFacade(imageCropperSpy);
+    sut = ImageCropperFacade(imageCropper: imageCropperSpy);
   });
 
   setUpAll(() {

@@ -29,6 +29,7 @@ abstract class Translation {
   String get phoneInvalidField;
   String get shortPasswordField;
   String get passwordsNotMatchField;
+  String get noImageSelected;
   //endregion
 
   //region Errors

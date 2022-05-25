@@ -18,7 +18,7 @@ void main() {
   group("camera", () {
     setUp(() {
       imagePickerSpy = ImagePickerSpy(source: ImageSource.camera, file: fileResult);
-      sut = ImagePickerFacade(imagePickerSpy);
+      sut = ImagePickerFacade(imagePicker: imagePickerSpy);
     });
 
     test("Deve chamar getFromCamera com valores corretos", () async {
@@ -56,7 +56,7 @@ void main() {
   group("gallery", () {
     setUp(() {
       imagePickerSpy = ImagePickerSpy(source: ImageSource.gallery, file: fileResult);
-      sut = ImagePickerFacade(imagePickerSpy);
+      sut = ImagePickerFacade(imagePicker: imagePickerSpy);
     });
 
     test("Deve chamar getFromGallery com valores corretos", () async {

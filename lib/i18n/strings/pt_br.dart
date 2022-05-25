@@ -81,6 +81,9 @@ class PtBr implements Translation {
 
   @override
   String get passwordsNotMatchField => "As senhas não coincidem!";
+
+  @override
+  String get noImageSelected => "Nenhuma imagem selecionada!";
   //endregion
 
   //region Error

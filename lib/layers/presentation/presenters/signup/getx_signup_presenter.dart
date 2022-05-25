@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 
+import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_camera.dart';
+import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
 import './signup_presenter.dart';
 import '../../../../i18n/resources.dart';
 import '../../../domain/entities/user_entity.dart';
@@ -13,8 +17,14 @@ import '../../viewmodels/signup_viewmodel.dart';
 
 class GetxSignupPresenter extends GetxController with LoadingManager implements SignupPresenter {
   final ISignUpEmail signUpEmail;
+  final IFetchImagePickerCamera fetchImagePickerCamera;
+  final IFetchImagePickerGallery fetchImagePickerGallery;
 
-  GetxSignupPresenter({required this.signUpEmail});
+  GetxSignupPresenter({
+    required this.signUpEmail,
+    required this.fetchImagePickerCamera,
+    required this.fetchImagePickerGallery,
+  });
 
   SignupViewModel viewModel = SignupViewModel();
 
@@ -27,7 +37,7 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
 
       final UserEntity user = await signUpEmail.signUp(viewModel.toEntity());
     } on DomainError catch (e) {
-      throw e.message;
+      throw Exception(e.message);
     } finally {
       setLoading(false);
     }
@@ -37,6 +47,28 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   Future<void> signupWithGoogle() {
     // TODO: implement signupWithGoogle
     throw UnimplementedError();
+  }
+
+  @override
+  Future<void> getFromCameraOrGallery({bool isGallery = true}) async {
+    try {
+      setLoading(true);
+
+      final File? image;
+      if (isGallery) {
+        image = await fetchImagePickerGallery.fetchFromGallery();
+      } else {
+        image = await fetchImagePickerCamera.fetchFromCamera();
+      }
+
+      if (image == null) throw Exception(R.string.noImageSelected);
+
+      viewModel.setPhoto(image);
+    } on DomainError catch (e) {
+      throw Exception(e.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   @override

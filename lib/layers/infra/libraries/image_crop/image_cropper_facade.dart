@@ -9,7 +9,7 @@ import './i_image_cropper_facade.dart';
 class ImageCropperFacade implements IImageCropperFacade {
   final ImageCropper imageCropper;
 
-  ImageCropperFacade(this.imageCropper);
+  ImageCropperFacade({required this.imageCropper});
 
   @override
   Future<File?> crop(File image) async {

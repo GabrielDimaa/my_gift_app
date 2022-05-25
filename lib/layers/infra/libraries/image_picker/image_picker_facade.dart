@@ -9,7 +9,7 @@ import './i_image_picker_facade.dart';
 class ImagePickerFacade implements IImagePickerFacade {
   final ImagePicker imagePicker;
 
-  ImagePickerFacade(this.imagePicker);
+  ImagePickerFacade({required this.imagePicker});
 
   @override
   Future<File?> getFromCamera() async {
