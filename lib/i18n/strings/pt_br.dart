@@ -151,6 +151,12 @@ class PtBr implements Translation {
   String get permissionDeniedError => "Sem permissão.";
 
   @override
+  String get withoutPermissionCameraError => "Sem permissão para acessar a câmera.";
+
+  @override
+  String get withoutPermissionGalleryError => "Sem permissão para acessar a galeria.";
+
+  @override
   String get unauthenticatedError => "Credenciais inválidas.";
 
   @override
@@ -191,5 +197,11 @@ class PtBr implements Translation {
 
   @override
   String get deleteImageError => "Não foi possível remover a imagem. Tente novamente.";
+
+  @override
+  String get imagePickerError => "Não foi possível selecionar a imagem. Tente novamente.";
+
+  @override
+  String get imageCropperError => "Não foi possível cortar a imagem.";
   //endregion
 }

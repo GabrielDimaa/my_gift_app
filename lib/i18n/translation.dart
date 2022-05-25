@@ -54,6 +54,8 @@ abstract class Translation {
   String get nameNotInformedError;
   String get shortPasswordError;
   String get permissionDeniedError;
+  String get withoutPermissionCameraError;
+  String get withoutPermissionGalleryError;
   String get unauthenticatedError;
   String get unavailableError;
   String get resourceExhaustedError;
@@ -68,5 +70,7 @@ abstract class Translation {
   String get deleteError;
   String get uploadImageError;
   String get deleteImageError;
+  String get imagePickerError;
+  String get imageCropperError;
   //endregion
 }
