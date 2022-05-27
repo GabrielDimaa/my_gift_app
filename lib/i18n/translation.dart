@@ -14,6 +14,7 @@ abstract class Translation {
   String get nameHint;
   String get photo;
   String get addPhotoProfile;
+  String get photoProfile;
   String get enter;
   String get advance;
   String get doNotHaveAccount;
@@ -21,6 +22,9 @@ abstract class Translation {
   String get register;
   String get makeLogin;
   String get createAccount;
+  String get gallery;
+  String get camera;
+  String get close;
   //endregion
 
   //region Validation

@@ -38,6 +38,17 @@ class AppTheme extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           contentTextStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         ),
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: light,
+          elevation: 4,
+          clipBehavior: Clip.antiAlias,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(22),
+              topRight: Radius.circular(22),
+            ),
+          ),
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -58,6 +69,17 @@ class AppTheme extends StatelessWidget {
           elevation: 4,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           contentTextStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+        ),
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: dark,
+          elevation: 4,
+          clipBehavior: Clip.antiAlias,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(22),
+              topRight: Radius.circular(22),
+            ),
+          ),
         ),
       ),
       getPages: Routes().getRoutes(),

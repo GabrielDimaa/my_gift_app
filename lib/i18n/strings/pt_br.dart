@@ -45,6 +45,9 @@ class PtBr implements Translation {
   String get addPhotoProfile => "Adicionar foto de perfil";
 
   @override
+  String get photoProfile => "Foto de perfil";
+
+  @override
   String get enter => "Entrar";
 
   @override
@@ -64,6 +67,15 @@ class PtBr implements Translation {
 
   @override
   String get createAccount => "Criar conta";
+
+  @override
+  String get gallery => "Galeria";
+
+  @override
+  String get camera => "Câmera";
+
+  @override
+  String get close => "Fechar";
   //endregion
 
   //region Validation

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:desejando_app/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 
@@ -20,11 +21,10 @@ class ImageCropperFacade implements IImageCropperFacade {
             uiSettings: [
               AndroidUiSettings(
                 toolbarWidgetColor: Colors.white,
-                toolbarColor: Colors.yellow,
-                statusBarColor: Colors.red,
-                backgroundColor: Colors.green,
-                dimmedLayerColor: Colors.blue,
-                activeControlsWidgetColor: Colors.black,
+                toolbarColor: const AppTheme().dark,
+                backgroundColor: const AppTheme().dark,
+                dimmedLayerColor: const AppTheme().dark,
+                activeControlsWidgetColor: const AppTheme().secondary,
               ),
             ],
           );

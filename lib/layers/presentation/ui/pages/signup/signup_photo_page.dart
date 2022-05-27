@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/signup/getx_signup_presenter.dart';
 import '../../components/app_bar/app_bar_default.dart';
+import '../../components/bottom_sheet/bottom_sheet_image_picker.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
@@ -37,8 +38,25 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                     children: [
                       const SizedBoxDefault(3),
                       InkWell(
-                        onTap: () {
-                          // TODO: Implementar foto
+                        onTap: () async {
+                          await BottomSheetImagePicker.show(
+                            context: context,
+                            title: R.string.photoProfile,
+                            onPressedCamera: () async {
+                              try {
+                                await presenter.getFromCameraOrGallery(isGallery: false);
+                              } catch (e) {
+                                ErrorDialog.show(context: context, content: e.toString());
+                              }
+                            },
+                            onPressedGallery: () async {
+                              try {
+                                await presenter.getFromCameraOrGallery(isGallery: true);
+                              } catch (e) {
+                                ErrorDialog.show(context: context, content: e.toString());
+                              }
+                            },
+                          );
                         },
                         borderRadius: BorderRadius.circular(radius),
                         child: Ink(

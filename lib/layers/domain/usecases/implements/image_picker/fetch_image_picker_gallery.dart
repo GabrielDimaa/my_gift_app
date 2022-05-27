@@ -17,7 +17,7 @@ class FetchImagePickerGallery implements IFetchImagePickerGallery {
     File? image;
 
     try {
-      image = await imagePickerService.getFromCamera();
+      image = await imagePickerService.getFromGallery();
     } on DomainError catch (e) {
       if (e is WithoutPermissionDomainError) throw WithoutPermissionDomainError(message: "Sem permissão para acessar a câmera.");
       rethrow;
