@@ -133,7 +133,7 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                 ),
               ),
               ElevatedButton(
-                child: Text(R.string.createAccount),
+                child: Text(R.string.advance),
                 onPressed: () async {
                   try {
                     await presenter.signup();

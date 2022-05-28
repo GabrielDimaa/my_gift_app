@@ -6,10 +6,14 @@ abstract class Translation {
   String get loginOu;
   String get email;
   String get emailHint;
+  String get confirmEmail;
   String get password;
   String get passwordHint;
   String get confirmPassword;
   String get confirmPasswordHint;
+  String get explicationConfirmEmail;
+  String get explicationConfirmedEmail;
+  String get resendEmail;
   String get name;
   String get nameHint;
   String get photo;
@@ -22,7 +26,7 @@ abstract class Translation {
   String get alreadyHaveAccount;
   String get register;
   String get makeLogin;
-  String get createAccount;
+  String get completeAccount;
   String get gallery;
   String get camera;
   String get close;

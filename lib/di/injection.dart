@@ -6,6 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_camera.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_gallery.dart';
 import '../layers/domain/usecases/implements/login/login_email.dart';
+import '../layers/domain/usecases/implements/signup/check_email_verified.dart';
+import '../layers/domain/usecases/implements/signup/send_verification_email.dart';
 import '../layers/domain/usecases/implements/signup/signup_email.dart';
 import '../layers/infra/datasources/firebase_user_account_datasource.dart';
 import '../layers/infra/libraries/image_crop/image_cropper_facade.dart';
@@ -68,6 +70,8 @@ class Injection {
               imageCropService: Get.find<ImageCropService>(),
             ),
         fenix: true);
+    Get.lazyPut(() => SendVerificationEmail(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
+    Get.lazyPut(() => CheckEmailVerified(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     //endregion
 
     //region Presenters
@@ -77,6 +81,7 @@ class Injection {
               signUpEmail: Get.find<SignUpEmail>(),
               fetchImagePickerCamera: Get.find<FetchImagePickerCamera>(),
               fetchImagePickerGallery: Get.find<FetchImagePickerGallery>(),
+              sendVerificationEmail: Get.find<SendVerificationEmail>(),
             ),
         fenix: true);
     //endregion

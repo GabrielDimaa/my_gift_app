@@ -21,6 +21,18 @@ class PtBr implements Translation {
   String get emailHint => "Digite seu email";
 
   @override
+  String get confirmEmail => "Confirmar Email";
+
+  @override
+  String get explicationConfirmEmail => "Enviamos uma confirmação de email para o seu endereço. Localize-o na sua caixa de entrada e siga o procedimento.";
+
+  @override
+  String get explicationConfirmedEmail => "Caso já tenha confirmado, conclua o cadastro.";
+
+  @override
+  String get resendEmail => "Reenviar email";
+
+  @override
   String get password => "Senha";
 
   @override
@@ -69,7 +81,7 @@ class PtBr implements Translation {
   String get makeLogin => "Fazer login";
 
   @override
-  String get createAccount => "Criar conta";
+  String get completeAccount => "Concluir cadastro";
 
   @override
   String get gallery => "Galeria";

@@ -14,22 +14,28 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       toolbarHeight: toolbarHeight,
-      leadingWidth: double.infinity,
       elevation: 0,
       backgroundColor: Theme.of(context).colorScheme.background,
-      leading: Column(
+      leadingWidth: 0,
+      leading: const SizedBox.shrink(),
+      titleSpacing: 0,
+      title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBoxDefault(),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: IconButton(
-              padding: EdgeInsets.zero,
-              iconSize: 38,
-              splashRadius: 28,
-              icon: const Icon(Icons.keyboard_backspace),
-              onPressed: () => Navigator.of(context).pop(),
+          Visibility(
+            visible: Navigator.canPop(context),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                iconSize: 38,
+                splashRadius: 28,
+                icon: const Icon(Icons.keyboard_backspace),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
             ),
+            replacement: const SizedBox(height: 48),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 18),
