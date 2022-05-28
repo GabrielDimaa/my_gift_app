@@ -30,7 +30,7 @@ void main() {
   });
 
   test("Deve chamar picker e retornar null", () async {
-    imagePickerServiceSpy.mockGetFromCamera();
+    imagePickerServiceSpy.mockGetFromGallery();
 
     final File? file = await sut.fetchFromGallery();
     expect(file, null);
@@ -46,14 +46,14 @@ void main() {
   });
 
   test("Deve throw UnexpectedDomainError se getFromCamera throws", () {
-    imagePickerServiceSpy.mockGetFromCameraError();
+    imagePickerServiceSpy.mockGetFromGalleryError();
 
     final Future future = sut.fetchFromGallery();
     expect(future, throwsA(isA<UnexpectedDomainError>()));
   });
 
-  test("Deve throw WithoutPermissionDomainError se não tiver permissão pra câmera", () {
-    imagePickerServiceSpy.mockGetFromCameraError(error: WithoutPermissionDomainError());
+  test("Deve throw WithoutPermissionDomainError se não tiver permissão pra acessar a galeria", () {
+    imagePickerServiceSpy.mockGetFromGalleryError(error: WithoutPermissionDomainError());
 
     final Future future = sut.fetchFromGallery();
     expect(future, throwsA(isA<WithoutPermissionDomainError>()));

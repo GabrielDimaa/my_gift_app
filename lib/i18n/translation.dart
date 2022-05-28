@@ -14,6 +14,10 @@ abstract class Translation {
   String get explicationConfirmEmail;
   String get explicationConfirmedEmail;
   String get resendEmail;
+  String get resent;
+  String get seconds;
+  String get completingRegistration;
+  String get signingUp;
   String get name;
   String get nameHint;
   String get photo;

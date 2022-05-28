@@ -7,6 +7,7 @@ import '../../components/app_bar/app_bar_default.dart';
 import '../../components/button/small_button.dart';
 import '../../components/circular_loading.dart';
 import '../../components/dialogs/error_dialog.dart';
+import '../../components/dialogs/loading_dialog.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 
@@ -53,8 +54,8 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
                             children: [
                               Obx(
                                     () => SmallButton(
-                                  icon: (presenter.timerTick.value ?? 0) <= 0 ? Icons.edit_outlined : null,
-                                  label: (presenter.timerTick.value ?? 0) <= 0 ? R.string.resendEmail : "${presenter.timerTick.value} seg",
+                                  icon: (presenter.timerTick.value ?? 0) <= 0 ? Icons.forward_to_inbox : Icons.hourglass_top_outlined,
+                                  label: (presenter.timerTick.value ?? 0) <= 0 ? R.string.resendEmail : "${presenter.timerTick.value} ${R.string.seconds}",
                                   onPressed: (presenter.timerTick.value ?? 0) <= 0
                                       ? () async {
                                     try {
@@ -88,7 +89,7 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
                                       ),
                                       const SizedBox(width: 6),
                                       Text(
-                                        "Reenviado",
+                                        R.string.resent,
                                         style: TextStyle(color: colorScheme.secondary, fontWeight: FontWeight.w500),
                                       ),
                                     ],
@@ -106,7 +107,9 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
                       child: Text(R.string.completeAccount),
                       onPressed: () async {
                         try {
-                          await presenter.signup();
+                          await LoadingDialog.show(context: context, message: "${R.string.completingRegistration}...", onAction: () async {
+                            await presenter.completeAccount();
+                          });
                         } catch (e) {
                           ErrorDialog.show(context: context, content: e.toString());
                         }

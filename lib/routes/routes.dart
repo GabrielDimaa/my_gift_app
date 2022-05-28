@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../layers/presentation/ui/pages/dashboard/dashboard_page.dart';
 import '../layers/presentation/ui/pages/login/login_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_confirm_email_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_page.dart';
@@ -13,5 +14,6 @@ class Routes {
     GetPage(name: "/signup_password", page: () => const SignupPasswordPage()),
     GetPage(name: "/signup_photo", page: () => const SignupPhotoPage()),
     GetPage(name: "/signup_confirm_email", page: () => const SignupConfirmEmailPage()),
+    GetPage(name: "/dashboard", page: () => const DashboardPage()),
   ];
 }

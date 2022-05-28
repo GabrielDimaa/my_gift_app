@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_camera.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
+import '../../../domain/usecases/abstracts/signup/i_check_email_verified.dart';
 import '../../../domain/usecases/abstracts/signup/i_send_verification_email.dart';
+import '../../ui/pages/dashboard/dashboard_page.dart';
 import '../../ui/pages/signup/signup_confirm_email_page.dart';
 import './signup_presenter.dart';
 import '../../../../i18n/resources.dart';
@@ -23,12 +25,14 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   final IFetchImagePickerCamera fetchImagePickerCamera;
   final IFetchImagePickerGallery fetchImagePickerGallery;
   final ISendVerificationEmail sendVerificationEmail;
+  final ICheckEmailVerified checkEmailVerified;
 
   GetxSignupPresenter({
     required this.signUpEmail,
     required this.fetchImagePickerCamera,
     required this.fetchImagePickerGallery,
     required this.sendVerificationEmail,
+    required this.checkEmailVerified,
   });
 
   Timer? _timerResendEmail;
@@ -47,18 +51,13 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   @override
   Future<void> signup() async {
     try {
-      setLoading(true);
-
       validate();
 
       _userEntity = await signUpEmail.signUp(viewModel.toEntity());
+      await navigateToConfirmEmail();
     } on DomainError catch (e) {
       throw Exception(e.message);
-    } finally {
-      setLoading(false);
     }
-
-    await navigateToConfirmEmail();
   }
 
   @override
@@ -102,8 +101,24 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
     } on DomainError catch (e) {
       throw Exception(e.message);
     } finally {
+      //Apenas para exibição do loading na tela, sem atrapalhar o processo.
       await Future.delayed(const Duration(seconds: 2));
       setLoadingResendEmail(false);
+    }
+  }
+
+  @override
+  Future<void> completeAccount() async {
+    try {
+      if (_userEntity?.id == null) throw UnexpectedDomainError(R.string.unexpectedError);
+      final bool verified = await checkEmailVerified.check(_userEntity!.id!);
+
+      if (!verified) throw EmailNotVerifiedDomainError();
+
+      _userEntity!.emailVerified = verified;
+      await navigateToDashboard();
+    } on DomainError catch (e) {
+      throw Exception(e.message);
     }
   }
 
@@ -125,6 +140,9 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
 
   @override
   Future<void> navigateToConfirmEmail() async => await Get.offAll(() => const SignupConfirmEmailPage());
+
+  @override
+  Future<void> navigateToDashboard() async => await Get.offAll(() => const DashboardPage());
 
   void startTimerResendEmail() {
     if (!(_timerResendEmail?.isActive ?? false)) {

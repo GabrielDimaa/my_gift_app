@@ -71,6 +71,8 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   Future<bool> checkEmailVerified(String userId) async {
     try {
       if (firebaseAuth.currentUser == null) throw Exception();
+      await firebaseAuth.currentUser!.reload();
+
       return firebaseAuth.currentUser!.emailVerified;
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;

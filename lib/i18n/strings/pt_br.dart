@@ -33,6 +33,18 @@ class PtBr implements Translation {
   String get resendEmail => "Reenviar email";
 
   @override
+  String get resent => "Reenviado";
+
+  @override
+  String get seconds => "segundo(s)";
+
+  @override
+  String get completingRegistration => "Concluindo cadastro";
+
+  @override
+  String get signingUp => "Cadastrando-se";
+
+  @override
   String get password => "Senha";
 
   @override

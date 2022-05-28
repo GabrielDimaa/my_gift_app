@@ -82,6 +82,7 @@ class Injection {
               fetchImagePickerCamera: Get.find<FetchImagePickerCamera>(),
               fetchImagePickerGallery: Get.find<FetchImagePickerGallery>(),
               sendVerificationEmail: Get.find<SendVerificationEmail>(),
+              checkEmailVerified: Get.find<CheckEmailVerified>(),
             ),
         fenix: true);
     //endregion

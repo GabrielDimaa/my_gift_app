@@ -9,6 +9,7 @@ import '../../../presenters/signup/getx_signup_presenter.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/bottom_sheet/bottom_sheet_image_picker.dart';
 import '../../components/dialogs/error_dialog.dart';
+import '../../components/dialogs/loading_dialog.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 
@@ -136,7 +137,9 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                 child: Text(R.string.advance),
                 onPressed: () async {
                   try {
-                    await presenter.signup();
+                    await LoadingDialog.show(context: context, message: "${R.string.signingUp}...", onAction: () async {
+                      await presenter.signup();
+                    });
                   } catch (e) {
                     ErrorDialog.show(context: context, content: e.toString());
                   }
