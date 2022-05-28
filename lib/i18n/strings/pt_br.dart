@@ -48,6 +48,9 @@ class PtBr implements Translation {
   String get photoProfile => "Foto de perfil";
 
   @override
+  String get removePhoto => "Remover foto";
+
+  @override
   String get enter => "Entrar";
 
   @override

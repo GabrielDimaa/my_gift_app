@@ -9,7 +9,7 @@ class SignupViewModel {
   RxnString email = RxnString();
   RxnString password = RxnString();
   RxnString confirmPassword = RxnString();
-  Rxn photo = Rxn();
+  Rxn<File?> photo = Rxn<File?>();
 
   void setName(String? value) => name.value = value;
 
@@ -25,7 +25,7 @@ class SignupViewModel {
     return UserEntity(
       name: name.value!,
       email: email.value!,
-      photo: photo.value!,
+      photo: photo.value?.path,
       emailVerified: false,
       password: password.value!,
     );

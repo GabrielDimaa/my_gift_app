@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,6 +26,7 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorSchema = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBarDefault(title: R.string.photo),
       body: SafeArea(
@@ -37,52 +40,93 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                   child: Column(
                     children: [
                       const SizedBoxDefault(3),
-                      InkWell(
-                        onTap: () async {
-                          await BottomSheetImagePicker.show(
-                            context: context,
-                            title: R.string.photoProfile,
-                            onPressedCamera: () async {
-                              try {
-                                await presenter.getFromCameraOrGallery(isGallery: false);
-                              } catch (e) {
-                                ErrorDialog.show(context: context, content: e.toString());
-                              }
+                      Stack(
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              await BottomSheetImagePicker.show(
+                                context: context,
+                                title: R.string.photoProfile,
+                                onPressedCamera: () async {
+                                  try {
+                                    await presenter.getFromCameraOrGallery(isGallery: false);
+                                    Navigator.of(context).pop();
+                                  } catch (e) {
+                                    ErrorDialog.show(context: context, content: e.toString());
+                                  }
+                                },
+                                onPressedGallery: () async {
+                                  try {
+                                    await presenter.getFromCameraOrGallery(isGallery: true);
+                                    Navigator.of(context).pop();
+                                  } catch (e) {
+                                    ErrorDialog.show(context: context, content: e.toString());
+                                  }
+                                },
+                              );
                             },
-                            onPressedGallery: () async {
-                              try {
-                                await presenter.getFromCameraOrGallery(isGallery: true);
-                              } catch (e) {
-                                ErrorDialog.show(context: context, content: e.toString());
-                              }
-                            },
-                          );
-                        },
-                        borderRadius: BorderRadius.circular(radius),
-                        child: Ink(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(radius),
-                            color: Theme.of(context).colorScheme.surface,
-                          ),
-                          child: DottedBorder(
-                            color: Theme.of(context).colorScheme.onBackground,
-                            strokeWidth: 2,
-                            dashPattern: const [6, 5],
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(radius),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.person_pin_outlined, size: 60),
-                                const SizedBoxDefault(2),
-                                Text(R.string.addPhotoProfile, textAlign: TextAlign.center),
-                              ],
+                            child: Ink(
+                              width: 200,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(radius),
+                                color: colorSchema.surface,
+                              ),
+                              child: Obx(
+                                () => Visibility(
+                                  visible: presenter.viewModel.photo.value == null,
+                                  child: DottedBorder(
+                                    color: colorSchema.onBackground,
+                                    strokeWidth: 2,
+                                    dashPattern: const [6, 5],
+                                    borderType: BorderType.RRect,
+                                    radius: Radius.circular(radius),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.person_pin_outlined, size: 60),
+                                        const SizedBoxDefault(2),
+                                        Text(R.string.addPhotoProfile, textAlign: TextAlign.center),
+                                      ],
+                                    ),
+                                  ),
+                                  replacement: ClipRRect(
+                                    borderRadius: BorderRadius.circular(radius),
+                                    child: Image.file(presenter.viewModel.photo.value ?? File("")),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          Obx(
+                            () => Visibility(
+                              visible: presenter.viewModel.photo.value != null,
+                              child: Positioned(
+                                top: 0,
+                                right: 0,
+                                child: Material(
+                                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10)),
+                                  color: colorSchema.background,
+                                  child: SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: IconButton(
+                                      iconSize: 22,
+                                      color: colorSchema.secondary,
+                                      padding: EdgeInsets.zero,
+                                      icon: const Icon(Icons.delete),
+                                      onPressed: () => presenter.viewModel.setPhoto(null),
+                                      splashRadius: 20,
+                                      tooltip: R.string.removePhoto,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

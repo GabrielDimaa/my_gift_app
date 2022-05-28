@@ -15,6 +15,7 @@ abstract class Translation {
   String get photo;
   String get addPhotoProfile;
   String get photoProfile;
+  String get removePhoto;
   String get enter;
   String get advance;
   String get doNotHaveAccount;
