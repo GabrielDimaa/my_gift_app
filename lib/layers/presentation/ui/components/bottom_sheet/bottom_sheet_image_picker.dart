@@ -62,7 +62,7 @@ class BottomSheetImagePicker extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Icon(icon, size: 30),
+          Icon(icon, size: 30, color: Theme.of(context).colorScheme.onBackground),
           Text(text, style: Theme.of(context).textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w600)),
         ],
       ),

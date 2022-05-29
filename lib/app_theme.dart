@@ -10,7 +10,7 @@ class AppTheme extends StatelessWidget {
     return GetMaterialApp(
       title: 'Desejando',
       debugShowCheckedModeBanner: false,
-      initialRoute: "/login",
+      initialRoute: "/splash",
       themeMode: ThemeMode.dark,
       theme: ThemeData(
         brightness: Brightness.light,
@@ -36,7 +36,7 @@ class AppTheme extends StatelessWidget {
           backgroundColor: light,
           elevation: 4,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          contentTextStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+          contentTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: dark),
         ),
         bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: light,
@@ -68,7 +68,7 @@ class AppTheme extends StatelessWidget {
           backgroundColor: dark,
           elevation: 4,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          contentTextStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+          contentTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: light),
         ),
         bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: dark,
@@ -144,6 +144,9 @@ class AppTheme extends StatelessWidget {
         headline6: TextStyle(color: dark, fontSize: 22, fontWeight: FontWeight.w600),
         headline5: TextStyle(color: dark, fontSize: 28, fontWeight: FontWeight.w700),
         headline4: TextStyle(color: dark, fontSize: 34, fontWeight: FontWeight.w800),
+        headline3: TextStyle(color: dark, fontSize: 40, fontWeight: FontWeight.w800),
+        headline2: TextStyle(color: dark, fontSize: 44, fontWeight: FontWeight.w700),
+        headline1: TextStyle(color: dark, fontSize: 50, fontWeight: FontWeight.w600),
         subtitle2: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w700),
         subtitle1: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w500),
         button: TextStyle(color: dark, fontSize: 20, fontWeight: FontWeight.w700),
@@ -156,6 +159,9 @@ class AppTheme extends StatelessWidget {
         headline6: TextStyle(color: light, fontSize: 22, fontWeight: FontWeight.w600),
         headline5: TextStyle(color: light, fontSize: 28, fontWeight: FontWeight.w700),
         headline4: TextStyle(color: light, fontSize: 34, fontWeight: FontWeight.w800),
+        headline3: TextStyle(color: light, fontSize: 40, fontWeight: FontWeight.w800),
+        headline2: TextStyle(color: light, fontSize: 44, fontWeight: FontWeight.w700),
+        headline1: TextStyle(color: light, fontSize: 50, fontWeight: FontWeight.w600),
         subtitle2: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w700),
         subtitle1: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w500),
         button: TextStyle(color: light, fontSize: 20, fontWeight: FontWeight.w700),
@@ -171,6 +177,7 @@ class AppTheme extends StatelessWidget {
           onPrimary: light,
           padding: const EdgeInsets.all(16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+          onSurface: primary,
         ),
       );
 

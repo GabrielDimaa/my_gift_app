@@ -35,91 +35,92 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
       body: SafeArea(
         child: Padding(
           padding: const PaddingDefault(),
-          child: Obx(
-            () {
-              if (presenter.loading) {
-                return const CircularLoading();
-              } else {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBoxDefault(2),
-                          Text(R.string.explicationConfirmEmail, style: Theme.of(context).textTheme.subtitle1),
-                          const SizedBoxDefault(2),
-                          Row(
-                            children: [
-                              Obx(
-                                    () => SmallButton(
-                                  icon: (presenter.timerTick.value ?? 0) <= 0 ? Icons.forward_to_inbox : Icons.hourglass_top_outlined,
-                                  label: (presenter.timerTick.value ?? 0) <= 0 ? R.string.resendEmail : "${presenter.timerTick.value} ${R.string.seconds}",
-                                  onPressed: (presenter.timerTick.value ?? 0) <= 0
-                                      ? () async {
-                                    try {
-                                      await presenter.resendVerificationEmail();
-                                    } catch (e) {
-                                      ErrorDialog.show(context: context, content: e.toString());
-                                    }
-                                  }
-                                      : null,
+          child: Obx(() {
+            if (presenter.loading) {
+              return const CircularLoading();
+            } else {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBoxDefault(2),
+                        Text(R.string.explicationConfirmEmail, style: Theme.of(context).textTheme.subtitle1),
+                        const SizedBoxDefault(2),
+                        Row(
+                          children: [
+                            Obx(
+                              () => SmallButton(
+                                icon: (presenter.timerTick.value ?? 0) <= 0 ? Icons.forward_to_inbox : Icons.hourglass_top_outlined,
+                                label: (presenter.timerTick.value ?? 0) <= 0 ? R.string.resendEmail : "${presenter.timerTick.value} ${R.string.seconds}",
+                                onPressed: (presenter.timerTick.value ?? 0) <= 0
+                                    ? () async {
+                                        try {
+                                          await presenter.resendVerificationEmail();
+                                        } catch (e) {
+                                          ErrorDialog.show(context: context, content: e.toString());
+                                        }
+                                      }
+                                    : null,
+                              ),
+                            ),
+                            const SizedBoxDefault.horizontal(2),
+                            Obx(
+                              () => Visibility(
+                                visible: presenter.loadingResendEmail.value,
+                                child: const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(strokeWidth: 3),
                                 ),
                               ),
-                              const SizedBoxDefault.horizontal(2),
-                              Obx(
-                                    () => Visibility(
-                                  visible: presenter.loadingResendEmail.value,
-                                  child: const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(strokeWidth: 3),
-                                  ),
+                            ),
+                            Obx(
+                              () => Visibility(
+                                visible: !presenter.loadingResendEmail.value && (presenter.timerTick.value ?? 0) > 0 && presenter.resendEmail.value,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.check,
+                                      color: colorScheme.secondary,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      R.string.resent,
+                                      style: TextStyle(color: colorScheme.secondary, fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Obx(
-                                    () => Visibility(
-                                  visible: !presenter.loadingResendEmail.value && (presenter.timerTick.value ?? 0) > 0 && presenter.resendEmail.value,
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.check,
-                                        color: colorScheme.secondary,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Text(
-                                        R.string.resent,
-                                        style: TextStyle(color: colorScheme.secondary, fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBoxDefault(5),
-                          Text(R.string.explicationConfirmedEmail, style: Theme.of(context).textTheme.subtitle1),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        const SizedBoxDefault(5),
+                        Text(R.string.explicationConfirmedEmail, style: Theme.of(context).textTheme.subtitle1),
+                      ],
                     ),
-                    ElevatedButton(
-                      child: Text(R.string.completeAccount),
-                      onPressed: () async {
-                        try {
-                          await LoadingDialog.show(context: context, message: "${R.string.completingRegistration}...", onAction: () async {
-                            await presenter.completeAccount();
-                          });
-                        } catch (e) {
-                          ErrorDialog.show(context: context, content: e.toString());
-                        }
-                      },
-                    ),
-                  ],
-                );
-              }
+                  ),
+                  ElevatedButton(
+                    child: Text(R.string.completeAccount),
+                    onPressed: () async {
+                      try {
+                        await LoadingDialog.show(
+                            context: context,
+                            message: "${R.string.completingRegistration}...",
+                            onAction: () async {
+                              await presenter.completeAccount();
+                            });
+                      } catch (e) {
+                        ErrorDialog.show(context: context, content: e.toString());
+                      }
+                    },
+                  ),
+                ],
+              );
             }
-          ),
+          }),
         ),
       ),
     );
