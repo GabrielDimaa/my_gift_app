@@ -208,6 +208,9 @@ class PtBr implements Translation {
   String get resourceExhaustedError => "Não foi possível concluir a operação. Verifique se o seu dispositivo possui espaço no armazenamento.";
 
   @override
+  String get splashError => "Houve um erro ao carregar os dados.";
+
+  @override
   String get loginError => "Não foi possível fazer login. Tente novamente.";
 
   @override

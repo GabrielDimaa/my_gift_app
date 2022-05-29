@@ -73,6 +73,7 @@ abstract class Translation {
   String get unauthenticatedError;
   String get unavailableError;
   String get resourceExhaustedError;
+  String get splashError;
   String get loginError;
   String get signUpError;
   String get sendVerificationEmailError;

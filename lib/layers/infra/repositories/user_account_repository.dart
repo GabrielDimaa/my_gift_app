@@ -55,4 +55,10 @@ class UserAccountRepository implements IUserAccountRepository {
       throw UnexpectedInfraError().toDomainError();
     }
   }
+
+  @override
+  Future<UserEntity?> getUserLogged() async {
+    // TODO: implement getUserLogged
+    throw UnimplementedError();
+  }
 }

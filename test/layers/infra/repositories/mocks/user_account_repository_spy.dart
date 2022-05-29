@@ -14,6 +14,7 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
 
     mockSendVerificationEmail(entityResult.id!);
     mockCheckEmailVerified(true);
+    mockGetUserLogged(entityResult);
   }
 
   //region auth
@@ -38,5 +39,11 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
   When mockCheckEmailVerifiedCall() => when(() => checkEmailVerified(any()));
   void mockCheckEmailVerified(bool data) => mockCheckEmailVerifiedCall().thenAnswer((_) => Future.value(data));
   void mockCheckEmailVerifiedError(Exception error) => mockCheckEmailVerifiedCall().thenThrow(error);
+  //endregion
+
+  //region getUserLogged
+  When mockGetUserLoggedCall() => when(() => getUserLogged());
+  void mockGetUserLogged(UserEntity? data) => mockGetUserLoggedCall().thenAnswer((_) => Future.value(data));
+  void mockGetUserLoggedError({Exception? error}) => mockGetUserLoggedCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }
