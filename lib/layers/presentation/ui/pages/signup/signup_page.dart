@@ -34,7 +34,6 @@ class _SignupPageState extends State<SignupPage> {
         child: Padding(
           padding: const PaddingDefault(),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 child: SingleChildScrollView(

@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
@@ -26,6 +27,12 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
   double get radius => 18;
 
   @override
+  void initState() {
+    super.initState();
+    presenter.viewModel.setPhoto(null);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final ColorScheme colorSchema = Theme.of(context).colorScheme;
     return Scaffold(
@@ -34,14 +41,15 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
         child: Padding(
           padding: const PaddingDefault(),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const SizedBoxDefault(3),
                       Stack(
+                        alignment: AlignmentDirectional.center,
                         children: [
                           InkWell(
                             onTap: () async {
@@ -129,21 +137,22 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                           ),
                         ],
                       ),
+                      const SizedBoxDefault(5),
+                      ElevatedButton(
+                        child: Text(R.string.advance),
+                        onPressed: () async {
+                          try {
+                            await LoadingDialog.show(context: context, message: "${R.string.signingUp}...", onAction: () async {
+                              await presenter.signup();
+                            });
+                          } catch (e) {
+                            ErrorDialog.show(context: context, content: e.toString());
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
-              ),
-              ElevatedButton(
-                child: Text(R.string.advance),
-                onPressed: () async {
-                  try {
-                    await LoadingDialog.show(context: context, message: "${R.string.signingUp}...", onAction: () async {
-                      await presenter.signup();
-                    });
-                  } catch (e) {
-                    ErrorDialog.show(context: context, content: e.toString());
-                  }
-                },
               ),
             ],
           ),

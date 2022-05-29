@@ -19,7 +19,7 @@ class AppTheme extends StatelessWidget {
         textTheme: _textThemeLight,
         fontFamily: 'Sarabun',
         textSelectionTheme: TextSelectionThemeData(cursorColor: secondary),
-        elevatedButtonTheme: _elevatedButtonTheme,
+        elevatedButtonTheme: _elevatedButtonTheme(onSurface: primary),
         textButtonTheme: _textButtonTheme,
         inputDecorationTheme: _inputDecorationThemeLight,
         appBarTheme: AppBarTheme(
@@ -58,7 +58,7 @@ class AppTheme extends StatelessWidget {
         fontFamily: 'Sarabun',
         textSelectionTheme: TextSelectionThemeData(cursorColor: secondary),
         inputDecorationTheme: _inputDecorationThemeDark,
-        elevatedButtonTheme: _elevatedButtonTheme,
+        elevatedButtonTheme: _elevatedButtonTheme(),
         textButtonTheme: _textButtonTheme,
         iconTheme: IconThemeData(
           color: light,
@@ -170,14 +170,14 @@ class AppTheme extends StatelessWidget {
         caption: TextStyle(color: light, fontSize: 14, fontWeight: FontWeight.w300),
       );
 
-  ElevatedButtonThemeData get _elevatedButtonTheme => ElevatedButtonThemeData(
+  ElevatedButtonThemeData _elevatedButtonTheme({Color? onSurface}) => ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: 4,
           primary: primary,
           onPrimary: light,
           padding: const EdgeInsets.all(16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-          onSurface: primary,
+          onSurface: onSurface,
         ),
       );
 

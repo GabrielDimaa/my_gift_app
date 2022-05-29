@@ -24,6 +24,13 @@ class _SignupPasswordPageState extends State<SignupPasswordPage> {
   final TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    presenter.viewModel.setPassword(null);
+    presenter.viewModel.setConfirmPassword(null);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarDefault(title: R.string.password),
@@ -31,11 +38,11 @@ class _SignupPasswordPageState extends State<SignupPasswordPage> {
         child: Padding(
           padding: const PaddingDefault(),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const SizedBoxDefault(3),
                       Form(
@@ -66,13 +73,14 @@ class _SignupPasswordPageState extends State<SignupPasswordPage> {
                           ],
                         ),
                       ),
+                      const SizedBoxDefault(5),
+                      ElevatedButton(
+                        child: Text(R.string.advance),
+                        onPressed: () async => await _advance(),
+                      ),
                     ],
                   ),
                 ),
-              ),
-              ElevatedButton(
-                child: Text(R.string.advance),
-                onPressed: () async => await _advance(),
               ),
             ],
           ),

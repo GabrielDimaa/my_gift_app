@@ -40,11 +40,10 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
               return const CircularLoading();
             } else {
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const SizedBoxDefault(2),
                         Text(R.string.explicationConfirmEmail, style: Theme.of(context).textTheme.subtitle1),
@@ -99,23 +98,24 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
                         ),
                         const SizedBoxDefault(5),
                         Text(R.string.explicationConfirmedEmail, style: Theme.of(context).textTheme.subtitle1),
+                        const SizedBoxDefault(5),
+                        ElevatedButton(
+                          child: Text(R.string.completeAccount),
+                          onPressed: () async {
+                            try {
+                              await LoadingDialog.show(
+                                  context: context,
+                                  message: "${R.string.completingRegistration}...",
+                                  onAction: () async {
+                                    await presenter.completeAccount();
+                                  });
+                            } catch (e) {
+                              ErrorDialog.show(context: context, content: e.toString());
+                            }
+                          },
+                        ),
                       ],
                     ),
-                  ),
-                  ElevatedButton(
-                    child: Text(R.string.completeAccount),
-                    onPressed: () async {
-                      try {
-                        await LoadingDialog.show(
-                            context: context,
-                            message: "${R.string.completingRegistration}...",
-                            onAction: () async {
-                              await presenter.completeAccount();
-                            });
-                      } catch (e) {
-                        ErrorDialog.show(context: context, content: e.toString());
-                      }
-                    },
                   ),
                 ],
               );
