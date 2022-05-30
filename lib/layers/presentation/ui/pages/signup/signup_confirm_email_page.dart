@@ -12,7 +12,9 @@ import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 
 class SignupConfirmEmailPage extends StatefulWidget {
-  const SignupConfirmEmailPage({Key? key}) : super(key: key);
+  final bool visibleToLogin;
+
+  const SignupConfirmEmailPage({Key? key, this.visibleToLogin = false}) : super(key: key);
 
   @override
   _SignupConfirmEmailPageState createState() => _SignupConfirmEmailPageState();
@@ -113,6 +115,14 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
                               ErrorDialog.show(context: context, content: e.toString());
                             }
                           },
+                        ),
+                        const SizedBoxDefault(),
+                        Visibility(
+                          visible: widget.visibleToLogin,
+                          child: OutlinedButton(
+                            child: Text(R.string.makeLogin),
+                            onPressed: () async => presenter.navigateToLogin(),
+                          ),
                         ),
                       ],
                     ),

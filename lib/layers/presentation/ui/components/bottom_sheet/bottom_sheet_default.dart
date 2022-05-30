@@ -45,9 +45,9 @@ class BottomSheetDefault extends StatelessWidget {
                 Visibility(
                   visible: title != null,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 24),
+                    padding: const EdgeInsets.only(top: 6, bottom: 30),
                     child: Align(
-                      alignment: Alignment.center,
+                      alignment: Alignment.centerLeft,
                       child: Text(
                         title ?? "",
                         style: Theme.of(context).textTheme.headline6,

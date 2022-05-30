@@ -20,6 +20,7 @@ class AppTheme extends StatelessWidget {
         fontFamily: 'Sarabun',
         textSelectionTheme: TextSelectionThemeData(cursorColor: secondary),
         elevatedButtonTheme: _elevatedButtonTheme(onSurface: primary),
+        outlinedButtonTheme: _outlinedButtonTheme,
         textButtonTheme: _textButtonTheme,
         inputDecorationTheme: _inputDecorationThemeLight,
         appBarTheme: AppBarTheme(
@@ -59,6 +60,7 @@ class AppTheme extends StatelessWidget {
         textSelectionTheme: TextSelectionThemeData(cursorColor: secondary),
         inputDecorationTheme: _inputDecorationThemeDark,
         elevatedButtonTheme: _elevatedButtonTheme(),
+        outlinedButtonTheme: _outlinedButtonTheme,
         textButtonTheme: _textButtonTheme,
         iconTheme: IconThemeData(
           color: light,
@@ -178,6 +180,17 @@ class AppTheme extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
           onSurface: onSurface,
+        ),
+      );
+
+  OutlinedButtonThemeData get _outlinedButtonTheme => OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          primary: primary,
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          side: BorderSide(color: primary, width: 2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32),
+          ),
         ),
       );
 

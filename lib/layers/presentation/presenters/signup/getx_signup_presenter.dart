@@ -7,6 +7,7 @@ import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_cam
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
 import '../../../domain/usecases/abstracts/signup/i_check_email_verified.dart';
 import '../../../domain/usecases/abstracts/signup/i_send_verification_email.dart';
+import '../../../domain/usecases/abstracts/user/i_get_user_logged.dart';
 import '../../ui/pages/dashboard/dashboard_page.dart';
 import '../../ui/pages/signup/signup_confirm_email_page.dart';
 import './signup_presenter.dart';
@@ -26,6 +27,7 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   final IFetchImagePickerGallery fetchImagePickerGallery;
   final ISendVerificationEmail sendVerificationEmail;
   final ICheckEmailVerified checkEmailVerified;
+  final IGetUserLogged getUserLogged;
 
   GetxSignupPresenter({
     required this.signUpEmail,
@@ -33,6 +35,7 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
     required this.fetchImagePickerGallery,
     required this.sendVerificationEmail,
     required this.checkEmailVerified,
+    required this.getUserLogged,
   });
 
   Timer? _timerResendEmail;
@@ -110,7 +113,12 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   @override
   Future<void> completeAccount() async {
     try {
-      if (_userEntity?.id == null) throw UnexpectedDomainError(R.string.unexpectedError);
+      if (_userEntity?.id == null) {
+        final UserEntity? user = await getUserLogged.getUser();
+        if (user == null) throw UnexpectedDomainError(R.string.unexpectedError);
+
+        _userEntity = user;
+      }
       final bool verified = await checkEmailVerified.check(_userEntity!.id!);
 
       if (!verified) throw EmailNotVerifiedDomainError();
@@ -130,7 +138,7 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   }
 
   @override
-  Future<void> navigateToLogin() async => await Get.off(() => const LoginPage());
+  Future<void> navigateToLogin() async => await Get.offAll(() => const LoginPage());
 
   @override
   Future<void> navigateToSignupPassword() async => await Get.to(() => const SignupPasswordPage());

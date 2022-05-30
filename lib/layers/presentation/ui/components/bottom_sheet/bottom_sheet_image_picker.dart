@@ -55,7 +55,7 @@ class BottomSheetImagePicker extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Theme.of(context).colorScheme.background,
-        fixedSize: const Size(100, 100),
+        fixedSize: const Size(90, 90),
         elevation: 0,
         shape: const CircleBorder(side: BorderSide(color: Color(0xFF464646), width: 1.5)),
       ),

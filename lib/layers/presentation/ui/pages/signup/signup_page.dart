@@ -79,7 +79,7 @@ class _SignupPageState extends State<SignupPage> {
                               label: R.string.email,
                               hint: R.string.emailHint,
                               controller: _emailController,
-                              textInputAction: TextInputAction.next,
+                              textInputAction: TextInputAction.done,
                               keyboardType: TextInputType.emailAddress,
                               onSaved: presenter.viewModel.setEmail,
                               validator: InputEmailValidator().validate,
