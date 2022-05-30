@@ -6,9 +6,11 @@ import '../layers/presentation/ui/pages/signup/signup_confirm_email_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_password_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_photo_page.dart';
+import '../layers/presentation/ui/pages/splash/splash_page.dart';
 
 class Routes {
   List<GetPage> getRoutes() => [
+    GetPage(name: "/splash", page: () => const SplashPage()),
     GetPage(name: "/login", page: () => const LoginPage()),
     GetPage(name: "/signup", page: () => const SignupPage()),
     GetPage(name: "/signup_password", page: () => const SignupPasswordPage()),

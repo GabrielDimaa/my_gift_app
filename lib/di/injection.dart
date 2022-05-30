@@ -9,6 +9,7 @@ import '../layers/domain/usecases/implements/login/login_email.dart';
 import '../layers/domain/usecases/implements/signup/check_email_verified.dart';
 import '../layers/domain/usecases/implements/signup/send_verification_email.dart';
 import '../layers/domain/usecases/implements/signup/signup_email.dart';
+import '../layers/domain/usecases/implements/user/get_user_logged.dart';
 import '../layers/infra/datasources/firebase_user_account_datasource.dart';
 import '../layers/infra/libraries/image_crop/image_cropper_facade.dart';
 import '../layers/infra/libraries/image_picker/image_picker_facade.dart';
@@ -17,6 +18,7 @@ import '../layers/infra/services/image_crop_service.dart';
 import '../layers/infra/services/image_picker_service.dart';
 import '../layers/presentation/presenters/login/getx_login_presenter.dart';
 import '../layers/presentation/presenters/signup/getx_signup_presenter.dart';
+import '../layers/presentation/presenters/splash/getx_splash_presenter.dart';
 
 class Injection {
   static final Injection _instance = Injection._();
@@ -72,6 +74,7 @@ class Injection {
         fenix: true);
     Get.lazyPut(() => SendVerificationEmail(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => CheckEmailVerified(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
+    Get.lazyPut(() => GetUserLogged(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     //endregion
 
     //region Presenters
@@ -83,8 +86,14 @@ class Injection {
               fetchImagePickerGallery: Get.find<FetchImagePickerGallery>(),
               sendVerificationEmail: Get.find<SendVerificationEmail>(),
               checkEmailVerified: Get.find<CheckEmailVerified>(),
+              getUserLogged: Get.find<GetUserLogged>(),
             ),
         fenix: true);
+    Get.lazyPut(() => GetxSplashPresenter(
+          getUserLogged: Get.find<GetUserLogged>(),
+          checkEmailVerified: Get.find<CheckEmailVerified>(),
+          sendVerificationEmail: Get.find<SendVerificationEmail>(),
+        ));
     //endregion
   }
 }
