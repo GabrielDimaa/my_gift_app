@@ -58,7 +58,13 @@ class UserAccountRepository implements IUserAccountRepository {
 
   @override
   Future<UserEntity?> getUserLogged() async {
-    // TODO: implement getUserLogged
-    throw UnimplementedError();
+    try {
+      final UserModel? userModel = await userAccountDataSource.getUserLogged();
+      return userModel?.toEntity();
+    } on InfraError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedInfraError().toDomainError();
+    }
   }
 }

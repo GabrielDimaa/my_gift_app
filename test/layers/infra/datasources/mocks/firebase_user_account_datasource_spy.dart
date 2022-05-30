@@ -10,6 +10,7 @@ class FirebaseUserAccountDataSourceSpy extends Mock implements IUserAccountDataS
     mockSignUpWithEmail(model);
     mockSendVerificationEmail();
     mockCheckEmailVerified(true);
+    mockGetUserLogged(model);
   }
 
   //region authWithEmail
@@ -34,5 +35,11 @@ class FirebaseUserAccountDataSourceSpy extends Mock implements IUserAccountDataS
   When mockCheckEmailVerifiedCall() => when(() => checkEmailVerified(any()));
   void mockCheckEmailVerified(bool data) => mockCheckEmailVerifiedCall().thenAnswer((_) => Future.value(data));
   void mockCheckEmailVerifiedError(Exception error) => mockCheckEmailVerifiedCall().thenThrow(error);
+  //endregion
+
+  //region getUserLogged
+  When mockGetUserLoggedCall() => when(() => getUserLogged());
+  void mockGetUserLogged(UserModel? data) => mockGetUserLoggedCall().thenAnswer((_) => Future.value(data));
+  void mockGetUserLoggedError(Exception error) => mockGetUserLoggedCall().thenThrow(error);
   //endregion
 }

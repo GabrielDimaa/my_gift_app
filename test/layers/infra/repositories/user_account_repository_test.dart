@@ -76,21 +76,21 @@ void main() {
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
       userAccountDataSourceSpy.mockAuthWithEmailError(ConnectionInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedDomainError se CancelledInfraError", () {
       userAccountDataSourceSpy.mockAuthWithEmailError(CancelledInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedDomainError se InternalInfraError", () {
       userAccountDataSourceSpy.mockAuthWithEmailError(InternalInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
@@ -227,6 +227,27 @@ void main() {
       userAccountDataSourceSpy.mockCheckEmailVerifiedError(InternalInfraError());
 
       final Future future = sut.checkEmailVerified(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+  });
+
+  group("getUserLogged", () {
+    test("Deve chamar getUserLogged e retornar o user com sucesso", () async {
+      final UserEntity? user = await sut.getUserLogged();
+      expect(user!.equals(userModel.toEntity()), true);
+    });
+
+    test("Deve chamar getUserLogged e retornar null", () async {
+      userAccountDataSourceSpy.mockGetUserLogged(null);
+
+      final UserEntity? user = await sut.getUserLogged();
+      expect(user, null);
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      userAccountDataSourceSpy.mockGetUserLoggedError(Exception());
+
+      final Future future = sut.getUserLogged();
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
   });

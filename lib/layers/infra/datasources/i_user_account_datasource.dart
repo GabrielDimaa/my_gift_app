@@ -6,4 +6,5 @@ abstract class IUserAccountDataSource {
   Future<UserModel> signUpWithEmail(UserModel model);
   Future<void> sendVerificationEmail(String userId);
   Future<bool> checkEmailVerified(String userId);
+  Future<UserModel?> getUserLogged();
 }

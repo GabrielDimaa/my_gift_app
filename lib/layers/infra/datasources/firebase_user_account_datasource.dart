@@ -82,4 +82,27 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       throw UnexpectedInfraError();
     }
   }
+
+  @override
+  Future<UserModel?> getUserLogged() async {
+    try {
+      final User? user = firebaseAuth.currentUser;
+      if (user == null) return null;
+
+      await user.reload();
+
+      return UserModel(
+        id: user.uid,
+        name: user.displayName ?? "",
+        email: user.email!,
+        emailVerified: user.emailVerified,
+      );
+    } on FirebaseAuthException catch (e) {
+      throw e.getInfraError;
+    } on InfraError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedInfraError();
+    }
+  }
 }
