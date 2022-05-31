@@ -45,6 +45,9 @@ class PtBr implements Translation {
   String get signingUp => "Cadastrando-se";
 
   @override
+  String get loggingIn => "Fazendo login";
+
+  @override
   String get password => "Senha";
 
   @override

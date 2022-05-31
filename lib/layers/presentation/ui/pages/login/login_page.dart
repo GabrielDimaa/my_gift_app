@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/login/getx_login_presenter.dart';
 import '../../components/dialogs/error_dialog.dart';
+import '../../components/dialogs/loading_dialog.dart';
 import '../../components/form/validators/input_validators.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
@@ -119,12 +120,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _login() async {
-    if (presenter.loading) return;
-
     try {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        await presenter.login();
+
+        await LoadingDialog.show(context: context, message: "${R.string.loggingIn}...", onAction: () async {
+          await presenter.login();
+        });
       }
     } catch (e) {
       ErrorDialog.show(context: context, content: e.toString());

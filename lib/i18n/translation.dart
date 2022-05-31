@@ -18,6 +18,7 @@ abstract class Translation {
   String get seconds;
   String get completingRegistration;
   String get signingUp;
+  String get loggingIn;
   String get name;
   String get nameHint;
   String get photo;

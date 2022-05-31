@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 
+import '../../../../monostates/user_global.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_camera.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
 import '../../../domain/usecases/abstracts/signup/i_check_email_verified.dart';
@@ -120,10 +121,13 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
         _userEntity = user;
       }
       final bool verified = await checkEmailVerified.check(_userEntity!.id!);
-
       if (!verified) throw EmailNotVerifiedDomainError();
 
       _userEntity!.emailVerified = verified;
+
+      final UserGlobal userGlobal = UserGlobal();
+      userGlobal.setUser(_userEntity);
+
       await navigateToDashboard();
     } on DomainError catch (e) {
       throw Exception(e.message);
