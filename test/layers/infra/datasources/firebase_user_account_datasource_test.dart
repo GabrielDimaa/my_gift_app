@@ -1,3 +1,6 @@
+/*
+TODO: Implementar futuramente.
+
 import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
 import 'package:desejando_app/layers/infra/datasources/firebase_user_account_datasource.dart';
 import 'package:desejando_app/layers/infra/helpers/errors/infra_error.dart';
@@ -193,3 +196,4 @@ void main() {
     });
   });
 }
+*/
