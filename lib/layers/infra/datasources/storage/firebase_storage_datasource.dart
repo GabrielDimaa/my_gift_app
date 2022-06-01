@@ -13,12 +13,13 @@ class FirebaseStorageDataSource implements IStorageDataSource {
 
   @override
   Future<String> upload(String path, File file) async {
-    final storage = firebaseStorage.ref().child(path);
-    final UploadTask uploadTask = storage.putFile(file);
-
-    return await uploadTask
-        .then((snapshot) => snapshot.ref.getDownloadURL())
-        .catchError(throw UnexpectedInfraError(message: R.string.uploadImageError));
+    try {
+      final storage = firebaseStorage.ref().child(path);
+      await storage.putFile(file);
+      return await storage.getDownloadURL();
+    } catch (e) {
+      throw UnexpectedInfraError(message: R.string.uploadImageError);
+    }
   }
 
   @override

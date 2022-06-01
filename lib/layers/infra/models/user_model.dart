@@ -28,6 +28,14 @@ class UserModel {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'email': email,
+      'photo': photo,
+    };
+  }
+
   UserModel clone(String? id) {
     return UserModel(
       id: id ?? this.id,

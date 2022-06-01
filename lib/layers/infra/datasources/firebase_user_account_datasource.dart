@@ -1,16 +1,28 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../domain/helpers/params/login_params.dart';
 import '../helpers/errors/infra_error.dart';
 import '../helpers/extensions/firebase_auth_exception_extension.dart';
+import '../helpers/extensions/firebase_exception_extension.dart';
 import '../helpers/extensions/firebase_user_credential_extension.dart';
 import '../models/user_model.dart';
+import './storage/i_storage_datasource.dart';
+import 'constants/collection_reference.dart';
 import 'i_user_account_datasource.dart';
 
 class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   final FirebaseAuth firebaseAuth;
+  final FirebaseFirestore firestore;
+  final IStorageDataSource firebaseStorageDataSource;
 
-  FirebaseUserAccountDataSource({required this.firebaseAuth});
+  FirebaseUserAccountDataSource({
+    required this.firebaseAuth,
+    required this.firestore,
+    required this.firebaseStorageDataSource,
+  });
 
   @override
   Future<UserModel> authWithEmail(LoginParams params) async {
@@ -35,16 +47,38 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
     try {
       if (model.password == null) throw WrongPasswordInfraError();
 
+      //region FirebaseAuth
+
       await firebaseAuth.createUserWithEmailAndPassword(email: model.email, password: model.password!);
 
       User? user = firebaseAuth.currentUser;
       if (user == null) throw Exception();
 
-      await user.updateDisplayName(model.name);
       await sendVerificationEmail(user.uid);
+
+      //endregion
+
+      final String? photoProfile = model.photo;
+      model.photo = null;
+
+      //Cria o usuário no Firestore
+      await firestore.collection(constantUsersReference).doc(user.uid).set(model.toJson());
+
+      //Faz upload da foto de perfil
+      if (photoProfile != null) {
+        try {
+          final String imageUrl = await firebaseStorageDataSource.upload("profile/${user.uid}", File(photoProfile));
+          await firestore.collection(constantUsersReference).doc(user.uid).update({'photo': imageUrl}); //.set({'photo': imageUrl});
+          model.photo = imageUrl;
+        } catch (e) {
+          //Se tiver um erro ao fazer upload da imagem, não deve estourar error para o usuário.
+        }
+      }
 
       return model.clone(user.uid);
     } on FirebaseAuthException catch (e) {
+      throw e.getInfraError;
+    } on FirebaseException catch (e) {
       throw e.getInfraError;
     } on InfraError {
       rethrow;
