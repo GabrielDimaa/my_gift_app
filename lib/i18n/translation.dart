@@ -35,6 +35,9 @@ abstract class Translation {
   String get gallery;
   String get camera;
   String get close;
+  String get wishlists;
+  String get notFoundWishlists;
+  String get createWishlist;
   //endregion
 
   //region Validation

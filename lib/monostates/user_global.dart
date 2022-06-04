@@ -1,8 +1,8 @@
 import '../layers/domain/entities/user_entity.dart';
 
 class UserGlobal {
-  static UserEntity? user;
+  static UserEntity? _user;
 
-  UserEntity? getUser() => user;
-  void setUser(UserEntity? value) => user = value;
+  UserEntity? getUser() => _user;
+  void setUser(UserEntity? value) => _user = value;
 }

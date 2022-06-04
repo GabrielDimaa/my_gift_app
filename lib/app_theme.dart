@@ -50,6 +50,7 @@ class AppTheme extends StatelessWidget {
             ),
           ),
         ),
+        floatingActionButtonTheme: _floatingActionButtonTheme,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -83,6 +84,7 @@ class AppTheme extends StatelessWidget {
             ),
           ),
         ),
+        floatingActionButtonTheme: _floatingActionButtonTheme,
       ),
       getPages: Routes().getRoutes(),
     );
@@ -253,5 +255,11 @@ class AppTheme extends StatelessWidget {
           borderSide: BorderSide(color: error, width: 2),
         ),
         errorStyle: TextStyle(color: error),
+      );
+
+  FloatingActionButtonThemeData get _floatingActionButtonTheme => FloatingActionButtonThemeData(
+        elevation: 4,
+        backgroundColor: primary,
+        foregroundColor: light,
       );
 }

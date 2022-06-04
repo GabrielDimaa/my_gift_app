@@ -7,6 +7,7 @@ import '../layers/presentation/ui/pages/signup/signup_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_password_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_photo_page.dart';
 import '../layers/presentation/ui/pages/splash/splash_page.dart';
+import '../layers/presentation/ui/pages/wishlist/wishlists_fetch_page.dart';
 
 class Routes {
   List<GetPage> getRoutes() => [
@@ -17,5 +18,6 @@ class Routes {
     GetPage(name: "/signup_photo", page: () => const SignupPhotoPage()),
     GetPage(name: "/signup_confirm_email", page: () => const SignupConfirmEmailPage()),
     GetPage(name: "/dashboard", page: () => const DashboardPage()),
+    GetPage(name: "/wishlists_fetch", page: () => const WishlistsFetchPage()),
   ];
 }

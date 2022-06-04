@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../../../monostates/user_global.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/usecases/abstracts/signup/i_check_email_verified.dart';
 import '../../../domain/usecases/abstracts/signup/i_send_verification_email.dart';
@@ -36,6 +37,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
 
       final bool emailVerified = await checkEmailVerified.check(user!.id!);
       if (emailVerified) {
+        UserGlobal().setUser(user);
         await navigateToDashboard();
       } else {
         try {

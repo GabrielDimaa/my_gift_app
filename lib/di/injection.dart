@@ -12,16 +12,20 @@ import '../layers/domain/usecases/implements/signup/check_email_verified.dart';
 import '../layers/domain/usecases/implements/signup/send_verification_email.dart';
 import '../layers/domain/usecases/implements/signup/signup_email.dart';
 import '../layers/domain/usecases/implements/user/get_user_logged.dart';
+import '../layers/domain/usecases/implements/wishlist/get_wishlists.dart';
 import '../layers/infra/datasources/firebase_user_account_datasource.dart';
+import '../layers/infra/datasources/firebase_wishlist_datasource.dart';
 import '../layers/infra/datasources/storage/firebase_storage_datasource.dart';
 import '../layers/infra/libraries/image_crop/image_cropper_facade.dart';
 import '../layers/infra/libraries/image_picker/image_picker_facade.dart';
 import '../layers/infra/repositories/user_account_repository.dart';
+import '../layers/infra/repositories/wishlist_repository.dart';
 import '../layers/infra/services/image_crop_service.dart';
 import '../layers/infra/services/image_picker_service.dart';
 import '../layers/presentation/presenters/login/getx_login_presenter.dart';
 import '../layers/presentation/presenters/signup/getx_signup_presenter.dart';
 import '../layers/presentation/presenters/splash/getx_splash_presenter.dart';
+import '../layers/presentation/presenters/wishlist/implements/getx_wishlists_list_presenter.dart';
 
 class Injection {
   static final Injection _instance = Injection._();
@@ -54,6 +58,7 @@ class Injection {
       ),
       fenix: true,
     );
+    Get.lazyPut(() => FirebaseWishlistDataSource(firestore: Get.find<FirebaseFirestore>()), fenix: true);
     //endregion
 
     //region Facades
@@ -63,6 +68,7 @@ class Injection {
 
     //region Repositories
     Get.lazyPut(() => UserAccountRepository(userAccountDataSource: Get.find<FirebaseUserAccountDataSource>()), fenix: true);
+    Get.lazyPut(() => WishlistRepository(wishlistDataSource: Get.find<FirebaseWishlistDataSource>()), fenix: true);
     //endregion
 
     //region Services
@@ -90,6 +96,7 @@ class Injection {
     Get.lazyPut(() => SendVerificationEmail(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => CheckEmailVerified(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => GetUserLogged(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
+    Get.lazyPut(() => GetWishlists(wishlistRepository: Get.find<WishlistRepository>()), fenix: true);
     //endregion
 
     //region Presenters
@@ -111,6 +118,11 @@ class Injection {
         checkEmailVerified: Get.find<CheckEmailVerified>(),
         sendVerificationEmail: Get.find<SendVerificationEmail>(),
       ),
+    );
+    Get.lazyPut(
+          () => GetxWishlistsFetchPresenter(
+            getWishlists: Get.find<GetWishlists>(),
+      ), fenix: true
     );
     //endregion
   }
