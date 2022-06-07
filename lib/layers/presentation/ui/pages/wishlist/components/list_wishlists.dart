@@ -18,11 +18,11 @@ class ListWishlists extends StatelessWidget {
           onTap: onTapListTile,
           contentPadding: EdgeInsets.zero,
           visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-          title: Text(wishlist.description.value!),
+          title: Text(wishlist.description!),
           subtitle: Text(
-            wishlist.tag.value?.name.value ?? "",
+            wishlist.tag?.name ?? "",
             style: TextStyle(
-              color: Color(wishlist.tag.value?.color.value ?? 0),
+              color: Color(wishlist.tag?.color ?? 0),
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),

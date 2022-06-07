@@ -39,6 +39,9 @@ class PtBr implements Translation {
   String get seconds => "segundo(s)";
 
   @override
+  String get back => "Voltar";
+
+  @override
   String get completingRegistration => "Concluindo cadastro";
 
   @override
@@ -108,13 +111,55 @@ class PtBr implements Translation {
   String get close => "Fechar";
 
   @override
-  String get wishlists => "Listas de desejos";
+  String get wishlists => "Listas de Desejos";
 
   @override
   String get notFoundWishlists => "Nenhuma lista de desejos encontrada.";
 
   @override
   String get createWishlist => "Criar lista de desejos";
+
+  @override
+  String get wishlist => "Lista de Desejo";
+
+  @override
+  String get labelWishlist => "Nome da lista";
+
+  @override
+  String get hintWishlist => "Digite o nome da lista";
+
+  @override
+  String get labelTag => "Nome";
+
+  @override
+  String get hintTag => "Digite o nome da tag";
+
+  @override
+  String get save => "Salvar";
+
+  @override
+  String get tag => "Tag";
+
+  @override
+  String get addTag => "Add";
+
+  @override
+  String get wishes => "Desejos";
+
+  @override
+  String get wish => "Desejo";
+
+  @override
+  String get tagNormal => "Normal";
+
+  @override
+  String get createTag => "Criar tag";
+
+  @override
+  String get colorTag => "Cor";
+
+  @override
+  String get savingTag => "Salvando tag";
   //endregion
 
   //region Validation
@@ -173,6 +218,9 @@ class PtBr implements Translation {
 
   @override
   String get colorTagEmptyError => "Cor da tag precisa ser informada.";
+
+  @override
+  String get nameColorTagError => "Nome ou cor da tag não informada.";
 
   @override
   String get wishlistUninformedError => "Lista de desejos não informada.";

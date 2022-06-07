@@ -4,18 +4,21 @@ import '../../domain/entities/wishlist_entity.dart';
 import './tag_viewmodel.dart';
 
 class WishlistViewModel {
-  RxnString id = RxnString();
-  RxnString description = RxnString();
-  Rxn<TagViewModel> tag = Rxn<TagViewModel>();
+  final RxnString _id = RxnString();
+  final RxnString _description = RxnString();
+  final Rxn<TagViewModel> _tag = Rxn<TagViewModel>();
 
-  void setDescription(String? value) => description.value = value;
+  String? get id => _id.value;
+  String? get description => _description.value;
+  TagViewModel? get tag => _tag.value;
 
-  void setTag(TagViewModel? value) => tag.value = value;
+  void setDescription(String? value) => _description.value = value;
+  void setTag(TagViewModel? value) => _tag.value = value;
 
   WishlistViewModel({String? id, String? description, TagViewModel? tag}) {
-    this.id.value = id;
-    this.description.value = description;
-    this.tag.value = tag;
+    _id.value = id;
+    _description.value = description;
+    _tag.value = tag;
   }
 
   factory WishlistViewModel.fromEntity(WishlistEntity entity) {

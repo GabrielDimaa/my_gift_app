@@ -1,27 +1,42 @@
 import 'package:get/get.dart';
 
+import '../../../extensions/string_extension.dart';
 import '../../domain/entities/tag_entity.dart';
 
 class TagViewModel {
-  RxnString id = RxnString();
-  RxnString name = RxnString();
-  RxnInt color = RxnInt();
+  final RxnString _id = RxnString();
+  final RxnString _name = RxnString();
+  final RxnInt _color = RxnInt();
 
-  void setName(String? value) => name.value = value;
+  String? get id => _id.value;
 
-  void setColor(int? value) => color.value = value;
+  String? get name => _name.value;
+
+  int? get color => _color.value;
+
+  void setName(String? value) => _name.value = value;
+
+  void setColor(int? value) => _color.value = value;
 
   TagViewModel({String? id, String? name, int? color}) {
-    this.id.value = id;
-    this.name.value = name;
-    this.color.value = color;
+    _id.value = id;
+    _name.value = name;
+    _color.value = color;
+  }
+
+  TagEntity toEntity() {
+    return TagEntity(
+      id: id,
+      name: name!,
+      color: color!.toRadixString(16),
+    );
   }
 
   factory TagViewModel.fromEntity(TagEntity entity) {
     return TagViewModel(
       id: entity.id,
       name: entity.name,
-      color: int.tryParse("0xFF${entity.color}") ?? 0xFFFFFF,
+      color: entity.color.toColor(),
     );
   }
 }

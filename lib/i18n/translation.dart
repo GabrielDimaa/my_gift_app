@@ -16,6 +16,7 @@ abstract class Translation {
   String get resendEmail;
   String get resent;
   String get seconds;
+  String get back;
   String get completingRegistration;
   String get signingUp;
   String get loggingIn;
@@ -38,6 +39,20 @@ abstract class Translation {
   String get wishlists;
   String get notFoundWishlists;
   String get createWishlist;
+  String get wishlist;
+  String get labelWishlist;
+  String get hintWishlist;
+  String get labelTag;
+  String get hintTag;
+  String get save;
+  String get tag;
+  String get addTag;
+  String get wishes;
+  String get wish;
+  String get tagNormal;
+  String get createTag;
+  String get colorTag;
+  String get savingTag;
   //endregion
 
   //region Validation
@@ -62,6 +77,7 @@ abstract class Translation {
   String get withoutPermissionError;
   String get nameTagEmptyError;
   String get colorTagEmptyError;
+  String get nameColorTagError;
   String get wishlistUninformedError;
   String get emailInUseError;
   String get emailNotVerifiedError;

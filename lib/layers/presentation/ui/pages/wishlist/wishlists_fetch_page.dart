@@ -69,10 +69,10 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
   }
 
   Future<void> _navigateWishlist() async {
-    await Navigator.of(context).pushNamed("wishlist");
+    await Navigator.of(context).pushNamed("wishlist_register");
   }
 
   Future<void> _navigateCreateWishlist() async {
-    await Navigator.of(context).pushNamed("");
+    await Navigator.of(context).pushNamed("wishlist_register");
   }
 }

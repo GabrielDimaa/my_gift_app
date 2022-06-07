@@ -5,18 +5,26 @@ import '../../../../../i18n/resources.dart';
 class BottomSheetDefault extends StatelessWidget {
   final String? title;
   final Widget child;
+  final bool enablePop;
 
-  const BottomSheetDefault({Key? key, this.title, required this.child}) : super(key: key);
+  const BottomSheetDefault({Key? key, this.title, required this.child, this.enablePop = true}) : super(key: key);
 
   static Future<void> show({
     required BuildContext context,
     required Widget child,
     String? title,
     VoidCallback? onClosing,
+    bool? isScrollControlled,
+    bool? isDismissible,
+    bool? enableDrag,
+    bool? enablePop,
   }) async {
     return await showModalBottomSheet(
       context: context,
-      builder: (_) => BottomSheetDefault(title: title, child: child),
+      isScrollControlled: isScrollControlled ?? false,
+      isDismissible: isDismissible ?? false,
+      enableDrag: enableDrag ?? true,
+      builder: (_) => BottomSheetDefault(title: title, child: child, enablePop: enablePop ?? true),
     );
   }
 
@@ -34,7 +42,7 @@ class BottomSheetDefault extends StatelessWidget {
               splashRadius: 24,
               icon: const Icon(Icons.close),
               tooltip: R.string.close,
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => enablePop ? Navigator.pop(context) : null,
             ),
           ),
           Padding(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../i18n/resources.dart';
 import '../sized_box_default.dart';
 
 class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
@@ -33,6 +34,7 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
                 splashRadius: 28,
                 icon: const Icon(Icons.keyboard_backspace),
                 onPressed: () => Navigator.of(context).pop(),
+                tooltip: R.string.back,
               ),
             ),
             replacement: const SizedBox(height: 48),
