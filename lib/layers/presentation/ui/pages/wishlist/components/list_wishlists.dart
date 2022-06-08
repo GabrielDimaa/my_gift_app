@@ -4,7 +4,7 @@ import '../../../../viewmodels/wishlist_viewmodel.dart';
 
 class ListWishlists extends StatelessWidget {
   final List<WishlistViewModel> list;
-  final VoidCallback onTapListTile;
+  final Future<void> Function(WishlistViewModel?) onTapListTile;
 
   const ListWishlists({Key? key, required this.list, required this.onTapListTile}) : super(key: key);
 
@@ -15,7 +15,7 @@ class ListWishlists extends StatelessWidget {
       itemBuilder: (_, index) {
         final WishlistViewModel wishlist = list[index];
         return ListTile(
-          onTap: onTapListTile,
+          onTap: () async => await onTapListTile.call(wishlist),
           contentPadding: EdgeInsets.zero,
           visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
           title: Text(wishlist.description!),

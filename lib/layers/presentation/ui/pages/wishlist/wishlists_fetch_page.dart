@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/wishlist/implements/getx_wishlists_list_presenter.dart';
+import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/button/fab_default.dart';
 import '../../components/circular_loading.dart';
@@ -26,7 +27,7 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
       appBar: AppBarDefault(title: R.string.wishlists),
       floatingActionButton: FABDefault(
         icon: Icons.add,
-        onPressed: () async => await _navigateCreateWishlist(),
+        onPressed: () async => await _navigateWishlist(null),
         tooltip: R.string.createWishlist,
       ),
       body: SafeArea(
@@ -53,7 +54,7 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
                         } else {
                           return ListWishlists(
                             list: presenter.viewModel.wishlists,
-                            onTapListTile: () async => await _navigateWishlist(),
+                            onTapListTile: _navigateWishlist,
                           );
                         }
                       }),
@@ -68,11 +69,7 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
     );
   }
 
-  Future<void> _navigateWishlist() async {
-    await Navigator.of(context).pushNamed("wishlist_register");
-  }
-
-  Future<void> _navigateCreateWishlist() async {
-    await Navigator.of(context).pushNamed("wishlist_register");
+  Future<void> _navigateWishlist(WishlistViewModel? viewModel) async {
+    await Navigator.of(context).pushNamed("wishlist_register", arguments: viewModel);
   }
 }
