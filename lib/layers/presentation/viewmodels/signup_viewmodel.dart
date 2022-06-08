@@ -5,29 +5,31 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import '../../domain/entities/user_entity.dart';
 
 class SignupViewModel {
-  RxnString name = RxnString();
-  RxnString email = RxnString();
-  RxnString password = RxnString();
-  RxnString confirmPassword = RxnString();
-  Rxn<File?> photo = Rxn<File?>();
+  final RxnString _name = RxnString();
+  final RxnString _email = RxnString();
+  final RxnString _password = RxnString();
+  final RxnString _confirmPassword = RxnString();
+  final Rxn<File?> _photo = Rxn<File?>();
 
-  void setName(String? value) => name.value = value;
+  String? get name => _name.value;
+  String? get email => _email.value;
+  String? get password => _password.value;
+  String? get confirmPassword => _confirmPassword.value;
+  File? get photo => _photo.value;
 
-  void setEmail(String? value) => email.value = value;
-
-  void setPassword(String? value) => password.value = value;
-
-  void setConfirmPassword(String? value) => confirmPassword.value = value;
-
-  void setPhoto(File? value) => photo.value = value;
+  void setName(String? value) => _name.value = value;
+  void setEmail(String? value) => _email.value = value;
+  void setPassword(String? value) => _password.value = value;
+  void setConfirmPassword(String? value) => _confirmPassword.value = value;
+  void setPhoto(File? value) => _photo.value = value;
 
   UserEntity toEntity() {
     return UserEntity(
-      name: name.value!,
-      email: email.value!,
-      photo: photo.value?.path,
+      name: name!,
+      email: email!,
+      photo: photo?.path,
       emailVerified: false,
-      password: password.value!,
+      password: password!,
     );
   }
 }

@@ -1,9 +1,16 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
-class LoginViewModel {
-  RxnString email = RxnString();
-  RxnString password = RxnString();
+import '../../domain/helpers/params/login_params.dart';
 
-  void setEmail(String? value) => email.value = value;
-  void setPassword(String? value) => password.value = value;
+class LoginViewModel {
+  final RxnString _email = RxnString();
+  final RxnString _password = RxnString();
+
+  String? get email => _email.value;
+  String? get password => _password.value;
+
+  void setEmail(String? value) => _email.value = value;
+  void setPassword(String? value) => _password.value = value;
+
+  LoginParams toParams() => LoginParams(email: email!.trim(), password: password!);
 }

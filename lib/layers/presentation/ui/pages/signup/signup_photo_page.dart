@@ -85,7 +85,7 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                                   ),
                                   child: Obx(
                                     () => Visibility(
-                                      visible: presenter.viewModel.photo.value == null,
+                                      visible: presenter.viewModel.photo == null,
                                       child: DottedBorder(
                                         color: colorSchema.onBackground,
                                         strokeWidth: 2,
@@ -104,7 +104,7 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                                       ),
                                       replacement: ClipRRect(
                                         borderRadius: BorderRadius.circular(radius),
-                                        child: Image.file(presenter.viewModel.photo.value ?? File("")),
+                                        child: Image.file(presenter.viewModel.photo ?? File("")),
                                       ),
                                     ),
                                   ),
@@ -112,7 +112,7 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                               ),
                               Obx(
                                 () => Visibility(
-                                  visible: presenter.viewModel.photo.value != null,
+                                  visible: presenter.viewModel.photo != null,
                                   child: Positioned(
                                     top: 0,
                                     right: 0,

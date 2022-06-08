@@ -9,13 +9,10 @@ class TagViewModel {
   final RxnInt _color = RxnInt();
 
   String? get id => _id.value;
-
   String? get name => _name.value;
-
   int? get color => _color.value;
 
   void setName(String? value) => _name.value = value;
-
   void setColor(int? value) => _color.value = value;
 
   TagViewModel({String? id, String? name, int? color}) {

@@ -136,9 +136,9 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
 
   @override
   void validate() async {
-    if (viewModel.email.value == null || viewModel.email.value!.trim().isEmpty) throw ValidationDomainError(message: R.string.emailNotInformedError);
-    if (viewModel.password.value == null || viewModel.password.value!.isEmpty) throw ValidationDomainError(message: R.string.passwordNotInformedError);
-    if (viewModel.name.value == null || viewModel.name.value!.trim().isEmpty) throw ValidationDomainError(message: R.string.nameNotInformedError);
+    if (viewModel.email == null || viewModel.email!.trim().isEmpty) throw ValidationDomainError(message: R.string.emailNotInformedError);
+    if (viewModel.password == null || viewModel.password!.isEmpty) throw ValidationDomainError(message: R.string.passwordNotInformedError);
+    if (viewModel.name == null || viewModel.name!.trim().isEmpty) throw ValidationDomainError(message: R.string.nameNotInformedError);
   }
 
   @override

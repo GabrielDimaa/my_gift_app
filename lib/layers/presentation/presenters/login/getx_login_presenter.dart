@@ -4,7 +4,6 @@ import '../../../../i18n/resources.dart';
 import '../../../../monostates/user_global.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/helpers/errors/domain_error.dart';
-import '../../../domain/helpers/params/login_params.dart';
 import '../../../domain/usecases/abstracts/login/i_login_email.dart';
 import '../../ui/pages/dashboard/dashboard_page.dart';
 import '../../ui/pages/signup/signup_confirm_email_page.dart';
@@ -24,9 +23,7 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
     try {
       validate();
 
-      final LoginParams params = LoginParams(email: viewModel.email.value!.trim(), password: viewModel.password.value!);
-      final UserEntity user = await loginWithEmail.auth(params);
-
+      final UserEntity user = await loginWithEmail.auth(viewModel.toParams());
       final UserGlobal userGlobal = UserGlobal();
       userGlobal.setUser(user);
 
@@ -40,8 +37,8 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
 
   @override
   void validate() {
-    if (viewModel.email.value == null || viewModel.email.value!.trim().isEmpty) throw ValidationDomainError(message: R.string.emailNotInformedError);
-    if (viewModel.password.value == null || viewModel.password.value!.isEmpty) throw ValidationDomainError(message: R.string.passwordNotInformedError);
+    if (viewModel.email == null || viewModel.email!.trim().isEmpty) throw ValidationDomainError(message: R.string.emailNotInformedError);
+    if (viewModel.password == null || viewModel.password!.isEmpty) throw ValidationDomainError(message: R.string.passwordNotInformedError);
   }
 
   @override

@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'wishlist_viewmodel.dart';
 
 class WishlistsViewModel {
-  RxList<WishlistViewModel> wishlists = RxList<WishlistViewModel>();
+  final RxList<WishlistViewModel> _wishlists = RxList<WishlistViewModel>();
 
-  void setWishlists(List<WishlistViewModel>? value) => wishlists.value = value ?? [];
+  List<WishlistViewModel> get wishlists => _wishlists;
+
+  void setWishlists(List<WishlistViewModel> value) => _wishlists.value = value;
 }
