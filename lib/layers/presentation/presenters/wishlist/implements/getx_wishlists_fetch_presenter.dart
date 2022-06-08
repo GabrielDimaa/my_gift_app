@@ -20,11 +20,14 @@ class GetxWishlistsFetchPresenter extends GetxController with LoadingManager imp
   WishlistsViewModel get viewModel => _viewModel;
 
   @override
+  void setViewModel(WishlistsViewModel value) => _viewModel = value;
+
+  @override
   Future<void> onInit() async {
     try {
       setLoading(true);
 
-      _viewModel = WishlistsViewModel();
+      setViewModel(WishlistsViewModel());
       _userLogged = UserGlobal().getUser()!;
       await fetchWishlists();
 

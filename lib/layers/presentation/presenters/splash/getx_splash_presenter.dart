@@ -22,7 +22,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
   });
 
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     await load();
     super.onInit();
   }

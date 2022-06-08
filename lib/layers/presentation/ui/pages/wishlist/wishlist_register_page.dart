@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
+import '../../../presenters/wishlist/abstracts/wishlist_register_presenter.dart';
 import '../../../presenters/wishlist/implements/getx_wishlist_register_presenter.dart';
 import '../../../viewmodels/tag_viewmodel.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
@@ -29,7 +30,7 @@ class WishlistRegisterPage extends StatefulWidget {
 }
 
 class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
-  final GetxWishlistRegisterPresenter presenter = Get.find<GetxWishlistRegisterPresenter>();
+  final WishlistRegisterPresenter presenter = Get.find<GetxWishlistRegisterPresenter>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameWishlistController = TextEditingController();

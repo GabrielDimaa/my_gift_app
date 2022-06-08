@@ -1,4 +1,8 @@
-abstract class SignupPresenter {
+import '../../helpers/interfaces/i_loading.dart';
+import '../../helpers/interfaces/i_view_model.dart';
+import '../../viewmodels/signup_viewmodel.dart';
+
+abstract class SignupPresenter implements IViewModel<SignupViewModel>, ILoading {
   Future<void> signup();
   Future<void> signupWithGoogle();
   Future<void> getFromCameraOrGallery({bool isGallery = true});
@@ -10,4 +14,9 @@ abstract class SignupPresenter {
   Future<void> navigateToSignupPhoto();
   Future<void> navigateToConfirmEmail();
   Future<void> navigateToDashboard();
+
+  int? get timerTick;
+  bool get resendEmail;
+  bool get loadingResendEmail;
+  void startTimerResendEmail();
 }

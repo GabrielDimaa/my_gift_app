@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/login/getx_login_presenter.dart';
+import '../../../presenters/login/login_presenter.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/form/validators/input_validators.dart';
@@ -22,7 +23,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GetxLoginPresenter presenter = Get.find<GetxLoginPresenter>();
+  final LoginPresenter presenter = Get.find<GetxLoginPresenter>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();

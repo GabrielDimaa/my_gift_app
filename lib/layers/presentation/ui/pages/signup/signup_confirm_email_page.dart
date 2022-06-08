@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/signup/getx_signup_presenter.dart';
+import '../../../presenters/signup/signup_presenter.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/button/small_button.dart';
 import '../../components/circular_loading.dart';
@@ -21,7 +22,7 @@ class SignupConfirmEmailPage extends StatefulWidget {
 }
 
 class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
-  final GetxSignupPresenter presenter = Get.find<GetxSignupPresenter>();
+  final SignupPresenter presenter = Get.find<GetxSignupPresenter>();
 
   @override
   void initState() {
@@ -54,9 +55,9 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
                           children: [
                             Obx(
                               () => SmallButton(
-                                icon: (presenter.timerTick.value ?? 0) <= 0 ? Icons.forward_to_inbox : Icons.hourglass_top_outlined,
-                                label: (presenter.timerTick.value ?? 0) <= 0 ? R.string.resendEmail : "${presenter.timerTick.value} ${R.string.seconds}",
-                                onPressed: (presenter.timerTick.value ?? 0) <= 0
+                                icon: (presenter.timerTick ?? 0) <= 0 ? Icons.forward_to_inbox : Icons.hourglass_top_outlined,
+                                label: (presenter.timerTick ?? 0) <= 0 ? R.string.resendEmail : "${presenter.timerTick} ${R.string.seconds}",
+                                onPressed: (presenter.timerTick ?? 0) <= 0
                                     ? () async {
                                         try {
                                           await presenter.resendVerificationEmail();
@@ -70,7 +71,7 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
                             const SizedBoxDefault.horizontal(2),
                             Obx(
                               () => Visibility(
-                                visible: presenter.loadingResendEmail.value,
+                                visible: presenter.loadingResendEmail,
                                 child: const SizedBox(
                                   width: 20,
                                   height: 20,
@@ -80,7 +81,7 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
                             ),
                             Obx(
                               () => Visibility(
-                                visible: !presenter.loadingResendEmail.value && (presenter.timerTick.value ?? 0) > 0 && presenter.resendEmail.value,
+                                visible: !presenter.loadingResendEmail && (presenter.timerTick ?? 0) > 0 && presenter.resendEmail,
                                 child: Row(
                                   children: [
                                     Icon(

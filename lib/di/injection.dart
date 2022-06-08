@@ -33,7 +33,7 @@ import '../layers/presentation/presenters/login/getx_login_presenter.dart';
 import '../layers/presentation/presenters/signup/getx_signup_presenter.dart';
 import '../layers/presentation/presenters/splash/getx_splash_presenter.dart';
 import '../layers/presentation/presenters/wishlist/implements/getx_wishlist_register_presenter.dart';
-import '../layers/presentation/presenters/wishlist/implements/getx_wishlists_list_presenter.dart';
+import '../layers/presentation/presenters/wishlist/implements/getx_wishlists_fetch_presenter.dart';
 
 class Injection {
   static final Injection _instance = Injection._();

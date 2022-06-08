@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
-import '../../../presenters/wishlist/implements/getx_wishlists_list_presenter.dart';
+import '../../../presenters/wishlist/abstracts/wishlists_fetch_presenter.dart';
+import '../../../presenters/wishlist/implements/getx_wishlists_fetch_presenter.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/button/fab_default.dart';
@@ -19,7 +20,7 @@ class WishlistsFetchPage extends StatefulWidget {
 }
 
 class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
-  final GetxWishlistsFetchPresenter presenter = Get.find<GetxWishlistsFetchPresenter>();
+  final WishlistsFetchPresenter presenter = Get.find<GetxWishlistsFetchPresenter>();
 
   @override
   Widget build(BuildContext context) {

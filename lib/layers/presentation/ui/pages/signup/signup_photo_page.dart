@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/signup/getx_signup_presenter.dart';
+import '../../../presenters/signup/signup_presenter.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/bottom_sheet/bottom_sheet_image_picker.dart';
 import '../../components/dialogs/error_dialog.dart';
@@ -21,7 +22,7 @@ class SignupPhotoPage extends StatefulWidget {
 }
 
 class _SignupPhotoPageState extends State<SignupPhotoPage> {
-  final GetxSignupPresenter presenter = Get.find<GetxSignupPresenter>();
+  final SignupPresenter presenter = Get.find<GetxSignupPresenter>();
 
   double get radius => 18;
 

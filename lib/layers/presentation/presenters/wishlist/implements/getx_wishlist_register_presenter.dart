@@ -20,11 +20,11 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   final ISaveTag saveTag;
   final IGetTags fetchTags;
 
+  GetxWishlistRegisterPresenter({required this.saveWishlist, required this.saveTag, required this.fetchTags});
+
   late WishlistViewModel _viewModel;
   late RxList<TagViewModel> _tagsViewModel;
   late UserEntity _user;
-
-  GetxWishlistRegisterPresenter({required this.saveWishlist, required this.saveTag, required this.fetchTags});
 
   @override
   WishlistViewModel get viewModel => _viewModel;
@@ -40,7 +40,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
     try {
       setLoading(true);
 
-      _viewModel = WishlistViewModel();
+      setViewModel(WishlistViewModel());
       _tagsViewModel = <TagViewModel>[].obs;
       _user = UserGlobal().getUser()!;
 

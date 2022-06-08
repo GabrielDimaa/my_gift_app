@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/signup/getx_signup_presenter.dart';
+import '../../../presenters/signup/signup_presenter.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/form/text_field_default.dart';
 import '../../components/form/validators/input_validators.dart';
@@ -21,7 +22,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final GetxSignupPresenter presenter = Get.find<GetxSignupPresenter>();
+  final SignupPresenter presenter = Get.find<GetxSignupPresenter>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();

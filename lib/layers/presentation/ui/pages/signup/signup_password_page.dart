@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/signup/getx_signup_presenter.dart';
+import '../../../presenters/signup/signup_presenter.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/form/validators/input_validators.dart';
 import '../../components/padding/padding_default.dart';
@@ -17,7 +18,7 @@ class SignupPasswordPage extends StatefulWidget {
 }
 
 class _SignupPasswordPageState extends State<SignupPasswordPage> {
-  final GetxSignupPresenter presenter = Get.find<GetxSignupPresenter>();
+  final SignupPresenter presenter = Get.find<GetxSignupPresenter>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();

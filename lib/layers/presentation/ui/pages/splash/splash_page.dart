@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../../app_theme.dart';
 import '../../../presenters/splash/getx_splash_presenter.dart';
+import '../../../presenters/splash/splash_presenter.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 
@@ -15,7 +16,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final GetxSplashPresenter presenter = Get.find<GetxSplashPresenter>();
+  final SplashPresenter presenter = Get.find<GetxSplashPresenter>();
 
   @override
   Widget build(BuildContext context) {

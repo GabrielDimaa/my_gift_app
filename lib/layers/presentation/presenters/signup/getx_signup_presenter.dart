@@ -39,18 +39,40 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
     required this.getUserLogged,
   });
 
+  late SignupViewModel _viewModel;
+
+  @override
+  SignupViewModel get viewModel => _viewModel;
+
+  @override
+  void setViewModel(SignupViewModel value) => _viewModel = value;
+
+  UserEntity? _userEntity;
   Timer? _timerResendEmail;
   int maxSeconds = 60;
-  RxnInt timerTick = RxnInt(60);
+  
+  final RxnInt _timerTick = RxnInt(60);
 
-  SignupViewModel viewModel = SignupViewModel();
-  UserEntity? _userEntity;
+  @override
+  int? get timerTick => _timerTick.value;
 
-  RxBool resendEmail = RxBool(false);
-  void setResendEmail(bool value) => resendEmail.value = value;
+  final RxBool _resendEmail = RxBool(false);
+  void setResendEmail(bool value) => _resendEmail.value = value;
 
-  RxBool loadingResendEmail = RxBool(false);
-  void setLoadingResendEmail(bool value) => loadingResendEmail.value = value;
+  @override
+  bool get resendEmail => _resendEmail.value;
+
+  final RxBool _loadingResendEmail = RxBool(false);
+  void setLoadingResendEmail(bool value) => _loadingResendEmail.value = value;
+
+  @override
+  bool get loadingResendEmail => _loadingResendEmail.value;
+  
+  @override
+  void onInit() {
+    setViewModel(SignupViewModel());
+    super.onInit();
+  }
 
   @override
   Future<void> signup() async {
@@ -156,12 +178,13 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   @override
   Future<void> navigateToDashboard() async => await Get.offAll(() => const DashboardPage());
 
+  @override
   void startTimerResendEmail() {
     if (!(_timerResendEmail?.isActive ?? false)) {
       _timerResendEmail = Timer.periodic(const Duration(seconds: 1), (timer) {
-        timerTick.value = maxSeconds - timer.tick;
+        _timerTick.value = maxSeconds - timer.tick;
         if (timer.tick >= maxSeconds) {
-          timerTick.value = null;
+          _timerTick.value = null;
           _timerResendEmail?.cancel();
         }
       });

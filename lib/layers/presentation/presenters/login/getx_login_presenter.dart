@@ -16,7 +16,19 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
 
   GetxLoginPresenter({required this.loginWithEmail});
 
-  LoginViewModel viewModel = LoginViewModel();
+  late LoginViewModel _viewModel;
+
+  @override
+  LoginViewModel get viewModel => _viewModel;
+
+  @override
+  void setViewModel(LoginViewModel value) => _viewModel = value;
+
+  @override
+  void onInit() {
+    setViewModel(LoginViewModel());
+    super.onInit();
+  }
 
   @override
   Future<void> login() async {
