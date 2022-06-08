@@ -147,9 +147,6 @@ class PtBr implements Translation {
   String get wishes => "Desejos";
 
   @override
-  String get wish => "Desejo";
-
-  @override
   String get tagNormal => "Normal";
 
   @override
@@ -160,6 +157,30 @@ class PtBr implements Translation {
 
   @override
   String get savingTag => "Salvando tag";
+
+  @override
+  String get savingWishlist => "Salvando lista de desejos";
+
+  @override
+  String get noneWishSelected => "Nenhum desejo selecionado";
+
+  @override
+  String get wishSelected => "Desejo selecionado";
+
+  @override
+  String get wishesSelected => "Desejos selecionados";
+
+  @override
+  String get cancel => "Cancelar";
+
+  @override
+  String get confirm => "Confirmar";
+
+  @override
+  String get titleNoneWish => "Nenhum desejo encontrado";
+
+  @override
+  String get messageNoneWish => "Deseja criar a lista sem nenhum desejo adicionado?";
   //endregion
 
   //region Validation
@@ -308,5 +329,11 @@ class PtBr implements Translation {
 
   @override
   String get imageCropperError => "Não foi possível cortar a imagem.";
+
+  @override
+  String get descriptionWishlistNotInformed => "Descrição não informada.";
+
+  @override
+  String get tagNotInformed => "Tag não selecionada.";
   //endregion
 }

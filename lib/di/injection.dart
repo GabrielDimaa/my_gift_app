@@ -15,14 +15,17 @@ import '../layers/domain/usecases/implements/tag/get_tags.dart';
 import '../layers/domain/usecases/implements/tag/save_tag.dart';
 import '../layers/domain/usecases/implements/user/get_user_logged.dart';
 import '../layers/domain/usecases/implements/wishlist/get_wishlists.dart';
+import '../layers/domain/usecases/implements/wishlist/save_wishlist.dart';
 import '../layers/infra/datasources/firebase_tag_datasource.dart';
 import '../layers/infra/datasources/firebase_user_account_datasource.dart';
+import '../layers/infra/datasources/firebase_wish_datasource.dart';
 import '../layers/infra/datasources/firebase_wishlist_datasource.dart';
 import '../layers/infra/datasources/storage/firebase_storage_datasource.dart';
 import '../layers/infra/libraries/image_crop/image_cropper_facade.dart';
 import '../layers/infra/libraries/image_picker/image_picker_facade.dart';
 import '../layers/infra/repositories/tag_repository.dart';
 import '../layers/infra/repositories/user_account_repository.dart';
+import '../layers/infra/repositories/wish_repository.dart';
 import '../layers/infra/repositories/wishlist_repository.dart';
 import '../layers/infra/services/image_crop_service.dart';
 import '../layers/infra/services/image_picker_service.dart';
@@ -65,6 +68,7 @@ class Injection {
     );
     Get.lazyPut(() => FirebaseWishlistDataSource(firestore: Get.find<FirebaseFirestore>()), fenix: true);
     Get.lazyPut(() => FirebaseTagDataSource(firestore: Get.find<FirebaseFirestore>()), fenix: true);
+    Get.lazyPut(() => FirebaseWishDataSource(firestore: Get.find<FirebaseFirestore>()), fenix: true);
     //endregion
 
     //region Facades
@@ -75,6 +79,7 @@ class Injection {
     //region Repositories
     Get.lazyPut(() => UserAccountRepository(userAccountDataSource: Get.find<FirebaseUserAccountDataSource>()), fenix: true);
     Get.lazyPut(() => WishlistRepository(wishlistDataSource: Get.find<FirebaseWishlistDataSource>()), fenix: true);
+    Get.lazyPut(() => WishRepository(wishDataSource: Get.find<FirebaseWishDataSource>()), fenix: true);
     Get.lazyPut(() => TagRepository(tagDataSource: Get.find<FirebaseTagDataSource>()), fenix: true);
     //endregion
 
@@ -104,6 +109,13 @@ class Injection {
     Get.lazyPut(() => CheckEmailVerified(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => GetUserLogged(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => GetWishlists(wishlistRepository: Get.find<WishlistRepository>()), fenix: true);
+    Get.lazyPut(
+      () => SaveWishlist(
+        wishlistRepository: Get.find<WishlistRepository>(),
+        wishRepository: Get.find<WishRepository>(),
+      ),
+      fenix: true,
+    );
     Get.lazyPut(() => GetTags(tagRepository: Get.find<TagRepository>()), fenix: true);
     Get.lazyPut(() => SaveTag(tagRepository: Get.find<TagRepository>()), fenix: true);
     //endregion
@@ -129,7 +141,14 @@ class Injection {
       ),
     );
     Get.lazyPut(() => GetxWishlistsFetchPresenter(getWishlists: Get.find<GetWishlists>()), fenix: true);
-    Get.lazyPut(() => GetxWishlistRegisterPresenter(saveTag: Get.find<SaveTag>(), fetchTags: Get.find<GetTags>()), fenix: true);
+    Get.lazyPut(
+      () => GetxWishlistRegisterPresenter(
+        saveWishlist: Get.find<SaveWishlist>(),
+        saveTag: Get.find<SaveTag>(),
+        fetchTags: Get.find<GetTags>(),
+      ),
+      fenix: true,
+    );
     //endregion
   }
 }

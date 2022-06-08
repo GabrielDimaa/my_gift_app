@@ -4,22 +4,27 @@ import '../../../../../i18n/resources.dart';
 import '../../../../../monostates/user_global.dart';
 import '../../../../domain/entities/tag_entity.dart';
 import '../../../../domain/entities/user_entity.dart';
+import '../../../../domain/entities/wishlist_entity.dart';
 import '../../../../domain/enums/tag_internal.dart';
+import '../../../../domain/helpers/errors/domain_error.dart';
 import '../../../../domain/usecases/abstracts/tag/i_get_tags.dart';
 import '../../../../domain/usecases/abstracts/tag/i_save_tag.dart';
+import '../../../../domain/usecases/abstracts/wishlist/i_save_wishlist.dart';
 import '../../../helpers/mixins/loading_manager.dart';
 import '../../../viewmodels/tag_viewmodel.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../abstracts/wishlist_register_presenter.dart';
 
 class GetxWishlistRegisterPresenter extends GetxController with LoadingManager implements WishlistRegisterPresenter {
+  final ISaveWishlist saveWishlist;
   final ISaveTag saveTag;
   final IGetTags fetchTags;
+
   late WishlistViewModel _viewModel;
   late RxList<TagViewModel> _tagsViewModel;
   late UserEntity _user;
 
-  GetxWishlistRegisterPresenter({required this.saveTag, required this.fetchTags});
+  GetxWishlistRegisterPresenter({required this.saveWishlist, required this.saveTag, required this.fetchTags});
 
   @override
   WishlistViewModel get viewModel => _viewModel;
@@ -42,14 +47,26 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
       await loadTags();
     } finally {
       setLoading(false);
+      super.onInit();
     }
-
-    super.onInit();
   }
 
   @override
   Future<void> save() async {
-    throw UnimplementedError();
+    try {
+      validate();
+
+      final WishlistEntity wishlistEntity = await saveWishlist.save(_viewModel.toEntity());
+      navigateToWishlists(WishlistViewModel.fromEntity(wishlistEntity));
+    } on DomainError catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  @override
+  void validate() {
+    if (_viewModel.description?.isEmpty ?? true) throw ValidationDomainError(message: R.string.descriptionWishlistNotInformed);
+    if (_viewModel.tag == null) throw ValidationDomainError(message: R.string.tagNotInformed);
   }
 
   @override
@@ -77,4 +94,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
       setLoading(false);
     }
   }
+
+  @override
+  void navigateToWishlists(WishlistViewModel viewModel) => Get.back(result: viewModel);
 }

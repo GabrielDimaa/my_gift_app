@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,12 +8,15 @@ import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/bottom_sheet/bottom_sheet_default.dart';
 import '../../components/circular_loading.dart';
+import '../../components/dialogs/confirm_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/form/text_field_default.dart';
 import '../../components/form/validators/input_validators.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
+import '../tag/components/chip_add_tag.dart';
+import '../tag/components/chip_tag.dart';
 import '../tag/components/tag_form.dart';
 
 class WishlistRegisterPage extends StatefulWidget {
@@ -31,8 +33,6 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameWishlistController = TextEditingController();
-
-  double get radius => 100;
 
   @override
   void initState() {
@@ -79,30 +79,11 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                           Obx(
                             () => Wrap(
                               crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 10,
                               children: [
-                                IntrinsicWidth(
-                                  child: InkWell(
-                                    onTap: () async => await _createTag(),
-                                    borderRadius: BorderRadius.circular(radius),
-                                    child: DottedBorder(
-                                      color: Theme.of(context).colorScheme.onBackground,
-                                      strokeWidth: 2,
-                                      dashPattern: const [3, 3],
-                                      borderType: BorderType.RRect,
-                                      radius: Radius.circular(radius),
-                                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
-                                      child: Row(
-                                        children: [
-                                          const Icon(Icons.add, size: 20),
-                                          const SizedBoxDefault.horizontal(),
-                                          Text(R.string.addTag, textAlign: TextAlign.center),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                ChipAddTag(onTap: () async => await _createTag()),
                                 ...presenter.tagsViewModel
-                                    .map((tag) => _chipTag(
+                                    .map((tag) => ChipTag(
                                           label: tag.name!,
                                           color: Color(tag.color!),
                                           selected: tag.id == presenter.viewModel.tag?.id,
@@ -132,7 +113,16 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                             padding: const EdgeInsets.only(right: 6, top: 6),
                             child: Align(
                               alignment: Alignment.centerRight,
-                              child: Text(R.string.wishes.toLowerCase()),
+                              child: Obx(
+                                () {
+                                  final int count = presenter.viewModel.wishes.length;
+                                  return Text(count == 0
+                                      ? R.string.noneWishSelected
+                                      : count > 1
+                                          ? "$count ${R.string.wishesSelected.toLowerCase()}"
+                                          : "$count ${R.string.wishSelected.toLowerCase()}");
+                                },
+                              ),
                             ),
                           ),
                         ],
@@ -151,28 +141,6 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _chipTag({
-    required String label,
-    required Color color,
-    required bool selected,
-    required void Function(bool)? onSelected,
-    required Color backgroundColorDisable,
-    required Color onBackgroundColorDisable,
-  }) {
-    return ChoiceChip(
-      label: Text(
-        label,
-        style: TextStyle(color: selected ? color : onBackgroundColorDisable),
-      ),
-      selected: selected,
-      onSelected: onSelected,
-      selectedColor: color.withOpacity(0.1),
-      side: BorderSide(color: selected ? color : const Color(0xFF464646)),
-      backgroundColor: backgroundColorDisable,
-      labelPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
     );
   }
 
@@ -197,10 +165,11 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                   if (!presenter.loading && formKeyTag.currentState!.validate()) {
                     formKeyTag.currentState!.save();
 
-                    await LoadingDialog.show(context: context, message: "${R.string.savingTag}...", onAction: () async {
-                      await presenter.createTag(tag);
-                    });
-
+                    await LoadingDialog.show(
+                      context: context,
+                      message: "${R.string.savingTag}...",
+                      onAction: () async => await presenter.createTag(tag),
+                    );
                     Navigator.pop(context);
                   }
                 } catch (e) {
@@ -218,10 +187,24 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
 
   Future<void> _save() async {
     try {
-      if (_formKey.currentState!.validate()) {
+      if (!presenter.loading && _formKey.currentState!.validate()) {
         _formKey.currentState!.save();
 
-        // TODO: implement save.
+        if (presenter.viewModel.wishes.isEmpty) {
+          final bool? confirmed = await ConfirmDialog.show(
+            context: context,
+            title: R.string.titleNoneWish,
+            message: R.string.messageNoneWish,
+          );
+
+          if (!(confirmed ?? false)) return;
+        }
+
+        await LoadingDialog.show(
+          context: context,
+          message: "${R.string.savingWishlist}...",
+          onAction: () async => await presenter.save(),
+        );
       }
     } catch (e) {
       ErrorDialog.show(context: context, content: e.toString());

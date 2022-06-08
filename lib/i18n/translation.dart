@@ -48,11 +48,18 @@ abstract class Translation {
   String get tag;
   String get addTag;
   String get wishes;
-  String get wish;
   String get tagNormal;
   String get createTag;
   String get colorTag;
   String get savingTag;
+  String get savingWishlist;
+  String get noneWishSelected;
+  String get wishSelected;
+  String get wishesSelected;
+  String get cancel;
+  String get confirm;
+  String get titleNoneWish;
+  String get messageNoneWish;
   //endregion
 
   //region Validation
@@ -107,5 +114,7 @@ abstract class Translation {
   String get deleteImageError;
   String get imagePickerError;
   String get imageCropperError;
+  String get descriptionWishlistNotInformed;
+  String get tagNotInformed;
   //endregion
 }

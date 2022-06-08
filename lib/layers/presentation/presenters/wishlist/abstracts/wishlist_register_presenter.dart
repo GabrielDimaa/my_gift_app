@@ -8,6 +8,8 @@ abstract class WishlistRegisterPresenter {
   List<TagViewModel> get tagsViewModel;
 
   Future<void> save();
+  void validate();
   Future<void> loadTags();
   Future<void> createTag(TagViewModel viewModel);
+  void navigateToWishlists(WishlistViewModel viewModel);
 }

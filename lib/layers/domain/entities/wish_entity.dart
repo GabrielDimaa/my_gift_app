@@ -24,7 +24,7 @@ class WishEntity {
     required this.priceRangeInitial,
     required this.priceRangeFinal,
     required this.createdAt,
-    required this.expose,
-    required this.finished,
+    this.expose = true,
+    this.finished = false,
   });
 }
