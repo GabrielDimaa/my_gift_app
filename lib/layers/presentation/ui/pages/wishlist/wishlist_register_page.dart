@@ -46,100 +46,102 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBarDefault(title: R.string.wishlists),
-      body: Padding(
-        padding: const PaddingDefault(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBoxDefault(3),
-            Expanded(
-              child: Obx(() {
-                if (presenter.loading) {
-                  return const CircularLoading();
-                } else {
-                  return SingleChildScrollView(
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          TextFieldDefault(
-                            label: R.string.labelWishlist,
-                            hint: R.string.hintWishlist,
-                            controller: _nameWishlistController,
-                            onSaved: presenter.viewModel.setDescription,
-                            textInputAction: TextInputAction.done,
-                            keyboardType: TextInputType.text,
-                            validator: InputRequiredValidator().validate,
-                          ),
-                          const SizedBoxDefault(2),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 6, bottom: 10),
-                            child: Text(R.string.tag),
-                          ),
-                          Obx(
-                            () => Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              spacing: 10,
-                              children: [
-                                ChipAddTag(onTap: () async => await _createTag()),
-                                ...presenter.tagsViewModel
-                                    .map((tag) => ChipTag(
-                                          label: tag.name!,
-                                          color: Color(tag.color!),
-                                          selected: tag.id == presenter.viewModel.tag?.id,
-                                          onSelected: (bool value) => presenter.viewModel.setTag(tag),
-                                          backgroundColorDisable: colorScheme.surface,
-                                          onBackgroundColorDisable: colorScheme.onSurface,
-                                        ))
-                                    .toList(),
-                              ],
+      body: SafeArea(
+        child: Padding(
+          padding: const PaddingDefault(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBoxDefault(3),
+              Expanded(
+                child: Obx(() {
+                  if (presenter.loading) {
+                    return const CircularLoading();
+                  } else {
+                    return SingleChildScrollView(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            TextFieldDefault(
+                              label: R.string.labelWishlist,
+                              hint: R.string.hintWishlist,
+                              controller: _nameWishlistController,
+                              onSaved: presenter.viewModel.setDescription,
+                              textInputAction: TextInputAction.done,
+                              keyboardType: TextInputType.text,
+                              validator: InputRequiredValidator().validate,
                             ),
-                          ),
-                          const SizedBoxDefault(2),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 6, bottom: 10),
-                            child: Text(R.string.wishes),
-                          ),
-                          OutlinedButton.icon(
-                            icon: const Icon(Icons.add),
-                            label: Text(R.string.wishes),
-                            style: OutlinedButton.styleFrom(
-                              primary: colorScheme.secondary,
-                              side: BorderSide(color: colorScheme.secondary),
+                            const SizedBoxDefault(2),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 6, bottom: 10),
+                              child: Text(R.string.tag),
                             ),
-                            onPressed: () {},
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 6, top: 6),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Obx(
-                                () {
-                                  final int count = presenter.viewModel.wishes.length;
-                                  return Text(count == 0
-                                      ? R.string.noneWishSelected
-                                      : count > 1
-                                          ? "$count ${R.string.wishesSelected.toLowerCase()}"
-                                          : "$count ${R.string.wishSelected.toLowerCase()}");
-                                },
+                            Obx(
+                              () => Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                spacing: 10,
+                                children: [
+                                  ChipAddTag(onTap: () async => await _createTag()),
+                                  ...presenter.tagsViewModel
+                                      .map((tag) => ChipTag(
+                                            label: tag.name!,
+                                            color: Color(tag.color!),
+                                            selected: tag.id == presenter.viewModel.tag?.id,
+                                            onSelected: (bool value) => presenter.viewModel.setTag(tag),
+                                            backgroundColorDisable: colorScheme.surface,
+                                            onBackgroundColorDisable: colorScheme.onSurface,
+                                          ))
+                                      .toList(),
+                                ],
                               ),
                             ),
-                          ),
-                        ],
+                            const SizedBoxDefault(2),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 6, bottom: 10),
+                              child: Text(R.string.wishes),
+                            ),
+                            OutlinedButton.icon(
+                              icon: const Icon(Icons.add),
+                              label: Text(R.string.wishes),
+                              style: OutlinedButton.styleFrom(
+                                primary: colorScheme.secondary,
+                                side: BorderSide(color: colorScheme.secondary),
+                              ),
+                              onPressed: () async => await _navigateToWish(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 6, top: 6),
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Obx(
+                                  () {
+                                    final int count = presenter.viewModel.wishes.length;
+                                    return Text(count == 0
+                                        ? R.string.noneWishSelected
+                                        : count > 1
+                                            ? "$count ${R.string.wishesSelected.toLowerCase()}"
+                                            : "$count ${R.string.wishSelected.toLowerCase()}");
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }
-              }),
-            ),
-            const SizedBoxDefault(),
-            ElevatedButton.icon(
-              label: Text(R.string.save),
-              icon: const Icon(Icons.check),
-              onPressed: () async => await _save(),
-            ),
-          ],
+                    );
+                  }
+                }),
+              ),
+              const SizedBoxDefault(),
+              ElevatedButton.icon(
+                label: Text(R.string.save),
+                icon: const Icon(Icons.check),
+                onPressed: () async => await _save(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -210,5 +212,9 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
     } catch (e) {
       ErrorDialog.show(context: context, content: e.toString());
     }
+  }
+
+  Future<void> _navigateToWish() async {
+    await Navigator.pushNamed(context, "wish_register");
   }
 }
