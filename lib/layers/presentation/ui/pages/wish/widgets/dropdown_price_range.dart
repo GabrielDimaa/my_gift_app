@@ -11,10 +11,12 @@ class DropdownPriceRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
     return Obx(
       () => Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).colorScheme.secondary),
+          border: Border.all(color: theme.colorScheme.secondary),
           borderRadius: BorderRadius.circular(18),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
@@ -23,9 +25,9 @@ class DropdownPriceRange extends StatelessWidget {
           onChanged: presenter.setPriceRange,
           underline: const SizedBox.shrink(),
           borderRadius: BorderRadius.circular(18),
-          style: Theme.of(context).textTheme.button?.copyWith(fontSize: 14, color: const Color(0xFFC1C1C1)),
+          style: theme.textTheme.button?.copyWith(fontSize: 14, color: theme.brightness == Brightness.dark ? const Color(0xFFC1C1C1) : theme.colorScheme.onBackground),
           isDense: true,
-          icon: Icon(Icons.arrow_drop_down_outlined, color: Theme.of(context).colorScheme.secondary),
+          icon: Icon(Icons.arrow_drop_down_outlined, color: theme.colorScheme.secondary),
           items: [
             DropdownMenuItem<PriceRange>(value: PriceRange.pr1_100, child: Text(PriceRange.pr1_100.description)),
             DropdownMenuItem<PriceRange>(value: PriceRange.pr100_200, child: Text(PriceRange.pr100_200.description)),

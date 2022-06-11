@@ -11,7 +11,7 @@ class AppTheme extends StatelessWidget {
       title: 'Desejando',
       debugShowCheckedModeBanner: false,
       initialRoute: "/splash",
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       theme: ThemeData(
         brightness: Brightness.light,
         colorScheme: _colorSchemeLight,
