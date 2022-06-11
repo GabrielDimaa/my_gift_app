@@ -1,4 +1,7 @@
 abstract class Translation {
+  String get locale;
+  String get symbol;
+
   //region General
   String get login;
   String get loginWithGoogle;
@@ -60,6 +63,22 @@ abstract class Translation {
   String get confirm;
   String get titleNoneWish;
   String get messageNoneWish;
+  String get newWish;
+  String get editWish;
+  String get image;
+  String get labelDescription;
+  String get hintDescriptionWish;
+  String get labelLinkWish;
+  String get hintLinkWish;
+  String get labelPriceWish;
+  String get labelNoteWish;
+  String get hintNoteWish;
+  String get greaterThan;
+  String get savingWish;
+  String get addImage;
+  String get imageWish;
+  String get opening;
+  String get removeImage;
   //endregion
 
   //region Validation
@@ -114,7 +133,9 @@ abstract class Translation {
   String get deleteImageError;
   String get imagePickerError;
   String get imageCropperError;
-  String get descriptionWishlistNotInformed;
+  String get descriptionNotInformed;
   String get tagNotInformed;
+  String get wishlistLinked;
+  String get priceNotInformed;
   //endregion
 }

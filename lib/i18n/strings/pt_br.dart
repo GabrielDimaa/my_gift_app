@@ -1,6 +1,12 @@
 import '../translation.dart';
 
 class PtBr implements Translation {
+  @override
+  String get locale => "pt_BR";
+
+  @override
+  String get symbol => "R\$";
+
   //region General
   @override
   String get login => "Login";
@@ -181,6 +187,54 @@ class PtBr implements Translation {
 
   @override
   String get messageNoneWish => "Deseja criar a lista sem nenhum desejo adicionado?";
+
+  @override
+  String get newWish => "Novo Desejo";
+
+  @override
+  String get editWish => "Editar Desejo";
+
+  @override
+  String get image => "Imagem";
+
+  @override
+  String get labelDescription => "Descrição";
+
+  @override
+  String get hintDescriptionWish => "Digite a descrição do desejo";
+
+  @override
+  String get labelLinkWish => "Link";
+
+  @override
+  String get hintLinkWish => "Insira o Link do site";
+
+  @override
+  String get labelPriceWish => "Preço";
+
+  @override
+  String get labelNoteWish => "Observação";
+
+  @override
+  String get hintNoteWish => "Digite a observação";
+
+  @override
+  String get greaterThan => "Maior que";
+
+  @override
+  String get savingWish => "Salvando desejo";
+
+  @override
+  String get addImage => "Adicionar imagem";
+
+  @override
+  String get imageWish => "Image do desejo";
+
+  @override
+  String get opening => "Abrindo";
+
+  @override
+  String get removeImage => "Remover imagem";
   //endregion
 
   //region Validation
@@ -331,9 +385,15 @@ class PtBr implements Translation {
   String get imageCropperError => "Não foi possível cortar a imagem.";
 
   @override
-  String get descriptionWishlistNotInformed => "Descrição não informada.";
+  String get descriptionNotInformed => "Descrição não informada.";
 
   @override
   String get tagNotInformed => "Tag não selecionada.";
+
+  @override
+  String get wishlistLinked => "Lista de desejos não vinculada.";
+
+  @override
+  String get priceNotInformed => "Faixa de preço não informada.";
   //endregion
 }

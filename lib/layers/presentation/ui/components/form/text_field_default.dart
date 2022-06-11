@@ -14,6 +14,8 @@ class TextFieldDefault extends StatelessWidget {
   final TextInputType? keyboardType;
   final Function(String)? onFieldSubmitted;
   final TextCapitalization textCapitalization;
+  final int? minLines;
+  final int? maxLines;
 
   const TextFieldDefault({
     Key? key,
@@ -29,6 +31,8 @@ class TextFieldDefault extends StatelessWidget {
     this.keyboardType,
     this.onFieldSubmitted,
     this.textCapitalization = TextCapitalization.sentences,
+    this.minLines,
+    this.maxLines,
   }) : super(key: key);
 
   @override
@@ -55,6 +59,8 @@ class TextFieldDefault extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
           ),
+          minLines: minLines,
+          maxLines: maxLines,
         ),
       ],
     );

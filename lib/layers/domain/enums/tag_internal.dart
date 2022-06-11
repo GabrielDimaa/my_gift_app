@@ -5,7 +5,7 @@ enum TagInternal {
   normal
 }
 
-extension TagIternalExtension on TagInternal {
+extension TagInternalExtension on TagInternal {
   int get value {
     switch (this) {
       case TagInternal.normal: return 1;

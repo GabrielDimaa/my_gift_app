@@ -51,6 +51,9 @@ class AppTheme extends StatelessWidget {
           ),
         ),
         floatingActionButtonTheme: _floatingActionButtonTheme,
+        sliderTheme: const SliderThemeData(
+          rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape(),
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -85,6 +88,9 @@ class AppTheme extends StatelessWidget {
           ),
         ),
         floatingActionButtonTheme: _floatingActionButtonTheme,
+        sliderTheme: const SliderThemeData(
+          rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape(),
+        ),
       ),
       getPages: Routes().getRoutes(),
     );

@@ -65,7 +65,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
 
   @override
   void validate() {
-    if (_viewModel.description?.isEmpty ?? true) throw ValidationDomainError(message: R.string.descriptionWishlistNotInformed);
+    if (_viewModel.description?.isEmpty ?? true) throw ValidationDomainError(message: R.string.descriptionNotInformed);
     if (_viewModel.tag == null) throw ValidationDomainError(message: R.string.tagNotInformed);
   }
 

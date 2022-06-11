@@ -23,6 +23,15 @@ class WishViewModel {
   double? get priceRangeFinal => _priceRangeFinal.value;
   DateTime? get createdAt => _createdAt.value;
 
+  void setWishlistId(String? value) => _wishlistId.value = value;
+  void setDescription(String? value) => _description.value = value;
+  void setImage(String? value) => _image.value = value;
+  void setLink(String? value) => _link.value = value;
+  void setNote(String? value) => _note.value = value;
+  void setPriceRangeInitial(double? value) => _priceRangeInitial.value = value;
+  void setPriceRangeFinal(double? value) => _priceRangeFinal.value = value;
+  void setCreatedAt(DateTime? value) => _createdAt.value = value;
+
   WishViewModel({
     String? id,
     String? wishlistId,
