@@ -22,7 +22,7 @@ class BottomSheetDefault extends StatelessWidget {
     return await showModalBottomSheet(
       context: context,
       isScrollControlled: isScrollControlled ?? false,
-      isDismissible: isDismissible ?? false,
+      isDismissible: isDismissible ?? true,
       enableDrag: enableDrag ?? true,
       builder: (_) => BottomSheetDefault(title: title, child: child, enablePop: enablePop ?? true),
     );
