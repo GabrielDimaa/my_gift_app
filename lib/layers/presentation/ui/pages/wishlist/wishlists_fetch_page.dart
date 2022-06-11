@@ -16,7 +16,7 @@ class WishlistsFetchPage extends StatefulWidget {
   const WishlistsFetchPage({Key? key}) : super(key: key);
 
   @override
-  _WishlistsFetchPageState createState() => _WishlistsFetchPageState();
+  State<WishlistsFetchPage> createState() => _WishlistsFetchPageState();
 }
 
 class _WishlistsFetchPageState extends State<WishlistsFetchPage> {

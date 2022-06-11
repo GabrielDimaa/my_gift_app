@@ -14,7 +14,7 @@ class SignupPasswordPage extends StatefulWidget {
   const SignupPasswordPage({Key? key}) : super(key: key);
 
   @override
-  _SignupPasswordPageState createState() => _SignupPasswordPageState();
+  State<SignupPasswordPage> createState() => _SignupPasswordPageState();
 }
 
 class _SignupPasswordPageState extends State<SignupPasswordPage> {

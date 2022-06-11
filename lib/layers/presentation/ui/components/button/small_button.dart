@@ -16,6 +16,11 @@ class SmallButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        textStyle: Theme.of(context).textTheme.caption?.copyWith(fontWeight: FontWeight.w600),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        minimumSize: const Size(0, 0),
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -25,11 +30,6 @@ class SmallButton extends StatelessWidget {
           if (icon != null) const SizedBox(width: 8),
           Text(label),
         ],
-      ),
-      style: ElevatedButton.styleFrom(
-        textStyle: Theme.of(context).textTheme.caption?.copyWith(fontWeight: FontWeight.w600),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        minimumSize: const Size(0, 0),
       ),
     );
   }

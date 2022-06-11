@@ -53,6 +53,7 @@ class BottomSheetImagePicker extends StatelessWidget {
 
   Widget _buttonRounded(BuildContext context, IconData icon, String text, VoidCallback onPressed) {
     return ElevatedButton(
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         primary: Theme.of(context).colorScheme.background,
         fixedSize: const Size(90, 90),
@@ -66,7 +67,6 @@ class BottomSheetImagePicker extends StatelessWidget {
           Text(text, style: Theme.of(context).textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w600)),
         ],
       ),
-      onPressed: onPressed,
     );
   }
 }

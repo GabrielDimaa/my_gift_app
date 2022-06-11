@@ -10,6 +10,7 @@ import '../../../presenters/wish/implements/getx_wish_register_presenter.dart';
 import '../../../viewmodels/wish_viewmodel.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
+import '../../components/app_bar/button_action.dart';
 import '../../components/bottom_sheet/bottom_sheet_image_picker.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
@@ -51,7 +52,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
   void initState() {
     if (widget.viewModel != null) {
       presenter.setViewModel(widget.viewModel!);
-      
+
       presenter.setPriceRange(PriceRangeExtension.getPriceRange(presenter.viewModel.priceRangeInitial!, presenter.viewModel.priceRangeFinal!), calculate: false);
       _updateTextEditingController();
     } else {
@@ -74,7 +75,16 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarDefault(title: widget.viewModel == null ? R.string.newWish : R.string.editWish),
+      appBar: AppBarDefault(
+        title: widget.viewModel == null ? R.string.newWish : R.string.editWish,
+        actions: [
+          ButtonAction(
+            label: "Excluir",
+            icon: Icons.delete,
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const PaddingDefault(),
@@ -99,6 +109,20 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                             child: Obx(
                               () => Visibility(
                                 visible: presenter.viewModel.image == null,
+                                replacement: ClipRRect(
+                                  borderRadius: BorderRadius.circular(18),
+                                  child: (Uri.tryParse(presenter.viewModel.image ?? "")?.isAbsolute ?? false)
+                                      ? Image.network(
+                                          presenter.viewModel.image ?? "",
+                                          width: 150,
+                                          height: 150,
+                                        )
+                                      : Image.file(
+                                          File(presenter.viewModel.image ?? ""),
+                                          width: 150,
+                                          height: 150,
+                                        ),
+                                ),
                                 child: Ink(
                                   decoration: BoxDecoration(
                                     color: Theme.of(context).colorScheme.surface,
@@ -116,20 +140,6 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                                       Text(R.string.addImage, style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 14)),
                                     ],
                                   ),
-                                ),
-                                replacement: ClipRRect(
-                                  borderRadius: BorderRadius.circular(18),
-                                  child: (Uri.tryParse(presenter.viewModel.image ?? "")?.isAbsolute ?? false)
-                                      ? Image.network(
-                                          presenter.viewModel.image ?? "",
-                                          width: 150,
-                                          height: 150,
-                                        )
-                                      : Image.file(
-                                          File(presenter.viewModel.image ?? ""),
-                                          width: 150,
-                                          height: 150,
-                                        ),
                                 ),
                               ),
                             ),
@@ -283,6 +293,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                 await presenter.getFromCameraOrGallery(isGallery: false);
               });
 
+          if (!mounted) return;
           Navigator.of(context).pop();
         } catch (e) {
           ErrorDialog.show(context: context, content: e.toString());
@@ -297,6 +308,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                 await presenter.getFromCameraOrGallery(isGallery: true);
               });
 
+          if (!mounted) return;
           Navigator.of(context).pop();
         } catch (e) {
           ErrorDialog.show(context: context, content: e.toString());

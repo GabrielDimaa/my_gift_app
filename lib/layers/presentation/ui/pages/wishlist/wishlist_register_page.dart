@@ -29,7 +29,7 @@ class WishlistRegisterPage extends StatefulWidget {
   const WishlistRegisterPage({Key? key, this.wishlistViewModel}) : super(key: key);
 
   @override
-  _WishlistRegisterPageState createState() => _WishlistRegisterPageState();
+  State<WishlistRegisterPage> createState() => _WishlistRegisterPageState();
 }
 
 class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
@@ -189,6 +189,8 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                       message: "${R.string.savingTag}...",
                       onAction: () async => await presenter.createTag(tag),
                     );
+
+                    if (!mounted) return;
                     Navigator.pop(context);
                   }
                 } catch (e) {

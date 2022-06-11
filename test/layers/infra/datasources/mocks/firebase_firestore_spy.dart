@@ -168,9 +168,9 @@ class DocumentSnapshotSpy extends Mock implements DocumentSnapshot<Map<String, d
   Map<String, dynamic>? json;
 
   DocumentSnapshotSpy(Map<String, dynamic>? json) {
-    var _json = json == null ? null : {...json};
-    idJson = _json?['id'];
-    this.json = _json?..remove('id');
+    var jsonCopy = json == null ? null : {...json};
+    idJson = jsonCopy?['id'];
+    this.json = jsonCopy?..remove('id');
   }
 
   @override

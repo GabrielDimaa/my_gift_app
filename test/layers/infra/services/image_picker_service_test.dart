@@ -12,7 +12,7 @@ void main() {
   late ImagePickerService sut;
   late ImagePickerFacadeSpy imagePickerFacadeSpy;
 
-  final File? fileResult = File("any_path");
+  final File fileResult = File("any_path");
 
   setUp(() {
     imagePickerFacadeSpy = ImagePickerFacadeSpy(file: fileResult);
@@ -24,7 +24,7 @@ void main() {
   group("getFromCamera", () {
     test("Deve chamar getFromCamera e retornar os valores corretamente", () async {
       final File? file = await sut.getFromCamera();
-      expect(file!.path, fileResult!.path);
+      expect(file!.path, fileResult.path);
     });
 
     test("Deve chamar getFromCamera e retornar null", () async {
@@ -52,7 +52,7 @@ void main() {
   group("getFromGallery", () {
     test("Deve chamar getFromGallery e retornar os valores corretamente", () async {
       final File? file = await sut.getFromGallery();
-      expect(file!.path, fileResult!.path);
+      expect(file!.path, fileResult.path);
     });
 
     test("Deve chamar getFromGallery e retornar null", () async {

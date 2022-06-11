@@ -18,7 +18,7 @@ class SignupConfirmEmailPage extends StatefulWidget {
   const SignupConfirmEmailPage({Key? key, this.visibleToLogin = false}) : super(key: key);
 
   @override
-  _SignupConfirmEmailPageState createState() => _SignupConfirmEmailPageState();
+  State<SignupConfirmEmailPage> createState() => _SignupConfirmEmailPageState();
 }
 
 class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {

@@ -18,7 +18,7 @@ class SignupPhotoPage extends StatefulWidget {
   const SignupPhotoPage({Key? key}) : super(key: key);
 
   @override
-  _SignupPhotoPageState createState() => _SignupPhotoPageState();
+  State<SignupPhotoPage> createState() => _SignupPhotoPageState();
 }
 
 class _SignupPhotoPageState extends State<SignupPhotoPage> {
@@ -61,7 +61,9 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                                     onPressedCamera: () async {
                                       try {
                                         await presenter.getFromCameraOrGallery(isGallery: false);
-                                        Navigator.of(context).pop();
+
+                                        if (!mounted) return;
+                                        Navigator.pop(context);
                                       } catch (e) {
                                         ErrorDialog.show(context: context, content: e.toString());
                                       }
@@ -69,7 +71,9 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                                     onPressedGallery: () async {
                                       try {
                                         await presenter.getFromCameraOrGallery(isGallery: true);
-                                        Navigator.of(context).pop();
+
+                                        if (!mounted) return;
+                                        Navigator.pop(context);
                                       } catch (e) {
                                         ErrorDialog.show(context: context, content: e.toString());
                                       }
@@ -87,6 +91,10 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                                   child: Obx(
                                     () => Visibility(
                                       visible: presenter.viewModel.photo == null,
+                                      replacement: ClipRRect(
+                                        borderRadius: BorderRadius.circular(radius),
+                                        child: Image.file(presenter.viewModel.photo ?? File("")),
+                                      ),
                                       child: DottedBorder(
                                         color: colorSchema.onBackground,
                                         strokeWidth: 2,
@@ -102,10 +110,6 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                                             Text(R.string.addPhotoProfile, textAlign: TextAlign.center),
                                           ],
                                         ),
-                                      ),
-                                      replacement: ClipRRect(
-                                        borderRadius: BorderRadius.circular(radius),
-                                        child: Image.file(presenter.viewModel.photo ?? File("")),
                                       ),
                                     ),
                                   ),

@@ -24,7 +24,7 @@ class BottomSheetDefault extends StatelessWidget {
       isScrollControlled: isScrollControlled ?? false,
       isDismissible: isDismissible ?? true,
       enableDrag: enableDrag ?? true,
-      builder: (_) => BottomSheetDefault(title: title, child: child, enablePop: enablePop ?? true),
+      builder: (_) => BottomSheetDefault(title: title, enablePop: enablePop ?? true, child: child),
     );
   }
 
