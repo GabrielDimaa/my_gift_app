@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../extensions/double_extension.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/wishlist/abstracts/wishlist_register_presenter.dart';
 import '../../../presenters/wishlist/implements/getx_wishlist_register_presenter.dart';
@@ -24,7 +21,7 @@ import '../../components/sized_box_default.dart';
 import '../tag/components/chip_add_tag.dart';
 import '../tag/components/chip_tag.dart';
 import '../tag/components/tag_form.dart';
-import '../wish/components/wish_without_image.dart';
+import '../wish/widgets/list_tile_wish.dart';
 
 class WishlistRegisterPage extends StatefulWidget {
   final WishlistViewModel? wishlistViewModel;
@@ -265,33 +262,12 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                       separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
                       itemBuilder: (_, index) {
                         final WishViewModel wish = presenter.viewModel.wishes[index];
-                        return ListTile(
-                          contentPadding: const EdgeInsets.all(4),
+                        return ListTileWish(
+                          viewModel: wish,
                           onTap: () async {
                             final WishViewModel? wishUpdated = await _navigateToWish(wish: wish);
                             if (wishUpdated != null) presenter.viewModel.wishes[index] = wishUpdated;
                           },
-                          title: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              _imageWish(wish.image),
-                              const SizedBoxDefault.horizontal(),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(wish.description ?? ""),
-                                    Text(
-                                      "${wish.priceRangeInitial!.money} - ${wish.priceRangeFinal!.money}",
-                                      style: Theme.of(context).textTheme.caption?.copyWith(fontWeight: FontWeight.w500, color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBoxDefault.horizontal(),
-                              const Icon(Icons.arrow_forward_ios, size: 18),
-                            ],
-                          ),
                         );
                       },
                     );
@@ -305,26 +281,5 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
         ),
       ),
     );
-  }
-
-  Widget _imageWish(String? image) {
-    if (image == null) {
-      return const WishWithoutImage();
-    } else {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: (Uri.tryParse(image)?.isAbsolute ?? false)
-            ? Image.network(
-                image,
-                height: 70,
-                width: 70,
-              )
-            : Image.file(
-                File(image),
-                height: 70,
-                width: 70,
-              ),
-      );
-    }
   }
 }
