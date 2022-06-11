@@ -41,6 +41,7 @@ abstract class Translation {
   String get close;
   String get wishlists;
   String get notFoundWishlists;
+  String get notFoundWishes;
   String get createWishlist;
   String get wishlist;
   String get labelWishlist;
@@ -51,6 +52,8 @@ abstract class Translation {
   String get tag;
   String get addTag;
   String get wishes;
+  String get addWishes;
+  String get seeWishes;
   String get tagNormal;
   String get createTag;
   String get colorTag;
@@ -137,5 +140,6 @@ abstract class Translation {
   String get tagNotInformed;
   String get wishlistLinked;
   String get priceNotInformed;
+  String get priceMinMaxError;
   //endregion
 }

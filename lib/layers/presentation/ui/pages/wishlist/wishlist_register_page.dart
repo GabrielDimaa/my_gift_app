@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../extensions/double_extension.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/wishlist/abstracts/wishlist_register_presenter.dart';
 import '../../../presenters/wishlist/implements/getx_wishlist_register_presenter.dart';
 import '../../../viewmodels/tag_viewmodel.dart';
+import '../../../viewmodels/wish_viewmodel.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/bottom_sheet/bottom_sheet_default.dart';
@@ -14,11 +18,13 @@ import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/form/text_field_default.dart';
 import '../../components/form/validators/input_validators.dart';
+import '../../components/not_found.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import '../tag/components/chip_add_tag.dart';
 import '../tag/components/chip_tag.dart';
 import '../tag/components/tag_form.dart';
+import '../wish/components/wish_without_image.dart';
 
 class WishlistRegisterPage extends StatefulWidget {
   final WishlistViewModel? wishlistViewModel;
@@ -104,7 +110,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                             ),
                             OutlinedButton.icon(
                               icon: const Icon(Icons.add),
-                              label: Text(R.string.wishes),
+                              label: Text(R.string.addWishes),
                               style: OutlinedButton.styleFrom(
                                 primary: colorScheme.secondary,
                                 side: BorderSide(color: colorScheme.secondary),
@@ -112,19 +118,32 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                               onPressed: () async => await _navigateToWish(),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 6, top: 6),
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Obx(
-                                  () {
-                                    final int count = presenter.viewModel.wishes.length;
-                                    return Text(count == 0
-                                        ? R.string.noneWishSelected
-                                        : count > 1
-                                            ? "$count ${R.string.wishesSelected.toLowerCase()}"
-                                            : "$count ${R.string.wishSelected.toLowerCase()}");
-                                  },
-                                ),
+                              padding: const EdgeInsets.only(left: 6, top: 6),
+                              child: Wrap(
+                                alignment: WrapAlignment.spaceBetween,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  Obx(
+                                    () {
+                                      final int count = presenter.viewModel.wishes.length;
+                                      return Text(count == 0
+                                          ? R.string.noneWishSelected
+                                          : count > 1
+                                              ? "$count ${R.string.wishesSelected.toLowerCase()}"
+                                              : "$count ${R.string.wishSelected.toLowerCase()}");
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text(
+                                      R.string.seeWishes,
+                                      style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                                            fontSize: 16,
+                                            color: Theme.of(context).colorScheme.secondary,
+                                          ),
+                                    ),
+                                    onPressed: () async => await _seeWishes(),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -214,7 +233,98 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
     }
   }
 
-  Future<void> _navigateToWish() async {
-    await Navigator.pushNamed(context, "wish_register");
+  Future<WishViewModel?> _navigateToWish({WishViewModel? wish}) async {
+    final WishViewModel? wishViewModel = await Navigator.pushNamed(context, "wish_register", arguments: {
+      //Controle para não enviar os dois parâmetros ao mesmo tempo, pois WishRegister possui um assert validando isto.
+      'viewModel': wish?.clone(),
+      'wishlistViewModel': presenter.viewModel.id != null && wish != null ? presenter.viewModel : null,
+    }) as WishViewModel?;
+
+    if (wishViewModel != null && wish == null) presenter.viewModel.wishes.add(wishViewModel);
+
+    return wishViewModel;
+  }
+
+  Future<void> _seeWishes() async {
+    final double heightModal = MediaQuery.of(context).size.height * 0.6;
+
+    await BottomSheetDefault.show(
+      context: context,
+      isScrollControlled: true,
+      title: R.string.wishes,
+      child: SizedBox(
+        height: heightModal,
+        child: Column(
+          children: [
+            Expanded(
+              child: Obx(
+                () {
+                  if (presenter.viewModel.wishes.isNotEmpty) {
+                    return ListView.separated(
+                      itemCount: presenter.viewModel.wishes.length,
+                      separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
+                      itemBuilder: (_, index) {
+                        final WishViewModel wish = presenter.viewModel.wishes[index];
+                        return ListTile(
+                          contentPadding: const EdgeInsets.all(4),
+                          onTap: () async {
+                            final WishViewModel? wishUpdated = await _navigateToWish(wish: wish);
+                            if (wishUpdated != null) presenter.viewModel.wishes[index] = wishUpdated;
+                          },
+                          title: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              _imageWish(wish.image),
+                              const SizedBoxDefault.horizontal(),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(wish.description ?? ""),
+                                    Text(
+                                      "${wish.priceRangeInitial!.money} - ${wish.priceRangeFinal!.money}",
+                                      style: Theme.of(context).textTheme.caption?.copyWith(fontWeight: FontWeight.w500, color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBoxDefault.horizontal(),
+                              const Icon(Icons.arrow_forward_ios, size: 18),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return NotFound(message: R.string.notFoundWishes);
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _imageWish(String? image) {
+    if (image == null) {
+      return const WishWithoutImage();
+    } else {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: (Uri.tryParse(image)?.isAbsolute ?? false)
+            ? Image.network(
+                image,
+                height: 70,
+                width: 70,
+              )
+            : Image.file(
+                File(image),
+                height: 70,
+                width: 70,
+              ),
+      );
+    }
   }
 }

@@ -49,14 +49,26 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
 
   @override
   void initState() {
-    if (presenter.viewModel.id == null) {
-      presenter.viewModel.setPriceRangeInitial(startRangeSliderDefault);
-      presenter.viewModel.setPriceRangeFinal(endRangeSliderDefault);
+    if (widget.viewModel != null) {
+      presenter.setViewModel(widget.viewModel!);
+      
+      presenter.setPriceRange(PriceRangeExtension.getPriceRange(presenter.viewModel.priceRangeInitial!, presenter.viewModel.priceRangeFinal!), calculate: false);
+      _updateTextEditingController();
+    } else {
+      if (presenter.viewModel.id == null) {
+        presenter.viewModel.setPriceRangeInitial(startRangeSliderDefault);
+        presenter.viewModel.setPriceRangeFinal(endRangeSliderDefault);
+      }
+      //Gabriel: Caso seja passado um wishlistViewModel será para adicionar o id da wishlist no viewmodel.
+      if (widget.wishlistViewModel != null) presenter.viewModel.setWishlistId(widget.wishlistViewModel?.id);
     }
-
-    //Gabriel: Caso seja passado um wishlistViewModel será para adicionar o id da lista no viewmodel.
-    if (widget.wishlistViewModel != null) presenter.viewModel.setWishlistId(widget.wishlistViewModel?.id);
     super.initState();
+  }
+
+  void _updateTextEditingController() {
+    _descriptionController.text = presenter.viewModel.description ?? "";
+    _linkController.text = presenter.viewModel.link ?? "";
+    _noteController.text = presenter.viewModel.note ?? "";
   }
 
   @override
@@ -108,7 +120,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                                 replacement: ClipRRect(
                                   borderRadius: BorderRadius.circular(18),
                                   child: (Uri.tryParse(presenter.viewModel.image ?? "")?.isAbsolute ?? false)
-                                      ? Image.asset(
+                                      ? Image.network(
                                           presenter.viewModel.image ?? "",
                                           width: 150,
                                           height: 150,
@@ -241,16 +253,17 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
 
+        //Caso a wishlist seja null e o view model não possui wishlist id, significa que deve retornar pra salvar junto com a wishlist.
         if (widget.wishlistViewModel == null && presenter.viewModel.wishlistId == null) {
           presenter.validate(ignoreWishlistId: true);
           Navigator.pop(context, presenter.viewModel);
+        } else {
+          await LoadingDialog.show(
+            context: context,
+            message: "${R.string.savingWish}...",
+            onAction: () async => await presenter.save(),
+          );
         }
-
-        await LoadingDialog.show(
-          context: context,
-          message: "${R.string.savingWish}...",
-          onAction: () async => await presenter.save(),
-        );
       }
     } catch (e) {
       ErrorDialog.show(context: context, content: e.toString());

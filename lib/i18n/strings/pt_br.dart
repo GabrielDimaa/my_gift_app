@@ -123,6 +123,9 @@ class PtBr implements Translation {
   String get notFoundWishlists => "Nenhuma lista de desejos encontrada.";
 
   @override
+  String get notFoundWishes => "Nenhum desejo encontrado.";
+
+  @override
   String get createWishlist => "Criar lista de desejos";
 
   @override
@@ -151,6 +154,12 @@ class PtBr implements Translation {
 
   @override
   String get wishes => "Desejos";
+
+  @override
+  String get addWishes => "Adicionar desejos";
+
+  @override
+  String get seeWishes => "Ver desejos";
 
   @override
   String get tagNormal => "Normal";
@@ -395,5 +404,8 @@ class PtBr implements Translation {
 
   @override
   String get priceNotInformed => "Faixa de preço não informada.";
+
+  @override
+  String get priceMinMaxError => "Preço mínimo maior que o máximo.";
   //endregion
 }

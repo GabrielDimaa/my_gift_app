@@ -29,19 +29,21 @@ class GetxWishRegisterPresenter extends GetxController implements WishRegisterPr
   PriceRange get priceRangeSelected => _priceRange.value;
 
   @override
-  void setPriceRange(PriceRange? value) {
+  void setPriceRange(PriceRange? value, {bool calculate = true}) {
     if (value != null && value != _priceRange.value) {
       final PriceRange priceRangeOld = _priceRange.value;
       _priceRange.value = value;
 
-      final double differenceOld = priceRangeOld.max - priceRangeOld.min;
-      final double differenceNew = value.max - value.min;
+      if (calculate) {
+        final double differenceOld = priceRangeOld.max - priceRangeOld.min;
+        final double differenceNew = value.max - value.min;
 
-      final double multiplierInitial = ((viewModel.priceRangeInitial ?? 0) - priceRangeOld.min) * 10 / differenceOld;
-      final double multiplierFinal = ((viewModel.priceRangeFinal ?? 0) - priceRangeOld.max) * 10 / differenceOld;
+        final double multiplierInitial = ((viewModel.priceRangeInitial ?? 0) - priceRangeOld.min) * 10 / differenceOld;
+        final double multiplierFinal = ((viewModel.priceRangeFinal ?? 0) - priceRangeOld.max) * 10 / differenceOld;
 
-      viewModel.setPriceRangeInitial(((differenceNew / 10) * multiplierInitial) + _priceRange.value.min);
-      viewModel.setPriceRangeFinal(((differenceNew / 10) * multiplierFinal) + _priceRange.value.max);
+        viewModel.setPriceRangeInitial(((differenceNew / 10) * multiplierInitial) + _priceRange.value.min);
+        viewModel.setPriceRangeFinal(((differenceNew / 10) * multiplierFinal) + _priceRange.value.max);
+      }
     }
   }
 

@@ -4,7 +4,7 @@ import '../../../viewmodels/wish_viewmodel.dart';
 
 abstract class WishRegisterPresenter implements IViewModel<WishViewModel> {
   PriceRange get priceRangeSelected;
-  void setPriceRange(PriceRange? value);
+  void setPriceRange(PriceRange? value, {bool calculate = true});
 
   Future<void> getFromCameraOrGallery({bool isGallery = true});
   Future<void> save();

@@ -68,6 +68,20 @@ class WishViewModel {
     );
   }
 
+  WishViewModel clone() {
+    return WishViewModel(
+      id: id,
+      wishlistId: wishlistId,
+      description: description,
+      image: image,
+      link: link,
+      note: note,
+      priceRangeInitial: priceRangeInitial,
+      priceRangeFinal: priceRangeFinal,
+      createdAt: createdAt,
+    );
+  }
+
   factory WishViewModel.fromEntity(WishEntity entity) {
     return WishViewModel(
       id: entity.id,
