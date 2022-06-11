@@ -26,6 +26,7 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
           const SizedBoxDefault(),
           Visibility(
             visible: Navigator.canPop(context),
+            replacement: const SizedBox(height: 48),
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: IconButton(
@@ -37,7 +38,6 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
                 tooltip: R.string.back,
               ),
             ),
-            replacement: const SizedBox(height: 48),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 18),
@@ -46,12 +46,19 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
         ],
       ),
       actions: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const SizedBoxDefault(),
-            Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.center, children: actions),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(right: 18, top: 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const SizedBoxDefault(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: actions,
+              ),
+            ],
+          ),
         )
       ],
     );
