@@ -8,5 +8,6 @@ abstract class WishRegisterPresenter implements IViewModel<WishViewModel> {
 
   Future<void> getFromCameraOrGallery({bool isGallery = true});
   Future<void> save();
+  Future<void> delete();
   void validate({bool ignoreWishlistId});
 }

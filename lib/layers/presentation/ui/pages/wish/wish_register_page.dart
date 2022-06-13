@@ -12,6 +12,7 @@ import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
 import '../../components/bottom_sheet/bottom_sheet_image_picker.dart';
+import '../../components/dialogs/confirm_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/form/text_field_default.dart';
@@ -79,9 +80,10 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
         title: widget.viewModel == null ? R.string.newWish : R.string.editWish,
         actions: [
           ButtonAction(
+            visible: widget.viewModel?.id != null,
             label: "Excluir",
             icon: Icons.delete,
-            onPressed: () {},
+            onPressed: () async => await _delete(),
           ),
         ],
       ),
@@ -274,6 +276,26 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
             onAction: () async => await presenter.save(),
           );
         }
+      }
+    } catch (e) {
+      ErrorDialog.show(context: context, content: e.toString());
+    }
+  }
+
+  Future<void> _delete() async {
+    try {
+      final bool? confirmed = await ConfirmDialog.show(
+        context: context,
+        title: R.string.delete,
+        message: R.string.confirmDeleteWish,
+      );
+
+      if (confirmed ?? false) {
+        await LoadingDialog.show(
+          context: context,
+          message: "${R.string.deletingWish}...",
+          onAction: () async => await presenter.delete(),
+        );
       }
     } catch (e) {
       ErrorDialog.show(context: context, content: e.toString());

@@ -78,6 +78,12 @@ class GetxWishRegisterPresenter extends GetxController implements WishRegisterPr
   }
 
   @override
+  Future<void> delete() async {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
+
+  @override
   void validate({bool ignoreWishlistId = false}) {
     if (viewModel.description?.isEmpty ?? true) throw Exception(R.string.descriptionNotInformed);
     if (!ignoreWishlistId && viewModel.wishlistId == null) throw Exception(R.string.wishlistLinked);

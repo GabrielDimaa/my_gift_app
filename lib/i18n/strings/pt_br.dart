@@ -156,6 +156,9 @@ class PtBr implements Translation {
   String get wishes => "Desejos";
 
   @override
+  String get wish => "Desejo";
+
+  @override
   String get addWishes => "Adicionar desejos";
 
   @override
@@ -244,6 +247,15 @@ class PtBr implements Translation {
 
   @override
   String get removeImage => "Remover imagem";
+
+  @override
+  String get delete => "Excluir";
+
+  @override
+  String get confirmDeleteWish => "Deseja excluir o desejo?";
+
+  @override
+  String get deletingWish => "Excluindo desejo";
   //endregion
 
   //region Validation

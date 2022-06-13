@@ -10,34 +10,58 @@ import 'wish_without_image.dart';
 class ListTileWish extends StatelessWidget {
   final WishViewModel viewModel;
   final VoidCallback? onTap;
+  final void Function(DismissDirection)? onDismissed;
+  final Future<bool> Function(DismissDirection)? confirmDismiss;
 
-  const ListTileWish({Key? key, required this.viewModel, required this.onTap}) : super(key: key);
+  const ListTileWish({
+    Key? key,
+    required this.viewModel,
+    required this.onTap,
+    this.onDismissed,
+    this.confirmDismiss,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: const EdgeInsets.all(4),
-      onTap: onTap,
-      title: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _imageWish(viewModel.image),
-          const SizedBoxDefault.horizontal(),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(viewModel.description!),
-                Text(
-                  "${viewModel.priceRangeInitial!.money} - ${viewModel.priceRangeFinal!.money}",
-                  style: Theme.of(context).textTheme.caption?.copyWith(fontWeight: FontWeight.w500, color: Colors.grey),
-                ),
-              ],
-            ),
+    return Dismissible(
+      key: ValueKey<WishViewModel>(viewModel),
+      direction: DismissDirection.startToEnd,
+      onDismissed: onDismissed,
+      confirmDismiss: confirmDismiss,
+      background: Container(
+        color: Colors.redAccent,
+        child: const Align(
+          alignment: Alignment(-0.9, 0.0),
+          child: Icon(
+            Icons.delete,
+            color: Colors.white,
           ),
-          const SizedBoxDefault.horizontal(),
-          const Icon(Icons.arrow_forward_ios, size: 18),
-        ],
+        ),
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+        onTap: onTap,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _imageWish(viewModel.image),
+            const SizedBoxDefault.horizontal(),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(viewModel.description!),
+                  Text(
+                    "${viewModel.priceRangeInitial!.money} - ${viewModel.priceRangeFinal!.money}",
+                    style: Theme.of(context).textTheme.caption?.copyWith(fontWeight: FontWeight.w500, color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBoxDefault.horizontal(),
+            const Icon(Icons.arrow_forward_ios, size: 18),
+          ],
+        ),
       ),
     );
   }

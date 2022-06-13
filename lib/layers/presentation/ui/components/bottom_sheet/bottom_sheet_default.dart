@@ -6,8 +6,15 @@ class BottomSheetDefault extends StatelessWidget {
   final String? title;
   final Widget child;
   final bool enablePop;
+  final EdgeInsets? contentPadding;
 
-  const BottomSheetDefault({Key? key, this.title, required this.child, this.enablePop = true}) : super(key: key);
+  const BottomSheetDefault({
+    Key? key,
+    this.title,
+    required this.child,
+    this.enablePop = true,
+    this.contentPadding,
+  }) : super(key: key);
 
   static Future<void> show({
     required BuildContext context,
@@ -18,13 +25,19 @@ class BottomSheetDefault extends StatelessWidget {
     bool? isDismissible,
     bool? enableDrag,
     bool? enablePop,
+    EdgeInsets? contentPadding,
   }) async {
     return await showModalBottomSheet(
       context: context,
       isScrollControlled: isScrollControlled ?? false,
       isDismissible: isDismissible ?? true,
       enableDrag: enableDrag ?? true,
-      builder: (_) => BottomSheetDefault(title: title, enablePop: enablePop ?? true, child: child),
+      builder: (_) => BottomSheetDefault(
+        title: title,
+        enablePop: enablePop ?? true,
+        contentPadding: contentPadding,
+        child: child,
+      ),
     );
   }
 
@@ -45,27 +58,27 @@ class BottomSheetDefault extends StatelessWidget {
               onPressed: () => enablePop ? Navigator.pop(context) : null,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Visibility(
-                  visible: title != null,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 6, bottom: 30),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        title ?? "",
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Visibility(
+                visible: title != null,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 30, left: 24, bottom: 30),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      title ?? "",
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
                 ),
-                child,
-              ],
-            ),
+              ),
+              Padding(
+                padding: contentPadding ?? const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+                child: child,
+              ),
+            ],
           ),
         ],
       ),

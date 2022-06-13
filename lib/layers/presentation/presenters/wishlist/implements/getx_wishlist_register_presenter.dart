@@ -9,18 +9,26 @@ import '../../../../domain/enums/tag_internal.dart';
 import '../../../../domain/helpers/errors/domain_error.dart';
 import '../../../../domain/usecases/abstracts/tag/i_get_tags.dart';
 import '../../../../domain/usecases/abstracts/tag/i_save_tag.dart';
+import '../../../../domain/usecases/abstracts/wish/i_delete_wish.dart';
 import '../../../../domain/usecases/abstracts/wishlist/i_save_wishlist.dart';
 import '../../../helpers/mixins/loading_manager.dart';
 import '../../../viewmodels/tag_viewmodel.dart';
+import '../../../viewmodels/wish_viewmodel.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../abstracts/wishlist_register_presenter.dart';
 
 class GetxWishlistRegisterPresenter extends GetxController with LoadingManager implements WishlistRegisterPresenter {
   final ISaveWishlist saveWishlist;
+  final IDeleteWish iDeleteWish;
   final ISaveTag saveTag;
   final IGetTags fetchTags;
 
-  GetxWishlistRegisterPresenter({required this.saveWishlist, required this.saveTag, required this.fetchTags});
+  GetxWishlistRegisterPresenter({
+    required this.saveWishlist,
+    required this.iDeleteWish,
+    required this.saveTag,
+    required this.fetchTags,
+  });
 
   late WishlistViewModel _viewModel;
   late RxList<TagViewModel> _tagsViewModel;
@@ -70,6 +78,11 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   }
 
   @override
+  Future<void> deleteWish(WishViewModel wish) async {
+    if (wish.id != null) await iDeleteWish.delete(wish.id!);
+  }
+
+  @override
   Future<void> loadTags() async {
     _tagsViewModel = <TagViewModel>[].obs;
 
@@ -83,16 +96,10 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
 
   @override
   Future<void> createTag(TagViewModel viewModel) async {
-    try {
-      setLoading(true);
+    if (viewModel.name == null || viewModel.color == null) throw Exception(R.string.nameColorTagError);
 
-      if (viewModel.name == null || viewModel.color == null) throw Exception(R.string.nameColorTagError);
-
-      final TagEntity tagEntity = await saveTag.save(viewModel.toEntity());
-      tagsViewModel.add(TagViewModel.fromEntity(tagEntity));
-    } finally {
-      setLoading(false);
-    }
+    final TagEntity tagEntity = await saveTag.save(viewModel.toEntity());
+    tagsViewModel.add(TagViewModel.fromEntity(tagEntity));
   }
 
   @override

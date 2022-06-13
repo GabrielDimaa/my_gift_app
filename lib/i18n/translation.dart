@@ -52,6 +52,7 @@ abstract class Translation {
   String get tag;
   String get addTag;
   String get wishes;
+  String get wish;
   String get addWishes;
   String get seeWishes;
   String get tagNormal;
@@ -82,6 +83,9 @@ abstract class Translation {
   String get imageWish;
   String get opening;
   String get removeImage;
+  String get delete;
+  String get confirmDeleteWish;
+  String get deletingWish;
   //endregion
 
   //region Validation

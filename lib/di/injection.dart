@@ -14,6 +14,7 @@ import '../layers/domain/usecases/implements/signup/signup_email.dart';
 import '../layers/domain/usecases/implements/tag/get_tags.dart';
 import '../layers/domain/usecases/implements/tag/save_tag.dart';
 import '../layers/domain/usecases/implements/user/get_user_logged.dart';
+import '../layers/domain/usecases/implements/wish/delete_wish.dart';
 import '../layers/domain/usecases/implements/wishlist/get_wishlists.dart';
 import '../layers/domain/usecases/implements/wishlist/save_wishlist.dart';
 import '../layers/infra/datasources/firebase_tag_datasource.dart';
@@ -117,6 +118,7 @@ class Injection {
       ),
       fenix: true,
     );
+    Get.lazyPut(() => DeleteWish(wishRepository: Get.find<WishRepository>()), fenix: true);
     Get.lazyPut(() => GetTags(tagRepository: Get.find<TagRepository>()), fenix: true);
     Get.lazyPut(() => SaveTag(tagRepository: Get.find<TagRepository>()), fenix: true);
     //endregion
@@ -145,6 +147,7 @@ class Injection {
     Get.lazyPut(
       () => GetxWishlistRegisterPresenter(
         saveWishlist: Get.find<SaveWishlist>(),
+        iDeleteWish: Get.find<DeleteWish>(),
         saveTag: Get.find<SaveTag>(),
         fetchTags: Get.find<GetTags>(),
       ),

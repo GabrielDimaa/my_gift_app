@@ -251,6 +251,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
       context: context,
       isScrollControlled: true,
       title: R.string.wishes,
+      contentPadding: EdgeInsets.zero,
       child: SizedBox(
         height: heightModal,
         child: Column(
@@ -269,6 +270,26 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                           onTap: () async {
                             final WishViewModel? wishUpdated = await _navigateToWish(wish: wish);
                             if (wishUpdated != null) presenter.viewModel.wishes[index] = wishUpdated;
+                          },
+                          onDismissed: (_) async => presenter.viewModel.wishes.removeAt(index),
+                          confirmDismiss: (_) async {
+                            try {
+                              if (wish.id == null) return true;
+
+                              final bool? confirmed = await ConfirmDialog.show(context: context, title: R.string.delete, message: R.string.deletingWish);
+                              if (confirmed ?? false) {
+                                await LoadingDialog.show(
+                                  context: context,
+                                  message: "${R.string.deletingWish}...",
+                                  onAction: () async => await presenter.deleteWish(wish),
+                                );
+                              }
+
+                              return false;
+                            } catch (e) {
+                              ErrorDialog.show(context: context, content: e.toString());
+                              return false;
+                            }
                           },
                         );
                       },
