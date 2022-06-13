@@ -35,7 +35,7 @@ class WishlistModel {
     return WishlistModel(
       id: id ?? this.id,
       description: description,
-      wishes: wishes,
+      wishes: wishes.map((e) => e.clone()).toList(),
       tag: tag,
     );
   }

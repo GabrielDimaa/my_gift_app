@@ -128,7 +128,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       final jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
         var json = e.data();
         if (json.isEmpty) return json;
-        return json..addAll({
+        return json
+          ..addAll({
             'id': e.id,
             'tag': tag.toJson()..addAll({'id': tag.id}),
           });
@@ -155,10 +156,12 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<WishlistModel> create(WishlistModel model) async {
     try {
+      final WriteBatch batch = firestore.batch();
+
       //region wishlist
 
-      final Map<String, dynamic> json = model.toJson();
-      final doc = await firestore.collection(constantWishlistsReference).add(json);
+      final DocumentReference doc = firestore.collection(constantWishlistsReference).doc();
+      batch.set(doc, model.toJson());
 
       final WishlistModel wishlistSaved = model.clone(id: doc.id);
 
@@ -166,10 +169,9 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       //region wishes
 
-      final WriteBatch batch = firestore.batch();
       final CollectionReference collectionWishes = firestore.collection(constantWishesReference);
 
-      for (WishModel wish in model.wishes) {
+      for (WishModel wish in wishlistSaved.wishes) {
         final DocumentReference doc = collectionWishes.doc();
 
         String? photoUrl;
@@ -184,11 +186,11 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
         wish = wish.clone(id: doc.id);
       }
 
-      await batch.commit();
-
       //endregion
 
-      return model.clone(id: doc.id);
+      await batch.commit();
+
+      return wishlistSaved;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
     } on InfraError {
