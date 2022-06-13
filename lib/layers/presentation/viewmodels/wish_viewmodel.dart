@@ -64,7 +64,7 @@ class WishViewModel {
       note: note,
       priceRangeInitial: priceRangeInitial!,
       priceRangeFinal: priceRangeFinal!,
-      createdAt: createdAt!,
+      createdAt: createdAt ?? DateTime.now(),
     );
   }
 

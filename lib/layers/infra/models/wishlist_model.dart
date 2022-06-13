@@ -26,7 +26,6 @@ class WishlistModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'description': description,
       'tag_id': tag.id,
     };

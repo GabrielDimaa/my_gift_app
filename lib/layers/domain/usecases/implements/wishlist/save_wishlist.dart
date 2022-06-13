@@ -19,17 +19,6 @@ class SaveWishlist implements ISaveWishlist {
         final WishlistEntity wishlistResponse = await wishlistRepository.create(entity);
         if (wishlistResponse.id == null) throw ValidationDomainError(message: R.string.saveError);
 
-        final List<WishEntity> wishes = [];
-
-        for (var wish in entity.wishes) {
-          wish.wishlistId = wishlistResponse.id;
-          final WishEntity wishSaved = await wishRepository.create(wish);
-
-          if (wishSaved.id != null) wishes.add(wishSaved);
-        }
-
-        wishlistResponse.wishes = wishes;
-
         return wishlistResponse;
       } else {
         return await wishlistRepository.update(entity);

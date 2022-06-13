@@ -1,16 +1,21 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../helpers/extensions/firebase_exception_extension.dart';
+import '../models/wish_model.dart';
 import './constants/collection_reference.dart';
 import '../helpers/errors/infra_error.dart';
 import 'i_wishlist_datasource.dart';
 import '../models/tag_model.dart';
 import '../models/wishlist_model.dart';
+import 'storage/i_storage_datasource.dart';
 
 class FirebaseWishlistDataSource implements IWishlistDataSource {
   final FirebaseFirestore firestore;
+  final IStorageDataSource storage;
 
-  FirebaseWishlistDataSource({required this.firestore});
+  FirebaseWishlistDataSource({required this.firestore, required this.storage});
 
   @override
   Future<WishlistModel> getById(String id) async {
@@ -150,8 +155,38 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<WishlistModel> create(WishlistModel model) async {
     try {
+      //region wishlist
+
       final Map<String, dynamic> json = model.toJson();
       final doc = await firestore.collection(constantWishlistsReference).add(json);
+
+      final WishlistModel wishlistSaved = model.clone(id: doc.id);
+
+      //endregion
+
+      //region wishes
+
+      final WriteBatch batch = firestore.batch();
+      final CollectionReference collectionWishes = firestore.collection(constantWishesReference);
+
+      for (WishModel wish in model.wishes) {
+        final DocumentReference doc = collectionWishes.doc();
+
+        String? photoUrl;
+        if (wish.image != null) {
+          photoUrl = await storage.upload("wishes/${doc.id}", File(wish.image!));
+        }
+
+        wish.wishlistId = wishlistSaved.id!;
+        wish.image = photoUrl;
+
+        batch.set(doc, wish.toJson());
+        wish = wish.clone(id: doc.id);
+      }
+
+      await batch.commit();
+
+      //endregion
 
       return model.clone(id: doc.id);
     } on FirebaseException catch (e) {

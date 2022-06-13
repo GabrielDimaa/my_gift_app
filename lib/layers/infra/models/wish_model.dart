@@ -3,7 +3,7 @@ import '../helpers/errors/infra_error.dart';
 
 class WishModel {
   final String? id;
-  String wishlistId;
+  String? wishlistId;
   String description;
   String? image;
   String? link;
@@ -48,6 +48,8 @@ class WishModel {
   }
 
   Map<String, dynamic> toJson() {
+    if (wishlistId == null) throw InvalidDataInfraError();
+
     return {
       'wishlist_id': wishlistId,
       'description': description,
@@ -79,11 +81,11 @@ class WishModel {
   }
 
   factory WishModel.fromEntity(WishEntity entity) {
-    if (entity.wishlistId == null) throw InvalidDataInfraError();
+    if (entity.id != null && entity.wishlistId == null) throw InvalidDataInfraError();
 
     return WishModel(
       id: entity.id,
-      wishlistId: entity.wishlistId!,
+      wishlistId: entity.wishlistId,
       description: entity.description,
       image: entity.image,
       link: entity.link,

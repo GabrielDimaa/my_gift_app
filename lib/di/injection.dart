@@ -68,7 +68,13 @@ class Injection {
       ),
       fenix: true,
     );
-    Get.lazyPut(() => FirebaseWishlistDataSource(firestore: Get.find<FirebaseFirestore>()), fenix: true);
+    Get.lazyPut(
+      () => FirebaseWishlistDataSource(
+        firestore: Get.find<FirebaseFirestore>(),
+        storage: Get.find<FirebaseStorageDataSource>(),
+      ),
+      fenix: true,
+    );
     Get.lazyPut(() => FirebaseTagDataSource(firestore: Get.find<FirebaseFirestore>()), fenix: true);
     Get.lazyPut(() => FirebaseWishDataSource(firestore: Get.find<FirebaseFirestore>()), fenix: true);
     //endregion
