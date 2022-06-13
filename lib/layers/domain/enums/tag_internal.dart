@@ -1,5 +1,6 @@
 import '../../../i18n/resources.dart';
 import '../entities/tag_entity.dart';
+import '../entities/user_entity.dart';
 
 enum TagInternal {
   normal
@@ -24,5 +25,5 @@ extension TagInternalExtension on TagInternal {
     }
   }
 
-  TagEntity toEntity() => TagEntity(id: value.toString(), name: description, color: color);
+  TagEntity toEntity(UserEntity user) => TagEntity(id: value.toString(), user: user, name: description, color: color);
 }

@@ -36,7 +36,7 @@ class UserModel {
     };
   }
 
-  UserModel clone(String? id) {
+  UserModel clone({String? id}) {
     return UserModel(
       id: id ?? this.id,
       name: name,
@@ -55,6 +55,16 @@ class UserModel {
       photo: entity.photo,
       emailVerified: entity.emailVerified,
       password: entity.password,
+    );
+  }
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['id'],
+      name: json['name'],
+      email: json['email'],
+      photo: json['photo'],
+      emailVerified: json['email_verified'] ?? false,
     );
   }
 }

@@ -47,7 +47,9 @@ class TextFieldDefault extends StatelessWidget {
           ),
         TextFormField(
           controller: controller,
-          onSaved: onSaved,
+          onSaved: (String? value) {
+            onSaved?.call((value?.isEmpty ?? true) ? null : value);
+          },
           validator: validator,
           enabled: enabled,
           inputFormatters: inputFormatters,

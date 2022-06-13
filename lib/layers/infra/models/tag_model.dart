@@ -1,12 +1,15 @@
 import '../../domain/entities/tag_entity.dart';
+import 'user_model.dart';
 
 class TagModel {
   final String? id;
+  final UserModel user;
   final String name;
   final String color;
 
   const TagModel({
     this.id,
+    required this.user,
     required this.name,
     required this.color,
   });
@@ -14,6 +17,7 @@ class TagModel {
   TagEntity toEntity() {
     return TagEntity(
       id: id,
+      user: user.toEntity(),
       name: name,
       color: color,
     );
@@ -23,12 +27,14 @@ class TagModel {
     return {
       'name': name,
       'color': color,
+      'user_id': user.id,
     };
   }
 
   TagModel clone({String? id}) {
     return TagModel(
       id: id ?? this.id,
+      user: user.clone(),
       name: name,
       color: color,
     );
@@ -37,6 +43,7 @@ class TagModel {
   factory TagModel.fromEntity(TagEntity entity) {
     return TagModel(
       id: entity.id,
+      user: UserModel.fromEntity(entity.user),
       name: entity.name,
       color: entity.color,
     );
@@ -47,6 +54,7 @@ class TagModel {
       id: json['id'],
       name: json['name'],
       color: json['color'],
+      user: UserModel.fromJson(json['user']),
     );
   }
 
@@ -56,6 +64,7 @@ class TagModel {
           'id',
           'name',
           'color',
+          'user_id',
         ]);
   }
 }

@@ -1,5 +1,8 @@
+import 'user_entity.dart';
+
 class WishEntity {
   final String? id;
+  final UserEntity user;
   String? wishlistId;
   String description;
   String? image;
@@ -16,6 +19,7 @@ class WishEntity {
 
   WishEntity({
     this.id,
+    required this.user,
     this.wishlistId,
     required this.description,
     this.image,

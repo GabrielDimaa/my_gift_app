@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../extensions/string_extension.dart';
 import '../../domain/entities/tag_entity.dart';
+import '../../domain/entities/user_entity.dart';
 
 class TagViewModel {
   final RxnString _id = RxnString();
@@ -21,9 +22,10 @@ class TagViewModel {
     _color.value = color;
   }
 
-  TagEntity toEntity() {
+  TagEntity toEntity(UserEntity user) {
     return TagEntity(
       id: id,
+      user: user,
       name: name!,
       color: color!.toRadixString(16),
     );

@@ -75,7 +75,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
         }
       }
 
-      return model.clone(user.uid);
+      return model.clone(id: user.uid);
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
     } on FirebaseException catch (e) {

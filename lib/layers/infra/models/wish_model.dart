@@ -1,8 +1,10 @@
 import '../../domain/entities/wish_entity.dart';
 import '../helpers/errors/infra_error.dart';
+import 'user_model.dart';
 
 class WishModel {
   final String? id;
+  final UserModel user;
   String? wishlistId;
   String description;
   String? image;
@@ -19,6 +21,7 @@ class WishModel {
 
   WishModel({
     this.id,
+    required this.user,
     required this.wishlistId,
     required this.description,
     this.image,
@@ -34,6 +37,7 @@ class WishModel {
   WishEntity toEntity() {
     return WishEntity(
       id: id,
+      user: user.toEntity(),
       wishlistId: wishlistId,
       description: description,
       image: image,
@@ -51,6 +55,7 @@ class WishModel {
     if (wishlistId == null) throw InvalidDataInfraError();
 
     return {
+      'user_id': user.id,
       'wishlist_id': wishlistId,
       'description': description,
       'image': image,
@@ -67,6 +72,7 @@ class WishModel {
   WishModel clone({String? id}) {
     return WishModel(
       id: id ?? this.id,
+      user: user.clone(),
       wishlistId: wishlistId,
       description: description,
       image: image,
@@ -85,6 +91,7 @@ class WishModel {
 
     return WishModel(
       id: entity.id,
+      user: UserModel.fromEntity(entity.user),
       wishlistId: entity.wishlistId,
       description: entity.description,
       image: entity.image,
@@ -103,6 +110,7 @@ class WishModel {
 
     return WishModel(
       id: json['id'],
+      user: UserModel.fromJson(json['user']),
       wishlistId: json['wishlist_id'],
       description: json['description'],
       image: json['image'],
@@ -120,6 +128,7 @@ class WishModel {
     return json != null &&
         json.keys.toSet().containsAll([
           'id',
+          'user_id',
           'wishlist_id',
           'description',
           'price_range_initial',

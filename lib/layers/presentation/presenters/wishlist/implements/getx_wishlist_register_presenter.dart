@@ -64,7 +64,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
     try {
       validate();
 
-      final WishlistEntity wishlistEntity = await saveWishlist.save(_viewModel.toEntity());
+      final WishlistEntity wishlistEntity = await saveWishlist.save(_viewModel.toEntity(_user));
       navigateToWishlists(WishlistViewModel.fromEntity(wishlistEntity));
     } on DomainError catch (e) {
       throw Exception(e.message);
@@ -86,7 +86,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   Future<void> loadTags() async {
     _tagsViewModel = <TagViewModel>[].obs;
 
-    TagViewModel tagInitial = TagViewModel.fromEntity(TagInternal.normal.toEntity());
+    TagViewModel tagInitial = TagViewModel.fromEntity(TagInternal.normal.toEntity(_user));
     _tagsViewModel.add(tagInitial);
     viewModel.setTag(tagInitial);
 
@@ -98,7 +98,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   Future<void> createTag(TagViewModel viewModel) async {
     if (viewModel.name == null || viewModel.color == null) throw Exception(R.string.nameColorTagError);
 
-    final TagEntity tagEntity = await saveTag.save(viewModel.toEntity());
+    final TagEntity tagEntity = await saveTag.save(viewModel.toEntity(_user));
     tagsViewModel.add(TagViewModel.fromEntity(tagEntity));
   }
 

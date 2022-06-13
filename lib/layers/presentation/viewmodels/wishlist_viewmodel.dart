@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../domain/entities/user_entity.dart';
 import '../../domain/entities/wishlist_entity.dart';
 import './tag_viewmodel.dart';
 import './wish_viewmodel.dart';
@@ -26,12 +27,13 @@ class WishlistViewModel {
     _tag.value = tag;
   }
 
-  WishlistEntity toEntity() {
+  WishlistEntity toEntity(UserEntity user) {
     return WishlistEntity(
       id: id,
+      user: user,
       description: description!,
-      wishes: wishes.map((e) => e.toEntity()).toList(),
-      tag: tag!.toEntity(),
+      wishes: wishes.map((e) => e.toEntity(user)).toList(),
+      tag: tag!.toEntity(user),
     );
   }
 

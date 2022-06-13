@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../domain/entities/user_entity.dart';
 import '../../domain/entities/wish_entity.dart';
 
 class WishViewModel {
@@ -54,9 +55,10 @@ class WishViewModel {
     _createdAt.value = createdAt;
   }
 
-  WishEntity toEntity() {
+  WishEntity toEntity(UserEntity user) {
     return WishEntity(
       id: id,
+      user: user,
       wishlistId: wishlistId,
       description: description!,
       image: image,
