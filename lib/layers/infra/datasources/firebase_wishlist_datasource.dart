@@ -4,9 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/enums/tag_internal.dart';
 import '../helpers/extensions/firebase_exception_extension.dart';
+import '../models/user_model.dart';
 import '../models/wish_model.dart';
 import './constants/collection_reference.dart';
 import '../helpers/errors/infra_error.dart';
+import 'i_user_account_datasource.dart';
 import 'i_wishlist_datasource.dart';
 import '../models/tag_model.dart';
 import '../models/wishlist_model.dart';
@@ -15,8 +17,9 @@ import 'storage/i_storage_datasource.dart';
 class FirebaseWishlistDataSource implements IWishlistDataSource {
   final FirebaseFirestore firestore;
   final IStorageDataSource storage;
+  final IUserAccountDataSource userDataSource;
 
-  FirebaseWishlistDataSource({required this.firestore, required this.storage});
+  FirebaseWishlistDataSource({required this.firestore, required this.storage, required this.userDataSource});
 
   @override
   Future<WishlistModel> getById(String id) async {
@@ -30,15 +33,22 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       //endregion
 
+      //region user
+
+      final UserModel user = await userDataSource.getById(jsonWishlist['user_id']);
+      final Map<String, dynamic> jsonUser = user.toJson()..addAll({'id': user.id});
+
+      //endregion
+
       //region wishes
 
-      final List<Map<String, dynamic>?> jsonWishes = await _getWishes(jsonWishlist['id']);
+      final List<Map<String, dynamic>?> jsonWishes = await _getWishes(jsonWishlist['id'], jsonUser);
 
       //endregion
 
       //region tag
 
-      final Map<String, dynamic>? jsonTag = await _getTag(jsonWishlist['tag_id']);
+      final Map<String, dynamic>? jsonTag = await _getTag(jsonWishlist['tag_id'], jsonUser);
       if (!TagModel.validateJson(jsonTag)) throw NotFoundInfraError();
 
       //endregion
@@ -47,6 +57,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       jsonWishlist.addAll({
         'wishes': jsonWishes,
         'tag': jsonTag,
+        'user': jsonUser,
       });
 
       if (!WishlistModel.validateJson(jsonWishlist)) throw UnexpectedInfraError();
@@ -80,8 +91,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       //region user
 
-      final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: userId).get();
-      final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data()..addAll({'id': userId});
+      final UserModel user = await userDataSource.getById(userId);
+      final Map<String, dynamic> jsonUser = user.toJson()..addAll({'id': user.id});
 
       //endregion
 
@@ -149,6 +160,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
   @override
   Future<List<WishlistModel>> getByTag(TagModel tag) async {
+    //TODO: Implementar a busca do user.
+
     try {
       final snapshot = await firestore.collection(constantWishlistsReference).where("tag_id", isEqualTo: tag.id).get();
       final jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
@@ -256,22 +269,22 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
     }
   }
 
-  Future<List<Map<String, dynamic>?>> _getWishes(String wishlistId) async {
+  Future<List<Map<String, dynamic>?>> _getWishes(String wishlistId, Map<String, dynamic> user) async {
     final snapshot = await firestore.collection(constantWishesReference).where("wishlist_id", isEqualTo: wishlistId).get();
 
     final json = snapshot.docs.map<Map<String, dynamic>>((e) {
       var json = e.data();
       if (json.isEmpty) return json;
-      return json..addAll({'id': e.id});
+      return json..addAll({'id': e.id, 'user': user});
     }).toList();
 
     return json;
   }
 
-  Future<Map<String, dynamic>?> _getTag(String tagId) async {
+  Future<Map<String, dynamic>?> _getTag(String tagId, Map<String, dynamic> user) async {
     final snapshot = await firestore.collection(constantTagsReference).doc(tagId).get();
 
     final Map<String, dynamic>? jsonTag = snapshot.data();
-    return jsonTag?..addAll({'id': snapshot.id});
+    return jsonTag?..addAll({'id': snapshot.id, 'user': user});
   }
 }

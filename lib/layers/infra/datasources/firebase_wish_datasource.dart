@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../helpers/extensions/firebase_exception_extension.dart';
+import '../models/user_model.dart';
 import './constants/collection_reference.dart';
 import '../helpers/errors/infra_error.dart';
+import 'i_user_account_datasource.dart';
 import 'i_wish_datasource.dart';
 import '../models/wish_model.dart';
 
 class FirebaseWishDataSource implements IWishDataSource {
   final FirebaseFirestore firestore;
+  final IUserAccountDataSource userDataSource;
 
-  FirebaseWishDataSource({required this.firestore});
+  FirebaseWishDataSource({required this.firestore, required this.userDataSource});
 
   @override
   Future<WishModel> getById(String id) async {
@@ -18,6 +21,12 @@ class FirebaseWishDataSource implements IWishDataSource {
 
       final Map<String, dynamic>? json = snapshot.data();
       json?.addAll({'id': snapshot.id});
+
+      if (json?['user_id'] == null) throw NotFoundInfraError();
+
+      //Busca o usuário
+      final UserModel user = await userDataSource.getById(json?['user_id']);
+      json?.addAll({'user': user.toJson()..addAll({'id': user.id})});
 
       if (!WishModel.validateJson(json)) throw NotFoundInfraError();
 
@@ -42,13 +51,12 @@ class FirebaseWishDataSource implements IWishDataSource {
       }).toList();
 
       //Busca o usuário
-      final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: jsonList.first['user_id']).get();
-      final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data()..addAll({'id': jsonList.first['user_id']});
+      final UserModel user = await userDataSource.getById(jsonList.first['user_id']);
 
       List<WishModel> wishesModel = [];
 
       for (var json in  jsonList) {
-        json.addAll({'user': jsonUser});
+        json.addAll({'user': user.toJson()..addAll({'id': user.id})});
 
         if (WishModel.validateJson(json)) {
           wishesModel.add(WishModel.fromJson(json));

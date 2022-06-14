@@ -1,22 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../helpers/extensions/firebase_exception_extension.dart';
+import '../models/user_model.dart';
 import './constants/collection_reference.dart';
 import '../helpers/errors/infra_error.dart';
 import 'i_tag_datasource.dart';
 import '../models/tag_model.dart';
+import 'i_user_account_datasource.dart';
 
 class FirebaseTagDataSource implements ITagDataSource {
   final FirebaseFirestore firestore;
+  final IUserAccountDataSource userDataSource;
 
-  FirebaseTagDataSource({required this.firestore});
+  FirebaseTagDataSource({required this.firestore, required this.userDataSource});
 
   @override
   Future<List<TagModel>> getAll(userId) async {
     try {
       //Busca o usuário
-      final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: userId).get();
-      final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data()..addAll({'id': userId});
+      final UserModel user = await userDataSource.getById(userId);
+      final Map<String, dynamic> jsonUser = user.toJson()..addAll({'id': user.id});
 
       final snapshot = await firestore.collection(constantTagsReference).where("user_id", isEqualTo: userId).get();
       final jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {

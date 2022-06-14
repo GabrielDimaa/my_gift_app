@@ -73,11 +73,24 @@ class Injection {
       () => FirebaseWishlistDataSource(
         firestore: Get.find<FirebaseFirestore>(),
         storage: Get.find<FirebaseStorageDataSource>(),
+        userDataSource: Get.find<FirebaseUserAccountDataSource>(),
       ),
       fenix: true,
     );
-    Get.lazyPut(() => FirebaseTagDataSource(firestore: Get.find<FirebaseFirestore>()), fenix: true);
-    Get.lazyPut(() => FirebaseWishDataSource(firestore: Get.find<FirebaseFirestore>()), fenix: true);
+    Get.lazyPut(
+      () => FirebaseTagDataSource(
+        firestore: Get.find<FirebaseFirestore>(),
+        userDataSource: Get.find<FirebaseUserAccountDataSource>(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => FirebaseWishDataSource(
+        firestore: Get.find<FirebaseFirestore>(),
+        userDataSource: Get.find<FirebaseUserAccountDataSource>(),
+      ),
+      fenix: true,
+    );
     //endregion
 
     //region Facades

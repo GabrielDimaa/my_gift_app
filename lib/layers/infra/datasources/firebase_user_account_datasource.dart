@@ -139,4 +139,22 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       throw UnexpectedInfraError();
     }
   }
+
+  @override
+  Future<UserModel> getById(String userId) async {
+    try {
+      final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: userId).get();
+      final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data();
+
+      if (jsonUser.isEmpty) throw NotFoundInfraError();
+
+      return UserModel.fromJson(jsonUser..addAll({'id': userId}));
+    } on FirebaseException catch (e) {
+      throw e.getInfraError;
+    } on InfraError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedInfraError();
+    }
+  }
 }
