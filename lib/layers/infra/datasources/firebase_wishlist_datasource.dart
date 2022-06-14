@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../domain/enums/tag_internal.dart';
 import '../helpers/extensions/firebase_exception_extension.dart';
 import '../models/wish_model.dart';
 import './constants/collection_reference.dart';
@@ -77,6 +78,13 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       //endregion
 
+      //region user
+
+      final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: userId).get();
+      final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data()..addAll({'id': userId});
+
+      //endregion
+
       //region tags
 
       final List<String> tagsId = [];
@@ -91,8 +99,20 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       final jsonListTags = snapshotTags.docs.map<Map<String, dynamic>>((e) {
         var json = e.data();
         if (json.isEmpty) return json;
-        return json..addAll({'id': e.id});
+        return json..addAll({'id': e.id, 'user': jsonUser});
       }).toList();
+
+      //Adiciona as tags internas na lista
+      final tagsInternals = TagInternal.values.map((e) {
+        return {
+          'id': e.value.toString(),
+          'name': e.description,
+          'color': e.color,
+          'user': jsonUser
+        };
+      }).toList();
+
+      jsonListTags.addAll(tagsInternals);
 
       //endregion
 
@@ -101,8 +121,14 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       List<WishlistModel> wishlistsModel = [];
       for (var json in jsonListWishlist) {
         //Busca em jsonListTags a tag correspondente.
-        var tag = jsonListTags.firstWhere((e) => e['id'] == json['tag_id'], orElse: () => throw UnexpectedInfraError());
+        var tag = jsonListTags.firstWhere((e) {
+          bool result = e['id'] == json['tag_id'];
+          return result;
+        }, orElse: () => throw UnexpectedInfraError());
         json.addAll({'tag': tag});
+
+        //Adiciona o user ao json
+        json.addAll({'user': jsonUser});
 
         if (WishlistModel.validateJson(json)) {
           wishlistsModel.add(WishlistModel.fromJson(json));
