@@ -37,6 +37,15 @@ class WishlistViewModel {
     );
   }
 
+  WishlistViewModel clone() {
+    return WishlistViewModel(
+      id: id,
+      description: description,
+      wishes: wishes.map((e) => e.clone()).toList(),
+      tag: tag?.clone(),
+    );
+  }
+
   factory WishlistViewModel.fromEntity(WishlistEntity entity) {
     return WishlistViewModel(
       id: entity.id,

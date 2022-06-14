@@ -4,12 +4,14 @@ import '../../../../../i18n/resources.dart';
 import '../../../../../monostates/user_global.dart';
 import '../../../../domain/entities/tag_entity.dart';
 import '../../../../domain/entities/user_entity.dart';
+import '../../../../domain/entities/wish_entity.dart';
 import '../../../../domain/entities/wishlist_entity.dart';
 import '../../../../domain/enums/tag_internal.dart';
 import '../../../../domain/helpers/errors/domain_error.dart';
 import '../../../../domain/usecases/abstracts/tag/i_get_tags.dart';
 import '../../../../domain/usecases/abstracts/tag/i_save_tag.dart';
 import '../../../../domain/usecases/abstracts/wish/i_delete_wish.dart';
+import '../../../../domain/usecases/abstracts/wish/i_get_wishes.dart';
 import '../../../../domain/usecases/abstracts/wishlist/i_save_wishlist.dart';
 import '../../../helpers/mixins/loading_manager.dart';
 import '../../../viewmodels/tag_viewmodel.dart';
@@ -22,12 +24,14 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   final IDeleteWish iDeleteWish;
   final ISaveTag saveTag;
   final IGetTags fetchTags;
+  final IGetWishes getWishes;
 
   GetxWishlistRegisterPresenter({
     required this.saveWishlist,
     required this.iDeleteWish,
     required this.saveTag,
     required this.fetchTags,
+    required this.getWishes,
   });
 
   late WishlistViewModel _viewModel;
@@ -44,19 +48,28 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   List<TagViewModel> get tagsViewModel => _tagsViewModel;
 
   @override
-  Future<void> onInit() async {
+  Future<void> init(WishlistViewModel? viewModel) async {
     try {
       setLoading(true);
 
-      setViewModel(WishlistViewModel());
-      _tagsViewModel = <TagViewModel>[].obs;
-      _user = UserGlobal().getUser()!;
+      if (viewModel?.id != null) {
+        setViewModel(viewModel!);
+        await fetchWishes();
+      }
 
       await loadTags();
     } finally {
       setLoading(false);
       super.onInit();
     }
+  }
+
+  @override
+  Future<void> onInit() async {
+    setViewModel(WishlistViewModel());
+    _tagsViewModel = <TagViewModel>[].obs;
+    _user = UserGlobal().getUser()!;
+    super.onInit();
   }
 
   @override
@@ -78,6 +91,16 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   }
 
   @override
+  Future<void> fetchWishes() async {
+    if (viewModel.id != null) {
+      final List<WishEntity> wishesEntity = await getWishes.get(viewModel.id!);
+      viewModel.setWishes(wishesEntity.map((e) => WishViewModel.fromEntity(e)).toList());
+
+      viewModel.wishes.sort((a, b) => a.description.toString().toLowerCase().compareTo(b.description.toString().toLowerCase()));
+    }
+  }
+
+  @override
   Future<void> deleteWish(WishViewModel wish) async {
     if (wish.id != null) await iDeleteWish.delete(wish.id!);
   }
@@ -88,10 +111,12 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
 
     TagViewModel tagInitial = TagViewModel.fromEntity(TagInternal.normal.toEntity(_user));
     _tagsViewModel.add(tagInitial);
-    viewModel.setTag(tagInitial);
+    if (viewModel.tag == null) viewModel.setTag(tagInitial);
 
     List<TagEntity> tags = await fetchTags.get(_user.id!);
     _tagsViewModel.addAll(tags.map((entity) => TagViewModel.fromEntity(entity)).toList().obs);
+
+    _tagsViewModel.sort((a, b) => a.name.toString().toLowerCase().compareTo(b.name.toString().toLowerCase()));
   }
 
   @override

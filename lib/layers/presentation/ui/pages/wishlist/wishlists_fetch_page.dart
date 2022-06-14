@@ -71,6 +71,6 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
   }
 
   Future<void> _navigateWishlist(WishlistViewModel? viewModel) async {
-    await Navigator.of(context).pushNamed("wishlist_register", arguments: viewModel);
+    await Navigator.of(context).pushNamed("wishlist_register", arguments: viewModel?.clone());
   }
 }

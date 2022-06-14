@@ -24,9 +24,9 @@ import '../tag/components/tag_form.dart';
 import '../wish/widgets/list_tile_wish.dart';
 
 class WishlistRegisterPage extends StatefulWidget {
-  final WishlistViewModel? wishlistViewModel;
+  final WishlistViewModel? viewModel;
 
-  const WishlistRegisterPage({Key? key, this.wishlistViewModel}) : super(key: key);
+  const WishlistRegisterPage({Key? key, this.viewModel}) : super(key: key);
 
   @override
   State<WishlistRegisterPage> createState() => _WishlistRegisterPageState();
@@ -40,8 +40,13 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
 
   @override
   void initState() {
-    if (widget.wishlistViewModel != null) presenter.setViewModel(widget.wishlistViewModel!);
+    presenter.init(widget.viewModel);
+    _updateTextEditingController();
     super.initState();
+  }
+
+  void _updateTextEditingController() {
+    _nameWishlistController.text = presenter.viewModel.description ?? "";
   }
 
   @override

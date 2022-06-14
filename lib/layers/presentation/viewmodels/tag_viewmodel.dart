@@ -31,6 +31,14 @@ class TagViewModel {
     );
   }
 
+  TagViewModel clone() {
+    return TagViewModel(
+      id: id,
+      name: name,
+      color: color,
+    );
+  }
+
   factory TagViewModel.fromEntity(TagEntity entity) {
     return TagViewModel(
       id: entity.id,

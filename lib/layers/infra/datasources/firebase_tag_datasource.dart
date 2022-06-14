@@ -14,13 +14,17 @@ class FirebaseTagDataSource implements ITagDataSource {
   @override
   Future<List<TagModel>> getAll(userId) async {
     try {
+      //Busca o usuário
+      final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: userId).get();
+      final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data()..addAll({'id': userId});
+
       final snapshot = await firestore.collection(constantTagsReference).where("user_id", isEqualTo: userId).get();
       final jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
         var json = e.data();
         if (json.isEmpty) {
           return json;
         }
-        return json..addAll({'id': e.id});
+        return json..addAll({'id': e.id, 'user': jsonUser});
       }).toList();
 
       List<TagModel> tagsModel = [];

@@ -1,5 +1,5 @@
 import '../../../entities/wish_entity.dart';
 
-abstract class IGetWishesByWishlist {
+abstract class IGetWishes {
   Future<List<WishEntity>> get(String wishlistId);
 }

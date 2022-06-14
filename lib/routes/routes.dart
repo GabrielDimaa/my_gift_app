@@ -21,7 +21,7 @@ class Routes {
         GetPage(name: "/signup_confirm_email", page: () => const SignupConfirmEmailPage()),
         GetPage(name: "/dashboard", page: () => const DashboardPage()),
         GetPage(name: "/wishlists_fetch", page: () => const WishlistsFetchPage()),
-        GetPage(name: "/wishlist_register", page: () => const WishlistRegisterPage()),
+        GetPage(name: "/wishlist_register", page: () => WishlistRegisterPage(viewModel: Get.arguments)),
         GetPage(name: "/wish_register", page: () => WishRegisterPage(viewModel: Get.arguments['viewModel'], wishlistViewModel: Get.arguments['wishlistViewModel'])),
       ];
 }

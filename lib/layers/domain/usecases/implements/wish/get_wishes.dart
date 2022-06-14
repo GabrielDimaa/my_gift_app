@@ -4,10 +4,10 @@ import '../../../helpers/errors/domain_error.dart';
 import '../../../repositories/i_wish_repository.dart';
 import '../../abstracts/wish/i_get_wishes.dart';
 
-class GetWishesByWishlist implements IGetWishesByWishlist {
+class GetWishes implements IGetWishes {
   final IWishRepository wishRepository;
 
-  GetWishesByWishlist({required this.wishRepository});
+  GetWishes({required this.wishRepository});
 
   @override
   Future<List<WishEntity>> get(String wishlistId) async {

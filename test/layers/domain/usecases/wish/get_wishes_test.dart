@@ -10,7 +10,7 @@ import '../../../domain/entities/entity_factory.dart';
 import '../../../infra/repositories/mocks/wish_repository_spy.dart';
 
 void main() {
-  late GetWishesByWishlist sut;
+  late GetWishes sut;
   late WishRepositorySpy wishRepositorySpy;
 
   final wishlistId = faker.guid.guid();
@@ -18,7 +18,7 @@ void main() {
 
   setUp(() {
     wishRepositorySpy = WishRepositorySpy(get: true, datas: wishesResult);
-    sut = GetWishesByWishlist(wishRepository: wishRepositorySpy);
+    sut = GetWishes(wishRepository: wishRepositorySpy);
   });
 
   test("Deve chamar getAll com valores corretos", () async {

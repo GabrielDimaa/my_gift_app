@@ -41,9 +41,15 @@ class FirebaseWishDataSource implements IWishDataSource {
         return json..addAll({'id': e.id});
       }).toList();
 
+      //Busca o usuário
+      final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: jsonList.first['user_id']).get();
+      final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data()..addAll({'id': jsonList.first['user_id']});
+
       List<WishModel> wishesModel = [];
 
-      for (var json in jsonList) {
+      for (var json in  jsonList) {
+        json.addAll({'user': jsonUser});
+
         if (WishModel.validateJson(json)) {
           wishesModel.add(WishModel.fromJson(json));
         }
