@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../helpers/extensions/firebase_exception_extension.dart';
@@ -7,12 +9,18 @@ import '../helpers/errors/infra_error.dart';
 import 'i_user_account_datasource.dart';
 import 'i_wish_datasource.dart';
 import '../models/wish_model.dart';
+import 'storage/i_storage_datasource.dart';
 
 class FirebaseWishDataSource implements IWishDataSource {
   final FirebaseFirestore firestore;
   final IUserAccountDataSource userDataSource;
+  final IStorageDataSource storageDataSource;
 
-  FirebaseWishDataSource({required this.firestore, required this.userDataSource});
+  FirebaseWishDataSource({
+    required this.firestore,
+    required this.userDataSource,
+    required this.storageDataSource,
+  });
 
   @override
   Future<WishModel> getById(String id) async {
@@ -26,7 +34,9 @@ class FirebaseWishDataSource implements IWishDataSource {
 
       //Busca o usuário
       final UserModel user = await userDataSource.getById(json?['user_id']);
-      json?.addAll({'user': user.toJson()..addAll({'id': user.id})});
+      json?.addAll({
+        'user': user.toJson()..addAll({'id': user.id})
+      });
 
       if (!WishModel.validateJson(json)) throw NotFoundInfraError();
 
@@ -55,8 +65,10 @@ class FirebaseWishDataSource implements IWishDataSource {
 
       List<WishModel> wishesModel = [];
 
-      for (var json in  jsonList) {
-        json.addAll({'user': user.toJson()..addAll({'id': user.id})});
+      for (var json in jsonList) {
+        json.addAll({
+          'user': user.toJson()..addAll({'id': user.id})
+        });
 
         if (WishModel.validateJson(json)) {
           wishesModel.add(WishModel.fromJson(json));
@@ -76,17 +88,14 @@ class FirebaseWishDataSource implements IWishDataSource {
   @override
   Future<WishModel> create(WishModel model) async {
     try {
-      // TODO: implementar upload de imagens nos datasources
-      // if (model.image?.isNotEmpty ?? false) {
-      //   try {
-      //     final path = "/wishes/${DateTime.now().millisecondsSinceEpoch}_${model.image}";
-      //     final String urlImage = await storage.upload(path, File(model.image!));
-      //
-      //     model.image = urlImage;
-      //   } catch (_) {}
-      // }
+      final doc = firestore.collection(constantWishesReference).doc();
 
-      final doc = await firestore.collection(constantWishesReference).add(model.toJson());
+      if (model.image != null) {
+        final String urlImage = await storageDataSource.upload("wishes/${doc.id}", File(model.image!));
+        model.image = urlImage;
+      }
+      await doc.set(model.toJson());
+
       return model.clone(id: doc.id);
     } on FirebaseException catch (e) {
       throw e.getInfraError;
@@ -101,7 +110,23 @@ class FirebaseWishDataSource implements IWishDataSource {
   Future<WishModel> update(WishModel model) async {
     try {
       final doc = firestore.collection(constantWishesReference).doc(model.id);
+
+      final snapshot = await doc.get();
+      final Map<String, dynamic>? jsonOld = snapshot.data()?..addAll({'id': snapshot.id});
+      if (jsonOld == null) throw NotFoundInfraError();
+
       await doc.update(model.toJson());
+
+      if (jsonOld['image'] != model.image) {
+        //Se jsonOld tiver imagem salva, deve ser removida, tanto para fazer upload, como para manter um wish sem imagem.
+        if (jsonOld['image'] != null) {
+          await storageDataSource.delete("wishes/${model.id}");
+        }
+        //Se model tiver imagem setada, deve fazer upload.
+        if (model.image != null) {
+          await storageDataSource.upload("wishes/${model.id}", File(model.image!));
+        }
+      }
 
       return model;
     } on FirebaseException catch (e) {
@@ -118,6 +143,7 @@ class FirebaseWishDataSource implements IWishDataSource {
     try {
       final doc = firestore.collection(constantWishesReference).doc(id);
       await doc.delete();
+      await storageDataSource.delete("wishes/$id");
     } on FirebaseException catch (e) {
       throw e.getInfraError;
     } on InfraError {

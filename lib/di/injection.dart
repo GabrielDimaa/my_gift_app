@@ -89,6 +89,7 @@ class Injection {
       () => FirebaseWishDataSource(
         firestore: Get.find<FirebaseFirestore>(),
         userDataSource: Get.find<FirebaseUserAccountDataSource>(),
+        storageDataSource: Get.find<FirebaseStorageDataSource>(),
       ),
       fenix: true,
     );

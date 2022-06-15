@@ -1,5 +1,4 @@
 import '../../../../../i18n/resources.dart';
-import '../../../entities/wish_entity.dart';
 import '../../../entities/wishlist_entity.dart';
 import '../../../helpers/errors/domain_error.dart';
 import '../../../repositories/i_wish_repository.dart';
