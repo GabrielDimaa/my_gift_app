@@ -80,7 +80,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
         title: widget.viewModel == null ? R.string.newWish : R.string.editWish,
         actions: [
           ButtonAction(
-            visible: widget.viewModel?.id != null,
+            visible: widget.viewModel != null,
             label: "Excluir",
             icon: Icons.delete,
             onPressed: () async => await _delete(),
@@ -270,11 +270,10 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
           presenter.validate(ignoreWishlistId: true);
           Navigator.pop(context, presenter.viewModel);
         } else {
-          await LoadingDialog.show(
-            context: context,
-            message: "${R.string.savingWish}...",
-            onAction: () async => await presenter.save(),
-          );
+          await LoadingDialog.show(context: context, message: "${R.string.savingWish}...", onAction: () async => await presenter.save());
+
+          if (!mounted) return;
+          Navigator.pop(context, presenter.viewModel);
         }
       }
     } catch (e) {
@@ -291,11 +290,18 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
       );
 
       if (confirmed ?? false) {
-        await LoadingDialog.show(
-          context: context,
-          message: "${R.string.deletingWish}...",
-          onAction: () async => await presenter.delete(),
-        );
+        presenter.viewModel.deleted = true;
+
+        if (presenter.viewModel.id != null) {
+          await LoadingDialog.show(
+            context: context,
+            message: "${R.string.deletingWish}...",
+            onAction: () async => await presenter.delete(),
+          );
+        }
+
+        if (!mounted) return;
+        Navigator.pop(context, presenter.viewModel);
       }
     } catch (e) {
       ErrorDialog.show(context: context, content: e.toString());

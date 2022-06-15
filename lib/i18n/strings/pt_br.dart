@@ -252,7 +252,7 @@ class PtBr implements Translation {
   String get delete => "Excluir";
 
   @override
-  String get confirmDeleteWish => "Deseja excluir o desejo?";
+  String get confirmDeleteWish => "Deseja excluir permanentemente o desejo?";
 
   @override
   String get deletingWish => "Excluindo desejo";

@@ -3,20 +3,33 @@ import 'dart:io';
 import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
+import '../../../../../monostates/user_global.dart';
+import '../../../../domain/entities/user_entity.dart';
+import '../../../../domain/entities/wish_entity.dart';
 import '../../../../domain/helpers/errors/domain_error.dart';
 import '../../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_camera.dart';
 import '../../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
+import '../../../../domain/usecases/abstracts/wish/i_delete_wish.dart';
+import '../../../../domain/usecases/abstracts/wish/i_save_wish.dart';
 import '../../../helpers/enums/price_range.dart';
 import '../../../viewmodels/wish_viewmodel.dart';
 import '../abstracts/wish_register_presenter.dart';
 
-class GetxWishRegisterPresenter extends GetxController implements WishRegisterPresenter{
+class GetxWishRegisterPresenter extends GetxController implements WishRegisterPresenter {
   final IFetchImagePickerCamera fetchImagePickerCamera;
   final IFetchImagePickerGallery fetchImagePickerGallery;
+  final ISaveWish saveWish;
+  final IDeleteWish deleteWish;
 
-  GetxWishRegisterPresenter({required this.fetchImagePickerCamera, required this.fetchImagePickerGallery});
+  GetxWishRegisterPresenter({
+    required this.fetchImagePickerCamera,
+    required this.fetchImagePickerGallery,
+    required this.saveWish,
+    required this.deleteWish,
+  });
 
   late WishViewModel _viewModel;
+  late UserEntity _user;
   final Rx<PriceRange> _priceRange = Rx<PriceRange>(PriceRange.pr1_100);
 
   @override
@@ -50,6 +63,7 @@ class GetxWishRegisterPresenter extends GetxController implements WishRegisterPr
   @override
   void onInit() {
     setViewModel(WishViewModel());
+    _user = UserGlobal().getUser()!;
     super.onInit();
   }
 
@@ -73,14 +87,21 @@ class GetxWishRegisterPresenter extends GetxController implements WishRegisterPr
 
   @override
   Future<void> save() async {
-    // TODO: implement save
-    throw UnimplementedError();
+    try {
+      final WishEntity wishSaved = await saveWish.save(viewModel.toEntity(_user));
+      setViewModel(WishViewModel.fromEntity(wishSaved));
+    } on DomainError catch (e) {
+      throw Exception(e.message);
+    }
   }
 
   @override
   Future<void> delete() async {
-    // TODO: implement delete
-    throw UnimplementedError();
+    try {
+      if (viewModel.id != null) await deleteWish.delete(viewModel.id!);
+    } on DomainError catch (e) {
+      throw Exception(e.message);
+    }
   }
 
   @override

@@ -16,6 +16,7 @@ import '../layers/domain/usecases/implements/tag/save_tag.dart';
 import '../layers/domain/usecases/implements/user/get_user_logged.dart';
 import '../layers/domain/usecases/implements/wish/delete_wish.dart';
 import '../layers/domain/usecases/implements/wish/get_wishes.dart';
+import '../layers/domain/usecases/implements/wish/save_wish.dart';
 import '../layers/domain/usecases/implements/wishlist/get_wishlists.dart';
 import '../layers/domain/usecases/implements/wishlist/save_wishlist.dart';
 import '../layers/infra/datasources/firebase_tag_datasource.dart';
@@ -139,6 +140,7 @@ class Injection {
       fenix: true,
     );
     Get.lazyPut(() => GetWishes(wishRepository: Get.find<WishRepository>()), fenix: true);
+    Get.lazyPut(() => SaveWish(wishRepository: Get.find<WishRepository>()), fenix: true);
     Get.lazyPut(() => DeleteWish(wishRepository: Get.find<WishRepository>()), fenix: true);
     Get.lazyPut(() => GetTags(tagRepository: Get.find<TagRepository>()), fenix: true);
     Get.lazyPut(() => SaveTag(tagRepository: Get.find<TagRepository>()), fenix: true);
@@ -179,6 +181,8 @@ class Injection {
       () => GetxWishRegisterPresenter(
         fetchImagePickerCamera: Get.find<FetchImagePickerCamera>(),
         fetchImagePickerGallery: Get.find<FetchImagePickerGallery>(),
+        saveWish: Get.find<SaveWish>(),
+        deleteWish: Get.find<DeleteWish>()
       ),
       fenix: true,
     );

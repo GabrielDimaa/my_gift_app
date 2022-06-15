@@ -14,6 +14,9 @@ class WishViewModel {
   final RxnDouble _priceRangeFinal = RxnDouble();
   final Rxn<DateTime> _createdAt = Rxn<DateTime>();
 
+  //Propriedade apenas para controle de tela.
+  bool? deleted = false;
+
   String? get id => _id.value;
   String? get wishlistId => _wishlistId.value;
   String? get description => _description.value;

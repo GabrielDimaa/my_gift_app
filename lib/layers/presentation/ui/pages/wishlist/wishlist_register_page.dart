@@ -117,7 +117,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                                 primary: colorScheme.secondary,
                                 side: BorderSide(color: colorScheme.secondary),
                               ),
-                              onPressed: () async => await _navigateToWish(),
+                              onPressed: () async => await _navigateToWishCreate(),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 6, top: 6),
@@ -237,16 +237,18 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
     }
   }
 
-  Future<WishViewModel?> _navigateToWish({WishViewModel? wish}) async {
+  Future<void> _navigateToWishCreate() async {
     final WishViewModel? wishViewModel = await Navigator.pushNamed(context, "wish_register", arguments: {
-      //Controle para não enviar os dois parâmetros ao mesmo tempo, pois WishRegister possui um assert validando isto.
-      'viewModel': wish?.clone(),
-      'wishlistViewModel': presenter.viewModel.id != null && wish != null ? presenter.viewModel : null,
+      'wishlistViewModel': presenter.viewModel.id != null ? presenter.viewModel : null,
     }) as WishViewModel?;
 
-    if (wishViewModel != null && wish == null) presenter.viewModel.wishes.add(wishViewModel);
+    if (wishViewModel != null) presenter.viewModel.wishes.add(wishViewModel);
+  }
 
-    return wishViewModel;
+  Future<WishViewModel?> _navigateToWishEdit(WishViewModel wish) async {
+    return await Navigator.pushNamed(context, "wish_register", arguments: {
+      'viewModel': wish.clone(),
+    }) as WishViewModel?;
   }
 
   Future<void> _seeWishes() async {
@@ -273,16 +275,22 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                         return ListTileWish(
                           viewModel: wish,
                           onTap: () async {
-                            final WishViewModel? wishUpdated = await _navigateToWish(wish: wish);
-                            if (wishUpdated != null) presenter.viewModel.wishes[index] = wishUpdated;
+                            final WishViewModel? wishUpdated = await _navigateToWishEdit(wish);
+                            if (wishUpdated != null) {
+                              if (wishUpdated.deleted ?? false) {
+                                presenter.viewModel.wishes.removeAt(index);
+                              } else {
+                                presenter.viewModel.wishes[index] = wishUpdated;
+                              }
+                            }
                           },
                           onDismissed: (_) async => presenter.viewModel.wishes.removeAt(index),
                           confirmDismiss: (_) async {
                             try {
                               if (wish.id == null) return true;
 
-                              final bool? confirmed = await ConfirmDialog.show(context: context, title: R.string.delete, message: R.string.deletingWish);
-                              if (confirmed ?? false) {
+                              final bool confirmed = await ConfirmDialog.show(context: context, title: R.string.delete, message: R.string.confirmDeleteWish) ?? false;
+                              if (confirmed) {
                                 await LoadingDialog.show(
                                   context: context,
                                   message: "${R.string.deletingWish}...",
@@ -290,7 +298,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                                 );
                               }
 
-                              return false;
+                              return confirmed;
                             } catch (e) {
                               ErrorDialog.show(context: context, content: e.toString());
                               return false;
