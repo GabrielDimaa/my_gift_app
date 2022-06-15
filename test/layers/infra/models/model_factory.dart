@@ -7,6 +7,7 @@ import 'package:faker/faker.dart';
 abstract class ModelFactory {
   static WishModel wish({String? id, String? wishlistId, bool withId = true}) => WishModel(
         id: withId ? id ?? faker.guid.guid() : null,
+        user: user(),
         wishlistId: wishlistId ?? faker.guid.guid(),
         description: faker.lorem.sentence(),
         image: faker.internet.httpsUrl(),
@@ -23,6 +24,7 @@ abstract class ModelFactory {
 
   static WishlistModel wishlist({String? id, bool withId = true, bool withWishes = true}) => WishlistModel(
         id: withId ? id ?? faker.guid.guid() : null,
+        user: user(),
         description: faker.lorem.sentence(),
         wishes: withWishes ? wishes(wishlistId: id) : [],
         tag: tag(),
@@ -41,6 +43,7 @@ abstract class ModelFactory {
 
   static TagModel tag({String? id, bool withId = true}) => TagModel(
         id: withId ? id ?? faker.guid.guid() : null,
+        user: user(),
         name: faker.lorem.word(),
         color: "#00000",
       );

@@ -60,6 +60,8 @@ class FirebaseWishDataSource implements IWishDataSource {
         return json..addAll({'id': e.id});
       }).toList();
 
+      if (jsonList.isEmpty) return [];
+
       //Busca o usuário
       final UserModel user = await userDataSource.getById(jsonList.first['user_id']);
 

@@ -7,6 +7,7 @@ import 'package:faker/faker.dart';
 abstract class EntityFactory {
   static WishEntity wish({String? id, bool withId = true, bool withWishlistId = true}) => WishEntity(
         id: withId ? id ?? faker.guid.guid() : null,
+        user: user(),
         wishlistId: withWishlistId ? faker.guid.guid() : null,
         description: faker.lorem.sentence(),
         image: faker.internet.httpsUrl(),
@@ -23,6 +24,7 @@ abstract class EntityFactory {
 
   static WishlistEntity wishlist({String? id, bool withId = true}) => WishlistEntity(
         id: withId ? id ?? faker.guid.guid() : null,
+        user: user(),
         description: faker.lorem.sentence(),
         wishes: wishes(),
         tag: tag(),
@@ -41,6 +43,7 @@ abstract class EntityFactory {
 
   static TagEntity tag({bool withId = true}) => TagEntity(
         id: withId ? faker.guid.guid() : null,
+        user: user(),
         name: faker.lorem.word(),
         color: "#00000",
       );
