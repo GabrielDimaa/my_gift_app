@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:collection/collection.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -48,8 +49,20 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
 
       //region tag
 
-      final Map<String, dynamic>? jsonTag = await _getTag(jsonWishlist['tag_id'], jsonUser);
-      if (!TagModel.validateJson(jsonTag)) throw NotFoundInfraError();
+      final Map<String, dynamic>? jsonTag;
+
+      final TagInternal? tagInternal = TagInternal.values.firstWhereOrNull((e) => e.value.toString() == jsonWishlist['tag_id']);
+      if (tagInternal != null) {
+        jsonTag = {
+          'id': tagInternal.value.toString(),
+          'name': tagInternal.description,
+          'color': tagInternal.color,
+          'user': jsonUser
+        };
+      } else {
+        jsonTag = await _getTag(jsonWishlist['tag_id'], jsonUser);
+        if (!TagModel.validateJson(jsonTag)) throw NotFoundInfraError();
+      }
 
       //endregion
 
