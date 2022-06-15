@@ -16,17 +16,20 @@ import '../../../viewmodels/wish_viewmodel.dart';
 import '../abstracts/wish_register_presenter.dart';
 
 class GetxWishRegisterPresenter extends GetxController implements WishRegisterPresenter {
-  final IFetchImagePickerCamera fetchImagePickerCamera;
-  final IFetchImagePickerGallery fetchImagePickerGallery;
-  final ISaveWish saveWish;
-  final IDeleteWish deleteWish;
+  final IFetchImagePickerCamera _fetchImagePickerCamera;
+  final IFetchImagePickerGallery _fetchImagePickerGallery;
+  final ISaveWish _saveWish;
+  final IDeleteWish _deleteWish;
 
   GetxWishRegisterPresenter({
-    required this.fetchImagePickerCamera,
-    required this.fetchImagePickerGallery,
-    required this.saveWish,
-    required this.deleteWish,
-  });
+    required IFetchImagePickerCamera fetchImagePickerCamera,
+    required IFetchImagePickerGallery fetchImagePickerGallery,
+    required ISaveWish saveWish,
+    required IDeleteWish deleteWish,
+  })  : _fetchImagePickerCamera = fetchImagePickerCamera,
+        _fetchImagePickerGallery = fetchImagePickerGallery,
+        _saveWish = saveWish,
+        _deleteWish = deleteWish;
 
   late WishViewModel _viewModel;
   late UserEntity _user;
@@ -72,9 +75,9 @@ class GetxWishRegisterPresenter extends GetxController implements WishRegisterPr
     try {
       final File? image;
       if (isGallery) {
-        image = await fetchImagePickerGallery.fetchFromGallery();
+        image = await _fetchImagePickerGallery.fetchFromGallery();
       } else {
-        image = await fetchImagePickerCamera.fetchFromCamera();
+        image = await _fetchImagePickerCamera.fetchFromCamera();
       }
 
       if (image == null) throw Exception(R.string.noImageSelected);
@@ -88,7 +91,7 @@ class GetxWishRegisterPresenter extends GetxController implements WishRegisterPr
   @override
   Future<void> save() async {
     try {
-      final WishEntity wishSaved = await saveWish.save(viewModel.toEntity(_user));
+      final WishEntity wishSaved = await _saveWish.save(viewModel.toEntity(_user));
       setViewModel(WishViewModel.fromEntity(wishSaved));
     } on DomainError catch (e) {
       throw Exception(e.message);
@@ -98,7 +101,7 @@ class GetxWishRegisterPresenter extends GetxController implements WishRegisterPr
   @override
   Future<void> delete() async {
     try {
-      if (viewModel.id != null) await deleteWish.delete(viewModel.id!);
+      if (viewModel.id != null) await _deleteWish.delete(viewModel.id!);
     } on DomainError catch (e) {
       throw Exception(e.message);
     }

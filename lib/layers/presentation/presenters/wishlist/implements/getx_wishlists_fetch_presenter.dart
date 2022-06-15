@@ -10,11 +10,12 @@ import '../../../viewmodels/wishlists_viewmodel.dart';
 import '../abstracts/wishlists_fetch_presenter.dart';
 
 class GetxWishlistsFetchPresenter extends GetxController with LoadingManager implements WishlistsFetchPresenter {
+  final IGetWishlists _getWishlists;
+
+  GetxWishlistsFetchPresenter({required IGetWishlists getWishlists}) : _getWishlists = getWishlists;
+
   late WishlistsViewModel _viewModel;
   late UserEntity _userLogged;
-  final IGetWishlists getWishlists;
-
-  GetxWishlistsFetchPresenter({required this.getWishlists});
 
   @override
   WishlistsViewModel get viewModel => _viewModel;
@@ -39,7 +40,7 @@ class GetxWishlistsFetchPresenter extends GetxController with LoadingManager imp
 
   @override
   Future<void> fetchWishlists() async {
-    List<WishlistEntity> wishlistsEntities = await getWishlists.get(_userLogged.id!);
+    List<WishlistEntity> wishlistsEntities = await _getWishlists.get(_userLogged.id!);
     List<WishlistViewModel> wishlistsViewModel = wishlistsEntities.map((entity) => WishlistViewModel.fromEntity(entity)).toList();
 
     _viewModel.setWishlists(wishlistsViewModel);

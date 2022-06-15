@@ -20,19 +20,23 @@ import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../abstracts/wishlist_register_presenter.dart';
 
 class GetxWishlistRegisterPresenter extends GetxController with LoadingManager implements WishlistRegisterPresenter {
-  final ISaveWishlist saveWishlist;
-  final IDeleteWish iDeleteWish;
-  final ISaveTag saveTag;
-  final IGetTags fetchTags;
-  final IGetWishes getWishes;
+  final ISaveWishlist _saveWishlist;
+  final IDeleteWish _deleteWish;
+  final ISaveTag _saveTag;
+  final IGetTags _getTags;
+  final IGetWishes _getWishes;
 
   GetxWishlistRegisterPresenter({
-    required this.saveWishlist,
-    required this.iDeleteWish,
-    required this.saveTag,
-    required this.fetchTags,
-    required this.getWishes,
-  });
+    required ISaveWishlist saveWishlist,
+    required IDeleteWish deleteWish,
+    required ISaveTag saveTag,
+    required IGetTags getTags,
+    required IGetWishes getWishes,
+  })  : _saveWishlist = saveWishlist,
+        _deleteWish = deleteWish,
+        _saveTag = saveTag,
+        _getTags = getTags,
+        _getWishes = getWishes;
 
   late WishlistViewModel _viewModel;
   late RxList<TagViewModel> _tagsViewModel;
@@ -77,7 +81,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
     try {
       validate();
 
-      final WishlistEntity wishlistEntity = await saveWishlist.save(_viewModel.toEntity(_user));
+      final WishlistEntity wishlistEntity = await _saveWishlist.save(_viewModel.toEntity(_user));
       navigateToWishlists(WishlistViewModel.fromEntity(wishlistEntity));
     } on DomainError catch (e) {
       throw Exception(e.message);
@@ -93,7 +97,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   @override
   Future<void> fetchWishes() async {
     if (viewModel.id != null) {
-      final List<WishEntity> wishesEntity = await getWishes.get(viewModel.id!);
+      final List<WishEntity> wishesEntity = await _getWishes.get(viewModel.id!);
       viewModel.setWishes(wishesEntity.map((e) => WishViewModel.fromEntity(e)).toList());
 
       viewModel.wishes.sort((a, b) => a.description.toString().toLowerCase().compareTo(b.description.toString().toLowerCase()));
@@ -102,7 +106,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
 
   @override
   Future<void> deleteWish(WishViewModel wish) async {
-    if (wish.id != null) await iDeleteWish.delete(wish.id!);
+    if (wish.id != null) await _deleteWish.delete(wish.id!);
   }
 
   @override
@@ -113,7 +117,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
     _tagsViewModel.add(tagInitial);
     if (viewModel.tag == null) viewModel.setTag(tagInitial);
 
-    List<TagEntity> tags = await fetchTags.get(_user.id!);
+    List<TagEntity> tags = await _getTags.get(_user.id!);
     _tagsViewModel.addAll(tags.map((entity) => TagViewModel.fromEntity(entity)).toList().obs);
 
     _tagsViewModel.sort((a, b) => a.name.toString().toLowerCase().compareTo(b.name.toString().toLowerCase()));
@@ -123,7 +127,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   Future<void> createTag(TagViewModel viewModel) async {
     if (viewModel.name == null || viewModel.color == null) throw Exception(R.string.nameColorTagError);
 
-    final TagEntity tagEntity = await saveTag.save(viewModel.toEntity(_user));
+    final TagEntity tagEntity = await _saveTag.save(viewModel.toEntity(_user));
     tagsViewModel.add(TagViewModel.fromEntity(tagEntity));
   }
 

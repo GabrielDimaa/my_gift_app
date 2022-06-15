@@ -12,9 +12,9 @@ import '../../viewmodels/login_viewmodel.dart';
 import './login_presenter.dart';
 
 class GetxLoginPresenter extends GetxController implements LoginPresenter {
-  final ILoginEmail loginWithEmail;
+  final ILoginEmail _loginWithEmail;
 
-  GetxLoginPresenter({required this.loginWithEmail});
+  GetxLoginPresenter({required ILoginEmail loginWithEmail}) : _loginWithEmail = loginWithEmail;
 
   late LoginViewModel _viewModel;
 
@@ -35,7 +35,7 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
     try {
       validate();
 
-      final UserEntity user = await loginWithEmail.auth(viewModel.toParams());
+      final UserEntity user = await _loginWithEmail.auth(viewModel.toParams());
       final UserGlobal userGlobal = UserGlobal();
       userGlobal.setUser(user);
 

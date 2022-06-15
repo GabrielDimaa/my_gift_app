@@ -11,15 +11,17 @@ import '../../ui/pages/signup/signup_confirm_email_page.dart';
 import '../splash/splash_presenter.dart';
 
 class GetxSplashPresenter extends GetxController implements SplashPresenter {
-  final IGetUserLogged getUserLogged;
-  final ICheckEmailVerified checkEmailVerified;
-  final ISendVerificationEmail sendVerificationEmail;
+  final IGetUserLogged _getUserLogged;
+  final ICheckEmailVerified _checkEmailVerified;
+  final ISendVerificationEmail _sendVerificationEmail;
 
   GetxSplashPresenter({
-    required this.getUserLogged,
-    required this.checkEmailVerified,
-    required this.sendVerificationEmail,
-  });
+    required IGetUserLogged getUserLogged,
+    required ICheckEmailVerified checkEmailVerified,
+    required ISendVerificationEmail sendVerificationEmail,
+  })  : _getUserLogged = getUserLogged,
+        _checkEmailVerified = checkEmailVerified,
+        _sendVerificationEmail = sendVerificationEmail;
 
   @override
   Future<void> onInit() async {
@@ -32,16 +34,16 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
     try {
       await Future.delayed(const Duration(seconds: 2));
 
-      final UserEntity? user = await getUserLogged.getUser();
+      final UserEntity? user = await _getUserLogged.getUser();
       if (user == null) await navigateToLogin();
 
-      final bool emailVerified = await checkEmailVerified.check(user!.id!);
+      final bool emailVerified = await _checkEmailVerified.check(user!.id!);
       if (emailVerified) {
         UserGlobal().setUser(user);
         await navigateToDashboard();
       } else {
         try {
-          await sendVerificationEmail.send(user.id!);
+          await _sendVerificationEmail.send(user.id!);
         } finally {
           await navigateToConfirmEmail();
         }

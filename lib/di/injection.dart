@@ -171,9 +171,9 @@ class Injection {
     Get.lazyPut(
       () => GetxWishlistRegisterPresenter(
         saveWishlist: Get.find<SaveWishlist>(),
-        iDeleteWish: Get.find<DeleteWish>(),
+        deleteWish: Get.find<DeleteWish>(),
         saveTag: Get.find<SaveTag>(),
-        fetchTags: Get.find<GetTags>(),
+        getTags: Get.find<GetTags>(),
         getWishes: Get.find<GetWishes>(),
       ),
       fenix: true,

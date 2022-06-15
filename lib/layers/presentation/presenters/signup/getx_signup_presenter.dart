@@ -23,21 +23,26 @@ import '../../ui/pages/signup/signup_photo_page.dart';
 import '../../viewmodels/signup_viewmodel.dart';
 
 class GetxSignupPresenter extends GetxController with LoadingManager implements SignupPresenter {
-  final ISignUpEmail signUpEmail;
-  final IFetchImagePickerCamera fetchImagePickerCamera;
-  final IFetchImagePickerGallery fetchImagePickerGallery;
-  final ISendVerificationEmail sendVerificationEmail;
-  final ICheckEmailVerified checkEmailVerified;
-  final IGetUserLogged getUserLogged;
+  final ISignUpEmail _signUpEmail;
+  final IFetchImagePickerCamera _fetchImagePickerCamera;
+  final IFetchImagePickerGallery _fetchImagePickerGallery;
+  final ISendVerificationEmail _sendVerificationEmail;
+  final ICheckEmailVerified _checkEmailVerified;
+  final IGetUserLogged _getUserLogged;
 
   GetxSignupPresenter({
-    required this.signUpEmail,
-    required this.fetchImagePickerCamera,
-    required this.fetchImagePickerGallery,
-    required this.sendVerificationEmail,
-    required this.checkEmailVerified,
-    required this.getUserLogged,
-  });
+    required ISignUpEmail signUpEmail,
+    required IFetchImagePickerCamera fetchImagePickerCamera,
+    required IFetchImagePickerGallery fetchImagePickerGallery,
+    required ISendVerificationEmail sendVerificationEmail,
+    required ICheckEmailVerified checkEmailVerified,
+    required IGetUserLogged getUserLogged,
+  })  : _signUpEmail = signUpEmail,
+        _fetchImagePickerCamera = fetchImagePickerCamera,
+        _fetchImagePickerGallery = fetchImagePickerGallery,
+        _sendVerificationEmail = sendVerificationEmail,
+        _checkEmailVerified = checkEmailVerified,
+        _getUserLogged = getUserLogged;
 
   late SignupViewModel _viewModel;
 
@@ -50,24 +55,26 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   UserEntity? _userEntity;
   Timer? _timerResendEmail;
   int maxSeconds = 60;
-  
+
   final RxnInt _timerTick = RxnInt(60);
 
   @override
   int? get timerTick => _timerTick.value;
 
   final RxBool _resendEmail = RxBool(false);
+
   void setResendEmail(bool value) => _resendEmail.value = value;
 
   @override
   bool get resendEmail => _resendEmail.value;
 
   final RxBool _loadingResendEmail = RxBool(false);
+
   void setLoadingResendEmail(bool value) => _loadingResendEmail.value = value;
 
   @override
   bool get loadingResendEmail => _loadingResendEmail.value;
-  
+
   @override
   void onInit() {
     setViewModel(SignupViewModel());
@@ -79,7 +86,7 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
     try {
       validate();
 
-      _userEntity = await signUpEmail.signUp(viewModel.toEntity());
+      _userEntity = await _signUpEmail.signUp(viewModel.toEntity());
       await navigateToConfirmEmail();
     } on DomainError catch (e) {
       throw Exception(e.message);
@@ -99,9 +106,9 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
 
       final File? image;
       if (isGallery) {
-        image = await fetchImagePickerGallery.fetchFromGallery();
+        image = await _fetchImagePickerGallery.fetchFromGallery();
       } else {
-        image = await fetchImagePickerCamera.fetchFromCamera();
+        image = await _fetchImagePickerCamera.fetchFromCamera();
       }
 
       if (image == null) throw Exception(R.string.noImageSelected);
@@ -120,7 +127,7 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
       setLoadingResendEmail(true);
 
       if (_userEntity?.id == null) throw UnexpectedDomainError(R.string.unexpectedError);
-      await sendVerificationEmail.send(_userEntity!.id!);
+      await _sendVerificationEmail.send(_userEntity!.id!);
 
       setResendEmail(true);
       startTimerResendEmail();
@@ -137,12 +144,12 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   Future<void> completeAccount() async {
     try {
       if (_userEntity?.id == null) {
-        final UserEntity? user = await getUserLogged.getUser();
+        final UserEntity? user = await _getUserLogged.getUser();
         if (user == null) throw UnexpectedDomainError(R.string.unexpectedError);
 
         _userEntity = user;
       }
-      final bool verified = await checkEmailVerified.check(_userEntity!.id!);
+      final bool verified = await _checkEmailVerified.check(_userEntity!.id!);
       if (!verified) throw EmailNotVerifiedDomainError();
 
       _userEntity!.emailVerified = verified;

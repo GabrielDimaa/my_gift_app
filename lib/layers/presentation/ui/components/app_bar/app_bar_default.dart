@@ -47,7 +47,7 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.only(right: 18, top: 4),
+          padding: const EdgeInsets.only(right: 18, top: 6),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
