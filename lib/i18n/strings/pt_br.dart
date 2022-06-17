@@ -222,7 +222,7 @@ class PtBr implements Translation {
   String get hintLinkWish => "Insira o Link do site";
 
   @override
-  String get labelPriceWish => "Preço";
+  String get labelPriceRangeWish => "Faixa de preço";
 
   @override
   String get labelNoteWish => "Observação";
@@ -252,10 +252,28 @@ class PtBr implements Translation {
   String get delete => "Excluir";
 
   @override
+  String get edit => "Editar";
+
+  @override
   String get confirmDeleteWish => "Deseja excluir permanentemente o desejo?";
 
   @override
   String get deletingWish => "Excluindo desejo";
+
+  @override
+  String get linkSite => "Link do site";
+
+  @override
+  String get copyLink => "Copiar link";
+
+  @override
+  String get copiedLink => "Copiado para área de transferência.";
+
+  @override
+  String get gotToLink => "Ir para o site";
+
+  @override
+  String get messageConfirmGoToLink => "Deseja sair do aplicativo e ir para o site?";
   //endregion
 
   //region Validation

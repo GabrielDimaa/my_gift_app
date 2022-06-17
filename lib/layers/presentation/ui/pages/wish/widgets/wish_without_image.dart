@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class WishWithoutImage extends StatelessWidget {
-  const WishWithoutImage({Key? key}) : super(key: key);
+  final double? size;
+  final double? iconSize;
+  const WishWithoutImage({Key? key, this.size, this.iconSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +13,9 @@ class WishWithoutImage extends StatelessWidget {
         border: Border.all(color: const Color(0xFF464646), width: 2),
         borderRadius: BorderRadius.circular(12),
       ),
-      height: 70,
-      width: 70,
-      child: const Icon(Icons.photo, size: 36),
+      height: size ?? 70,
+      width: size ?? 70,
+      child: Icon(Icons.photo, size: iconSize ?? 36),
     );
   }
 }

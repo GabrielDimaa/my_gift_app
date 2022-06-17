@@ -74,7 +74,7 @@ abstract class Translation {
   String get hintDescriptionWish;
   String get labelLinkWish;
   String get hintLinkWish;
-  String get labelPriceWish;
+  String get labelPriceRangeWish;
   String get labelNoteWish;
   String get hintNoteWish;
   String get greaterThan;
@@ -84,8 +84,14 @@ abstract class Translation {
   String get opening;
   String get removeImage;
   String get delete;
+  String get edit;
   String get confirmDeleteWish;
   String get deletingWish;
+  String get linkSite;
+  String get copyLink;
+  String get copiedLink;
+  String get gotToLink;
+  String get messageConfirmGoToLink;
   //endregion
 
   //region Validation

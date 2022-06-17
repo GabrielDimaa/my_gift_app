@@ -82,7 +82,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
           ButtonAction(
             visible: widget.viewModel != null,
             label: "Excluir",
-            icon: Icons.delete,
+            icon: Icons.delete_outlined,
             onPressed: () async => await _delete(),
           ),
         ],
@@ -203,7 +203,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                             const SizedBoxDefault(2),
                             Padding(
                               padding: const EdgeInsets.only(left: 6, bottom: 10),
-                              child: Text(R.string.labelPriceWish),
+                              child: Text(R.string.labelPriceRangeWish),
                             ),
                             const SizedBoxDefault(2),
                             RangeSliderPrice(presenter: presenter),

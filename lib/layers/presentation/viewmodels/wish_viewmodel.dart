@@ -87,6 +87,16 @@ class WishViewModel {
     );
   }
 
+  void updateViewModel(WishViewModel viewModel) {
+    setDescription(viewModel.description);
+    setImage(viewModel.image);
+    setLink(viewModel.link);
+    setNote(viewModel.note);
+    setPriceRangeInitial(viewModel.priceRangeInitial);
+    setPriceRangeFinal(viewModel.priceRangeFinal);
+    setCreatedAt(viewModel.createdAt);
+  }
+
   factory WishViewModel.fromEntity(WishEntity entity) {
     return WishViewModel(
       id: entity.id,
