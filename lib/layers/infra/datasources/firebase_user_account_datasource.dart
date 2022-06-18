@@ -125,12 +125,13 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
 
       await user.reload();
 
-      return UserModel(
-        id: user.uid,
-        name: user.displayName ?? "",
-        email: user.email!,
-        emailVerified: user.emailVerified,
-      );
+      final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: user.uid).get();
+      final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data()..addAll({'id': user.uid});
+
+      final UserModel userModel = UserModel.fromJson(jsonUser);
+      userModel.emailVerified = user.emailVerified;
+
+      return userModel;
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
     } on InfraError {

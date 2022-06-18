@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/sized_box_default.dart';
-
 class CardButton extends StatelessWidget {
   final String text;
   final IconData icon;
@@ -26,38 +24,41 @@ class CardButton extends StatelessWidget {
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: color),
+          color: color.withOpacity(0.15),
         ),
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: color,
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: Icon(icon, size: 40),
+              child: Icon(icon, size: 30, color: Colors.white),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    text,
-                    style: Theme.of(context).textTheme.button,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      text,
+                      style: Theme.of(context).textTheme.subtitle2,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 4),
-                  child: Icon(Icons.east),
-                ),
-              ],
+                  const Padding(
+                    padding: EdgeInsets.only(left: 4),
+                    child: Icon(Icons.east),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

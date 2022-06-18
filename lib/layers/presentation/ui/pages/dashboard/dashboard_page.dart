@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../i18n/resources.dart';
+import '../../../../../monostates/user_global.dart';
 import '../../../../../routes/routes.dart';
+import '../../../../domain/entities/user_entity.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
@@ -15,13 +17,32 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  late UserEntity _user;
+
+  @override
+  void initState() {
+    _user = UserGlobal().getUser()!;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final double widthTotal = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBarDefault(
         title: R.string.dashboard,
-        actions: [],
+        actions: [
+          Visibility(
+            visible: _user.photo != null,
+            replacement: CircleAvatar(
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              child: Text(
+                _user.name.characters.first,
+                style: const TextStyle(fontSize: 20, color: Colors.white),
+              ),
+            ),
+            child: CircleAvatar(backgroundImage: NetworkImage(_user.photo ?? "")),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -29,14 +50,11 @@ class _DashboardPageState extends State<DashboardPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBoxDefault(5),
+              const SizedBoxDefault(2),
+              Text("${R.string.hello}, ${_user.name.split(" ").first} 👋", style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 26)),
+              const SizedBoxDefault(2),
               Expanded(
-                child: GridView(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: (widthTotal - 36) ~/ 130.0,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                  ),
+                child: ListView(
                   children: [
                     CardButton(
                       text: R.string.wishes,
@@ -44,12 +62,14 @@ class _DashboardPageState extends State<DashboardPage> {
                       color: const Color(0xFF3BC189),
                       onTap: () async => await _navigateToWishlist(),
                     ),
+                    const SizedBoxDefault(),
                     CardButton(
                       text: R.string.friends,
                       icon: Icons.people_alt_outlined,
                       color: const Color(0xFF8830F8),
                       onTap: () {},
                     ),
+                    const SizedBoxDefault(),
                     CardButton(
                       text: R.string.config,
                       icon: Icons.settings_outlined,

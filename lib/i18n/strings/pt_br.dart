@@ -292,6 +292,9 @@ class PtBr implements Translation {
 
   @override
   String get config => "Configurações";
+
+  @override
+  String get hello => "Olá";
   //endregion
 
   //region Validation

@@ -98,6 +98,7 @@ abstract class Translation {
   String get dashboard;
   String get friends;
   String get config;
+  String get hello;
   //endregion
 
   //region Validation
