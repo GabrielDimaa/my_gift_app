@@ -12,6 +12,7 @@ import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
 import '../../components/bottom_sheet/bottom_sheet_image_picker.dart';
+import '../../components/button/save_button.dart';
 import '../../components/dialogs/confirm_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
@@ -248,11 +249,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                 ),
               ),
               const SizedBoxDefault(2),
-              ElevatedButton.icon(
-                label: Text(R.string.save),
-                icon: const Icon(Icons.check),
-                onPressed: () async => await _save(),
-              ),
+              SaveButton(onPressed: () async => await _save()),
             ],
           ),
         ),

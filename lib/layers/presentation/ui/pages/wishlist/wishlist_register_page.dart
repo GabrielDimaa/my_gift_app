@@ -11,6 +11,7 @@ import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
 import '../../components/bottom_sheet/bottom_sheet_default.dart';
+import '../../components/button/save_button.dart';
 import '../../components/circular_loading.dart';
 import '../../components/dialogs/confirm_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
@@ -168,11 +169,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                 }),
               ),
               const SizedBoxDefault(),
-              ElevatedButton.icon(
-                label: Text(R.string.save),
-                icon: const Icon(Icons.check),
-                onPressed: () async => await _save(),
-              ),
+              SaveButton(onPressed: () async => await _save()),
             ],
           ),
         ),
@@ -193,9 +190,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
           children: [
             TagForm(viewModel: tag, formKeyTag: formKeyTag),
             const SizedBoxDefault(3),
-            ElevatedButton.icon(
-              label: Text(R.string.save),
-              icon: const Icon(Icons.check),
+            SaveButton(
               onPressed: () async {
                 try {
                   if (!presenter.loading && formKeyTag.currentState!.validate()) {
@@ -255,10 +250,11 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
   Future<void> _delete() async {
     try {
       final bool confirmed = await ConfirmDialog.show(
-        context: context,
-        title: R.string.delete,
-        message: R.string.confirmDeleteWishlist,
-      ) ?? false;
+            context: context,
+            title: R.string.delete,
+            message: R.string.confirmDeleteWishlist,
+          ) ??
+          false;
       if (!confirmed) return;
 
       await LoadingDialog.show(
