@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../../extensions/double_extension.dart';
 import '../../../../../i18n/resources.dart';
+import '../../../../../routes/routes.dart';
 import '../../../viewmodels/wish_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
@@ -131,7 +132,7 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
   //region Events
 
   Future<void> _edit() async {
-    final WishViewModel? viewModel = await Navigator.pushNamed(context, "wish_register", arguments: {'viewModel': widget.viewModel.clone()}) as WishViewModel?;
+    final WishViewModel? viewModel = await Navigator.pushNamed(context, wishRegisterRoute, arguments: {'viewModel': widget.viewModel.clone()}) as WishViewModel?;
     if (viewModel != null) setState(() => widget.viewModel.updateViewModel(viewModel));
   }
 

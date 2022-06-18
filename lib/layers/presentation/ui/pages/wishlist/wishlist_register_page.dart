@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
+import '../../../../../routes/routes.dart';
 import '../../../presenters/wishlist/abstracts/wishlist_register_presenter.dart';
 import '../../../presenters/wishlist/implements/getx_wishlist_register_presenter.dart';
 import '../../../viewmodels/tag_viewmodel.dart';
@@ -241,7 +242,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
   }
 
   Future<void> _navigateToWishCreate() async {
-    final WishViewModel? wishViewModel = await Navigator.pushNamed(context, "wish_register", arguments: {
+    final WishViewModel? wishViewModel = await Navigator.pushNamed(context, wishRegisterRoute, arguments: {
       'wishlistViewModel': presenter.viewModel.id != null ? presenter.viewModel : null,
     }) as WishViewModel?;
 
@@ -249,7 +250,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
   }
 
   Future<WishViewModel?> _navigateToWishEdit(WishViewModel wish) async {
-    return await Navigator.pushNamed(context, "wish_register", arguments: {
+    return await Navigator.pushNamed(context, wishRegisterRoute, arguments: {
       'viewModel': wish.clone(),
     }) as WishViewModel?;
   }

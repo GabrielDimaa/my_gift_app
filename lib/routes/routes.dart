@@ -1,31 +1,12 @@
-import 'package:get/get.dart';
-
-import '../layers/presentation/ui/pages/dashboard/dashboard_page.dart';
-import '../layers/presentation/ui/pages/login/login_page.dart';
-import '../layers/presentation/ui/pages/signup/signup_confirm_email_page.dart';
-import '../layers/presentation/ui/pages/signup/signup_page.dart';
-import '../layers/presentation/ui/pages/signup/signup_password_page.dart';
-import '../layers/presentation/ui/pages/signup/signup_photo_page.dart';
-import '../layers/presentation/ui/pages/splash/splash_page.dart';
-import '../layers/presentation/ui/pages/wish/wish_details_page.dart';
-import '../layers/presentation/ui/pages/wish/wish_register_page.dart';
-import '../layers/presentation/ui/pages/wishlist/wishlist_details_page.dart';
-import '../layers/presentation/ui/pages/wishlist/wishlist_register_page.dart';
-import '../layers/presentation/ui/pages/wishlist/wishlists_fetch_page.dart';
-
-class Routes {
-  List<GetPage> getRoutes() => [
-        GetPage(name: "/splash", page: () => const SplashPage()),
-        GetPage(name: "/login", page: () => const LoginPage()),
-        GetPage(name: "/signup", page: () => const SignupPage()),
-        GetPage(name: "/signup_password", page: () => const SignupPasswordPage()),
-        GetPage(name: "/signup_photo", page: () => const SignupPhotoPage()),
-        GetPage(name: "/signup_confirm_email", page: () => const SignupConfirmEmailPage()),
-        GetPage(name: "/dashboard", page: () => const DashboardPage()),
-        GetPage(name: "/wishlists_fetch", page: () => const WishlistsFetchPage()),
-        GetPage(name: "/wishlist_details", page: () => WishlistDetailsPage(viewModel: Get.arguments)),
-        GetPage(name: "/wishlist_register", page: () => WishlistRegisterPage(viewModel: Get.arguments)),
-        GetPage(name: "/wish_register", page: () => WishRegisterPage(viewModel: Get.arguments['viewModel'], wishlistViewModel: Get.arguments['wishlistViewModel'])),
-        GetPage(name: "/wish_details", page: () => WishDetailsPage(viewModel: Get.arguments)),
-      ];
-}
+const String splashRoute = "/splash";
+const String loginRoute = "/login";
+const String signupRoute = "/signup";
+const String signupPasswordRoute = "/signup_password";
+const String signupPhotoRoute = "/signup_photo";
+const String signupConfirmEmailRoute = "/signup_confirm_email";
+const String dashboardRoute = "/dashboard";
+const String wishlistsFetchRoute = "/wishlists_fetch";
+const String wishlistDetailsRoute = "/wishlist_details";
+const String wishlistRegisterRoute = "/wishlist_register";
+const String wishRegisterRoute = "/wish_register";
+const String wishDetailsRoute = "/wish_details";

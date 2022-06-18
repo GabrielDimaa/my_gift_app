@@ -1,6 +1,8 @@
-import 'package:desejando_app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+
+import 'routes/pages.dart';
+import 'routes/routes.dart';
 
 class AppTheme extends StatelessWidget {
   const AppTheme({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class AppTheme extends StatelessWidget {
     return GetMaterialApp(
       title: 'Desejando',
       debugShowCheckedModeBanner: false,
-      initialRoute: "/splash",
+      initialRoute: splashRoute,
       themeMode: ThemeMode.dark,
       theme: ThemeData(
         brightness: Brightness.light,
@@ -92,7 +94,7 @@ class AppTheme extends StatelessWidget {
           rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape(),
         ),
       ),
-      getPages: Routes().getRoutes(),
+      getPages: Pages().getPages(),
     );
   }
 

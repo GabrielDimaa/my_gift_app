@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../routes/routes.dart';
+
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
@@ -19,7 +21,7 @@ class _DashboardPageState extends State<DashboardPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () async => await Navigator.of(context).pushNamed("wishlists_fetch"),
+              onPressed: () async => await Navigator.of(context).pushNamed(wishlistsFetchRoute),
               child: const Text("AVANÇAR"),
             ),
           ],

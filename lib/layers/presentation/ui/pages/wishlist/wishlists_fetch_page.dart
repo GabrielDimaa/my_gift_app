@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
+import '../../../../../routes/routes.dart';
 import '../../../presenters/wishlist/abstracts/wishlists_fetch_presenter.dart';
 import '../../../presenters/wishlist/implements/getx_wishlists_fetch_presenter.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
@@ -94,12 +95,12 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
   }
 
   Future<void> _navigateWishlistRegister() async {
-    final WishlistViewModel? wishlist = await Navigator.pushNamed(context, "wishlist_register") as WishlistViewModel?;
+    final WishlistViewModel? wishlist = await Navigator.pushNamed(context, wishlistRegisterRoute) as WishlistViewModel?;
     if (wishlist != null) presenter.viewModel.wishlists.insert(0, wishlist);
   }
 
   Future<void> _navigateWishlistDetails(WishlistViewModel? viewModel, int index) async {
-    final WishlistViewModel? wishlist = await Navigator.pushNamed(context, "wishlist_details", arguments: viewModel?.clone()) as WishlistViewModel?;
+    final WishlistViewModel? wishlist = await Navigator.pushNamed(context, wishlistDetailsRoute, arguments: viewModel?.clone()) as WishlistViewModel?;
     if (wishlist != null) presenter.viewModel.wishlists[index] = wishlist;
   }
 }
