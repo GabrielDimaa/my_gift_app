@@ -146,7 +146,12 @@ class FirebaseWishDataSource implements IWishDataSource {
     try {
       final doc = firestore.collection(constantWishesReference).doc(id);
       await doc.delete();
-      await storageDataSource.delete("wishes/$id");
+
+      try {
+        await storageDataSource.delete("wishes/$id");
+      } catch (e) {
+        //Não faz nada no catch, apenas um "tratamento" para não retornar exceção ao remover imagem.
+      }
     } on FirebaseException catch (e) {
       throw e.getInfraError;
     } on InfraError {

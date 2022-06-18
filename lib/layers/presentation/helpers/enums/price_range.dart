@@ -49,11 +49,11 @@ extension PriceRangeExtension on PriceRange {
   static PriceRange getPriceRange(double min, double max) {
     if (min > max) throw Exception(R.string.priceMinMaxError);
 
-    if (min >= PriceRange.pr1_100.min && min <= PriceRange.pr1_100.max) return PriceRange.pr1_100;
-    if (min >= PriceRange.pr100_200.min && min <= PriceRange.pr100_200.max) return PriceRange.pr100_200;
-    if (min >= PriceRange.pr200_300.min && min <= PriceRange.pr200_300.max) return PriceRange.pr200_300;
-    if (min >= PriceRange.pr300_400.min && min <= PriceRange.pr300_400.max) return PriceRange.pr300_400;
-    if (min >= PriceRange.pr400_500.min && min <= PriceRange.pr400_500.max) return PriceRange.pr400_500;
+    if (min >= PriceRange.pr1_100.min && max <= PriceRange.pr1_100.max) return PriceRange.pr1_100;
+    if (min >= PriceRange.pr100_200.min && max <= PriceRange.pr100_200.max) return PriceRange.pr100_200;
+    if (min >= PriceRange.pr200_300.min && max <= PriceRange.pr200_300.max) return PriceRange.pr200_300;
+    if (min >= PriceRange.pr300_400.min && max <= PriceRange.pr300_400.max) return PriceRange.pr300_400;
+    if (min >= PriceRange.pr400_500.min && max <= PriceRange.pr400_500.max) return PriceRange.pr400_500;
     if (min >= PriceRange.pr500.min) return PriceRange.pr500;
 
     return PriceRange.pr100_200;

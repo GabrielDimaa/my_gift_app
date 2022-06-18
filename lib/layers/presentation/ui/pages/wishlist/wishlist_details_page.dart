@@ -10,6 +10,7 @@ import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
 import '../../components/circular_loading.dart';
+import '../../components/not_found.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import '../wish/widgets/list_tile_wish.dart';
@@ -66,6 +67,7 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
                           children: [
                             const SizedBoxDefault(2),
                             ButtonBar(
+                              buttonPadding: EdgeInsets.zero,
                               alignment: MainAxisAlignment.spaceBetween,
                               overflowButtonSpacing: 8,
                               children: [
@@ -97,20 +99,31 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
                             ),
                             const SizedBoxDefault(),
                             Obx(
-                              () => ListView.separated(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: presenter.viewModel.wishes.length,
-                                separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
-                                itemBuilder: (_, index) {
-                                  final WishViewModel wish = presenter.viewModel.wishes[index];
-                                  return ListTileWish(
-                                    contentPadding: const EdgeInsets.all(6),
-                                    viewModel: wish,
-                                    onTap: () async => await _navigateToWish(wish, index),
+                              () {
+                                if (presenter.viewModel.wishes.isNotEmpty) {
+                                  return ListView.separated(
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: presenter.viewModel.wishes.length,
+                                    separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
+                                    itemBuilder: (_, index) {
+                                      final WishViewModel wish = presenter.viewModel.wishes[index];
+                                      return ListTileWish(
+                                        contentPadding: const EdgeInsets.all(6),
+                                        viewModel: wish,
+                                        onTap: () async => await _navigateToWish(wish, index),
+                                      );
+                                    },
                                   );
-                                },
-                              ),
+                                } else {
+                                  return Column(
+                                    children: [
+                                      const SizedBoxDefault(6),
+                                      NotFound(message: R.string.noneWishes),
+                                    ],
+                                  );
+                                }
+                              }
                             ),
                           ],
                         ),
@@ -140,6 +153,12 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
 
   Future<void> _navigateToWish(WishViewModel wish, int index) async {
     final WishViewModel? wishViewModel = await Navigator.pushNamed(context, wishDetailsRoute, arguments: wish.clone()) as WishViewModel?;
-    if (wishViewModel != null) presenter.viewModel.wishes[index] = wishViewModel;
+    if (wishViewModel != null) {
+      if (wishViewModel.deleted ?? false) {
+        presenter.viewModel.wishes.removeAt(index);
+      } else {
+        presenter.viewModel.wishes[index] = wishViewModel;
+      }
+    }
   }
 }

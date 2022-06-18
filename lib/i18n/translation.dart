@@ -42,6 +42,7 @@ abstract class Translation {
   String get wishlists;
   String get notFoundWishlists;
   String get notFoundWishes;
+  String get noneWishes;
   String get createWishlist;
   String get wishlist;
   String get labelWishlist;

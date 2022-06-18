@@ -126,6 +126,9 @@ class PtBr implements Translation {
   String get notFoundWishes => "Nenhum desejo encontrado.";
 
   @override
+  String get noneWishes => "Nenhum desejo adicionado.";
+
+  @override
   String get createWishlist => "Criar lista de desejos";
 
   @override

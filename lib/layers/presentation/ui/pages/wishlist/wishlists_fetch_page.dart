@@ -60,7 +60,7 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
                               return ListTile(
                                 onTap: () async => await _navigateWishlistDetails(wishlist, index),
                                 contentPadding: EdgeInsets.zero,
-                                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                                visualDensity: const VisualDensity(horizontal: 0, vertical: -2),
                                 title: Text(wishlist.description!),
                                 subtitle: Text(
                                   wishlist.tag?.name ?? "",

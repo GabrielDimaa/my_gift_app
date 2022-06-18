@@ -133,7 +133,14 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
 
   Future<void> _edit() async {
     final WishViewModel? viewModel = await Navigator.pushNamed(context, wishRegisterRoute, arguments: {'viewModel': widget.viewModel.clone()}) as WishViewModel?;
-    if (viewModel != null) setState(() => widget.viewModel.updateViewModel(viewModel));
+    if (viewModel != null) {
+      if (viewModel.deleted ?? false) {
+        if (!mounted) return;
+        Navigator.pop(context, viewModel);
+      } else {
+        setState(() => widget.viewModel.updateViewModel(viewModel));
+      }
+    }
   }
 
   Future<void> _goToSite() async {
