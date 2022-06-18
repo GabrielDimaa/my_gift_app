@@ -10,6 +10,7 @@ abstract class WishlistRegisterPresenter implements IViewModel<WishlistViewModel
   Future<void> init(WishlistViewModel? viewModel);
 
   Future<void> save();
+  Future<void> delete();
   void validate();
   Future<void> fetchWishes();
   Future<void> deleteWish(WishViewModel wish);

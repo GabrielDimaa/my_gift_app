@@ -11,6 +11,9 @@ class WishlistViewModel {
   final RxList<WishViewModel> _wishes = RxList<WishViewModel>();
   final Rxn<TagViewModel> _tag = Rxn<TagViewModel>();
 
+  //Propriedade apenas para controle de tela.
+  bool? deleted = false;
+
   String? get id => _id.value;
   String? get description => _description.value;
   List<WishViewModel> get wishes => _wishes;

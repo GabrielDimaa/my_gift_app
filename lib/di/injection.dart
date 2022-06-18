@@ -17,6 +17,7 @@ import '../layers/domain/usecases/implements/user/get_user_logged.dart';
 import '../layers/domain/usecases/implements/wish/delete_wish.dart';
 import '../layers/domain/usecases/implements/wish/get_wishes.dart';
 import '../layers/domain/usecases/implements/wish/save_wish.dart';
+import '../layers/domain/usecases/implements/wishlist/delete_wishlist.dart';
 import '../layers/domain/usecases/implements/wishlist/get_wishlists.dart';
 import '../layers/domain/usecases/implements/wishlist/save_wishlist.dart';
 import '../layers/infra/datasources/firebase_tag_datasource.dart';
@@ -141,6 +142,7 @@ class Injection {
       ),
       fenix: true,
     );
+    Get.lazyPut(() => DeleteWishlist(wishlistRepository: Get.find<WishlistRepository>()), fenix: true);
     Get.lazyPut(() => GetWishes(wishRepository: Get.find<WishRepository>()), fenix: true);
     Get.lazyPut(() => SaveWish(wishRepository: Get.find<WishRepository>()), fenix: true);
     Get.lazyPut(() => DeleteWish(wishRepository: Get.find<WishRepository>()), fenix: true);
@@ -172,6 +174,7 @@ class Injection {
     Get.lazyPut(
       () => GetxWishlistRegisterPresenter(
         saveWishlist: Get.find<SaveWishlist>(),
+        deleteWishlist: Get.find<DeleteWishlist>(),
         deleteWish: Get.find<DeleteWish>(),
         saveTag: Get.find<SaveTag>(),
         getTags: Get.find<GetTags>(),

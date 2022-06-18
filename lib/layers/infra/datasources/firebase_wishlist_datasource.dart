@@ -271,8 +271,33 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<void> delete(String id) async {
     try {
+      //Busca todos os wishes para remove-los em transação.
+      final snapshot = await firestore.collection(constantWishesReference).where("wishlist_id", isEqualTo: id).get();
+      final List<String> idsWishes = snapshot.docs.map((e) => e.id).toList();
+
+      //Armazena o doc da wishlist.
       final doc = firestore.collection(constantWishlistsReference).doc(id);
-      await doc.delete();
+
+      final WriteBatch batch = firestore.batch();
+
+      //Exclui a wishlist
+      batch.delete(doc);
+
+      //Exclui os wishes
+      for (String id in idsWishes) {
+        batch.delete(firestore.collection(constantWishesReference).doc(id));
+      }
+
+      batch.commit();
+
+      //Exclui as imagens dos wishes
+      for (String id in idsWishes) {
+        try {
+          await storage.delete("wishes/$id");
+        } catch (e) {
+          //Não faz nada no catch, apenas um "tratamento" para não retornar exceção ao remover imagem.
+        }
+      }
     } on FirebaseException catch (e) {
       throw e.getInfraError;
     } on InfraError {

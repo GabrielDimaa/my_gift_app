@@ -12,6 +12,7 @@ import '../../../../domain/usecases/abstracts/tag/i_get_tags.dart';
 import '../../../../domain/usecases/abstracts/tag/i_save_tag.dart';
 import '../../../../domain/usecases/abstracts/wish/i_delete_wish.dart';
 import '../../../../domain/usecases/abstracts/wish/i_get_wishes.dart';
+import '../../../../domain/usecases/abstracts/wishlist/i_delete_wishlist.dart';
 import '../../../../domain/usecases/abstracts/wishlist/i_save_wishlist.dart';
 import '../../../helpers/mixins/loading_manager.dart';
 import '../../../viewmodels/tag_viewmodel.dart';
@@ -21,6 +22,7 @@ import '../abstracts/wishlist_register_presenter.dart';
 
 class GetxWishlistRegisterPresenter extends GetxController with LoadingManager implements WishlistRegisterPresenter {
   final ISaveWishlist _saveWishlist;
+  final IDeleteWishlist _deleteWishlist;
   final IDeleteWish _deleteWish;
   final ISaveTag _saveTag;
   final IGetTags _getTags;
@@ -28,11 +30,13 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
 
   GetxWishlistRegisterPresenter({
     required ISaveWishlist saveWishlist,
+    required IDeleteWishlist deleteWishlist,
     required IDeleteWish deleteWish,
     required ISaveTag saveTag,
     required IGetTags getTags,
     required IGetWishes getWishes,
   })  : _saveWishlist = saveWishlist,
+        _deleteWishlist = deleteWishlist,
         _deleteWish = deleteWish,
         _saveTag = saveTag,
         _getTags = getTags,
@@ -83,6 +87,15 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
 
       final WishlistEntity wishlistEntity = await _saveWishlist.save(_viewModel.toEntity(_user));
       setViewModel(WishlistViewModel.fromEntity(wishlistEntity));
+    } on DomainError catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  @override
+  Future<void> delete() async {
+    try {
+      if (viewModel.id != null) await _deleteWishlist.delete(viewModel.id!);
     } on DomainError catch (e) {
       throw Exception(e.message);
     }

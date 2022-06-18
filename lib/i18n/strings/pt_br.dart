@@ -180,6 +180,9 @@ class PtBr implements Translation {
   String get savingWishlist => "Salvando lista de desejos";
 
   @override
+  String get deletingWishlist => "Excluindo lista de desejos";
+
+  @override
   String get noneWishSelected => "Nenhum desejo selecionado";
 
   @override
@@ -256,6 +259,9 @@ class PtBr implements Translation {
 
   @override
   String get confirmDeleteWish => "Deseja excluir permanentemente este desejo?";
+
+  @override
+  String get confirmDeleteWishlist => "Deseja excluir permanentemente esta lista de desejos?";
 
   @override
   String get deletingWish => "Excluindo desejo";

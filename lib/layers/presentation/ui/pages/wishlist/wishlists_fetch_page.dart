@@ -101,6 +101,12 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
 
   Future<void> _navigateWishlistDetails(WishlistViewModel? viewModel, int index) async {
     final WishlistViewModel? wishlist = await Navigator.pushNamed(context, wishlistDetailsRoute, arguments: viewModel?.clone()) as WishlistViewModel?;
-    if (wishlist != null) presenter.viewModel.wishlists[index] = wishlist;
+    if (wishlist != null) {
+      if (wishlist.deleted ?? false) {
+        presenter.viewModel.wishlists.removeAt(index);
+      } else {
+        presenter.viewModel.wishlists[index] = wishlist;
+      }
+    }
   }
 }

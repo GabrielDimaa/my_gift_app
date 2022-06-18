@@ -9,6 +9,7 @@ import '../../../viewmodels/tag_viewmodel.dart';
 import '../../../viewmodels/wish_viewmodel.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
+import '../../components/app_bar/button_action.dart';
 import '../../components/bottom_sheet/bottom_sheet_default.dart';
 import '../../components/circular_loading.dart';
 import '../../components/dialogs/confirm_dialog.dart';
@@ -54,7 +55,17 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBarDefault(title: R.string.wishlists),
+      appBar: AppBarDefault(
+        title: R.string.wishlists,
+        actions: [
+          ButtonAction(
+            visible: widget.viewModel?.id != null,
+            label: R.string.delete,
+            icon: Icons.delete_outline,
+            onPressed: () async => await _delete(),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const PaddingDefault(),
@@ -236,6 +247,29 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
         if (!mounted) return;
         Navigator.pop(context, presenter.viewModel);
       }
+    } catch (e) {
+      ErrorDialog.show(context: context, content: e.toString());
+    }
+  }
+
+  Future<void> _delete() async {
+    try {
+      final bool confirmed = await ConfirmDialog.show(
+        context: context,
+        title: R.string.delete,
+        message: R.string.confirmDeleteWishlist,
+      ) ?? false;
+      if (!confirmed) return;
+
+      await LoadingDialog.show(
+        context: context,
+        message: "${R.string.deletingWishlist}...",
+        onAction: () async => await presenter.delete(),
+      );
+
+      presenter.viewModel.deleted = true;
+      if (!mounted) return;
+      Navigator.pop(context, presenter.viewModel);
     } catch (e) {
       ErrorDialog.show(context: context, content: e.toString());
     }

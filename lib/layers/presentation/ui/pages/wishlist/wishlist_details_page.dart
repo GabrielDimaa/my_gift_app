@@ -128,7 +128,14 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
 
   Future<void> _edit() async {
     final WishlistViewModel? wishlistViewModel = await Navigator.pushNamed(context, wishlistRegisterRoute, arguments: widget.viewModel.clone()) as WishlistViewModel?;
-    if (wishlistViewModel != null) presenter.setViewModel(wishlistViewModel);
+    if (wishlistViewModel != null) {
+      if (wishlistViewModel.deleted ?? false) {
+        if (!mounted) return;
+        Navigator.pop(context, wishlistViewModel);
+      } else {
+        presenter.setViewModel(wishlistViewModel);
+      }
+    }
   }
 
   Future<void> _navigateToWish(WishViewModel wish, int index) async {

@@ -290,8 +290,6 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
       );
 
       if (confirmed ?? false) {
-        presenter.viewModel.deleted = true;
-
         if (presenter.viewModel.id != null) {
           await LoadingDialog.show(
             context: context,
@@ -300,6 +298,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
           );
         }
 
+        presenter.viewModel.deleted = true;
         if (!mounted) return;
         Navigator.pop(context, presenter.viewModel);
       }

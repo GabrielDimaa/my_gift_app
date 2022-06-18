@@ -60,6 +60,7 @@ abstract class Translation {
   String get colorTag;
   String get savingTag;
   String get savingWishlist;
+  String get deletingWishlist;
   String get noneWishSelected;
   String get wishSelected;
   String get wishesSelected;
@@ -86,6 +87,7 @@ abstract class Translation {
   String get delete;
   String get edit;
   String get confirmDeleteWish;
+  String get confirmDeleteWishlist;
   String get deletingWish;
   String get linkSite;
   String get copyLink;
