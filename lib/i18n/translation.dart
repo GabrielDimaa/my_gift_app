@@ -95,6 +95,9 @@ abstract class Translation {
   String get copiedLink;
   String get gotToLink;
   String get messageConfirmGoToLink;
+  String get dashboard;
+  String get friends;
+  String get config;
   //endregion
 
   //region Validation

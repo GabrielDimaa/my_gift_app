@@ -283,6 +283,15 @@ class PtBr implements Translation {
 
   @override
   String get messageConfirmGoToLink => "Deseja sair do aplicativo e ir para o site?";
+
+  @override
+  String get dashboard => "Dashboard";
+
+  @override
+  String get friends => "Amigos";
+
+  @override
+  String get config => "Configurações";
   //endregion
 
   //region Validation
