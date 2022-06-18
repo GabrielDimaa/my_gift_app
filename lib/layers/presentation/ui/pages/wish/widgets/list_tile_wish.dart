@@ -12,6 +12,7 @@ class ListTileWish extends StatelessWidget {
   final VoidCallback? onTap;
   final void Function(DismissDirection)? onDismissed;
   final Future<bool> Function(DismissDirection)? confirmDismiss;
+  final EdgeInsets? contentPadding;
 
   const ListTileWish({
     Key? key,
@@ -19,13 +20,14 @@ class ListTileWish extends StatelessWidget {
     required this.onTap,
     this.onDismissed,
     this.confirmDismiss,
+    this.contentPadding,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey<WishViewModel>(viewModel),
-      direction: DismissDirection.startToEnd,
+      direction: onDismissed != null ? DismissDirection.startToEnd : DismissDirection.none,
       onDismissed: onDismissed,
       confirmDismiss: confirmDismiss,
       background: Container(
@@ -39,7 +41,7 @@ class ListTileWish extends StatelessWidget {
         ),
       ),
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+        contentPadding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
         onTap: onTap,
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

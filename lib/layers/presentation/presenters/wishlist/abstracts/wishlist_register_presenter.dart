@@ -15,5 +15,4 @@ abstract class WishlistRegisterPresenter implements IViewModel<WishlistViewModel
   Future<void> deleteWish(WishViewModel wish);
   Future<void> loadTags();
   Future<void> createTag(TagViewModel viewModel);
-  void navigateToWishlists(WishlistViewModel viewModel);
 }

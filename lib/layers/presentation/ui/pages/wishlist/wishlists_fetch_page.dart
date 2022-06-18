@@ -10,7 +10,6 @@ import '../../components/button/fab_default.dart';
 import '../../components/circular_loading.dart';
 import '../../components/not_found.dart';
 import '../../components/padding/padding_default.dart';
-import 'components/list_wishlists.dart';
 
 class WishlistsFetchPage extends StatefulWidget {
   const WishlistsFetchPage({Key? key}) : super(key: key);
@@ -28,7 +27,7 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
       appBar: AppBarDefault(title: R.string.wishlists),
       floatingActionButton: FABDefault(
         icon: Icons.add,
-        onPressed: () async => await _navigateWishlist(null),
+        onPressed: () async => await _navigateWishlistRegister(),
         tooltip: R.string.createWishlist,
       ),
       body: SafeArea(
@@ -44,7 +43,7 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
                   } else {
                     return RefreshIndicator(
                       onRefresh: presenter.fetchWishlists,
-                      child: Builder(builder: (_) {
+                      child: Obx(() {
                         if (presenter.viewModel.wishlists.isEmpty) {
                           return Stack(
                             children: [
@@ -53,9 +52,33 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
                             ],
                           );
                         } else {
-                          return ListWishlists(
-                            list: presenter.viewModel.wishlists,
-                            onTapListTile: _navigateWishlist,
+                          return ListView.builder(
+                            itemCount: presenter.viewModel.wishlists.length,
+                            itemBuilder: (_, index) {
+                              final WishlistViewModel wishlist = presenter.viewModel.wishlists[index];
+                              return ListTile(
+                                onTap: () async => await _navigateWishlistDetails(wishlist, index),
+                                contentPadding: EdgeInsets.zero,
+                                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                                title: Text(wishlist.description!),
+                                subtitle: Text(
+                                  wishlist.tag?.name ?? "",
+                                  style: TextStyle(
+                                    color: Color(wishlist.tag?.color ?? 0),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                trailing: const Icon(
+                                  Icons.chevron_right,
+                                  size: 32,
+                                ),
+                                shape: const UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Color(0xFF303134)),
+                                  borderRadius: BorderRadius.zero,
+                                ),
+                              );
+                            },
                           );
                         }
                       }),
@@ -70,7 +93,13 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
     );
   }
 
-  Future<void> _navigateWishlist(WishlistViewModel? viewModel) async {
-    await Navigator.of(context).pushNamed("wishlist_register", arguments: viewModel?.clone());
+  Future<void> _navigateWishlistRegister() async {
+    final WishlistViewModel? wishlist = await Navigator.pushNamed(context, "wishlist_register") as WishlistViewModel?;
+    if (wishlist != null) presenter.viewModel.wishlists.insert(0, wishlist);
+  }
+
+  Future<void> _navigateWishlistDetails(WishlistViewModel? viewModel, int index) async {
+    final WishlistViewModel? wishlist = await Navigator.pushNamed(context, "wishlist_details", arguments: viewModel?.clone()) as WishlistViewModel?;
+    if (wishlist != null) presenter.viewModel.wishlists[index] = wishlist;
   }
 }

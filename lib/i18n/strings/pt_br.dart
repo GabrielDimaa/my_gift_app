@@ -129,7 +129,7 @@ class PtBr implements Translation {
   String get createWishlist => "Criar lista de desejos";
 
   @override
-  String get wishlist => "Lista de Desejo";
+  String get wishlist => "Lista de Desejos";
 
   @override
   String get labelWishlist => "Nome da lista";

@@ -82,7 +82,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
       validate();
 
       final WishlistEntity wishlistEntity = await _saveWishlist.save(_viewModel.toEntity(_user));
-      navigateToWishlists(WishlistViewModel.fromEntity(wishlistEntity));
+      setViewModel(WishlistViewModel.fromEntity(wishlistEntity));
     } on DomainError catch (e) {
       throw Exception(e.message);
     }
@@ -130,7 +130,4 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
     final TagEntity tagEntity = await _saveTag.save(viewModel.toEntity(_user));
     tagsViewModel.add(TagViewModel.fromEntity(tagEntity));
   }
-
-  @override
-  void navigateToWishlists(WishlistViewModel viewModel) => Get.back(result: viewModel);
 }

@@ -6,8 +6,9 @@ import '../sized_box_default.dart';
 class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final List<Widget> actions;
+  final VoidCallback? onBackPressed;
 
-  const AppBarDefault({Key? key, required this.title, this.actions = const []}) : super(key: key);
+  const AppBarDefault({Key? key, required this.title, this.actions = const [], this.onBackPressed}) : super(key: key);
 
   double get toolbarHeight => 110;
 
@@ -24,20 +25,34 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBoxDefault(),
-          Visibility(
-            visible: Navigator.canPop(context),
-            replacement: const SizedBox(height: 48),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                iconSize: 38,
-                splashRadius: 28,
-                icon: const Icon(Icons.keyboard_backspace),
-                onPressed: () => Navigator.of(context).pop(),
-                tooltip: R.string.back,
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Visibility(
+                visible: Navigator.canPop(context),
+                replacement: const SizedBox(height: 48),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    iconSize: 38,
+                    splashRadius: 28,
+                    icon: const Icon(Icons.keyboard_backspace),
+                    onPressed: onBackPressed ?? () => Navigator.pop(context),
+                    tooltip: R.string.back,
+                  ),
+                ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(right: 18),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: actions,
+                ),
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.only(left: 18),
@@ -45,22 +60,6 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
           ),
         ],
       ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 18, top: 6),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              const SizedBoxDefault(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: actions,
-              ),
-            ],
-          ),
-        )
-      ],
     );
   }
 

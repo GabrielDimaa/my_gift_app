@@ -231,6 +231,9 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
           message: "${R.string.savingWishlist}...",
           onAction: () async => await presenter.save(),
         );
+
+        if (!mounted) return;
+        Navigator.pop(context, presenter.viewModel);
       }
     } catch (e) {
       ErrorDialog.show(context: context, content: e.toString());

@@ -32,7 +32,7 @@ class TextFieldDefault extends StatelessWidget {
     this.onFieldSubmitted,
     this.textCapitalization = TextCapitalization.sentences,
     this.minLines,
-    this.maxLines,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override

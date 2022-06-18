@@ -117,8 +117,6 @@ class FirebaseWishDataSource implements IWishDataSource {
       final Map<String, dynamic>? jsonOld = snapshot.data()?..addAll({'id': snapshot.id});
       if (jsonOld == null) throw NotFoundInfraError();
 
-      await doc.update(model.toJson());
-
       if (jsonOld['image'] != model.image) {
         //Se jsonOld tiver imagem salva, deve ser removida, tanto para fazer upload, como para manter um wish sem imagem.
         if (jsonOld['image'] != null) {
@@ -126,9 +124,12 @@ class FirebaseWishDataSource implements IWishDataSource {
         }
         //Se model tiver imagem setada, deve fazer upload.
         if (model.image != null) {
-          await storageDataSource.upload("wishes/${model.id}", File(model.image!));
+          final String imageUrl = await storageDataSource.upload("wishes/${model.id}", File(model.image!));
+          model.image = imageUrl;
         }
       }
+
+      await doc.update(model.toJson());
 
       return model;
     } on FirebaseException catch (e) {

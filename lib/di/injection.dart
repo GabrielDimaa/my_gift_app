@@ -36,6 +36,7 @@ import '../layers/presentation/presenters/login/getx_login_presenter.dart';
 import '../layers/presentation/presenters/signup/getx_signup_presenter.dart';
 import '../layers/presentation/presenters/splash/getx_splash_presenter.dart';
 import '../layers/presentation/presenters/wish/implements/getx_wish_register_presenter.dart';
+import '../layers/presentation/presenters/wishlist/implements/getx_wishlist_details_presenter.dart';
 import '../layers/presentation/presenters/wishlist/implements/getx_wishlist_register_presenter.dart';
 import '../layers/presentation/presenters/wishlist/implements/getx_wishlists_fetch_presenter.dart';
 
@@ -187,6 +188,7 @@ class Injection {
       ),
       fenix: true,
     );
+    Get.lazyPut(() => GetxWishlistDetailsPresenter(getWishes: Get.find<GetWishes>()), fenix: true);
     //endregion
   }
 }

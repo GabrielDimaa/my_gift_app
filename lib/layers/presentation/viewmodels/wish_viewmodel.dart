@@ -48,7 +48,7 @@ class WishViewModel {
     DateTime? createdAt,
   }) {
     _id.value = id;
-    _wishlistId.value = id;
+    _wishlistId.value = wishlistId;
     _description.value = description;
     _image.value = image;
     _link.value = link;

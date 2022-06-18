@@ -38,6 +38,7 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
             icon: Icons.edit_outlined,
           ),
         ],
+        onBackPressed: () => Navigator.pop(context, widget.viewModel),
       ),
       body: SafeArea(
         child: Padding(
@@ -91,12 +92,13 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
                                     ),
                                   ),
                                 ),
+                                const SizedBoxDefault.horizontal(),
                                 IconButton(
                                   onPressed: () async => await _copyLink(),
                                   tooltip: R.string.copyLink,
                                   color: colorScheme.secondary,
                                   padding: EdgeInsets.zero,
-                                  visualDensity: const VisualDensity(horizontal: VisualDensity.minimumDensity, vertical: VisualDensity.minimumDensity),
+                                  constraints: const BoxConstraints(),
                                   icon: const Icon(Icons.copy_outlined),
                                 ),
                               ],
@@ -129,8 +131,7 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
   //region Events
 
   Future<void> _edit() async {
-    final WishViewModel? viewModel = await Navigator.pushNamed(context, "wish_register", arguments: {'viewModel': widget.viewModel}) as WishViewModel?;
-
+    final WishViewModel? viewModel = await Navigator.pushNamed(context, "wish_register", arguments: {'viewModel': widget.viewModel.clone()}) as WishViewModel?;
     if (viewModel != null) setState(() => widget.viewModel.updateViewModel(viewModel));
   }
 
@@ -190,5 +191,5 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
     );
   }
 
-//endregion
+  //endregion
 }
