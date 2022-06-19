@@ -5,6 +5,7 @@ import '../../../../../monostates/user_global.dart';
 import '../../../../../routes/routes.dart';
 import '../../../../domain/entities/user_entity.dart';
 import '../../components/app_bar/app_bar_default.dart';
+import '../../components/app_bar/photo_profile_action.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import 'components/card_button.dart';
@@ -30,19 +31,7 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       appBar: AppBarDefault(
         title: R.string.dashboard,
-        actions: [
-          Visibility(
-            visible: _user.photo != null,
-            replacement: CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              child: Text(
-                _user.name.characters.first,
-                style: const TextStyle(fontSize: 20, color: Colors.white),
-              ),
-            ),
-            child: CircleAvatar(backgroundImage: NetworkImage(_user.photo ?? "")),
-          ),
-        ],
+        actions: const [PhotoProfileAction()],
       ),
       body: SafeArea(
         child: Padding(

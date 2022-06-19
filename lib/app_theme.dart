@@ -7,94 +7,101 @@ import 'routes/routes.dart';
 class AppTheme extends StatelessWidget {
   const AppTheme({Key? key}) : super(key: key);
 
+  static final ValueNotifier<ThemeMode> theme = ValueNotifier(ThemeMode.dark);
+
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Desejando',
-      debugShowCheckedModeBanner: false,
-      initialRoute: splashRoute,
-      themeMode: ThemeMode.dark,
-      theme: ThemeData(
-        brightness: Brightness.light,
-        colorScheme: _colorSchemeLight,
-        scaffoldBackgroundColor: light,
-        textTheme: _textThemeLight,
-        fontFamily: 'Sarabun',
-        textSelectionTheme: TextSelectionThemeData(cursorColor: secondary),
-        elevatedButtonTheme: _elevatedButtonTheme(onSurface: primary),
-        outlinedButtonTheme: _outlinedButtonTheme,
-        textButtonTheme: _textButtonTheme,
-        inputDecorationTheme: _inputDecorationThemeLight,
-        appBarTheme: AppBarTheme(
-          elevation: 0,
-          iconTheme: IconThemeData(
-            color: dark,
-          ),
-        ),
-        iconTheme: IconThemeData(
-          color: dark,
-        ),
-        dialogBackgroundColor: light,
-        dialogTheme: DialogTheme(
-          backgroundColor: light,
-          elevation: 4,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          contentTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: dark),
-        ),
-        bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: light,
-          elevation: 4,
-          clipBehavior: Clip.antiAlias,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(22),
-              topRight: Radius.circular(22),
+    return ValueListenableBuilder(
+      valueListenable: theme,
+      builder: (_, ThemeMode mode, __) {
+        return GetMaterialApp(
+          title: 'Desejando',
+          debugShowCheckedModeBanner: false,
+          initialRoute: splashRoute,
+          themeMode: theme.value,
+          theme: ThemeData(
+            brightness: Brightness.light,
+            colorScheme: _colorSchemeLight,
+            scaffoldBackgroundColor: light,
+            textTheme: _textThemeLight,
+            fontFamily: 'Sarabun',
+            textSelectionTheme: TextSelectionThemeData(cursorColor: secondary),
+            elevatedButtonTheme: _elevatedButtonTheme(onSurface: primary),
+            outlinedButtonTheme: _outlinedButtonTheme,
+            textButtonTheme: _textButtonTheme,
+            inputDecorationTheme: _inputDecorationThemeLight,
+            appBarTheme: AppBarTheme(
+              elevation: 0,
+              iconTheme: IconThemeData(
+                color: dark,
+              ),
+            ),
+            iconTheme: IconThemeData(
+              color: dark,
+            ),
+            dialogBackgroundColor: light,
+            dialogTheme: DialogTheme(
+              backgroundColor: light,
+              elevation: 4,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              contentTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: dark),
+            ),
+            bottomSheetTheme: BottomSheetThemeData(
+              backgroundColor: light,
+              elevation: 4,
+              clipBehavior: Clip.antiAlias,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(22),
+                  topRight: Radius.circular(22),
+                ),
+              ),
+            ),
+            floatingActionButtonTheme: _floatingActionButtonTheme,
+            sliderTheme: const SliderThemeData(
+              rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape(),
             ),
           ),
-        ),
-        floatingActionButtonTheme: _floatingActionButtonTheme,
-        sliderTheme: const SliderThemeData(
-          rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape(),
-        ),
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        colorScheme: _colorSchemeDark,
-        scaffoldBackgroundColor: dark,
-        textTheme: _textThemeDark,
-        fontFamily: 'Sarabun',
-        textSelectionTheme: TextSelectionThemeData(cursorColor: secondary),
-        inputDecorationTheme: _inputDecorationThemeDark,
-        elevatedButtonTheme: _elevatedButtonTheme(),
-        outlinedButtonTheme: _outlinedButtonTheme,
-        textButtonTheme: _textButtonTheme,
-        iconTheme: IconThemeData(
-          color: light,
-        ),
-        dialogBackgroundColor: dark,
-        dialogTheme: DialogTheme(
-          backgroundColor: dark,
-          elevation: 4,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          contentTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: light),
-        ),
-        bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: dark,
-          elevation: 4,
-          clipBehavior: Clip.antiAlias,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(22),
-              topRight: Radius.circular(22),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            colorScheme: _colorSchemeDark,
+            scaffoldBackgroundColor: dark,
+            textTheme: _textThemeDark,
+            fontFamily: 'Sarabun',
+            textSelectionTheme: TextSelectionThemeData(cursorColor: secondary),
+            inputDecorationTheme: _inputDecorationThemeDark,
+            elevatedButtonTheme: _elevatedButtonTheme(),
+            outlinedButtonTheme: _outlinedButtonTheme,
+            textButtonTheme: _textButtonTheme,
+            iconTheme: IconThemeData(
+              color: light,
+            ),
+            dialogBackgroundColor: dark,
+            dialogTheme: DialogTheme(
+              backgroundColor: dark,
+              elevation: 4,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              contentTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: light),
+            ),
+            bottomSheetTheme: BottomSheetThemeData(
+              backgroundColor: dark,
+              elevation: 4,
+              clipBehavior: Clip.antiAlias,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(22),
+                  topRight: Radius.circular(22),
+                ),
+              ),
+            ),
+            floatingActionButtonTheme: _floatingActionButtonTheme,
+            sliderTheme: const SliderThemeData(
+              rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape(),
             ),
           ),
-        ),
-        floatingActionButtonTheme: _floatingActionButtonTheme,
-        sliderTheme: const SliderThemeData(
-          rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape(),
-        ),
-      ),
-      getPages: Pages().getPages(),
+          getPages: Pages().getPages(),
+        );
+      },
     );
   }
 
