@@ -37,7 +37,7 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     iconSize: 38,
-                    splashRadius: 28,
+                    splashRadius: 32,
                     icon: const Icon(Icons.keyboard_backspace),
                     onPressed: onBackPressed ?? () => Navigator.pop(context),
                     tooltip: R.string.back,
@@ -60,6 +60,7 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
           ),
         ],
       ),
+      actions: const [SizedBox.shrink()],
     );
   }
 

@@ -291,10 +291,22 @@ class PtBr implements Translation {
   String get friends => "Amigos";
 
   @override
+  String get archive => "Arquivados";
+
+  @override
   String get config => "Configurações";
 
   @override
   String get hello => "Olá";
+
+  @override
+  String get logout => "Sair";
+
+  @override
+  String get editMyData => "Editar meus dados";
+
+  @override
+  String get changePassword => "Alterar senha";
   //endregion
 
   //region Validation

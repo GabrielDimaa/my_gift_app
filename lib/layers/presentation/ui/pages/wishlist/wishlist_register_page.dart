@@ -128,7 +128,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                               label: Text(R.string.addWishes),
                               style: OutlinedButton.styleFrom(
                                 primary: colorScheme.secondary,
-                                side: BorderSide(color: colorScheme.secondary),
+                                side: BorderSide(color: colorScheme.secondary, width: 2),
                               ),
                               onPressed: () async => await _navigateToWishCreate(),
                             ),

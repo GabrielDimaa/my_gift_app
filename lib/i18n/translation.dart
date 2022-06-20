@@ -97,8 +97,12 @@ abstract class Translation {
   String get messageConfirmGoToLink;
   String get dashboard;
   String get friends;
+  String get archive;
   String get config;
   String get hello;
+  String get logout;
+  String get editMyData;
+  String get changePassword;
   //endregion
 
   //region Validation

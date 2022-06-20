@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../i18n/resources.dart';
@@ -8,6 +9,7 @@ import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/photo_profile_action.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
+import '../config/config_drawer.dart';
 import 'components/card_button.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -18,6 +20,8 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   late UserEntity _user;
 
   @override
@@ -29,10 +33,12 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBarDefault(
         title: R.string.dashboard,
-        actions: const [PhotoProfileAction()],
+        actions: [PhotoProfileAction(scaffoldKey: _scaffoldKey)],
       ),
+      endDrawer: const ConfigDrawer(),
       body: SafeArea(
         child: Padding(
           padding: const PaddingDefault(),
@@ -60,10 +66,17 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                     const SizedBoxDefault(),
                     CardButton(
+                      text: R.string.archive,
+                      icon: Icons.archive_outlined,
+                      color: const Color(0xFFCE4163),
+                      onTap: () {},
+                    ),
+                    const SizedBoxDefault(),
+                    CardButton(
                       text: R.string.config,
                       icon: Icons.settings_outlined,
                       color: const Color(0xFF535353),
-                      onTap: () {},
+                      onTap: () => _scaffoldKey.currentState?.openEndDrawer(),
                     ),
                   ],
                 ),

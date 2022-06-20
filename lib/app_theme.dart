@@ -58,8 +58,11 @@ class AppTheme extends StatelessWidget {
               ),
             ),
             floatingActionButtonTheme: _floatingActionButtonTheme,
-            sliderTheme: const SliderThemeData(
-              rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape(),
+            sliderTheme: const SliderThemeData(rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape()),
+            drawerTheme: DrawerThemeData(
+              backgroundColor: light,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              elevation: 4,
             ),
           ),
           darkTheme: ThemeData(
@@ -95,8 +98,11 @@ class AppTheme extends StatelessWidget {
               ),
             ),
             floatingActionButtonTheme: _floatingActionButtonTheme,
-            sliderTheme: const SliderThemeData(
-              rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape(),
+            sliderTheme: const SliderThemeData(rangeValueIndicatorShape: PaddleRangeSliderValueIndicatorShape()),
+            drawerTheme: DrawerThemeData(
+              backgroundColor: dark,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              elevation: 4,
             ),
           ),
           getPages: Pages().getPages(),
