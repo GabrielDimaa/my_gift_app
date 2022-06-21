@@ -15,6 +15,7 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
     mockSendVerificationEmail(entityResult.id!);
     mockCheckEmailVerified(true);
     mockGetUserLogged(entityResult);
+    mockLogout();
   }
 
   //region auth
@@ -45,5 +46,11 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
   When mockGetUserLoggedCall() => when(() => getUserLogged());
   void mockGetUserLogged(UserEntity? data) => mockGetUserLoggedCall().thenAnswer((_) => Future.value(data));
   void mockGetUserLoggedError({Exception? error}) => mockGetUserLoggedCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region logout
+  When mockLogoutCall() => when(() => logout());
+  void mockLogout() => mockLogoutCall().thenAnswer((_) => Future.value());
+  void mockLogoutError({Exception? error}) => mockLogoutCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

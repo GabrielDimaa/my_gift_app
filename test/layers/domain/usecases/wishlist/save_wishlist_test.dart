@@ -13,30 +13,21 @@ import '../../../infra/repositories/mocks/wishlist_repository_spy.dart';
 void main() {
   late SaveWishlist sut;
   late WishlistRepositorySpy wishlistRepositorySpy;
-  late WishRepositorySpy wishRepositorySpy;
 
   group("create", () {
     final WishlistEntity entity = EntityFactory.wishlist(withId: false);
     final WishlistEntity wishlistResult = EntityFactory.wishlist();
-    final WishEntity wishResult = EntityFactory.wish();
 
     setUp(() {
       wishlistRepositorySpy = WishlistRepositorySpy(data: wishlistResult);
-      wishRepositorySpy = WishRepositorySpy(data: wishResult, save: true);
-      sut = SaveWishlist(wishlistRepository: wishlistRepositorySpy, wishRepository: wishRepositorySpy);
+      sut = SaveWishlist(wishlistRepository: wishlistRepositorySpy);
     });
 
-    setUpAll(() {
-      registerFallbackValue(entity);
-      registerFallbackValue(wishResult);
-    });
+    setUpAll(() => registerFallbackValue(entity));
 
     test("Deve chamar create com valores corretos", () async {
       await sut.save(entity);
-      verifyInOrder([
-        () => wishlistRepositorySpy.create(entity),
-        () => wishRepositorySpy.create(entity.wishes[0]),
-      ]);
+      verify(() => wishlistRepositorySpy.create(entity));
     });
 
     test("Deve criar wishlist com sucesso", () async {
@@ -48,12 +39,6 @@ void main() {
     test("Deve criar todos wishes", () async {
       final WishlistEntity wishlist = await sut.save(entity);
       expect(wishlist.wishes.length, wishlistResult.wishes.length);
-    });
-
-    test("Deve salvar wishlist e repassar o id para os wishes", () async {
-      await sut.save(entity);
-      final capture = verify(() => wishRepositorySpy.create(captureAny())).captured;
-      expect(capture.any((e) => e.wishlistId != wishlistResult.id), false);
     });
 
     test("Deve throw ValidationDomainError se entity.id null", () {
@@ -81,12 +66,10 @@ void main() {
   group("update", () {
     final WishlistEntity entity = EntityFactory.wishlist();
     final WishlistEntity wishlistResult = EntityFactory.wishlist(id: entity.id);
-    final WishEntity wishResult = EntityFactory.wish();
 
     setUp(() {
       wishlistRepositorySpy = WishlistRepositorySpy(data: wishlistResult);
-      wishRepositorySpy = WishRepositorySpy(data: wishResult);
-      sut = SaveWishlist(wishlistRepository: wishlistRepositorySpy, wishRepository: wishRepositorySpy);
+      sut = SaveWishlist(wishlistRepository: wishlistRepositorySpy);
     });
 
     setUpAll(() => registerFallbackValue(entity));

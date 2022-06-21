@@ -251,4 +251,18 @@ void main() {
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
   });
+
+  group("logout", () {
+    test("Deve chamar logout com sucesso", () async {
+      await sut.logout();
+      verify(() => userAccountDataSourceSpy.logout());
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      userAccountDataSourceSpy.mockLogoutError(Exception());
+
+      final Future future = sut.logout();
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+  });
 }
