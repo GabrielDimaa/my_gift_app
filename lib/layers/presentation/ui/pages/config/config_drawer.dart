@@ -7,6 +7,7 @@ import '../../../../../monostates/user_global.dart';
 import '../../../../domain/entities/user_entity.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
+import '../../components/switch_custom.dart';
 
 class ConfigDrawer extends StatefulWidget {
   const ConfigDrawer({Key? key}) : super(key: key);
@@ -72,16 +73,30 @@ class _ConfigDrawerState extends State<ConfigDrawer> {
                   ),
                 ],
               ),
-              Switch(
-                value: AppTheme.theme.value == ThemeMode.dark,
-                onChanged: (value) {
-                  AppTheme.theme.value = value ? ThemeMode.dark : ThemeMode.light;
-                },
-              ),
-              const SizedBoxDefault(2),
+              const SizedBoxDefault(3),
               Expanded(
                 child: ListView(
                   children: [
+                    const Divider(thickness: 1, height: 1),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Tema", style: textTheme.bodyText1),
+                          SwitchCustom(
+                            activeColor: colorScheme.primary,
+                            inactiveColor: colorScheme.secondary,
+                            activeIcon: Icons.dark_mode,
+                            inactiveIcon: Icons.light_mode,
+                            active: AppTheme.theme.value == ThemeMode.dark,
+                            onChanged: (value) {
+                              AppTheme.theme.value = value ? ThemeMode.dark : ThemeMode.light;
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                     const Divider(thickness: 1, height: 1),
                     _listTile(
                       label: R.string.editMyData,
