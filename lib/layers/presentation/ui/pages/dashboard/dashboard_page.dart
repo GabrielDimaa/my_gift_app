@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../i18n/resources.dart';
@@ -7,6 +6,7 @@ import '../../../../../routes/routes.dart';
 import '../../../../domain/entities/user_entity.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/photo_profile_action.dart';
+import '../../components/dialogs/error_dialog.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import '../config/config_drawer.dart';
@@ -69,7 +69,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       text: R.string.archive,
                       icon: Icons.archive_outlined,
                       color: const Color(0xFFCE4163),
-                      onTap: () {},
+                      onTap: () => ErrorDialog.show(context: context, content: "Em breve..."),
                     ),
                     const SizedBoxDefault(),
                     CardButton(
@@ -90,5 +90,9 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<void> _navigateToWishlist() async {
     await Navigator.pushNamed(context, wishlistsFetchRoute);
+  }
+
+  Future<void> _navigateToFriends() async {
+    //TODO: implement _navigateToFriends.
   }
 }

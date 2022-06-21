@@ -8,4 +8,5 @@ abstract class IUserAccountDataSource {
   Future<bool> checkEmailVerified(String userId);
   Future<UserModel?> getUserLogged();
   Future<UserModel> getById(String userId);
+  Future<void> logout();
 }

@@ -7,4 +7,5 @@ abstract class IUserAccountRepository {
   Future<void> sendVerificationEmail(String userId);
   Future<bool> checkEmailVerified(String userId);
   Future<UserEntity?> getUserLogged();
+  Future<void> logout();
 }

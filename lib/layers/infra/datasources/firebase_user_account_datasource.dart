@@ -28,11 +28,16 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   Future<UserModel> authWithEmail(LoginParams params) async {
     try {
       final UserCredential credential = await firebaseAuth.signInWithEmailAndPassword(email: params.email, password: params.password);
-      final UserModel? user = credential.toModel();
 
-      if (user == null) throw NotFoundInfraError();
+      if (credential.user == null) throw NotFoundInfraError();
 
-      return user;
+      final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: credential.user!.uid).get();
+      final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data()..addAll({'id': credential.user!.uid});
+
+      final UserModel userModel = UserModel.fromJson(jsonUser);
+      userModel.emailVerified = credential.user!.emailVerified;
+
+      return userModel;
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
     } on InfraError {
@@ -150,6 +155,21 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       if (jsonUser.isEmpty) throw NotFoundInfraError();
 
       return UserModel.fromJson(jsonUser..addAll({'id': userId}));
+    } on FirebaseException catch (e) {
+      throw e.getInfraError;
+    } on InfraError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedInfraError();
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      if (firebaseAuth.currentUser == null) return;
+
+      await firebaseAuth.signOut();
     } on FirebaseException catch (e) {
       throw e.getInfraError;
     } on InfraError {

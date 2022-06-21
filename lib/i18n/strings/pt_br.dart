@@ -307,6 +307,15 @@ class PtBr implements Translation {
 
   @override
   String get changePassword => "Alterar senha";
+
+  @override
+  String get theme => "Tema";
+
+  @override
+  String get goingOut => "Saindo";
+
+  @override
+  String get confirmLogout => "Deseja sair?\nSeus login não será lembrado ao abrir o aplicativo.";
   //endregion
 
   //region Validation

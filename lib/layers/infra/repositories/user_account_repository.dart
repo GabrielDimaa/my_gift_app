@@ -67,4 +67,15 @@ class UserAccountRepository implements IUserAccountRepository {
       throw UnexpectedInfraError().toDomainError();
     }
   }
+
+  @override
+  Future<void> logout() async {
+    try {
+      await userAccountDataSource.logout();
+    } on InfraError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedInfraError().toDomainError();
+    }
+  }
 }

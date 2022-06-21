@@ -1,15 +1,13 @@
 import '../../../../../i18n/resources.dart';
 import '../../../entities/wishlist_entity.dart';
 import '../../../helpers/errors/domain_error.dart';
-import '../../../repositories/i_wish_repository.dart';
 import '../../../repositories/i_wishlist_repository.dart';
 import '../../abstracts/wishlist/i_save_wishlist.dart';
 
 class SaveWishlist implements ISaveWishlist {
   final IWishlistRepository wishlistRepository;
-  final IWishRepository wishRepository;
 
-  SaveWishlist({required this.wishlistRepository, required this.wishRepository});
+  SaveWishlist({required this.wishlistRepository});
 
   @override
   Future<WishlistEntity> save(WishlistEntity entity) async {

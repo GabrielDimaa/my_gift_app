@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_camera.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_gallery.dart';
 import '../layers/domain/usecases/implements/login/login_email.dart';
+import '../layers/domain/usecases/implements/logout/logout.dart';
 import '../layers/domain/usecases/implements/signup/check_email_verified.dart';
 import '../layers/domain/usecases/implements/signup/send_verification_email.dart';
 import '../layers/domain/usecases/implements/signup/signup_email.dart';
@@ -33,6 +34,7 @@ import '../layers/infra/repositories/wish_repository.dart';
 import '../layers/infra/repositories/wishlist_repository.dart';
 import '../layers/infra/services/image_crop_service.dart';
 import '../layers/infra/services/image_picker_service.dart';
+import '../layers/presentation/presenters/config/getx_config_presenter.dart';
 import '../layers/presentation/presenters/login/getx_login_presenter.dart';
 import '../layers/presentation/presenters/signup/getx_signup_presenter.dart';
 import '../layers/presentation/presenters/splash/getx_splash_presenter.dart';
@@ -116,6 +118,7 @@ class Injection {
 
     //region UseCases
     Get.lazyPut(() => LoginEmail(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
+    Get.lazyPut(() => Logout(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => SignUpEmail(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(
       () => FetchImagePickerCamera(
@@ -135,13 +138,7 @@ class Injection {
     Get.lazyPut(() => CheckEmailVerified(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => GetUserLogged(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => GetWishlists(wishlistRepository: Get.find<WishlistRepository>()), fenix: true);
-    Get.lazyPut(
-      () => SaveWishlist(
-        wishlistRepository: Get.find<WishlistRepository>(),
-        wishRepository: Get.find<WishRepository>(),
-      ),
-      fenix: true,
-    );
+    Get.lazyPut(() => SaveWishlist(wishlistRepository: Get.find<WishlistRepository>()), fenix: true);
     Get.lazyPut(() => DeleteWishlist(wishlistRepository: Get.find<WishlistRepository>()), fenix: true);
     Get.lazyPut(() => GetWishes(wishRepository: Get.find<WishRepository>()), fenix: true);
     Get.lazyPut(() => SaveWish(wishRepository: Get.find<WishRepository>()), fenix: true);
@@ -152,6 +149,7 @@ class Injection {
 
     //region Presenters
     Get.lazyPut(() => GetxLoginPresenter(loginWithEmail: Get.find<LoginEmail>()), fenix: true);
+    Get.lazyPut(() => GetxConfigPresenter(logout: Get.find<Logout>()), fenix: true);
     Get.lazyPut(
       () => GetxSignupPresenter(
         signUpEmail: Get.find<SignUpEmail>(),
@@ -184,11 +182,7 @@ class Injection {
     );
     Get.lazyPut(
       () => GetxWishRegisterPresenter(
-        fetchImagePickerCamera: Get.find<FetchImagePickerCamera>(),
-        fetchImagePickerGallery: Get.find<FetchImagePickerGallery>(),
-        saveWish: Get.find<SaveWish>(),
-        deleteWish: Get.find<DeleteWish>()
-      ),
+          fetchImagePickerCamera: Get.find<FetchImagePickerCamera>(), fetchImagePickerGallery: Get.find<FetchImagePickerGallery>(), saveWish: Get.find<SaveWish>(), deleteWish: Get.find<DeleteWish>()),
       fenix: true,
     );
     Get.lazyPut(() => GetxWishlistDetailsPresenter(getWishes: Get.find<GetWishes>()), fenix: true);

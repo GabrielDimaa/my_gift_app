@@ -103,6 +103,9 @@ abstract class Translation {
   String get logout;
   String get editMyData;
   String get changePassword;
+  String get theme;
+  String get goingOut;
+  String get confirmLogout;
   //endregion
 
   //region Validation
