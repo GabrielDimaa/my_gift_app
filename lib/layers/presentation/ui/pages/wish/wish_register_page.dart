@@ -45,6 +45,9 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _linkController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+  final FocusNode _descriptionFocus = FocusNode();
+  final FocusNode _linkFocus = FocusNode();
+  final FocusNode _noteFocus = FocusNode();
 
   double get startRangeSliderDefault => presenter.priceRangeSelected.min + 20;
 
@@ -185,6 +188,8 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                               label: R.string.labelDescription,
                               hint: R.string.hintDescriptionWish,
                               controller: _descriptionController,
+                              focusNode: _descriptionFocus,
+                              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_linkFocus),
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.text,
                               onSaved: presenter.viewModel.setDescription,
@@ -196,6 +201,8 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                               label: R.string.labelLinkWish,
                               hint: R.string.hintLinkWish,
                               controller: _linkController,
+                              focusNode: _linkFocus,
+                              onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
                               textInputAction: TextInputAction.done,
                               keyboardType: TextInputType.url,
                               onSaved: presenter.viewModel.setLink,
@@ -233,6 +240,8 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                               label: R.string.labelNoteWish,
                               hint: R.string.hintNoteWish,
                               controller: _noteController,
+                              focusNode: _noteFocus,
+                              onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
                               textInputAction: TextInputAction.done,
                               keyboardType: TextInputType.text,
                               onSaved: presenter.viewModel.setNote,

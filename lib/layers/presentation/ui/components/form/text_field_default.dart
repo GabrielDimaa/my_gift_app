@@ -5,6 +5,7 @@ class TextFieldDefault extends StatelessWidget {
   final String? label;
   final String hint;
   final TextEditingController controller;
+  final FocusNode? focusNode;
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final bool? enabled;
@@ -22,6 +23,7 @@ class TextFieldDefault extends StatelessWidget {
     this.label,
     required this.hint,
     required this.controller,
+    this.focusNode,
     this.onSaved,
     this.validator,
     this.enabled,
@@ -47,6 +49,7 @@ class TextFieldDefault extends StatelessWidget {
           ),
         TextFormField(
           controller: controller,
+          focusNode: focusNode,
           onSaved: (String? value) {
             onSaved?.call((value?.isEmpty ?? true) ? null : value);
           },
