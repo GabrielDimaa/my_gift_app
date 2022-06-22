@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
+import '../../../../../i18n/resources.dart';
 import '../../../../domain/entities/wish_entity.dart';
+import '../../../../domain/helpers/errors/domain_error.dart';
 import '../../../../domain/usecases/abstracts/wish/i_get_wishes.dart';
 import '../../../helpers/mixins/loading_manager.dart';
 import '../../../viewmodels/wish_viewmodel.dart';
@@ -21,11 +23,13 @@ class GetxWishlistDetailsPresenter extends GetxController with LoadingManager im
   void setViewModel(WishlistViewModel value) => _viewModel.value = value;
 
   @override
-  Future<void> load(WishlistViewModel viewModel) async {
+  Future<void> initialize([WishlistViewModel? viewModel]) async {
     try {
       setLoading(true);
 
+      if (viewModel == null) throw Exception(R.string.unexpectedError);
       setViewModel(viewModel);
+
       await getWishes();
     } finally {
       setLoading(false);
@@ -34,9 +38,13 @@ class GetxWishlistDetailsPresenter extends GetxController with LoadingManager im
 
   @override
   Future<void> getWishes() async {
-    final List<WishEntity> wishesEntity = await _getWishes.get(viewModel.id!);
-    viewModel.setWishes(wishesEntity.map((e) => WishViewModel.fromEntity(e)).toList());
+    try {
+      final List<WishEntity> wishesEntity = await _getWishes.get(viewModel.id!);
+      viewModel.setWishes(wishesEntity.map((e) => WishViewModel.fromEntity(e)).toList());
 
-    viewModel.wishes.sort((a, b) => a.description.toString().toLowerCase().compareTo(b.description.toString().toLowerCase()));
+      viewModel.wishes.sort((a, b) => a.description.toString().toLowerCase().compareTo(b.description.toString().toLowerCase()));
+    } on DomainError catch (e) {
+      throw Exception(e.message);
+    }
   }
 }

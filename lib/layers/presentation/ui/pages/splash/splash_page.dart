@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../../app_theme.dart';
 import '../../../presenters/splash/getx_splash_presenter.dart';
 import '../../../presenters/splash/splash_presenter.dart';
+import '../../components/dialogs/error_dialog.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 
@@ -17,6 +18,12 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   final SplashPresenter presenter = Get.find<GetxSplashPresenter>();
+
+  @override
+  void initState() {
+    presenter.initialize().catchError((e) => ErrorDialog.show(context: context, content: e.toString()));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

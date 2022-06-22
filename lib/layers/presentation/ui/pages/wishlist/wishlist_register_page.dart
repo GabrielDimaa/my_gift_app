@@ -43,8 +43,9 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
 
   @override
   void initState() {
-    presenter.init(widget.viewModel);
-    _updateTextEditingController();
+    presenter.initialize(widget.viewModel)
+        .catchError((e) => ErrorDialog.show(context: context, content: e.toString()))
+        .whenComplete(() => _updateTextEditingController());
     super.initState();
   }
 

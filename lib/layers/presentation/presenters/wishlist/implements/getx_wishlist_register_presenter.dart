@@ -56,9 +56,13 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   List<TagViewModel> get tagsViewModel => _tagsViewModel;
 
   @override
-  Future<void> init(WishlistViewModel? viewModel) async {
+  Future<void> initialize([WishlistViewModel? viewModel]) async {
     try {
       setLoading(true);
+
+      setViewModel(WishlistViewModel());
+      _tagsViewModel = <TagViewModel>[].obs;
+      _user = UserGlobal().getUser()!;
 
       if (viewModel?.id != null) {
         setViewModel(viewModel!);
@@ -68,16 +72,7 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
       await loadTags();
     } finally {
       setLoading(false);
-      super.onInit();
     }
-  }
-
-  @override
-  Future<void> onInit() async {
-    setViewModel(WishlistViewModel());
-    _tagsViewModel = <TagViewModel>[].obs;
-    _user = UserGlobal().getUser()!;
-    super.onInit();
   }
 
   @override
@@ -109,38 +104,54 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
 
   @override
   Future<void> fetchWishes() async {
-    if (viewModel.id != null) {
-      final List<WishEntity> wishesEntity = await _getWishes.get(viewModel.id!);
-      viewModel.setWishes(wishesEntity.map((e) => WishViewModel.fromEntity(e)).toList());
+    try {
+      if (viewModel.id != null) {
+        final List<WishEntity> wishesEntity = await _getWishes.get(viewModel.id!);
+        viewModel.setWishes(wishesEntity.map((e) => WishViewModel.fromEntity(e)).toList());
 
-      viewModel.wishes.sort((a, b) => a.description.toString().toLowerCase().compareTo(b.description.toString().toLowerCase()));
+        viewModel.wishes.sort((a, b) => a.description.toString().toLowerCase().compareTo(b.description.toString().toLowerCase()));
+      }
+    } on DomainError catch (e) {
+      throw Exception(e.message);
     }
   }
 
   @override
   Future<void> deleteWish(WishViewModel wish) async {
-    if (wish.id != null) await _deleteWish.delete(wish.id!);
+    try {
+      if (wish.id != null) await _deleteWish.delete(wish.id!);
+    } on DomainError catch (e) {
+      throw Exception(e.message);
+    }
   }
 
   @override
   Future<void> loadTags() async {
-    _tagsViewModel = <TagViewModel>[].obs;
+    try {
+      _tagsViewModel = <TagViewModel>[].obs;
 
-    TagViewModel tagInitial = TagViewModel.fromEntity(TagInternal.normal.toEntity(_user));
-    _tagsViewModel.add(tagInitial);
-    if (viewModel.tag == null) viewModel.setTag(tagInitial);
+      TagViewModel tagInitial = TagViewModel.fromEntity(TagInternal.normal.toEntity(_user));
+      _tagsViewModel.add(tagInitial);
+      if (viewModel.tag == null) viewModel.setTag(tagInitial);
 
-    List<TagEntity> tags = await _getTags.get(_user.id!);
-    _tagsViewModel.addAll(tags.map((entity) => TagViewModel.fromEntity(entity)).toList().obs);
+      List<TagEntity> tags = await _getTags.get(_user.id!);
+      _tagsViewModel.addAll(tags.map((entity) => TagViewModel.fromEntity(entity)).toList().obs);
 
-    _tagsViewModel.sort((a, b) => a.name.toString().toLowerCase().compareTo(b.name.toString().toLowerCase()));
+      _tagsViewModel.sort((a, b) => a.name.toString().toLowerCase().compareTo(b.name.toString().toLowerCase()));
+    } on DomainError catch (e) {
+      throw Exception(e.message);
+    }
   }
 
   @override
   Future<void> createTag(TagViewModel viewModel) async {
-    if (viewModel.name == null || viewModel.color == null) throw Exception(R.string.nameColorTagError);
+    try {
+      if (viewModel.name == null || viewModel.color == null) throw Exception(R.string.nameColorTagError);
 
-    final TagEntity tagEntity = await _saveTag.save(viewModel.toEntity(_user));
-    tagsViewModel.add(TagViewModel.fromEntity(tagEntity));
+      final TagEntity tagEntity = await _saveTag.save(viewModel.toEntity(_user));
+      tagsViewModel.add(TagViewModel.fromEntity(tagEntity));
+    } on DomainError catch (e) {
+      throw Exception(e.message);
+    }
   }
 }

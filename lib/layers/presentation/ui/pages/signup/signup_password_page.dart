@@ -26,9 +26,9 @@ class _SignupPasswordPageState extends State<SignupPasswordPage> {
 
   @override
   void initState() {
-    super.initState();
     presenter.viewModel.setPassword(null);
     presenter.viewModel.setConfirmPassword(null);
+    super.initState();
   }
 
   @override

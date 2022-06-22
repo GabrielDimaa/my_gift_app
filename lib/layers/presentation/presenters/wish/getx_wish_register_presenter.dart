@@ -2,18 +2,18 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 
-import '../../../../../i18n/resources.dart';
-import '../../../../../monostates/user_global.dart';
-import '../../../../domain/entities/user_entity.dart';
-import '../../../../domain/entities/wish_entity.dart';
-import '../../../../domain/helpers/errors/domain_error.dart';
-import '../../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_camera.dart';
-import '../../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
-import '../../../../domain/usecases/abstracts/wish/i_delete_wish.dart';
-import '../../../../domain/usecases/abstracts/wish/i_save_wish.dart';
-import '../../../helpers/enums/price_range.dart';
-import '../../../viewmodels/wish_viewmodel.dart';
-import '../abstracts/wish_register_presenter.dart';
+import '../../../../i18n/resources.dart';
+import '../../../../monostates/user_global.dart';
+import '../../../domain/entities/user_entity.dart';
+import '../../../domain/entities/wish_entity.dart';
+import '../../../domain/helpers/errors/domain_error.dart';
+import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_camera.dart';
+import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
+import '../../../domain/usecases/abstracts/wish/i_delete_wish.dart';
+import '../../../domain/usecases/abstracts/wish/i_save_wish.dart';
+import '../../helpers/enums/price_range.dart';
+import '../../viewmodels/wish_viewmodel.dart';
+import 'wish_register_presenter.dart';
 
 class GetxWishRegisterPresenter extends GetxController implements WishRegisterPresenter {
   final IFetchImagePickerCamera _fetchImagePickerCamera;

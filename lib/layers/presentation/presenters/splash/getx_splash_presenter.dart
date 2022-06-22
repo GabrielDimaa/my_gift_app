@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../../monostates/user_global.dart';
 import '../../../domain/entities/user_entity.dart';
+import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/usecases/abstracts/signup/i_check_email_verified.dart';
 import '../../../domain/usecases/abstracts/signup/i_send_verification_email.dart';
 import '../../../domain/usecases/abstracts/user/i_get_user_logged.dart';
@@ -24,13 +25,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
         _sendVerificationEmail = sendVerificationEmail;
 
   @override
-  Future<void> onInit() async {
-    await load();
-    super.onInit();
-  }
-
-  @override
-  Future<void> load() async {
+  Future<void> initialize([viewModel]) async {
     try {
       await Future.delayed(const Duration(seconds: 2));
 
@@ -48,6 +43,8 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
           await navigateToConfirmEmail();
         }
       }
+    } on DomainError catch (e) {
+      throw Exception(e.message);
     } catch (e) {
       await navigateToLogin();
     }

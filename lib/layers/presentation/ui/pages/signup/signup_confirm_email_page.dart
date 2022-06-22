@@ -24,15 +24,16 @@ class SignupConfirmEmailPage extends StatefulWidget {
 class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
   final SignupPresenter presenter = Get.find<GetxSignupPresenter>();
 
+  ColorScheme get colorScheme => Theme.of(context).colorScheme;
+
   @override
   void initState() {
-    super.initState();
     presenter.startTimerResendEmail();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBarDefault(title: R.string.confirmEmail),
       body: SafeArea(

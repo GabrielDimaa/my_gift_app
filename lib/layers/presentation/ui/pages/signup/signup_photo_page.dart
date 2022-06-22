@@ -26,15 +26,16 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
 
   double get radius => 18;
 
+  ColorScheme get colorSchema => Theme.of(context).colorScheme;
+
   @override
   void initState() {
-    super.initState();
     presenter.viewModel.setPhoto(null);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorSchema = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBarDefault(title: R.string.photo),
       body: SafeArea(

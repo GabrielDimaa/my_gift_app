@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../../../helpers/enums/price_range.dart';
-import '../../../../presenters/wish/abstracts/wish_register_presenter.dart';
+import '../../../../presenters/wish/wish_register_presenter.dart';
 
 class DropdownPriceRange extends StatelessWidget {
   final WishRegisterPresenter presenter;

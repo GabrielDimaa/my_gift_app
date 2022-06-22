@@ -10,6 +10,7 @@ import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
 import '../../components/circular_loading.dart';
+import '../../components/dialogs/error_dialog.dart';
 import '../../components/not_found.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
@@ -31,7 +32,7 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
 
   @override
   void initState() {
-    presenter.load(widget.viewModel);
+    presenter.initialize(widget.viewModel).catchError((e) => ErrorDialog.show(context: context, content: e.toString()));
     super.initState();
   }
 
