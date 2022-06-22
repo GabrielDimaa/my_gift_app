@@ -1,3 +1,4 @@
+import 'package:desejando_app/layers/domain/entities/friend_entity.dart';
 import 'package:desejando_app/layers/domain/entities/tag_entity.dart';
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
@@ -51,12 +52,7 @@ extension WishEntityExtension on List<WishEntity> {
 
 extension UserExtension on UserEntity {
   bool equals(UserEntity entity) {
-    return entity.id == id &&
-        entity.email == email &&
-        entity.password == password &&
-        entity.name == name &&
-        entity.photo == photo &&
-        entity.emailVerified == emailVerified;
+    return entity.id == id && entity.email == email && entity.password == password && entity.name == name && entity.photo == photo && entity.emailVerified == emailVerified;
   }
 }
 
@@ -75,5 +71,17 @@ extension TaglistsExtension on List<TagEntity> {
     }
 
     return true;
+  }
+}
+
+extension FriendExtension on FriendEntity {
+  bool equals(FriendEntity entity) {
+    return entity.id == id &&
+        entity.friendUserId == friendUserId &&
+        entity.processorUserId == processorUserId &&
+        entity.name == name &&
+        entity.email == email &&
+        entity.photo == photo &&
+        entity.accepted == accepted;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:desejando_app/layers/domain/entities/friend_entity.dart';
 import 'package:desejando_app/layers/domain/entities/tag_entity.dart';
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
@@ -49,4 +50,14 @@ abstract class EntityFactory {
       );
 
   static List<TagEntity> tags({int length = 4}) => List.generate(length, (_) => tag());
+
+  static FriendEntity friend({String? friendUserId, String? processorUserId}) => FriendEntity(
+        id: faker.guid.guid(),
+        friendUserId: friendUserId ?? faker.guid.guid(),
+        processorUserId: processorUserId ?? faker.guid.guid(),
+        name: faker.person.name(),
+        email: faker.internet.email(),
+        photo: faker.internet.httpsUrl(),
+        accepted: faker.lorem.random.boolean(),
+      );
 }

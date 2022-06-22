@@ -165,5 +165,6 @@ abstract class Translation {
   String get wishlistLinked;
   String get priceNotInformed;
   String get priceMinMaxError;
+  String get addFriendError;
   //endregion
 }
