@@ -1,3 +1,3 @@
 abstract class IUndoFriend {
-  Future<void> undo(String friendUserId);
+  Future<void> undo(String friendUserId, String processorUserId);
 }

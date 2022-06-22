@@ -9,9 +9,9 @@ class UndoFriend implements IUndoFriend {
   UndoFriend({required this.friendRepository});
 
   @override
-  Future<void> undo(String friendUserId) async {
+  Future<void> undo(String friendUserId, String processorUserId) async {
     try {
-      return await friendRepository.undoFriend(friendUserId);
+      return await friendRepository.undoFriend(friendUserId, processorUserId);
     } on DomainError {
       rethrow;
     } catch (e) {

@@ -1,19 +1,19 @@
-import 'package:desejando_app/layers/domain/entities/friend_entity.dart';
-import 'package:desejando_app/layers/domain/repositories/i_friend_repository.dart';
+import 'package:desejando_app/layers/infra/datasources/i_friend_datasource.dart';
+import 'package:desejando_app/layers/infra/models/friend_model.dart';
 import 'package:mocktail/mocktail.dart';
 
-class FriendRepositorySpy extends Mock implements IFriendRepository {
-  FriendRepositorySpy.add({required FriendEntity friendEntity}) {
-    mockAddFriend(friendEntity);
+class FirebaseFriendDataSourceSpy extends Mock implements IFriendDataSource {
+  FirebaseFriendDataSourceSpy.add({required FriendModel model}) {
+    mockAddFriend(model);
   }
 
-  FriendRepositorySpy.undo() {
+  FirebaseFriendDataSourceSpy.undo() {
     mockUndoFriend();
   }
 
   //region addFriend
   When mockAddFriendCall() => when(() => addFriend(any()));
-  void mockAddFriend(FriendEntity entity) => mockAddFriendCall().thenAnswer((_) => Future.value(entity));
+  void mockAddFriend(FriendModel model) => mockAddFriendCall().thenAnswer((_) => Future.value(model));
   void mockAddFriendError({Exception? error}) => mockAddFriendCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 

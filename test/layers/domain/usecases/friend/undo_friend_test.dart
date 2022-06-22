@@ -19,21 +19,21 @@ void main() {
   });
 
   test("Deve chamar addFriend com valores corretos", () async {
-    await sut.undo(entity.friendUserId);
-    verify(() => repositorySpy.undoFriend(entity.friendUserId));
+    await sut.undo(entity.friendUserId, entity.processorUserId);
+    verify(() => repositorySpy.undoFriend(entity.friendUserId, entity.processorUserId));
   });
 
   test("Deve throw UnexpectedDomainError", () {
     repositorySpy.mockUndoFriendError();
 
-    final Future future = sut.undo(entity.friendUserId);
+    final Future future = sut.undo(entity.friendUserId, entity.processorUserId);
     expect(future, throwsA(isA<UnexpectedDomainError>()));
   });
 
   test("Deve throw NotFoundDomainError", () {
     repositorySpy.mockUndoFriendError(error: NotFoundDomainError());
 
-    final Future future = sut.undo(entity.friendUserId);
+    final Future future = sut.undo(entity.friendUserId, entity.processorUserId);
     expect(future, throwsA(isA<NotFoundDomainError>()));
   });
 }
