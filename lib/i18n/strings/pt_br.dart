@@ -481,6 +481,9 @@ class PtBr implements Translation {
   String get priceMinMaxError => "Preço mínimo maior que o máximo.";
 
   @override
-  String get addFriendError => "Erro ao tentar adicionar amigo.";
+  String get addFriendError => "Não foi possível adicionar amigo. Tente novamente.";
+
+  @override
+  String get undoFriendError => "Não foi possível adicionar amigo. Tente novamente.";
   //endregion
 }

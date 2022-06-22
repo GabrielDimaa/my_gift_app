@@ -18,7 +18,7 @@ void main() {
   final FriendEntity entity = EntityFactory.friend(friendUserId: params.friendUserId, processorUserId: params.processorUserId);
 
   setUp(() {
-    repositorySpy = FriendRepositorySpy(friendEntity: entity);
+    repositorySpy = FriendRepositorySpy.add(friendEntity: entity);
     sut = AddFriend(friendRepository: repositorySpy);
   });
 
@@ -39,5 +39,12 @@ void main() {
 
     final Future future = sut.add(params);
     expect(future, throwsA(isA<UnexpectedDomainError>()));
+  });
+
+  test("Deve throw NotFoundDomainError", () {
+    repositorySpy.mockAddFriendError(error: NotFoundDomainError());
+
+    final Future future = sut.add(params);
+    expect(future, throwsA(isA<NotFoundDomainError>()));
   });
 }

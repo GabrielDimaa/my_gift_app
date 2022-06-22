@@ -166,5 +166,6 @@ abstract class Translation {
   String get priceNotInformed;
   String get priceMinMaxError;
   String get addFriendError;
+  String get undoFriendError;
   //endregion
 }
