@@ -85,3 +85,15 @@ extension FriendExtension on FriendEntity {
         entity.accepted == accepted;
   }
 }
+
+extension FriendsListExtension on List<FriendEntity> {
+  bool equals(List<FriendEntity> entities) {
+    if (entities.length != length) return false;
+
+    for (var i = 0; i < length; i++) {
+      if (!entities[i].equals(this[i])) return false;
+    }
+
+    return true;
+  }
+}

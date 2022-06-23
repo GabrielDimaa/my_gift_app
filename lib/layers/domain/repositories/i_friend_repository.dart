@@ -4,4 +4,5 @@ import '../helpers/params/friend_params.dart';
 abstract class IFriendRepository {
   Future<FriendEntity> addFriend(FriendParams params);
   Future<void> undoFriend(String friendUserId, String processorUserId);
+  Future<List<FriendEntity>> getFriends(String processorUserId);
 }

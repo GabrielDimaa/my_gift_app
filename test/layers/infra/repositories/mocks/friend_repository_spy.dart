@@ -11,6 +11,10 @@ class FriendRepositorySpy extends Mock implements IFriendRepository {
     mockUndoFriend();
   }
 
+  FriendRepositorySpy.get({required List<FriendEntity> entities}) {
+    mockGetFriends(entities);
+  }
+
   //region addFriend
   When mockAddFriendCall() => when(() => addFriend(any()));
   void mockAddFriend(FriendEntity entity) => mockAddFriendCall().thenAnswer((_) => Future.value(entity));
@@ -21,5 +25,11 @@ class FriendRepositorySpy extends Mock implements IFriendRepository {
   When mockUndoFriendCall() => when(() => undoFriend(any(), any()));
   void mockUndoFriend() => mockUndoFriendCall().thenAnswer((_) => Future.value());
   void mockUndoFriendError({Exception? error}) => mockUndoFriendCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region getFriends
+  When mockGetFriendsCall() => when(() => getFriends(any()));
+  void mockGetFriends(List<FriendEntity> entities) => mockGetFriendsCall().thenAnswer((_) => Future.value(entities));
+  void mockGetFriendsError({Exception? error}) => mockGetFriendsCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

@@ -60,4 +60,6 @@ abstract class EntityFactory {
         photo: faker.internet.httpsUrl(),
         accepted: faker.lorem.random.boolean(),
       );
+
+  static List<FriendEntity> friends({int length = 4, String? processorUserId}) => List.generate(length, (_) => friend(processorUserId: processorUserId));
 }
