@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:desejando_app/layers/presentation/ui/components/dialogs/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,9 +8,11 @@ import '../../../../../routes/routes.dart';
 import '../../../../domain/entities/user_entity.dart';
 import '../../../presenters/config/config_presenter.dart';
 import '../../../presenters/config/getx_config_presenter.dart';
+import '../../components/dialogs/confirm_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/padding/padding_default.dart';
+import '../../components/photo_profile.dart';
 import '../../components/sized_box_default.dart';
 import '../../components/switch_custom.dart';
 
@@ -54,12 +54,7 @@ class _ConfigDrawerState extends State<ConfigDrawer> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CachedNetworkImage(
-                    imageUrl: _user.photo ?? "",
-                    imageBuilder: (_, image) => CircleAvatar(backgroundImage: image, radius: 35),
-                    placeholder: (context, url) => const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                  ),
+                  PhotoProfile(user: _user),
                   const SizedBoxDefault.horizontal(),
                   Expanded(
                     child: ListTile(

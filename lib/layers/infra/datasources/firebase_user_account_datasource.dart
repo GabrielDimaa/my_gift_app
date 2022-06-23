@@ -68,7 +68,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
 
       //Cria o usuário no Firestore
       var json = model.toJson();
-      json.addAll({'searchName': model.name.split("")});
+      json.addAll({'searchName': _mountSearchName(model.name)});
       await firestore.collection(constantUsersReference).doc(user.uid).set(json);
 
       //Faz upload da foto de perfil
@@ -179,5 +179,13 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
     } catch (e) {
       throw UnexpectedInfraError();
     }
+  }
+
+  List<String> _mountSearchName(String name) {
+    List<String> list = [];
+    for (var index = 0; index <= name.length; index++) {
+      list.add(name.substring(0, index));
+    }
+    return list;
   }
 }
