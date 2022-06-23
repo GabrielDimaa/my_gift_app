@@ -1,5 +1,6 @@
 import 'package:desejando_app/layers/infra/datasources/i_friend_datasource.dart';
 import 'package:desejando_app/layers/infra/models/friend_model.dart';
+import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:mocktail/mocktail.dart';
 
 class FirebaseFriendDataSourceSpy extends Mock implements IFriendDataSource {
@@ -13,6 +14,10 @@ class FirebaseFriendDataSourceSpy extends Mock implements IFriendDataSource {
 
   FirebaseFriendDataSourceSpy.get({required List<FriendModel> models}) {
     mockGetFriends(models);
+  }
+
+  FirebaseFriendDataSourceSpy.search({required List<UserModel> models}) {
+    mockFetchSearchFriends(models);
   }
 
   //region addFriend
@@ -31,5 +36,11 @@ class FirebaseFriendDataSourceSpy extends Mock implements IFriendDataSource {
   When mockGetFriendsCall() => when(() => getFriends(any()));
   void mockGetFriends(List<FriendModel> models) => mockGetFriendsCall().thenAnswer((_) => Future.value(models));
   void mockGetFriendsError({Exception? error}) => mockGetFriendsCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region fetchSearchFriends
+  When mockFetchSearchFriendsCall() => when(() => fetchSearchFriends(any()));
+  void mockFetchSearchFriends(List<UserModel> models) => mockFetchSearchFriendsCall().thenAnswer((_) => Future.value(models));
+  void mockFetchSearchFriendsError({Exception? error}) => mockFetchSearchFriendsCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

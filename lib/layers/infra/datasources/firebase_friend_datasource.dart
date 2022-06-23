@@ -106,4 +106,28 @@ class FirebaseFriendDataSource implements IFriendDataSource {
       throw UnexpectedInfraError();
     }
   }
+
+  @override
+  Future<List<UserModel>> fetchSearchFriends(String name) async {
+    try {
+      final snapshotUser = await firestore.collection(constantUsersReference)
+          .where("searchName", arrayContains: name.toLowerCase())
+          .get();
+
+      List<UserModel> users = [];
+
+      for (var doc in snapshotUser.docs) {
+        var json = doc.data()..addAll({'id': doc.id});
+        users.add(UserModel.fromJson(json));
+      }
+
+      return users;
+    } on FirebaseException catch (e) {
+      throw e.getInfraError;
+    } on InfraError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedInfraError();
+    }
+  }
 }

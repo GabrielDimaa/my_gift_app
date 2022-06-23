@@ -42,6 +42,8 @@ abstract class EntityFactory {
         password: faker.internet.password(),
       );
 
+  static List<UserEntity> users({int length = 4}) => List.generate(length, (_) => user());
+
   static TagEntity tag({bool withId = true}) => TagEntity(
         id: withId ? faker.guid.guid() : null,
         user: user(),

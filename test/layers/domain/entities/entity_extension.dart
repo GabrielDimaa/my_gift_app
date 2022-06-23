@@ -56,6 +56,18 @@ extension UserExtension on UserEntity {
   }
 }
 
+extension UsersListsExtension on List<UserEntity> {
+  bool equals(List<UserEntity> entities) {
+    if (entities.length != length) return false;
+
+    for (var i = 0; i < length; i++) {
+      if (!entities[i].equals(this[i])) return false;
+    }
+
+    return true;
+  }
+}
+
 extension TagExtension on TagEntity {
   bool equals(TagEntity entity) {
     return entity.id == id && entity.name == name && entity.color == color;

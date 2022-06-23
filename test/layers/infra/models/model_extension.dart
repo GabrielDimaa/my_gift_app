@@ -56,6 +56,18 @@ extension UserModelExtension on UserModel {
   }
 }
 
+extension UsersModelExtension on List<UserModel> {
+  bool equals(List<UserModel> models) {
+    if (models.length != length) return false;
+
+    for (var i = 0; i < length; i++) {
+      if (!models[i].equals(this[i])) return false;
+    }
+
+    return true;
+  }
+}
+
 extension TagModelExtension on TagModel {
   bool equals(TagModel model) {
     return model.id == id && model.name == name && model.color == color;

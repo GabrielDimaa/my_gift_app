@@ -42,6 +42,8 @@ abstract class ModelFactory {
         password: password,
       );
 
+  static List<UserModel> users({int length = 4}) => List.generate(length, (_) => user());
+
   static TagModel tag({String? id, bool withId = true}) => TagModel(
         id: withId ? id ?? faker.guid.guid() : null,
         user: user(),

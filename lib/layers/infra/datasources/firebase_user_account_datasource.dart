@@ -67,7 +67,9 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       model.photo = null;
 
       //Cria o usuário no Firestore
-      await firestore.collection(constantUsersReference).doc(user.uid).set(model.toJson());
+      var json = model.toJson();
+      json.addAll({'searchName': model.name.split("")});
+      await firestore.collection(constantUsersReference).doc(user.uid).set(json);
 
       //Faz upload da foto de perfil
       if (photoProfile != null) {
