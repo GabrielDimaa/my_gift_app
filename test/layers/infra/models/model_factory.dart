@@ -60,4 +60,6 @@ abstract class ModelFactory {
         photo: faker.internet.httpsUrl(),
         accepted: faker.lorem.random.boolean(),
       );
+
+  static List<FriendModel> friends({int length = 4, String? processorUserId}) => List.generate(length, (_) => friend(processorUserId: processorUserId));
 }

@@ -32,4 +32,16 @@ class FriendRepository implements IFriendRepository {
       throw UnexpectedInfraError().toDomainError();
     }
   }
+
+  @override
+  Future<List<FriendEntity>> getFriends(String processorUserId) async {
+    try {
+      final List<FriendModel> friendsModel = await friendDataSource.getFriends(processorUserId);
+      return friendsModel.map((e) => e.toEntity()).toList();
+    } on InfraError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedInfraError().toDomainError();
+    }
+  }
 }

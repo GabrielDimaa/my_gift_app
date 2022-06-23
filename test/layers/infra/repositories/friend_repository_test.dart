@@ -4,6 +4,7 @@ import 'package:desejando_app/layers/domain/helpers/params/friend_params.dart';
 import 'package:desejando_app/layers/infra/helpers/errors/infra_error.dart';
 import 'package:desejando_app/layers/infra/models/friend_model.dart';
 import 'package:desejando_app/layers/infra/repositories/friend_repository.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -76,6 +77,35 @@ void main() {
       dataSourceSpy.mockUndoFriendError();
 
       final Future future = sut.undoFriend(model.friendUserId, model.processorUserId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+  });
+
+  group("getFriends", () {
+    final String processorUserId = faker.guid.guid();
+    final List<FriendModel> models = ModelFactory.friends(processorUserId: processorUserId);
+
+    setUp(() {
+      dataSourceSpy = FirebaseFriendDataSourceSpy.get(models: models);
+      sut = FriendRepository(friendDataSource: dataSourceSpy);
+    });
+
+    test("Deve chamar getFriends com valores corretos", () async {
+      await sut.getFriends(processorUserId);
+      verify(() => dataSourceSpy.getFriends(processorUserId));
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      dataSourceSpy.mockGetFriendsError(error: ConnectionInfraError());
+
+      final Future future = sut.getFriends(processorUserId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      dataSourceSpy.mockGetFriendsError();
+
+      final Future future = sut.getFriends(processorUserId);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
   });
