@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../layers/presentation/ui/pages/dashboard/dashboard_page.dart';
+import '../layers/presentation/ui/pages/friend/friends_page.dart';
 import '../layers/presentation/ui/pages/login/login_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_confirm_email_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_page.dart';
@@ -28,5 +29,6 @@ class Pages {
         GetPage(name: wishlistRegisterRoute, page: () => WishlistRegisterPage(viewModel: Get.arguments)),
         GetPage(name: wishRegisterRoute, page: () => WishRegisterPage(viewModel: Get.arguments['viewModel'], wishlistViewModel: Get.arguments['wishlistViewModel'])),
         GetPage(name: wishDetailsRoute, page: () => WishDetailsPage(viewModel: Get.arguments)),
+        GetPage(name: friendsRoute, page: () => const FriendsPage()),
       ];
 }

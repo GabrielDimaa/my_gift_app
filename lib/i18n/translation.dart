@@ -106,6 +106,12 @@ abstract class Translation {
   String get theme;
   String get goingOut;
   String get confirmLogout;
+  String get searchFriend;
+  String get noneFriendAdd;
+  String get notFoundFriend;
+  String get undoFriend;
+  String get undoFriendConfirm;
+  String get undoingFriend;
   //endregion
 
   //region Validation

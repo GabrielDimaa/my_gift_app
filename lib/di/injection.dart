@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../layers/domain/usecases/implements/friend/get_friends.dart';
+import '../layers/domain/usecases/implements/friend/undo_friend.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_camera.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_gallery.dart';
 import '../layers/domain/usecases/implements/login/login_email.dart';
@@ -21,6 +23,7 @@ import '../layers/domain/usecases/implements/wish/save_wish.dart';
 import '../layers/domain/usecases/implements/wishlist/delete_wishlist.dart';
 import '../layers/domain/usecases/implements/wishlist/get_wishlists.dart';
 import '../layers/domain/usecases/implements/wishlist/save_wishlist.dart';
+import '../layers/infra/datasources/firebase_friend_datasource.dart';
 import '../layers/infra/datasources/firebase_tag_datasource.dart';
 import '../layers/infra/datasources/firebase_user_account_datasource.dart';
 import '../layers/infra/datasources/firebase_wish_datasource.dart';
@@ -28,6 +31,7 @@ import '../layers/infra/datasources/firebase_wishlist_datasource.dart';
 import '../layers/infra/datasources/storage/firebase_storage_datasource.dart';
 import '../layers/infra/libraries/image_crop/image_cropper_facade.dart';
 import '../layers/infra/libraries/image_picker/image_picker_facade.dart';
+import '../layers/infra/repositories/friend_repository.dart';
 import '../layers/infra/repositories/tag_repository.dart';
 import '../layers/infra/repositories/user_account_repository.dart';
 import '../layers/infra/repositories/wish_repository.dart';
@@ -35,6 +39,7 @@ import '../layers/infra/repositories/wishlist_repository.dart';
 import '../layers/infra/services/image_crop_service.dart';
 import '../layers/infra/services/image_picker_service.dart';
 import '../layers/presentation/presenters/config/getx_config_presenter.dart';
+import '../layers/presentation/presenters/friend/getx_friends_presenter.dart';
 import '../layers/presentation/presenters/login/getx_login_presenter.dart';
 import '../layers/presentation/presenters/signup/getx_signup_presenter.dart';
 import '../layers/presentation/presenters/splash/getx_splash_presenter.dart';
@@ -97,6 +102,13 @@ class Injection {
       ),
       fenix: true,
     );
+    Get.lazyPut(
+      () => FirebaseFriendDataSource(
+        firestore: Get.find<FirebaseFirestore>(),
+        userDataSource: Get.find<FirebaseUserAccountDataSource>(),
+      ),
+      fenix: true,
+    );
     //endregion
 
     //region Facades
@@ -109,6 +121,7 @@ class Injection {
     Get.lazyPut(() => WishlistRepository(wishlistDataSource: Get.find<FirebaseWishlistDataSource>()), fenix: true);
     Get.lazyPut(() => WishRepository(wishDataSource: Get.find<FirebaseWishDataSource>()), fenix: true);
     Get.lazyPut(() => TagRepository(tagDataSource: Get.find<FirebaseTagDataSource>()), fenix: true);
+    Get.lazyPut(() => FriendRepository(friendDataSource: Get.find<FirebaseFriendDataSource>()), fenix: true);
     //endregion
 
     //region Services
@@ -145,6 +158,8 @@ class Injection {
     Get.lazyPut(() => DeleteWish(wishRepository: Get.find<WishRepository>()), fenix: true);
     Get.lazyPut(() => GetTags(tagRepository: Get.find<TagRepository>()), fenix: true);
     Get.lazyPut(() => SaveTag(tagRepository: Get.find<TagRepository>()), fenix: true);
+    Get.lazyPut(() => GetFriends(friendRepository: Get.find<FriendRepository>()), fenix: true);
+    Get.lazyPut(() => UndoFriend(friendRepository: Get.find<FriendRepository>()), fenix: true);
     //endregion
 
     //region Presenters
@@ -186,6 +201,13 @@ class Injection {
       fenix: true,
     );
     Get.lazyPut(() => GetxWishlistDetailsPresenter(getWishes: Get.find<GetWishes>()), fenix: true);
+    Get.lazyPut(
+      () => GetxFriendsPresenter(
+        getFriends: Get.find<GetFriends>(),
+        undoFriend: Get.find<UndoFriend>(),
+      ),
+      fenix: true,
+    );
     //endregion
   }
 }

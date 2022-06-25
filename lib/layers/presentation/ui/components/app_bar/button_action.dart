@@ -5,6 +5,7 @@ class ButtonAction extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;
   final bool visible;
+  final double iconSize;
 
   const ButtonAction({
     Key? key,
@@ -12,6 +13,7 @@ class ButtonAction extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.visible = true,
+    this.iconSize = 18,
   }) : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class ButtonAction extends StatelessWidget {
       visible: visible,
       child: ElevatedButton.icon(
         label: Text(label),
-        icon: Icon(icon, size: 18),
+        icon: Icon(icon, size: iconSize),
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           textStyle: Theme.of(context).textTheme.button?.copyWith(fontSize: 16),

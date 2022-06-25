@@ -62,7 +62,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       text: R.string.friends,
                       icon: Icons.people_alt_outlined,
                       color: const Color(0xFF8830F8),
-                      onTap: () {},
+                      onTap: () async => await _navigateToFriends(),
                     ),
                     const SizedBoxDefault(),
                     CardButton(
@@ -93,6 +93,6 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Future<void> _navigateToFriends() async {
-    //TODO: implement _navigateToFriends.
+    await Navigator.pushNamed(context, friendsRoute);
   }
 }

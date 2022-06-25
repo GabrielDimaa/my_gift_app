@@ -316,6 +316,24 @@ class PtBr implements Translation {
 
   @override
   String get confirmLogout => "Deseja sair?\nSeus login não será lembrado ao abrir o aplicativo.";
+
+  @override
+  String get searchFriend => "Buscar";
+
+  @override
+  String get noneFriendAdd => "Nenhum amigo adicionado.\nPara você visualizar a lista de desejos dos seus amigos, basta adicioná-los.";
+
+  @override
+  String get notFoundFriend => "Nenhum amigo encontrado";
+
+  @override
+  String get undoFriend => "Desfazer amizade";
+
+  @override
+  String get undoFriendConfirm => "Tem certeza que deseja desfazer a amizade?";
+
+  @override
+  String get undoingFriend => "Desfazendo amizade";
   //endregion
 
   //region Validation

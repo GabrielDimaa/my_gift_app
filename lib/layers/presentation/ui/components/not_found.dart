@@ -14,11 +14,14 @@ class NotFound extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         AspectRatio(
-          aspectRatio: 2/1,
+          aspectRatio: 2 / 1,
           child: SvgPicture.asset("assets/images/not_found.svg"),
         ),
         const SizedBoxDefault(2),
-        Text(message),
+        Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }
