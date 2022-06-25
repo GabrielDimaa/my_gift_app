@@ -183,7 +183,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   List<String> _mountSearchName(String name) {
     List<String> list = [];
     for (var index = 0; index <= name.length; index++) {
-      list.add(name.substring(0, index));
+      list.add(name.substring(0, index).toLowerCase());
     }
     return list;
   }

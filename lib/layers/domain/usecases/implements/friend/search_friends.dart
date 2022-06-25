@@ -12,7 +12,7 @@ class SearchFriends implements ISearchFriends {
   @override
   Future<List<UserEntity>> fetch(String name) async {
     try {
-      return await friendRepository.fetchSearchFriends(name);
+      return await friendRepository.fetchSearchPersons(name);
     } on DomainError {
       rethrow;
     } catch (e) {

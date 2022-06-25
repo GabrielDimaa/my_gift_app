@@ -1,3 +1,5 @@
+import '../../../helpers/params/friend_params.dart';
+
 abstract class IUndoFriend {
-  Future<void> undo(String friendUserId, String processorUserId);
+  Future<void> undo(FriendParams params);
 }

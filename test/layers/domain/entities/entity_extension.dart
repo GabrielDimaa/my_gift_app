@@ -1,4 +1,4 @@
-import 'package:desejando_app/layers/domain/entities/friend_entity.dart';
+import 'package:desejando_app/layers/domain/entities/friends_entity.dart';
 import 'package:desejando_app/layers/domain/entities/tag_entity.dart';
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
@@ -86,26 +86,8 @@ extension TaglistsExtension on List<TagEntity> {
   }
 }
 
-extension FriendExtension on FriendEntity {
-  bool equals(FriendEntity entity) {
-    return entity.id == id &&
-        entity.friendUserId == friendUserId &&
-        entity.processorUserId == processorUserId &&
-        entity.name == name &&
-        entity.email == email &&
-        entity.photo == photo &&
-        entity.accepted == accepted;
-  }
-}
-
-extension FriendsListExtension on List<FriendEntity> {
-  bool equals(List<FriendEntity> entities) {
-    if (entities.length != length) return false;
-
-    for (var i = 0; i < length; i++) {
-      if (!entities[i].equals(this[i])) return false;
-    }
-
-    return true;
+extension FriendExtension on FriendsEntity {
+  bool equals(FriendsEntity entity) {
+    return friends.equals(entity.friends);
   }
 }

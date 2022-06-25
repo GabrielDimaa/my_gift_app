@@ -1,5 +1,6 @@
 import '../../../../../i18n/resources.dart';
 import '../../../helpers/errors/domain_error.dart';
+import '../../../helpers/params/friend_params.dart';
 import '../../../repositories/i_friend_repository.dart';
 import '../../abstracts/friend/i_undo_friend.dart';
 
@@ -9,9 +10,9 @@ class UndoFriend implements IUndoFriend {
   UndoFriend({required this.friendRepository});
 
   @override
-  Future<void> undo(String friendUserId, String processorUserId) async {
+  Future<void> undo(FriendParams params) async {
     try {
-      return await friendRepository.undoFriend(friendUserId, processorUserId);
+      await friendRepository.undoFriend(params);
     } on DomainError {
       rethrow;
     } catch (e) {

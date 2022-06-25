@@ -1,5 +1,5 @@
-import '../../../entities/friend_entity.dart';
+import '../../../entities/friends_entity.dart';
 
 abstract class IGetFriends {
-  Future<List<FriendEntity>> get(String processorUserId);
+  Future<FriendsEntity> get(String userId);
 }

@@ -1,10 +1,10 @@
 import '../../domain/helpers/params/friend_params.dart';
-import '../models/friend_model.dart';
+import '../models/friends_model.dart';
 import '../models/user_model.dart';
 
 abstract class IFriendDataSource {
-  Future<FriendModel> addFriend(FriendParams params);
-  Future<void> undoFriend(String friendUserId, String processorUserId);
-  Future<List<FriendModel>> getFriends(String userId);
-  Future<List<UserModel>> fetchSearchFriends(String name);
+  Future<void> addFriend(FriendParams params);
+  Future<void> undoFriend(FriendParams params);
+  Future<FriendsModel> getFriends(String userId);
+  Future<List<UserModel>> fetchSearchPersons(String name);
 }

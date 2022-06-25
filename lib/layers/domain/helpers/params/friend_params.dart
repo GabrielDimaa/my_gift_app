@@ -1,9 +1,9 @@
 class FriendParams {
+  final String userId;
   final String friendUserId;
-  final String processorUserId;
 
   FriendParams({
+    required this.userId,
     required this.friendUserId,
-    required this.processorUserId,
   });
 }

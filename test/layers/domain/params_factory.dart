@@ -10,6 +10,6 @@ abstract class ParamsFactory {
 
   static FriendParams friend() => FriendParams(
         friendUserId: faker.guid.guid(),
-        processorUserId: faker.guid.guid(),
+        userId: faker.guid.guid(),
       );
 }

@@ -1,4 +1,4 @@
-import 'package:desejando_app/layers/infra/models/friend_model.dart';
+import 'package:desejando_app/layers/infra/models/friends_model.dart';
 import 'package:desejando_app/layers/infra/models/tag_model.dart';
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:desejando_app/layers/infra/models/wish_model.dart';
@@ -53,15 +53,5 @@ abstract class ModelFactory {
 
   static List<TagModel> tags({int length = 4}) => List.generate(length, (_) => tag());
 
-  static FriendModel friend({String? friendUserId, String? processorUserId}) => FriendModel(
-        id: faker.guid.guid(),
-        friendUserId: friendUserId ?? faker.guid.guid(),
-        processorUserId: processorUserId ?? faker.guid.guid(),
-        name: faker.person.name(),
-        email: faker.internet.email(),
-        photo: faker.internet.httpsUrl(),
-        accepted: faker.lorem.random.boolean(),
-      );
-
-  static List<FriendModel> friends({int length = 4, String? processorUserId}) => List.generate(length, (_) => friend(processorUserId: processorUserId));
+  static FriendsModel friends() => FriendsModel(friends: users());
 }

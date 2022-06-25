@@ -23,7 +23,7 @@ void main() {
 
   test("Deve chamar fetchSearchFriends com valores corretos", () async {
     await sut.fetch(name);
-    verify(() => repositorySpy.fetchSearchFriends(name));
+    verify(() => repositorySpy.fetchSearchPersons(name));
   });
 
   test("Deve chamar fetch e retornar os valores com sucesso", () async {

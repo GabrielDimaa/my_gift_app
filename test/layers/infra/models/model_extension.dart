@@ -1,4 +1,4 @@
-import 'package:desejando_app/layers/infra/models/friend_model.dart';
+import 'package:desejando_app/layers/infra/models/friends_model.dart';
 import 'package:desejando_app/layers/infra/models/tag_model.dart';
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:desejando_app/layers/infra/models/wish_model.dart';
@@ -86,14 +86,8 @@ extension TagsModelExtension on List<TagModel> {
   }
 }
 
-extension FriendModelExtension on FriendModel {
-  bool equals(FriendModel model) {
-    return model.id == id &&
-        model.friendUserId == friendUserId &&
-        model.processorUserId == processorUserId &&
-        model.name == name &&
-        model.email == email &&
-        model.photo == photo &&
-        model.accepted == accepted;
+extension FriendsModelExtension on FriendsModel {
+  bool equals(FriendsModel model) {
+    return friends.equals(model.friends);
   }
 }
