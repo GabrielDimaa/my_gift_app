@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import '../../../../../../../extensions/double_extension.dart';
 import '../../../../viewmodels/wish_viewmodel.dart';
+import '../../../components/images/image_loader_default.dart';
 import '../../../components/sized_box_default.dart';
 import 'wish_without_image.dart';
 
@@ -72,19 +71,11 @@ class ListTileWish extends StatelessWidget {
     if (image == null) {
       return const WishWithoutImage();
     } else {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: (Uri.tryParse(image)?.isAbsolute ?? false)
-            ? Image.network(
-                image,
-                height: 70,
-                width: 70,
-              )
-            : Image.file(
-                File(image),
-                height: 70,
-                width: 70,
-              ),
+      return ImageLoaderDefault(
+        image: image,
+        height: 70,
+        width: 70,
+        radius: 12,
       );
     }
   }

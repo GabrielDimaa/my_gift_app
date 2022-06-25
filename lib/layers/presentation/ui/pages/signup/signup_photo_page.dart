@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +9,7 @@ import '../../components/app_bar/app_bar_default.dart';
 import '../../components/bottom_sheet/bottom_sheet_image_picker.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
+import '../../components/images/image_loader_default.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 
@@ -94,7 +93,11 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                                       visible: presenter.viewModel.photo == null,
                                       replacement: ClipRRect(
                                         borderRadius: BorderRadius.circular(radius),
-                                        child: Image.file(presenter.viewModel.photo ?? File("")),
+                                        child: ImageLoaderDefault(
+                                          image: presenter.viewModel.photo?.path ?? "",
+                                          width: 200,
+                                          height: 200,
+                                        ),
                                       ),
                                       child: DottedBorder(
                                         color: colorSchema.onBackground,

@@ -124,7 +124,7 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
                                     ],
                                   );
                                 }
-                              }
+                              },
                             ),
                           ],
                         ),

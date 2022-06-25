@@ -1,13 +1,11 @@
-import 'package:desejando_app/layers/domain/usecases/implements/wishlist/save_wishlist.dart';
-import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
 import 'package:desejando_app/layers/domain/entities/wishlist_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:desejando_app/layers/domain/usecases/implements/wishlist/save_wishlist.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../domain/entities/entity_extension.dart';
 import '../../../domain/entities/entity_factory.dart';
-import '../../../infra/repositories/mocks/wish_repository_spy.dart';
 import '../../../infra/repositories/mocks/wishlist_repository_spy.dart';
 
 void main() {

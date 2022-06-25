@@ -9,6 +9,7 @@ import '../../../viewmodels/wish_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
 import '../../components/dialogs/confirm_dialog.dart';
+import '../../components/images/image_loader_default.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import 'widgets/wish_without_image.dart';
@@ -60,8 +61,8 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
                           replacement: const WishWithoutImage(size: 200, iconSize: 90),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              widget.viewModel.image ?? "",
+                            child: ImageLoaderDefault(
+                              image: widget.viewModel.image ?? "",
                               height: 200,
                               width: 200,
                             ),

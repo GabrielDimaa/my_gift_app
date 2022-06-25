@@ -7,7 +7,6 @@ import '../../domain/helpers/params/login_params.dart';
 import '../helpers/errors/infra_error.dart';
 import '../helpers/extensions/firebase_auth_exception_extension.dart';
 import '../helpers/extensions/firebase_exception_extension.dart';
-import '../helpers/extensions/firebase_user_credential_extension.dart';
 import '../models/user_model.dart';
 import './storage/i_storage_datasource.dart';
 import 'constants/collection_reference.dart';

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +17,7 @@ import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/form/text_field_default.dart';
 import '../../components/form/validators/input_validators.dart';
+import '../../components/images/image_loader_default.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import 'widgets/dropdown_price_range.dart';
@@ -117,17 +117,11 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                                 visible: presenter.viewModel.image == null,
                                 replacement: ClipRRect(
                                   borderRadius: BorderRadius.circular(18),
-                                  child: (Uri.tryParse(presenter.viewModel.image ?? "")?.isAbsolute ?? false)
-                                      ? Image.network(
-                                          presenter.viewModel.image ?? "",
-                                          width: 150,
-                                          height: 150,
-                                        )
-                                      : Image.file(
-                                          File(presenter.viewModel.image ?? ""),
-                                          width: 150,
-                                          height: 150,
-                                        ),
+                                  child: ImageLoaderDefault(
+                                    image: presenter.viewModel.image ?? "",
+                                    width: 150,
+                                    height: 150,
+                                  ),
                                 ),
                                 child: Ink(
                                   decoration: BoxDecoration(
