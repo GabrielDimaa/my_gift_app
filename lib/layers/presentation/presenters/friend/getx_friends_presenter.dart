@@ -5,21 +5,30 @@ import '../../../domain/entities/friends_entity.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/helpers/params/friend_params.dart';
+import '../../../domain/usecases/abstracts/friend/i_add_friend.dart';
+import '../../../domain/usecases/abstracts/friend/i_fetch_search_persons.dart';
 import '../../../domain/usecases/abstracts/friend/i_get_friends.dart';
 import '../../../domain/usecases/abstracts/friend/i_undo_friend.dart';
 import '../../helpers/mixins/loading_manager.dart';
 import '../../viewmodels/friends_viewmodel.dart';
+import '../../viewmodels/user_viewmodel.dart';
 import 'friends_presenter.dart';
 
 class GetxFriendsPresenter extends GetxController with LoadingManager implements FriendsPresenter {
   final IGetFriends _getFriends;
   final IUndoFriend _undoFriend;
+  final IAddFriend _addFriend;
+  final IFetchSearchPersons _fetchSearchPersons;
 
   GetxFriendsPresenter({
     required IGetFriends getFriends,
     required IUndoFriend undoFriend,
+    required IAddFriend addFriend,
+    required IFetchSearchPersons fetchSearchPersons,
   })  : _getFriends = getFriends,
-        _undoFriend = undoFriend;
+        _undoFriend = undoFriend,
+        _addFriend = addFriend,
+        _fetchSearchPersons = fetchSearchPersons;
 
   late FriendsViewModel _viewModel;
   late UserEntity _user;
@@ -66,5 +75,25 @@ class GetxFriendsPresenter extends GetxController with LoadingManager implements
     } on DomainError catch (e) {
       throw Exception(e.message);
     }
+  }
+
+  @override
+  Future<void> addFriend(UserViewModel person) async {
+    try {
+      final FriendParams params = FriendParams(userId: _user.id!, friendUserId: person.id);
+      await _addFriend.add(params);
+
+      _viewModel.friends.add(person);
+      _viewModel.friends.sort((a, b) => a.name.toString().toLowerCase().compareTo(b.name.toString().toLowerCase()));
+    } on DomainError catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  @override
+  Future<List<UserViewModel>> fetchSearchPersons(String name) async {
+    final List<UserEntity> persons = await _fetchSearchPersons.search(name);
+    persons.removeWhere((e) => e.id == _user.id);
+    return persons.map((entity) => UserViewModel.fromEntity(entity)).toList();
   }
 }

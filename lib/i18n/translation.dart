@@ -20,6 +20,7 @@ abstract class Translation {
   String get resent;
   String get seconds;
   String get back;
+  String get clear;
   String get completingRegistration;
   String get signingUp;
   String get loggingIn;
@@ -107,9 +108,15 @@ abstract class Translation {
   String get goingOut;
   String get confirmLogout;
   String get searchFriend;
+  String get search;
+  String get findPeople;
+  String get messageSearchDelegate;
+  String get messageNotFoundSearchDelegate;
   String get noneFriendAdd;
   String get notFoundFriend;
   String get undoFriend;
+  String get addFriend;
+  String get addingFriend;
   String get undoFriendConfirm;
   String get undoingFriend;
   //endregion

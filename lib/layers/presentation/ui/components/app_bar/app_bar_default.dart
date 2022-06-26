@@ -10,7 +10,7 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
 
   const AppBarDefault({Key? key, required this.title, this.actions = const [], this.onBackPressed}) : super(key: key);
 
-  double get toolbarHeight => 110;
+  static double get toolbarHeight => 110;
 
   @override
   Widget build(BuildContext context) {

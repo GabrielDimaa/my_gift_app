@@ -2,15 +2,15 @@ import '../../../../../i18n/resources.dart';
 import '../../../entities/user_entity.dart';
 import '../../../helpers/errors/domain_error.dart';
 import '../../../repositories/i_friend_repository.dart';
-import '../../abstracts/friend/i_search_friends.dart';
+import '../../abstracts/friend/i_fetch_search_persons.dart';
 
-class SearchFriends implements ISearchFriends {
+class FetchSearchPersons implements IFetchSearchPersons {
   final IFriendRepository friendRepository;
 
-  SearchFriends({required this.friendRepository});
+  FetchSearchPersons({required this.friendRepository});
 
   @override
-  Future<List<UserEntity>> fetch(String name) async {
+  Future<List<UserEntity>> search(String name) async {
     try {
       return await friendRepository.fetchSearchPersons(name);
     } on DomainError {

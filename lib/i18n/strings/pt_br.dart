@@ -48,6 +48,9 @@ class PtBr implements Translation {
   String get back => "Voltar";
 
   @override
+  String get clear => "Limpar";
+
+  @override
   String get completingRegistration => "Concluindo cadastro";
 
   @override
@@ -321,6 +324,18 @@ class PtBr implements Translation {
   String get searchFriend => "Buscar";
 
   @override
+  String get search => "Pesquise";
+
+  @override
+  String get findPeople => "Encontre pessoas";
+
+  @override
+  String get messageSearchDelegate => "Pesquise outras pessoas para adicioná-las aos amigos.";
+
+  @override
+  String get messageNotFoundSearchDelegate => "Nenhum resultado encontrado para";
+
+  @override
   String get noneFriendAdd => "Nenhum amigo adicionado.\nPara você visualizar a lista de desejos dos seus amigos, basta adicioná-los.";
 
   @override
@@ -328,6 +343,12 @@ class PtBr implements Translation {
 
   @override
   String get undoFriend => "Desfazer amizade";
+
+  @override
+  String get addFriend => "Adicionar aos amigos";
+
+  @override
+  String get addingFriend => "Adicionando aos amigos";
 
   @override
   String get undoFriendConfirm => "Tem certeza que deseja desfazer a amizade?";

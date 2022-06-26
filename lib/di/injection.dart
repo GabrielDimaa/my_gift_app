@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../layers/domain/usecases/implements/friend/add_friend.dart';
+import '../layers/domain/usecases/implements/friend/fetch_search_persons.dart';
 import '../layers/domain/usecases/implements/friend/get_friends.dart';
 import '../layers/domain/usecases/implements/friend/undo_friend.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_camera.dart';
@@ -160,6 +162,8 @@ class Injection {
     Get.lazyPut(() => SaveTag(tagRepository: Get.find<TagRepository>()), fenix: true);
     Get.lazyPut(() => GetFriends(friendRepository: Get.find<FriendRepository>()), fenix: true);
     Get.lazyPut(() => UndoFriend(friendRepository: Get.find<FriendRepository>()), fenix: true);
+    Get.lazyPut(() => AddFriend(friendRepository: Get.find<FriendRepository>()), fenix: true);
+    Get.lazyPut(() => FetchSearchPersons(friendRepository: Get.find<FriendRepository>()), fenix: true);
     //endregion
 
     //region Presenters
@@ -205,6 +209,8 @@ class Injection {
       () => GetxFriendsPresenter(
         getFriends: Get.find<GetFriends>(),
         undoFriend: Get.find<UndoFriend>(),
+        addFriend: Get.find<AddFriend>(),
+        fetchSearchPersons: Get.find<FetchSearchPersons>(),
       ),
       fenix: true,
     );
