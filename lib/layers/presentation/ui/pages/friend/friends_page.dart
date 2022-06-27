@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
 
 import '../../../../../i18n/resources.dart';
+import '../../../../../routes/routes.dart';
 import '../../../presenters/friend/friends_presenter.dart';
 import '../../../presenters/friend/getx_friends_presenter.dart';
 import '../../../viewmodels/user_viewmodel.dart';
@@ -70,15 +72,15 @@ class _FriendsPageState extends State<FriendsPage> {
                                 final UserViewModel friend = presenter.viewModel.friends[index];
                                 return PersonListTile(
                                   person: friend,
-                                  isAddFriend: !presenter.viewModel.friends.any((e) => e.id == friend.id),
+                                  isAddFriend: !presenter.viewModel.personIsFriend(friend),
                                   onPressedTrailing: () async {
-                                    if (presenter.viewModel.friends.any((e) => e.id == friend.id)) {
+                                    if (presenter.viewModel.personIsFriend(friend)) {
                                       await _undoFriend(friend.id);
                                     } else {
                                       await _addFriend(friend);
                                     }
                                   },
-                                  onTapTile: () {},
+                                  onTapTile: () async => await _navigateProfile(friend),
                                 );
                               },
                             );
@@ -128,6 +130,19 @@ class _FriendsPageState extends State<FriendsPage> {
       );
     } catch (e) {
       ErrorDialog.show(context: context, content: e.toString());
+    }
+  }
+
+  Future<void> _navigateProfile(UserViewModel person) async {
+    try {
+      await Navigator.pushNamed(context, profileRoute, arguments: person);
+
+      presenter.setLoading(true);
+      await presenter.getFriends();
+    } catch (e) {
+      ErrorDialog.show(context: context, content: e.toString());
+    } finally {
+      presenter.setLoading(false);
     }
   }
 }

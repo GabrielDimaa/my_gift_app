@@ -7,4 +7,5 @@ abstract class IFriendRepository {
   Future<void> undoFriend(FriendParams params);
   Future<FriendsEntity> getFriends(String userId);
   Future<List<UserEntity>> fetchSearchPersons(String name);
+  Future<bool> verifyFriendship(FriendParams params);
 }

@@ -9,6 +9,7 @@ import '../layers/domain/usecases/implements/friend/add_friend.dart';
 import '../layers/domain/usecases/implements/friend/fetch_search_persons.dart';
 import '../layers/domain/usecases/implements/friend/get_friends.dart';
 import '../layers/domain/usecases/implements/friend/undo_friend.dart';
+import '../layers/domain/usecases/implements/friend/verify_friendship.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_camera.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_gallery.dart';
 import '../layers/domain/usecases/implements/login/login_email.dart';
@@ -42,6 +43,7 @@ import '../layers/infra/services/image_crop_service.dart';
 import '../layers/infra/services/image_picker_service.dart';
 import '../layers/presentation/presenters/config/getx_config_presenter.dart';
 import '../layers/presentation/presenters/friend/getx_friends_presenter.dart';
+import '../layers/presentation/presenters/friend/getx_profile_presenter.dart';
 import '../layers/presentation/presenters/login/getx_login_presenter.dart';
 import '../layers/presentation/presenters/signup/getx_signup_presenter.dart';
 import '../layers/presentation/presenters/splash/getx_splash_presenter.dart';
@@ -164,6 +166,7 @@ class Injection {
     Get.lazyPut(() => UndoFriend(friendRepository: Get.find<FriendRepository>()), fenix: true);
     Get.lazyPut(() => AddFriend(friendRepository: Get.find<FriendRepository>()), fenix: true);
     Get.lazyPut(() => FetchSearchPersons(friendRepository: Get.find<FriendRepository>()), fenix: true);
+    Get.lazyPut(() => VerifyFriendship(friendRepository: Get.find<FriendRepository>()), fenix: true);
     //endregion
 
     //region Presenters
@@ -211,6 +214,15 @@ class Injection {
         undoFriend: Get.find<UndoFriend>(),
         addFriend: Get.find<AddFriend>(),
         fetchSearchPersons: Get.find<FetchSearchPersons>(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetxProfilePresenter(
+        addFriend: Get.find<AddFriend>(),
+        undoFriend: Get.find<UndoFriend>(),
+        verifyFriendShip: Get.find<VerifyFriendship>(),
+        getWishlists: Get.find<GetWishlists>(),
       ),
       fenix: true,
     );

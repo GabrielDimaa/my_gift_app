@@ -98,4 +98,19 @@ class FirebaseFriendDataSource implements IFriendDataSource {
       throw UnexpectedInfraError();
     }
   }
+
+  @override
+  Future<bool> verifyFriendship(FriendParams params) async {
+    try {
+      final collUser = firestore.collection(constantUsersReference).doc(params.userId);
+      final snapshot = await collUser.collection(constantFriendsReference).doc(params.friendUserId).get();
+      return snapshot.exists;
+    } on FirebaseException catch (e) {
+      throw e.getInfraError;
+    } on InfraError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedInfraError();
+    }
+  }
 }

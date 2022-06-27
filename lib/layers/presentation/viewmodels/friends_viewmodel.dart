@@ -10,6 +10,8 @@ class FriendsViewModel {
 
   void setFriends(List<UserViewModel> value) => _friends.value = value;
 
+  bool personIsFriend(UserViewModel person) => friends.any((e) => e.id == person.id);
+
   FriendsViewModel({required List<UserViewModel> friends}) {
     _friends.value = friends;
   }

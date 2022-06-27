@@ -133,4 +133,40 @@ void main() {
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
   });
+
+  group("getFriends", () {
+    final FriendParams params = ParamsFactory.friend();
+    final bool isFriendship = faker.randomGenerator.boolean();
+
+    setUp(() {
+      dataSourceSpy = FirebaseFriendDataSourceSpy.verify(verified: isFriendship);
+      sut = FriendRepository(friendDataSource: dataSourceSpy);
+    });
+
+    setUpAll(() => registerFallbackValue(params));
+
+    test("Deve chamar verifyFriendship com valores corretos", () async {
+      await sut.verifyFriendship(params);
+      verify(() => dataSourceSpy.verifyFriendship(params));
+    });
+
+    test("Deve chamar verifyFriendship e retornar os valores com sucesso", () async {
+      final bool value = await sut.verifyFriendship(params);
+      expect(value, isFriendship);
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      dataSourceSpy.mockVerifyFriendshipError(error: ConnectionInfraError());
+
+      final Future future = sut.verifyFriendship(params);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      dataSourceSpy.mockVerifyFriendshipError();
+
+      final Future future = sut.verifyFriendship(params);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+  });
 }

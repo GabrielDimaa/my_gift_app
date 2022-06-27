@@ -11,3 +11,4 @@ const String wishlistRegisterRoute = "/wishlist_register";
 const String wishRegisterRoute = "/wish_register";
 const String wishDetailsRoute = "/wish_details";
 const String friendsRoute = "/friends";
+const String profileRoute = "/profile";

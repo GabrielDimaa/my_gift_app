@@ -57,4 +57,15 @@ class FriendRepository implements IFriendRepository {
       throw UnexpectedInfraError().toDomainError();
     }
   }
+
+  @override
+  Future<bool> verifyFriendship(FriendParams params) async {
+    try {
+      return await friendDataSource.verifyFriendship(params);
+    } on InfraError catch (e) {
+      throw e.toDomainError();
+    } catch (e) {
+      throw UnexpectedInfraError().toDomainError();
+    }
+  }
 }

@@ -20,6 +20,10 @@ class FirebaseFriendDataSourceSpy extends Mock implements IFriendDataSource {
     mockFetchSearchFriends(models);
   }
 
+  FirebaseFriendDataSourceSpy.verify({required bool verified}) {
+    mockVerifyFriendship(verified);
+  }
+
   //region addFriend
   When mockAddFriendCall() => when(() => addFriend(any()));
   void mockAddFriend() => mockAddFriendCall().thenAnswer((_) => Future.value());
@@ -42,5 +46,11 @@ class FirebaseFriendDataSourceSpy extends Mock implements IFriendDataSource {
   When mockFetchSearchFriendsCall() => when(() => fetchSearchPersons(any()));
   void mockFetchSearchFriends(List<UserModel> models) => mockFetchSearchFriendsCall().thenAnswer((_) => Future.value(models));
   void mockFetchSearchFriendsError({Exception? error}) => mockFetchSearchFriendsCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region verifyFriendship
+  When mockVerifyFriendshipCall() => when(() => verifyFriendship(any()));
+  void mockVerifyFriendship(bool value) => mockVerifyFriendshipCall().thenAnswer((_) => Future.value(value));
+  void mockVerifyFriendshipError({Exception? error}) => mockVerifyFriendshipCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

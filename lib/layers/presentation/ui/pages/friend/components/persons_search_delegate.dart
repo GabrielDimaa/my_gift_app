@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../../../../../i18n/resources.dart';
+import '../../../../../../routes/routes.dart';
 import '../../../../presenters/friend/friends_presenter.dart';
 import '../../../../viewmodels/user_viewmodel.dart';
 import '../../../components/circular_loading.dart';
@@ -112,15 +114,15 @@ class PersonsSearchDelegate extends SearchDelegate {
                   return Obx(
                     () => PersonListTile(
                       person: person,
-                      isAddFriend: !presenter.viewModel.friends.any((e) => e.id == person.id),
+                      isAddFriend: !presenter.viewModel.personIsFriend(person),
                       onPressedTrailing: () async {
-                        if (presenter.viewModel.friends.any((e) => e.id == person.id)) {
+                        if (presenter.viewModel.personIsFriend(person)) {
                           await _undoFriend(context: context, friendUserId: person.id);
                         } else {
                           await _addFriend(context: context, person: person);
                         }
                       },
-                      onTapTile: () async => await _navigateProfile(),
+                      onTapTile: () async => await _navigateProfile(context, person),
                     ),
                   );
                 },
@@ -185,7 +187,16 @@ class PersonsSearchDelegate extends SearchDelegate {
     }
   }
 
-  Future<void> _navigateProfile() async {
-    //TODO: implement
+  Future<void> _navigateProfile(BuildContext context, UserViewModel person) async {
+    //Retorna alguma ação na tela de perfil. (add/undo)
+    final bool? add = await Navigator.pushNamed(context, profileRoute, arguments: person) as bool?;
+
+    if (add != null) {
+      if (add) {
+        presenter.viewModel.friends.addAllIf(!presenter.viewModel.personIsFriend(person), [person]);
+      } else {
+        presenter.viewModel.friends.removeWhere((e) => e.id == person.id);
+      }
+    }
   }
 }

@@ -20,6 +20,10 @@ class FriendRepositorySpy extends Mock implements IFriendRepository {
     mockFetchSearchFriends(entities);
   }
 
+  FriendRepositorySpy.verify({required bool verified}) {
+    mockVerifyFriendship(verified);
+  }
+
   //region addFriend
   When mockAddFriendCall() => when(() => addFriend(any()));
   void mockAddFriend() => mockAddFriendCall().thenAnswer((_) => Future.value());
@@ -42,5 +46,11 @@ class FriendRepositorySpy extends Mock implements IFriendRepository {
   When mockFetchSearchFriendsCall() => when(() => fetchSearchPersons(any()));
   void mockFetchSearchFriends(List<UserEntity> entities) => mockFetchSearchFriendsCall().thenAnswer((_) => Future.value(entities));
   void mockFetchSearchFriendsError({Exception? error}) => mockFetchSearchFriendsCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region verifyFriendship
+  When mockVerifyFriendshipCall() => when(() => verifyFriendship(any()));
+  void mockVerifyFriendship(bool value) => mockVerifyFriendshipCall().thenAnswer((_) => Future.value(value));
+  void mockVerifyFriendshipError({Exception? error}) => mockVerifyFriendshipCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

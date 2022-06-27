@@ -42,6 +42,7 @@ abstract class Translation {
   String get close;
   String get wishlists;
   String get notFoundWishlists;
+  String get noneWishlists;
   String get notFoundWishes;
   String get noneWishes;
   String get createWishlist;
@@ -115,10 +116,13 @@ abstract class Translation {
   String get noneFriendAdd;
   String get notFoundFriend;
   String get undoFriend;
+  String get undo;
+  String get add;
   String get addFriend;
   String get addingFriend;
   String get undoFriendConfirm;
   String get undoingFriend;
+  String get profile;
   //endregion
 
   //region Validation
@@ -180,5 +184,6 @@ abstract class Translation {
   String get priceMinMaxError;
   String get addFriendError;
   String get undoFriendError;
+  String get getProfileError;
   //endregion
 }

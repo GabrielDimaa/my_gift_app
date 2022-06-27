@@ -7,4 +7,5 @@ abstract class IFriendDataSource {
   Future<void> undoFriend(FriendParams params);
   Future<FriendsModel> getFriends(String userId);
   Future<List<UserModel>> fetchSearchPersons(String name);
+  Future<bool> verifyFriendship(FriendParams params);
 }

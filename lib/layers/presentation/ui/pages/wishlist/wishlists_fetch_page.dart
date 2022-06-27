@@ -12,6 +12,7 @@ import '../../components/circular_loading.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/not_found.dart';
 import '../../components/padding/padding_default.dart';
+import 'components/wishlist_list_tile.dart';
 
 class WishlistsFetchPage extends StatefulWidget {
   const WishlistsFetchPage({Key? key}) : super(key: key);
@@ -60,31 +61,14 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
                             ],
                           );
                         } else {
-                          return ListView.builder(
+                          return ListView.separated(
                             itemCount: presenter.viewModel.wishlists.length,
+                            separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
                             itemBuilder: (_, index) {
                               final WishlistViewModel wishlist = presenter.viewModel.wishlists[index];
-                              return ListTile(
+                              return WishlistListTile(
+                                viewModel: wishlist,
                                 onTap: () async => await _navigateWishlistDetails(wishlist, index),
-                                contentPadding: EdgeInsets.zero,
-                                visualDensity: const VisualDensity(horizontal: 0, vertical: -2),
-                                title: Text(wishlist.description!),
-                                subtitle: Text(
-                                  wishlist.tag?.name ?? "",
-                                  style: TextStyle(
-                                    color: Color(wishlist.tag?.color ?? 0),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                trailing: const Icon(
-                                  Icons.chevron_right,
-                                  size: 32,
-                                ),
-                                shape: const UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Color(0xFF303134)),
-                                  borderRadius: BorderRadius.zero,
-                                ),
                               );
                             },
                           );

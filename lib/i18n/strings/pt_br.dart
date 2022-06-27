@@ -126,6 +126,9 @@ class PtBr implements Translation {
   String get notFoundWishlists => "Nenhuma lista de desejos encontrada.";
 
   @override
+  String get noneWishlists => "Nenhuma lista adicionada neste perfil.";
+
+  @override
   String get notFoundWishes => "Nenhum desejo encontrado.";
 
   @override
@@ -345,6 +348,12 @@ class PtBr implements Translation {
   String get undoFriend => "Desfazer amizade";
 
   @override
+  String get undo => "Desfazer";
+
+  @override
+  String get add => "Adicionar";
+
+  @override
   String get addFriend => "Adicionar aos amigos";
 
   @override
@@ -355,6 +364,9 @@ class PtBr implements Translation {
 
   @override
   String get undoingFriend => "Desfazendo amizade";
+
+  @override
+  String get profile => "Perfil";
   //endregion
 
   //region Validation
@@ -524,5 +536,8 @@ class PtBr implements Translation {
 
   @override
   String get undoFriendError => "Não foi possível adicionar amigo. Tente novamente.";
+
+  @override
+  String get getProfileError => "Não foi possível carregar os dados do perfil.";
   //endregion
 }
