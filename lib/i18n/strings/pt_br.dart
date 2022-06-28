@@ -539,5 +539,8 @@ class PtBr implements Translation {
 
   @override
   String get getProfileError => "Não foi possível carregar os dados do perfil.";
+
+  @override
+  String get noAccessError => "Você não tem acesso para editar.";
   //endregion
 }

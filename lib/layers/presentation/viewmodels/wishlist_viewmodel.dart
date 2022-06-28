@@ -7,6 +7,7 @@ import './wish_viewmodel.dart';
 
 class WishlistViewModel {
   final RxnString _id = RxnString();
+  final RxnString _userId = RxnString();
   final RxnString _description = RxnString();
   final RxList<WishViewModel> _wishes = RxList<WishViewModel>();
   final Rxn<TagViewModel> _tag = Rxn<TagViewModel>();
@@ -15,6 +16,7 @@ class WishlistViewModel {
   bool? deleted = false;
 
   String? get id => _id.value;
+  String? get userId => _userId.value;
   String? get description => _description.value;
   List<WishViewModel> get wishes => _wishes;
   TagViewModel? get tag => _tag.value;
@@ -23,8 +25,9 @@ class WishlistViewModel {
   void setWishes(List<WishViewModel> value) => _wishes.value = value;
   void setTag(TagViewModel? value) => _tag.value = value;
 
-  WishlistViewModel({String? id, String? description, List<WishViewModel>? wishes, TagViewModel? tag}) {
+  WishlistViewModel({String? id, String? userId, String? description, List<WishViewModel>? wishes, TagViewModel? tag}) {
     _id.value = id;
+    _userId.value = userId;
     _description.value = description;
     _wishes.value = wishes ?? [];
     _tag.value = tag;
@@ -43,6 +46,7 @@ class WishlistViewModel {
   WishlistViewModel clone() {
     return WishlistViewModel(
       id: id,
+      userId: userId,
       description: description,
       wishes: wishes.map((e) => e.clone()).toList(),
       tag: tag?.clone(),
@@ -52,6 +56,7 @@ class WishlistViewModel {
   factory WishlistViewModel.fromEntity(WishlistEntity entity) {
     return WishlistViewModel(
       id: entity.id,
+      userId: entity.user.id,
       description: entity.description,
       wishes: entity.wishes.map((e) => WishViewModel.fromEntity(e)).toList(),
       tag: TagViewModel.fromEntity(entity.tag),

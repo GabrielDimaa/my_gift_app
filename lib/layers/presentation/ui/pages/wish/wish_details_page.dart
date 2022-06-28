@@ -4,11 +4,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../../extensions/double_extension.dart';
 import '../../../../../i18n/resources.dart';
+import '../../../../../monostates/user_global.dart';
 import '../../../../../routes/routes.dart';
+import '../../../../domain/entities/user_entity.dart';
 import '../../../viewmodels/wish_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
 import '../../components/dialogs/confirm_dialog.dart';
+import '../../components/dialogs/error_dialog.dart';
 import '../../components/images/image_loader_default.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
@@ -24,6 +27,8 @@ class WishDetailsPage extends StatefulWidget {
 }
 
 class _WishDetailsPageState extends State<WishDetailsPage> {
+  final UserEntity _user = UserGlobal().getUser()!;
+
   ColorScheme get colorScheme => Theme.of(context).colorScheme;
 
   TextTheme get textTheme => Theme.of(context).textTheme;
@@ -35,6 +40,7 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
         title: R.string.wish,
         actions: [
           ButtonAction(
+            visible: _user.id == widget.viewModel.userId,
             onPressed: () async => await _edit(),
             label: R.string.edit,
             icon: Icons.edit_outlined,
@@ -133,6 +139,8 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
   //region Events
 
   Future<void> _edit() async {
+    if (_user.id != widget.viewModel.userId) return await ErrorDialog.show(context: context, content: R.string.noAccessError);
+
     final WishViewModel? viewModel = await Navigator.pushNamed(context, wishRegisterRoute, arguments: {'viewModel': widget.viewModel.clone()}) as WishViewModel?;
     if (viewModel != null) {
       if (viewModel.deleted ?? false) {

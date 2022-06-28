@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 import '../../../../../i18n/resources.dart';
+import '../../../../../monostates/user_global.dart';
+import '../../../../domain/entities/user_entity.dart';
 import '../../../../domain/entities/wish_entity.dart';
 import '../../../../domain/helpers/errors/domain_error.dart';
 import '../../../../domain/usecases/abstracts/wish/i_get_wishes.dart';
@@ -15,6 +17,7 @@ class GetxWishlistDetailsPresenter extends GetxController with LoadingManager im
   GetxWishlistDetailsPresenter({required IGetWishes getWishes}) : _getWishes = getWishes;
 
   final Rx<WishlistViewModel> _viewModel = Rx<WishlistViewModel>(WishlistViewModel());
+  late UserEntity _user;
 
   @override
   WishlistViewModel get viewModel => _viewModel.value;
@@ -23,10 +26,14 @@ class GetxWishlistDetailsPresenter extends GetxController with LoadingManager im
   void setViewModel(WishlistViewModel value) => _viewModel.value = value;
 
   @override
+  bool get canEdit => viewModel.userId == _user.id;
+
+  @override
   Future<void> initialize([WishlistViewModel? viewModel]) async {
     try {
       setLoading(true);
 
+      _user = UserGlobal().getUser()!;
       if (viewModel == null) throw Exception(R.string.unexpectedError);
       setViewModel(viewModel);
 

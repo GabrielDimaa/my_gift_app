@@ -43,6 +43,7 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
         title: R.string.wishlist,
         actions: [
           ButtonAction(
+            visible: presenter.canEdit,
             label: R.string.edit,
             icon: Icons.edit_outlined,
             onPressed: () async => await _edit(),
@@ -141,6 +142,8 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
   }
 
   Future<void> _edit() async {
+    if (!presenter.canEdit) return await ErrorDialog.show(context: context, content: R.string.noAccessError);
+
     final WishlistViewModel? wishlistViewModel = await Navigator.pushNamed(context, wishlistRegisterRoute, arguments: widget.viewModel.clone()) as WishlistViewModel?;
     if (wishlistViewModel != null) {
       if (wishlistViewModel.deleted ?? false) {

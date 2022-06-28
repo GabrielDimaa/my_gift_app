@@ -5,6 +5,7 @@ import '../../domain/entities/wish_entity.dart';
 
 class WishViewModel {
   final RxnString _id = RxnString();
+  final RxnString _userId = RxnString();
   final RxnString _wishlistId = RxnString();
   final RxnString _description = RxnString();
   final RxnString _image = RxnString();
@@ -18,6 +19,7 @@ class WishViewModel {
   bool? deleted = false;
 
   String? get id => _id.value;
+  String? get userId => _userId.value;
   String? get wishlistId => _wishlistId.value;
   String? get description => _description.value;
   String? get image => _image.value;
@@ -38,6 +40,7 @@ class WishViewModel {
 
   WishViewModel({
     String? id,
+    String? userId,
     String? wishlistId,
     String? description,
     String? image,
@@ -48,6 +51,7 @@ class WishViewModel {
     DateTime? createdAt,
   }) {
     _id.value = id;
+    _userId.value = userId;
     _wishlistId.value = wishlistId;
     _description.value = description;
     _image.value = image;
@@ -76,6 +80,7 @@ class WishViewModel {
   WishViewModel clone() {
     return WishViewModel(
       id: id,
+      userId: userId,
       wishlistId: wishlistId,
       description: description,
       image: image,
@@ -100,6 +105,7 @@ class WishViewModel {
   factory WishViewModel.fromEntity(WishEntity entity) {
     return WishViewModel(
       id: entity.id,
+      userId: entity.user.id,
       wishlistId: entity.wishlistId,
       description: entity.description,
       image: entity.image,

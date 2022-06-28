@@ -185,5 +185,6 @@ abstract class Translation {
   String get addFriendError;
   String get undoFriendError;
   String get getProfileError;
+  String get noAccessError;
   //endregion
 }
