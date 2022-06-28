@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../domain/helpers/params/friend_params.dart';
-import '../helpers/errors/infra_error.dart';
-import '../helpers/extensions/firebase_exception_extension.dart';
-import '../models/friends_model.dart';
-import '../models/user_model.dart';
+import '../../../domain/helpers/params/friend_params.dart';
+import '../../helpers/errors/infra_error.dart';
+import '../../helpers/extensions/firebase_exception_extension.dart';
+import '../../models/friends_model.dart';
+import '../../models/user_model.dart';
 import 'constants/collection_reference.dart';
-import 'i_friend_datasource.dart';
-import 'i_user_account_datasource.dart';
+import '../i_friend_datasource.dart';
+import '../i_user_account_datasource.dart';
 
 class FirebaseFriendDataSource implements IFriendDataSource {
   final FirebaseFirestore firestore;

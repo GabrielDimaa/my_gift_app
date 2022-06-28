@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../domain/helpers/params/login_params.dart';
-import '../helpers/errors/infra_error.dart';
-import '../helpers/extensions/firebase_auth_exception_extension.dart';
-import '../helpers/extensions/firebase_exception_extension.dart';
-import '../models/user_model.dart';
-import './storage/i_storage_datasource.dart';
+import '../../../domain/helpers/params/login_params.dart';
+import '../../helpers/errors/infra_error.dart';
+import '../../helpers/extensions/firebase_auth_exception_extension.dart';
+import '../../helpers/extensions/firebase_exception_extension.dart';
+import '../../models/user_model.dart';
 import 'constants/collection_reference.dart';
-import 'i_user_account_datasource.dart';
+import '../i_user_account_datasource.dart';
+import 'storage/i_storage_datasource.dart';
 
 class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   final FirebaseAuth firebaseAuth;

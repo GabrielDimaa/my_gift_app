@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../helpers/extensions/firebase_exception_extension.dart';
-import '../models/user_model.dart';
-import './constants/collection_reference.dart';
-import '../helpers/errors/infra_error.dart';
-import 'i_tag_datasource.dart';
-import '../models/tag_model.dart';
-import 'i_user_account_datasource.dart';
+import '../../helpers/extensions/firebase_exception_extension.dart';
+import '../../models/user_model.dart';
+import 'constants/collection_reference.dart';
+import '../../helpers/errors/infra_error.dart';
+import '../i_tag_datasource.dart';
+import '../../models/tag_model.dart';
+import '../i_user_account_datasource.dart';
 
 class FirebaseTagDataSource implements ITagDataSource {
   final FirebaseFirestore firestore;
