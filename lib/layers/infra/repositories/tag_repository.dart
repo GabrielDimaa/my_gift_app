@@ -15,9 +15,8 @@ class TagRepository implements ITagRepository {
       final List<TagModel> tagsModel = await tagDataSource.getAll(userId);
       return tagsModel.map((e) => e.toEntity()).toList();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -27,9 +26,8 @@ class TagRepository implements ITagRepository {
       final TagModel tagModel = await tagDataSource.create(TagModel.fromEntity(entity));
       return tagModel.toEntity();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -39,9 +37,8 @@ class TagRepository implements ITagRepository {
       final TagModel tagModel = await tagDataSource.update(TagModel.fromEntity(entity));
       return tagModel.toEntity();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -50,9 +47,8 @@ class TagRepository implements ITagRepository {
     try {
       await tagDataSource.delete(id);
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 }

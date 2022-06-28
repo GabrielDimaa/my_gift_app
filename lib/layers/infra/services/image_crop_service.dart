@@ -14,9 +14,8 @@ class ImageCropService implements IImageCropService {
     try {
       return await imageCropperFacade.crop(image);
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 }

@@ -16,9 +16,8 @@ class UserAccountRepository implements IUserAccountRepository {
       final UserModel userModel = await userAccountDataSource.authWithEmail(params);
       return userModel.toEntity();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -28,9 +27,8 @@ class UserAccountRepository implements IUserAccountRepository {
       final UserModel userModel = await userAccountDataSource.signUpWithEmail(UserModel.fromEntity(entity));
       return userModel.toEntity();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -39,9 +37,8 @@ class UserAccountRepository implements IUserAccountRepository {
     try {
       await userAccountDataSource.sendVerificationEmail(userId);
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -50,9 +47,8 @@ class UserAccountRepository implements IUserAccountRepository {
     try {
       return await userAccountDataSource.checkEmailVerified(userId);
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -62,9 +58,8 @@ class UserAccountRepository implements IUserAccountRepository {
       final UserModel? userModel = await userAccountDataSource.getUserLogged();
       return userModel?.toEntity();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -73,9 +68,8 @@ class UserAccountRepository implements IUserAccountRepository {
     try {
       await userAccountDataSource.logout();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 }

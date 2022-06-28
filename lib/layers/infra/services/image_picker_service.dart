@@ -14,9 +14,8 @@ class ImagePickerService implements IImagePickerService {
     try {
       return await imagePickerFacade.getFromCamera();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -25,9 +24,8 @@ class ImagePickerService implements IImagePickerService {
     try {
       return await imagePickerFacade.getFromGallery();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 }

@@ -17,9 +17,8 @@ class FriendRepository implements IFriendRepository {
     try {
       await friendDataSource.addFriend(params);
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -28,9 +27,8 @@ class FriendRepository implements IFriendRepository {
     try {
       await friendDataSource.undoFriend(params);
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -40,9 +38,8 @@ class FriendRepository implements IFriendRepository {
       final FriendsModel friendsModel = await friendDataSource.getFriends(userId);
       return friendsModel.toEntity();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -52,9 +49,8 @@ class FriendRepository implements IFriendRepository {
       final List<UserModel> friendsModel = await friendDataSource.fetchSearchPersons(name);
       return friendsModel.map((e) => e.toEntity()).toList();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -63,9 +59,8 @@ class FriendRepository implements IFriendRepository {
     try {
       return await friendDataSource.verifyFriendship(params);
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 }

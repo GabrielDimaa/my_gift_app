@@ -13,9 +13,8 @@ class ConfigRepository implements IConfigRepository {
     try {
       await configDataSource.saveTheme(themeMode.index);
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -27,9 +26,8 @@ class ConfigRepository implements IConfigRepository {
 
       return ThemeModeParse.fromIndex(themeInt);
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 }

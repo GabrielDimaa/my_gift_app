@@ -15,9 +15,8 @@ class WishRepository implements IWishRepository {
       final WishModel wishModel = await wishDataSource.getById(id);
       return wishModel.toEntity();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -27,9 +26,8 @@ class WishRepository implements IWishRepository {
       final List<WishModel> wishesModel = await wishDataSource.getByWishlist(wishlistId);
       return wishesModel.map((e) => e.toEntity()).toList();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -39,9 +37,8 @@ class WishRepository implements IWishRepository {
       final WishModel wishModel = await wishDataSource.create(WishModel.fromEntity(entity));
       return wishModel.toEntity();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -51,9 +48,8 @@ class WishRepository implements IWishRepository {
       final WishModel wishModel = await wishDataSource.update(WishModel.fromEntity(entity));
       return wishModel.toEntity();
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 
@@ -62,9 +58,8 @@ class WishRepository implements IWishRepository {
     try {
       await wishDataSource.delete(id);
     } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();
-    } catch (e) {
-      throw UnexpectedInfraError().toDomainError();
     }
   }
 }
