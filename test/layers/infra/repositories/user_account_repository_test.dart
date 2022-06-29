@@ -69,11 +69,18 @@ void main() {
       expect(future, throwsA(isA<EmailInvalidDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedInfraError", () {
       userAccountDataSourceSpy.mockAuthWithEmailError(UnexpectedInfraError());
       final Future future = sut.authWithEmail(loginParams);
 
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
+      userAccountDataSourceSpy.mockAuthWithEmailError(Exception());
+      final Future future = sut.authWithEmail(loginParams);
+
+      expect(future, throwsA(isA()));
     });
 
     test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
@@ -104,11 +111,18 @@ void main() {
       expect(entity.equals(userModel.toEntity()), true);
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedInfraError", () {
       userAccountDataSourceSpy.mockSignUpWithEmailError(UnexpectedInfraError());
       final Future future = sut.signUpWithEmail(userModel.toEntity());
 
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
+      userAccountDataSourceSpy.mockSignUpWithEmailError(Exception());
+      final Future future = sut.signUpWithEmail(userModel.toEntity());
+
+      expect(future, throwsA(isA()));
     });
 
     test("Deve throw UnexpectedDomainError", () {
@@ -160,11 +174,18 @@ void main() {
       expect(future, throwsA(isA<NotFoundDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedInfraError", () {
       userAccountDataSourceSpy.mockSendVerificationEmailError(UnexpectedInfraError());
 
       final Future future = sut.sendVerificationEmail(userId);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
+      userAccountDataSourceSpy.mockSendVerificationEmailError(Exception());
+
+      final Future future = sut.sendVerificationEmail(userId);
+      expect(future, throwsA(isA()));
     });
 
     test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
@@ -202,11 +223,18 @@ void main() {
       expect(future, throwsA(isA<NotFoundDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedInfraError", () {
       userAccountDataSourceSpy.mockCheckEmailVerifiedError(UnexpectedInfraError());
 
       final Future future = sut.checkEmailVerified(userId);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
+      userAccountDataSourceSpy.mockCheckEmailVerifiedError(Exception());
+
+      final Future future = sut.checkEmailVerified(userId);
+      expect(future, throwsA(isA()));
     });
 
     test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
@@ -244,11 +272,18 @@ void main() {
       expect(user, null);
     });
 
+    test("Deve throw UnexpectedInfraError", () {
+      userAccountDataSourceSpy.mockGetUserLoggedError(UnexpectedInfraError());
+
+      final Future future = sut.getUserLogged();
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
     test("Deve throw UnexpectedDomainError", () {
       userAccountDataSourceSpy.mockGetUserLoggedError(Exception());
 
       final Future future = sut.getUserLogged();
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA()));
     });
   });
 
@@ -258,11 +293,18 @@ void main() {
       verify(() => userAccountDataSourceSpy.logout());
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedInfraError", () {
+      userAccountDataSourceSpy.mockLogoutError(UnexpectedInfraError());
+
+      final Future future = sut.logout();
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
       userAccountDataSourceSpy.mockLogoutError(Exception());
 
       final Future future = sut.logout();
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<Exception>()));
     });
   });
 }

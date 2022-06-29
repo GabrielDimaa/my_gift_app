@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../infra/repositories/mocks/friend_repository_spy.dart';
-import '../../entities/entity_extension.dart';
 import '../../entities/entity_factory.dart';
 
 void main() {

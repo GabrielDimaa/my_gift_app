@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:desejando_app/layers/infra/helpers/errors/infra_error.dart';
 import 'package:desejando_app/layers/infra/services/image_crop_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -37,10 +37,17 @@ void main() {
     expect(file, null);
   });
 
-  test("Deve throw UnexpectedDomainError", () {
+  test("Deve throw Exception", () {
     imageCropperFacadeSpy.mockCropError();
 
     final Future future = sut.crop(fileResult);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA()));
+  });
+
+  test("Deve throw UnexpectedInfraError", () {
+    imageCropperFacadeSpy.mockCropError(error: UnexpectedInfraError());
+
+    final Future future = sut.crop(fileResult);
+    expect(future, throwsA(isA<UnexpectedInfraError>()));
   });
 }

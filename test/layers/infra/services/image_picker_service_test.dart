@@ -41,11 +41,18 @@ void main() {
       expect(future, throwsA(isA<WithoutPermissionDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw Exception", () {
       imagePickerFacadeSpy.mockGetFromCameraError();
 
       final Future future = sut.getFromCamera();
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA()));
+    });
+
+    test("Deve throw UnexpectedInfraError", () {
+      imagePickerFacadeSpy.mockGetFromCameraError(error: UnexpectedInfraError());
+
+      final Future future = sut.getFromCamera();
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
     });
   });
 
@@ -69,11 +76,18 @@ void main() {
       expect(future, throwsA(isA<WithoutPermissionDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedInfraError", () {
+      imagePickerFacadeSpy.mockGetFromGalleryError(error: UnexpectedInfraError());
+
+      final Future future = sut.getFromGallery();
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
       imagePickerFacadeSpy.mockGetFromGalleryError();
 
       final Future future = sut.getFromGallery();
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA()));
     });
   });
 }

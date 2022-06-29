@@ -31,18 +31,25 @@ void main() {
       verify(() => dataSourceSpy.addFriend(params));
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+    test("Deve throw ConnectionInfraError", () {
       dataSourceSpy.mockAddFriendError(error: ConnectionInfraError());
 
       final Future future = sut.addFriend(params);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedInfraError", () {
+      dataSourceSpy.mockAddFriendError(error: UnexpectedInfraError());
+
+      final Future future = sut.addFriend(params);
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
       dataSourceSpy.mockAddFriendError();
 
       final Future future = sut.addFriend(params);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA()));
     });
   });
 
@@ -61,18 +68,25 @@ void main() {
       verify(() => dataSourceSpy.undoFriend(params));
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+    test("Deve throw ConnectionInfraError", () {
       dataSourceSpy.mockUndoFriendError(error: ConnectionInfraError());
 
       final Future future = sut.undoFriend(params);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedInfraError", () {
+      dataSourceSpy.mockUndoFriendError(error: UnexpectedInfraError());
+
+      final Future future = sut.undoFriend(params);
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
       dataSourceSpy.mockUndoFriendError();
 
       final Future future = sut.undoFriend(params);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA()));
     });
   });
 
@@ -90,22 +104,29 @@ void main() {
       verify(() => dataSourceSpy.getFriends(userId));
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+    test("Deve throw ConnectionInfraError", () {
       dataSourceSpy.mockGetFriendsError(error: ConnectionInfraError());
 
       final Future future = sut.getFriends(userId);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedInfraError", () {
+      dataSourceSpy.mockGetFriendsError(error: UnexpectedInfraError());
+
+      final Future future = sut.getFriends(userId);
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
       dataSourceSpy.mockGetFriendsError();
 
       final Future future = sut.getFriends(userId);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA()));
     });
   });
 
-  group("getFriends", () {
+  group("fetchSearchPersons", () {
     final String name = faker.person.name();
     final List<UserModel> models = ModelFactory.users();
 
@@ -119,22 +140,29 @@ void main() {
       verify(() => dataSourceSpy.fetchSearchPersons(name));
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+    test("Deve throw ConnectionInfraError", () {
       dataSourceSpy.mockFetchSearchFriendsError(error: ConnectionInfraError());
 
       final Future future = sut.fetchSearchPersons(name);
       expect(future, throwsA(isA<UnexpectedDomainError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedInfraError", () {
+      dataSourceSpy.mockFetchSearchFriendsError(error: UnexpectedInfraError());
+
+      final Future future = sut.fetchSearchPersons(name);
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
       dataSourceSpy.mockFetchSearchFriendsError();
 
       final Future future = sut.fetchSearchPersons(name);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA()));
     });
   });
 
-  group("getFriends", () {
+  group("verifyFriendship", () {
     final FriendParams params = ParamsFactory.friend();
     final bool isFriendship = faker.randomGenerator.boolean();
 
@@ -155,7 +183,7 @@ void main() {
       expect(value, isFriendship);
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+    test("Deve throw ConnectionInfraError", () {
       dataSourceSpy.mockVerifyFriendshipError(error: ConnectionInfraError());
 
       final Future future = sut.verifyFriendship(params);
@@ -163,10 +191,17 @@ void main() {
     });
 
     test("Deve throw UnexpectedDomainError", () {
+      dataSourceSpy.mockVerifyFriendshipError(error: UnexpectedInfraError());
+
+      final Future future = sut.verifyFriendship(params);
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
       dataSourceSpy.mockVerifyFriendshipError();
 
       final Future future = sut.verifyFriendship(params);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA()));
     });
   });
 }
