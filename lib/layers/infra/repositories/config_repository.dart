@@ -30,4 +30,14 @@ class ConfigRepository implements IConfigRepository {
       throw e.toDomainError();
     }
   }
+
+  @override
+  Future<void> deleteConfigs() async {
+    try {
+      await configDataSource.deleteConfigs();
+    } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
+      throw e.toDomainError();
+    }
+  }
 }

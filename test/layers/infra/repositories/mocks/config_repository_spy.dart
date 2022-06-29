@@ -11,6 +11,10 @@ class ConfigRepositorySpy extends Mock implements IConfigRepository {
     mockGetTheme(value);
   }
 
+  ConfigRepositorySpy.deleteConfigs() {
+    mockDeleteConfigs();
+  }
+
   //region addFriend
   When mockSaveThemeCall() => when(() => saveTheme(any()));
   void mockSaveTheme() => mockSaveThemeCall().thenAnswer((_) => Future.value());
@@ -19,7 +23,13 @@ class ConfigRepositorySpy extends Mock implements IConfigRepository {
 
   //region addFriend
   When mockGetThemeCall() => when(() => getTheme());
-  void mockGetTheme(ThemeMode value) => mockGetThemeCall().thenAnswer((_) => Future.value(value));
+  void mockGetTheme(ThemeMode? value) => mockGetThemeCall().thenAnswer((_) => Future.value(value));
   void mockGetThemeError({Exception? error}) => mockGetThemeCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region deleteConfigs
+  When mockDeleteConfigsCall() => when(() => deleteConfigs());
+  void mockDeleteConfigs() => mockDeleteConfigsCall().thenAnswer((_) => Future.value());
+  void mockDeleteConfigsError({Exception? error}) => mockDeleteConfigsCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

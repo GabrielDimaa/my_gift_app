@@ -17,4 +17,9 @@ class SharedPreferencesConfigDataSource implements IConfigDataSource {
   Future<int?> getTheme() async {
     return sharedPreferences.getInt(constantThemeModeKey);
   }
+
+  @override
+  Future<void> deleteConfigs() async {
+    await sharedPreferences.remove(constantThemeModeKey);
+  }
 }

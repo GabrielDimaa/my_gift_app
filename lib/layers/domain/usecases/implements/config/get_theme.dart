@@ -16,7 +16,7 @@ class GetTheme implements IGetTheme {
     } on DomainError {
       rethrow;
     } catch (e) {
-      throw UnexpectedDomainError(R.string.saveError);
+      throw UnexpectedDomainError(R.string.getError);
     }
   }
 }

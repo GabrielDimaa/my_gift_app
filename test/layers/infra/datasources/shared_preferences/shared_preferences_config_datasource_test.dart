@@ -11,23 +11,72 @@ void main() {
   late SharedPreferencesSpy prefsSpy;
 
   const String key = "theme_mode";
-  const ThemeMode themeMode = ThemeMode.dark;
-  const int themeIndex = 0;
 
-  setUp(() {
-    prefsSpy = SharedPreferencesSpy.setInt(faker.randomGenerator.boolean());
-    sut = SharedPreferencesConfigDataSource(sharedPreferences: prefsSpy);
+  group("saveTheme", () {
+    const ThemeMode themeMode = ThemeMode.dark;
+    const int themeIndex = 0;
+
+    setUp(() {
+      prefsSpy = SharedPreferencesSpy.setInt(faker.randomGenerator.boolean());
+      sut = SharedPreferencesConfigDataSource(sharedPreferences: prefsSpy);
+    });
+
+    test("Deve chamar setInt com valores corretos", () async {
+      await sut.saveTheme(themeIndex);
+      verify(() => prefsSpy.setInt(key, themeMode.index));
+    });
+
+    test("Deve throw", () async {
+      prefsSpy.mockSetIntError();
+
+      final Future future = sut.saveTheme(themeIndex);
+      expect(future, throwsA(isA<Exception>()));
+    });
   });
 
-  test("Deve chamar setInt com valores corretos", () async {
-    await sut.saveTheme(themeIndex);
-    verify(() => prefsSpy.setInt(key, themeMode.index));
+  group("getTheme", () {
+    const ThemeMode themeMode = ThemeMode.dark;
+    const int themeIndex = 0;
+
+    setUp(() {
+      prefsSpy = SharedPreferencesSpy.getInt(themeIndex);
+      sut = SharedPreferencesConfigDataSource(sharedPreferences: prefsSpy);
+    });
+
+    test("Deve chamar getInt com valores corretos", () async {
+      await sut.getTheme();
+      verify(() => prefsSpy.getInt(key));
+    });
+
+    test("Deve chamar getInt e retornar valores com sucesso", () async {
+      final int? theme = await sut.getTheme();
+      expect(theme, themeMode.index);
+    });
+
+    test("Deve throw", () async {
+      prefsSpy.mockGetIntError();
+
+      final Future future = sut.getTheme();
+      expect(future, throwsA(isA<Exception>()));
+    });
   });
 
-  test("Deve throw", () async {
-    prefsSpy.mockSetIntError();
+  group("deleteConfigs", () {
+    setUp(() {
+      prefsSpy = SharedPreferencesSpy.remove(faker.randomGenerator.boolean());
+      sut = SharedPreferencesConfigDataSource(sharedPreferences: prefsSpy);
+    });
 
-    final Future future = sut.saveTheme(themeIndex);
-    expect(future, throwsA(isA<Exception>()));
+    test("Deve chamar remove com valores corretos", () async {
+      await sut.deleteConfigs();
+      verify(() => prefsSpy.remove(key)).called(1);
+    });
+
+    test("Deve throw", () async {
+      prefsSpy.mockRemoveError();
+
+      final Future future = sut.deleteConfigs();
+      expect(future, throwsA(isA<Exception>()));
+    });
   });
 }

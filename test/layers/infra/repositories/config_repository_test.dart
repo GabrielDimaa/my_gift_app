@@ -40,4 +40,64 @@ void main() {
       expect(future, throwsA(isA()));
     });
   });
+
+  group("getTheme", () {
+    const ThemeMode themeMode = ThemeMode.dark;
+    const int themeIndex = 0;
+
+    setUp(() {
+      dataSourceSpy = SharedPreferencesConfigDataSourceSpy.getTheme(themeMode.index);
+      sut = ConfigRepository(configDataSource: dataSourceSpy);
+    });
+
+    test("Deve chamar getTheme", () async {
+      await sut.getTheme();
+      verify(() => dataSourceSpy.getTheme()).called(1);
+    });
+
+    test("Deve chamar getTheme e retornar os valores com sucesso", () async {
+      final ThemeMode? theme = await sut.getTheme();
+      expect(theme!.index, themeIndex);
+    });
+
+    test("Deve throw UnexpectedInfraError", () {
+      dataSourceSpy.mockGetThemeError(error: UnexpectedInfraError());
+
+      final Future future = sut.getTheme();
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
+      dataSourceSpy.mockGetThemeError();
+
+      final Future future = sut.getTheme();
+      expect(future, throwsA(isA()));
+    });
+  });
+
+  group("deleteConfigs", () {
+    setUp(() {
+      dataSourceSpy = SharedPreferencesConfigDataSourceSpy.deleteConfigs();
+      sut = ConfigRepository(configDataSource: dataSourceSpy);
+    });
+
+    test("Deve chamar deleteConfigs", () async {
+      await sut.deleteConfigs();
+      verify(() => dataSourceSpy.deleteConfigs()).called(1);
+    });
+
+    test("Deve throw UnexpectedInfraError", () {
+      dataSourceSpy.mockDeleteConfigsError(error: UnexpectedInfraError());
+
+      final Future future = sut.deleteConfigs();
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
+      dataSourceSpy.mockDeleteConfigsError();
+
+      final Future future = sut.deleteConfigs();
+      expect(future, throwsA(isA()));
+    });
+  });
 }
