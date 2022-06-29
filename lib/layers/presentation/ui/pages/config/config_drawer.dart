@@ -6,6 +6,7 @@ import '../../../../../i18n/resources.dart';
 import '../../../../../monostates/user_global.dart';
 import '../../../../../routes/routes.dart';
 import '../../../../domain/entities/user_entity.dart';
+import '../../../../domain/enums/theme_mode.dart' as enum_theme;
 import '../../../presenters/config/config_presenter.dart';
 import '../../../presenters/config/getx_config_presenter.dart';
 import '../../components/dialogs/confirm_dialog.dart';
@@ -95,7 +96,9 @@ class _ConfigDrawerState extends State<ConfigDrawer> {
                             inactiveIcon: Icons.light_mode,
                             active: AppTheme.theme.value == ThemeMode.dark,
                             onChanged: (value) {
-                              AppTheme.theme.value = value ? ThemeMode.dark : ThemeMode.light;
+                              final ThemeMode theme = value ? ThemeMode.dark : ThemeMode.light;
+                              AppTheme.theme.value = theme;
+                              presenter.saveTheme(enum_theme.ThemeModeParse.fromMaterial(theme));
                             },
                           ),
                         ],

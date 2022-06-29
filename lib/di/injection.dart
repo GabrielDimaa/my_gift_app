@@ -4,7 +4,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../layers/domain/usecases/implements/config/get_theme.dart';
+import '../layers/domain/usecases/implements/config/save_theme.dart';
 import '../layers/domain/usecases/implements/friend/add_friend.dart';
 import '../layers/domain/usecases/implements/friend/fetch_search_persons.dart';
 import '../layers/domain/usecases/implements/friend/get_friends.dart';
@@ -32,8 +35,10 @@ import '../layers/infra/datasources/firebase/firebase_user_account_datasource.da
 import '../layers/infra/datasources/firebase/firebase_wish_datasource.dart';
 import '../layers/infra/datasources/firebase/firebase_wishlist_datasource.dart';
 import '../layers/infra/datasources/firebase/storage/firebase_storage_datasource.dart';
+import '../layers/infra/datasources/shared_preferences/shared_preferences_config_datasource.dart';
 import '../layers/infra/libraries/image_crop/image_cropper_facade.dart';
 import '../layers/infra/libraries/image_picker/image_picker_facade.dart';
+import '../layers/infra/repositories/config_repository.dart';
 import '../layers/infra/repositories/friend_repository.dart';
 import '../layers/infra/repositories/tag_repository.dart';
 import '../layers/infra/repositories/user_account_repository.dart';
@@ -61,7 +66,7 @@ class Injection {
     return _instance;
   }
 
-  void setup() {
+  Future<void> setup() async {
     //region Firebase
     Get.lazyPut(() => FirebaseAuth.instance, fenix: true);
     Get.lazyPut(() => FirebaseFirestore.instance, fenix: true);
@@ -71,6 +76,7 @@ class Injection {
     //region Libraries
     Get.lazyPut(() => ImagePicker(), fenix: true);
     Get.lazyPut(() => ImageCropper(), fenix: true);
+    await Get.putAsync<SharedPreferences>(() async => await SharedPreferences.getInstance());
     //endregion
 
     //region DataSources
@@ -113,6 +119,8 @@ class Injection {
       ),
       fenix: true,
     );
+
+    Get.lazyPut(() => SharedPreferencesConfigDataSource(sharedPreferences: Get.find<SharedPreferences>()), fenix: true);
     //endregion
 
     //region Facades
@@ -126,6 +134,7 @@ class Injection {
     Get.lazyPut(() => WishRepository(wishDataSource: Get.find<FirebaseWishDataSource>()), fenix: true);
     Get.lazyPut(() => TagRepository(tagDataSource: Get.find<FirebaseTagDataSource>()), fenix: true);
     Get.lazyPut(() => FriendRepository(friendDataSource: Get.find<FirebaseFriendDataSource>()), fenix: true);
+    Get.lazyPut(() => ConfigRepository(configDataSource: Get.find<SharedPreferencesConfigDataSource>()), fenix: true);
     //endregion
 
     //region Services
@@ -167,11 +176,20 @@ class Injection {
     Get.lazyPut(() => AddFriend(friendRepository: Get.find<FriendRepository>()), fenix: true);
     Get.lazyPut(() => FetchSearchPersons(friendRepository: Get.find<FriendRepository>()), fenix: true);
     Get.lazyPut(() => VerifyFriendship(friendRepository: Get.find<FriendRepository>()), fenix: true);
+    Get.lazyPut(() => SaveTheme(configRepository: Get.find<ConfigRepository>()), fenix: true);
+    Get.lazyPut(() => GetTheme(configRepository: Get.find<ConfigRepository>()), fenix: true);
     //endregion
 
     //region Presenters
     Get.lazyPut(() => GetxLoginPresenter(loginWithEmail: Get.find<LoginEmail>()), fenix: true);
-    Get.lazyPut(() => GetxConfigPresenter(logout: Get.find<Logout>()), fenix: true);
+    Get.lazyPut(
+      () => GetxConfigPresenter(
+        logout: Get.find<Logout>(),
+        getTheme: Get.find<GetTheme>(),
+        saveTheme: Get.find<SaveTheme>(),
+      ),
+      fenix: true,
+    );
     Get.lazyPut(
       () => GetxSignupPresenter(
         signUpEmail: Get.find<SignUpEmail>(),
@@ -188,6 +206,7 @@ class Injection {
         getUserLogged: Get.find<GetUserLogged>(),
         checkEmailVerified: Get.find<CheckEmailVerified>(),
         sendVerificationEmail: Get.find<SendVerificationEmail>(),
+        getTheme: Get.find<GetTheme>(),
       ),
     );
     Get.lazyPut(() => GetxWishlistsFetchPresenter(getWishlists: Get.find<GetWishlists>()), fenix: true);

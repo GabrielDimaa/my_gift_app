@@ -15,7 +15,7 @@ class AppTheme extends StatelessWidget {
       valueListenable: theme,
       builder: (_, ThemeMode mode, __) {
         return GetMaterialApp(
-          title: 'Desejando',
+          title: 'my Gift',
           debugShowCheckedModeBanner: false,
           initialRoute: splashRoute,
           themeMode: theme.value,

@@ -7,7 +7,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  Injection().setup();
+  await Injection().setup();
 
   runApp(const AppTheme());
 }
