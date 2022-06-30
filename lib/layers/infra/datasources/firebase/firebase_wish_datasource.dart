@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../helpers/connectivity_network.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
 import '../../models/user_model.dart';
 import 'constants/collection_reference.dart';
@@ -25,6 +26,8 @@ class FirebaseWishDataSource implements IWishDataSource {
   @override
   Future<WishModel> getById(String id) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final snapshot = await firestore.collection(constantWishesReference).doc(id).get();
 
       final Map<String, dynamic>? json = snapshot.data();
@@ -53,6 +56,8 @@ class FirebaseWishDataSource implements IWishDataSource {
   @override
   Future<List<WishModel>> getByWishlist(String wishlistId) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final snapshot = await firestore.collection(constantWishesReference).where("wishlist_id", isEqualTo: wishlistId).get();
       final jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
         var json = e.data();
@@ -90,6 +95,8 @@ class FirebaseWishDataSource implements IWishDataSource {
   @override
   Future<WishModel> create(WishModel model) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final doc = firestore.collection(constantWishesReference).doc();
 
       if (model.image != null) {
@@ -111,6 +118,8 @@ class FirebaseWishDataSource implements IWishDataSource {
   @override
   Future<WishModel> update(WishModel model) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final doc = firestore.collection(constantWishesReference).doc(model.id);
 
       final snapshot = await doc.get();
@@ -144,6 +153,8 @@ class FirebaseWishDataSource implements IWishDataSource {
   @override
   Future<void> delete(String id) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final doc = firestore.collection(constantWishesReference).doc(id);
       await doc.delete();
 

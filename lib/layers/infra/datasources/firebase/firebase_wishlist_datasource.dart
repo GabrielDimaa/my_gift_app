@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../domain/enums/tag_internal.dart';
+import '../../helpers/connectivity_network.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
 import '../../models/user_model.dart';
 import '../../models/wish_model.dart';
@@ -25,6 +26,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<WishlistModel> getById(String id) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       //region wishlists
 
       final snapshotWishlist = await firestore.collection(constantWishlistsReference).doc(id).get();
@@ -88,6 +91,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<List<WishlistModel>> getAll(String userId) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       //region wishlists
 
       final snapshotWishlist = await firestore.collection(constantWishlistsReference).where("user_id", isEqualTo: userId).get();
@@ -176,6 +181,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
     //TODO: Implementar a busca do user.
 
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final snapshot = await firestore.collection(constantWishlistsReference).where("tag_id", isEqualTo: tag.id).get();
       final jsonList = snapshot.docs.map<Map<String, dynamic>>((e) {
         var json = e.data();
@@ -208,6 +215,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<WishlistModel> create(WishlistModel model) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final WriteBatch batch = firestore.batch();
 
       //region wishlist
@@ -255,6 +264,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<WishlistModel> update(WishlistModel model) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final doc = firestore.collection(constantWishlistsReference).doc(model.id);
       await doc.update(model.toJson());
 
@@ -271,6 +282,8 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
   @override
   Future<void> delete(String id) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       //Busca todos os wishes para remove-los em transação.
       final snapshot = await firestore.collection(constantWishesReference).where("wishlist_id", isEqualTo: id).get();
       final List<String> idsWishes = snapshot.docs.map((e) => e.id).toList();

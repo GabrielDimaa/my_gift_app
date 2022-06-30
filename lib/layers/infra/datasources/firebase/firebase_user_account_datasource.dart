@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../domain/helpers/params/login_params.dart';
+import '../../helpers/connectivity_network.dart';
 import '../../helpers/errors/infra_error.dart';
 import '../../helpers/extensions/firebase_auth_exception_extension.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
@@ -26,6 +27,8 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   @override
   Future<UserModel> authWithEmail(LoginParams params) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final UserCredential credential = await firebaseAuth.signInWithEmailAndPassword(email: params.email, password: params.password);
 
       if (credential.user == null) throw NotFoundInfraError();
@@ -49,6 +52,8 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   @override
   Future<UserModel> signUpWithEmail(UserModel model) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       if (model.password == null) throw WrongPasswordInfraError();
 
       //region FirebaseAuth
@@ -96,6 +101,8 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   @override
   Future<void> sendVerificationEmail(String userId) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       if (firebaseAuth.currentUser == null) throw Exception();
       await firebaseAuth.currentUser?.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
@@ -110,6 +117,8 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   @override
   Future<bool> checkEmailVerified(String userId) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       if (firebaseAuth.currentUser == null) throw Exception();
       await firebaseAuth.currentUser!.reload();
 
@@ -126,6 +135,8 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   @override
   Future<UserModel?> getUserLogged() async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final User? user = firebaseAuth.currentUser;
       if (user == null) return null;
 
@@ -150,6 +161,8 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   @override
   Future<UserModel> getById(String userId) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: userId).get();
       final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data();
 

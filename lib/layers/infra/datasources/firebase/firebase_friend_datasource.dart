@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../domain/helpers/params/friend_params.dart';
+import '../../helpers/connectivity_network.dart';
 import '../../helpers/errors/infra_error.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
 import '../../models/friends_model.dart';
@@ -18,6 +19,8 @@ class FirebaseFriendDataSource implements IFriendDataSource {
   @override
   Future<void> addFriend(FriendParams params) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       var collUser = firestore.collection(constantUsersReference).doc(params.userId);
       await collUser.collection(constantFriendsReference).doc(params.friendUserId).set({});
     } on FirebaseException catch (e) {
@@ -32,6 +35,8 @@ class FirebaseFriendDataSource implements IFriendDataSource {
   @override
   Future<void> undoFriend(FriendParams params) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       var collUser = firestore.collection(constantUsersReference).doc(params.userId);
       await collUser.collection(constantFriendsReference).doc(params.friendUserId).delete();
     } on FirebaseException catch (e) {
@@ -46,6 +51,8 @@ class FirebaseFriendDataSource implements IFriendDataSource {
   @override
   Future<FriendsModel> getFriends(String userId) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       FriendsModel model = FriendsModel(friends: []);
 
       var collUser = firestore.collection(constantUsersReference).doc(userId);
@@ -78,6 +85,8 @@ class FirebaseFriendDataSource implements IFriendDataSource {
   @override
   Future<List<UserModel>> fetchSearchPersons(String name) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final snapshotUser = await firestore.collection(constantUsersReference)
           .where("searchName", arrayContains: name.toLowerCase())
           .get();
@@ -102,6 +111,8 @@ class FirebaseFriendDataSource implements IFriendDataSource {
   @override
   Future<bool> verifyFriendship(FriendParams params) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final collUser = firestore.collection(constantUsersReference).doc(params.userId);
       final snapshot = await collUser.collection(constantFriendsReference).doc(params.friendUserId).get();
       return snapshot.exists;

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../helpers/connectivity_network.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
 import '../../models/user_model.dart';
 import 'constants/collection_reference.dart';
@@ -17,6 +18,8 @@ class FirebaseTagDataSource implements ITagDataSource {
   @override
   Future<List<TagModel>> getAll(userId) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       //Busca o usuário
       final UserModel user = await userDataSource.getById(userId);
       final Map<String, dynamic> jsonUser = user.toJson()..addAll({'id': user.id});
@@ -51,6 +54,8 @@ class FirebaseTagDataSource implements ITagDataSource {
   @override
   Future<TagModel> create(TagModel model) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final Map<String, dynamic> json = model.toJson();
       final doc = await firestore.collection(constantTagsReference).add(json);
 
@@ -67,6 +72,8 @@ class FirebaseTagDataSource implements ITagDataSource {
   @override
   Future<TagModel> update(TagModel model) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final doc = firestore.collection(constantTagsReference).doc(model.id);
       await doc.update(model.toJson());
 
@@ -83,6 +90,8 @@ class FirebaseTagDataSource implements ITagDataSource {
   @override
   Future<void> delete(String id) async {
     try {
+      await ConnectivityNetwork.hasInternet();
+
       final doc = firestore.collection(constantTagsReference).doc(id);
       await doc.delete();
     } on FirebaseException catch (e) {
