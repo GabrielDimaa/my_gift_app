@@ -10,8 +10,8 @@ import '../../../viewmodels/user_viewmodel.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
+import '../../components/bottom_sheet/confirm_bottom_sheet.dart';
 import '../../components/circular_loading.dart';
-import '../../components/dialogs/confirm_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/images/image_loader_default.dart';
@@ -41,106 +41,112 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarDefault(
-        title: R.string.profile,
-        onBackPressed: () => Navigator.pop(context, presenter.verifyIsFriend),
-        actions: [
-          Obx(
-            () => ButtonAction(
-              visible: !presenter.loading && !presenter.verifyIsFriend,
-              label: R.string.add,
-              icon: Icons.person_add_outlined,
-              iconSize: 22,
-              onPressed: () async => await _addFriend(),
-            ),
-          ),
-          Obx(
-            () => ButtonAction(
-              visible: !presenter.loading && presenter.verifyIsFriend,
-              label: R.string.undo,
-              icon: Icons.person_remove_outlined,
-              iconSize: 22,
-              onPressed: () async => await _undoFriend(),
-            ),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const PaddingDefault(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Obx(
-                  () {
-                    if (presenter.loading) {
-                      return const CircularLoading();
-                    } else {
-                      return SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBoxDefault(1),
-                            _photoProfile(),
-                            const SizedBoxDefault(2),
-                            Text(
-                              widget.viewModel.name,
-                              style: textTheme.headline5,
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              widget.viewModel.email,
-                              style: textTheme.subtitle1?.copyWith(color: Colors.grey),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBoxDefault(3),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                R.string.wishlists,
-                                style: textTheme.subtitle1?.copyWith(fontSize: 24),
-                              ),
-                            ),
-                            const SizedBoxDefault(),
-                            Obx(
-                              () {
-                                if (presenter.wishlists.isNotEmpty) {
-                                  return ListView.separated(
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: presenter.wishlists.length,
-                                    separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
-                                    itemBuilder: (_, index) {
-                                      final WishlistViewModel viewModel = presenter.wishlists[index];
-                                      return WishlistListTile(
-                                        viewModel: viewModel,
-                                        onTap: () async => await _navigateWishlistDetails(viewModel),
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  return Column(
-                                    children: [
-                                      const SizedBoxDefault(2),
-                                      const Icon(Icons.search_off_outlined, size: 36),
-                                      const SizedBox(height: 5),
-                                      Text(R.string.noneWishlists),
-                                    ],
-                                  );
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
-                ),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, presenter.verifyIsFriend);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBarDefault(
+          title: R.string.profile,
+          onBackPressed: () => Navigator.pop(context, presenter.verifyIsFriend),
+          actions: [
+            Obx(
+              () => ButtonAction(
+                visible: !presenter.loading && !presenter.verifyIsFriend,
+                label: R.string.add,
+                icon: Icons.person_add_outlined,
+                iconSize: 22,
+                onPressed: () async => await _addFriend(),
               ),
-            ],
+            ),
+            Obx(
+              () => ButtonAction(
+                visible: !presenter.loading && presenter.verifyIsFriend,
+                label: R.string.undo,
+                icon: Icons.person_remove_outlined,
+                iconSize: 22,
+                onPressed: () async => await _undoFriend(),
+              ),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const PaddingDefault(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Obx(
+                    () {
+                      if (presenter.loading) {
+                        return const CircularLoading();
+                      } else {
+                        return SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBoxDefault(1),
+                              _photoProfile(),
+                              const SizedBoxDefault(2),
+                              Text(
+                                widget.viewModel.name,
+                                style: textTheme.headline5,
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                widget.viewModel.email,
+                                style: textTheme.subtitle1?.copyWith(color: Colors.grey),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBoxDefault(3),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  R.string.wishlists,
+                                  style: textTheme.subtitle1?.copyWith(fontSize: 24),
+                                ),
+                              ),
+                              const SizedBoxDefault(),
+                              Obx(
+                                () {
+                                  if (presenter.wishlists.isNotEmpty) {
+                                    return ListView.separated(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: presenter.wishlists.length,
+                                      separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
+                                      itemBuilder: (_, index) {
+                                        final WishlistViewModel viewModel = presenter.wishlists[index];
+                                        return WishlistListTile(
+                                          viewModel: viewModel,
+                                          onTap: () async => await _navigateWishlistDetails(viewModel),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    return Column(
+                                      children: [
+                                        const SizedBoxDefault(2),
+                                        const Icon(Icons.search_off_outlined, size: 36),
+                                        const SizedBox(height: 5),
+                                        Text(R.string.noneWishlists),
+                                      ],
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -189,12 +195,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _undoFriend() async {
     try {
-      final bool confirmed = await ConfirmDialog.show(
+      final bool confirmed = await ConfirmBottomSheet.show(
             context: context,
             title: R.string.undoFriend,
             message: R.string.undoFriendConfirm,
-          ) ??
-          false;
+          );
 
       if (!confirmed) return;
 

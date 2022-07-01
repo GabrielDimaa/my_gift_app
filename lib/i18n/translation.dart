@@ -123,6 +123,8 @@ abstract class Translation {
   String get undoFriendConfirm;
   String get undoingFriend;
   String get profile;
+  String get exit;
+  String get exitMessage;
   //endregion
 
   //region Validation

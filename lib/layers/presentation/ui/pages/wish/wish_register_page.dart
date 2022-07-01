@@ -10,9 +10,9 @@ import '../../../viewmodels/wish_viewmodel.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
-import '../../components/bottom_sheet/bottom_sheet_image_picker.dart';
+import '../../components/bottom_sheet/confirm_bottom_sheet.dart';
+import '../../components/bottom_sheet/image_picker_bottom_sheet.dart';
 import '../../components/button/save_button.dart';
-import '../../components/dialogs/confirm_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/form/text_field_default.dart';
@@ -283,13 +283,13 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
 
   Future<void> _delete() async {
     try {
-      final bool? confirmed = await ConfirmDialog.show(
+      final bool confirmed = await ConfirmBottomSheet.show(
         context: context,
         title: R.string.delete,
         message: R.string.confirmDeleteWish,
       );
 
-      if (confirmed ?? false) {
+      if (confirmed) {
         if (presenter.viewModel.id != null) {
           await LoadingDialog.show(
             context: context,
@@ -308,7 +308,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
   }
 
   Future<void> _addImage() async {
-    await BottomSheetImagePicker.show(
+    await ImagePickerBottomSheet.show(
       context: context,
       title: R.string.imageWish,
       onPressedCamera: () async {

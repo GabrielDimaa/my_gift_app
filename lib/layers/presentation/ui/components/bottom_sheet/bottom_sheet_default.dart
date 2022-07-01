@@ -16,7 +16,7 @@ class BottomSheetDefault extends StatelessWidget {
     this.contentPadding,
   }) : super(key: key);
 
-  static Future<void> show({
+  static Future<T?> show<T>({
     required BuildContext context,
     required Widget child,
     String? title,
@@ -64,7 +64,7 @@ class BottomSheetDefault extends StatelessWidget {
               Visibility(
                 visible: title != null,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 24, bottom: 30),
+                  padding: const EdgeInsets.only(top: 30, left: 24, bottom: 20),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(

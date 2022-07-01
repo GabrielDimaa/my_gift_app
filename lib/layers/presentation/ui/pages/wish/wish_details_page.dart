@@ -10,7 +10,7 @@ import '../../../../domain/entities/user_entity.dart';
 import '../../../viewmodels/wish_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
-import '../../components/dialogs/confirm_dialog.dart';
+import '../../components/bottom_sheet/confirm_bottom_sheet.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/images/image_loader_default.dart';
 import '../../components/padding/padding_default.dart';
@@ -35,101 +35,107 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarDefault(
-        title: R.string.wish,
-        actions: [
-          ButtonAction(
-            visible: _user.id == widget.viewModel.userId,
-            onPressed: () async => await _edit(),
-            label: R.string.edit,
-            icon: Icons.edit_outlined,
-          ),
-        ],
-        onBackPressed: () => Navigator.pop(context, widget.viewModel),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const PaddingDefault(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBoxDefault(3),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Visibility(
-                          visible: widget.viewModel.image != null,
-                          replacement: const WishWithoutImage(size: 200, iconSize: 90),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: ImageLoaderDefault(
-                              image: widget.viewModel.image ?? "",
-                              height: 200,
-                              width: 200,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, widget.viewModel);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBarDefault(
+          title: R.string.wish,
+          actions: [
+            ButtonAction(
+              visible: _user.id == widget.viewModel.userId,
+              onPressed: () async => await _edit(),
+              label: R.string.edit,
+              icon: Icons.edit_outlined,
+            ),
+          ],
+          onBackPressed: () => Navigator.pop(context, widget.viewModel),
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const PaddingDefault(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBoxDefault(3),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Visibility(
+                            visible: widget.viewModel.image != null,
+                            replacement: const WishWithoutImage(size: 200, iconSize: 90),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: ImageLoaderDefault(
+                                image: widget.viewModel.image ?? "",
+                                height: 200,
+                                width: 200,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBoxDefault(2),
-                      _label(text: R.string.labelDescription),
-                      _content(text: widget.viewModel.description!),
-                      const SizedBoxDefault(2),
-                      _label(text: R.string.labelPriceRangeWish),
-                      _content(text: "${widget.viewModel.priceRangeInitial!.money} - ${widget.viewModel.priceRangeFinal!.money}"),
-                      Visibility(
-                        visible: widget.viewModel.link != null,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBoxDefault(2),
-                            _label(text: R.string.linkSite),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () async => await _goToSite(),
-                                    child: Text(
-                                      widget.viewModel.link ?? "",
-                                      style: textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700, decoration: TextDecoration.underline),
+                        const SizedBoxDefault(2),
+                        _label(text: R.string.labelDescription),
+                        _content(text: widget.viewModel.description!),
+                        const SizedBoxDefault(2),
+                        _label(text: R.string.labelPriceRangeWish),
+                        _content(text: "${widget.viewModel.priceRangeInitial!.money} - ${widget.viewModel.priceRangeFinal!.money}"),
+                        Visibility(
+                          visible: widget.viewModel.link != null,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBoxDefault(2),
+                              _label(text: R.string.linkSite),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () async => await _goToSite(),
+                                      child: Text(
+                                        widget.viewModel.link ?? "",
+                                        style: textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700, decoration: TextDecoration.underline),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBoxDefault.horizontal(),
-                                IconButton(
-                                  onPressed: () async => await _copyLink(),
-                                  tooltip: R.string.copyLink,
-                                  color: colorScheme.secondary,
-                                  padding: EdgeInsets.zero,
-                                  constraints: const BoxConstraints(),
-                                  icon: const Icon(Icons.copy_outlined),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  const SizedBoxDefault.horizontal(),
+                                  IconButton(
+                                    onPressed: () async => await _copyLink(),
+                                    tooltip: R.string.copyLink,
+                                    color: colorScheme.secondary,
+                                    padding: EdgeInsets.zero,
+                                    constraints: const BoxConstraints(),
+                                    icon: const Icon(Icons.copy_outlined),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Visibility(
-                        visible: widget.viewModel.note != null,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBoxDefault(2),
-                            _label(text: R.string.labelNoteWish),
-                            _content(text: widget.viewModel.note ?? ""),
-                          ],
+                        Visibility(
+                          visible: widget.viewModel.note != null,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBoxDefault(2),
+                              _label(text: R.string.labelNoteWish),
+                              _content(text: widget.viewModel.note ?? ""),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -153,7 +159,7 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
   }
 
   Future<void> _goToSite() async {
-    final bool confirmed = await ConfirmDialog.show(context: context, title: R.string.gotToLink, message: R.string.messageConfirmGoToLink) ?? false;
+    final bool confirmed = await ConfirmBottomSheet.show(context: context, title: R.string.gotToLink, message: R.string.messageConfirmGoToLink);
     if (confirmed) await launchUrl(Uri.parse(widget.viewModel.link!));
   }
 

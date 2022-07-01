@@ -21,7 +21,10 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
-    presenter.initialize().catchError((e) => ErrorDialog.show(context: context, content: e.toString()));
+    presenter.initialize().catchError((e) async {
+      await ErrorDialog.show(context: context, content: e.toString());
+      await presenter.navigateToLogin();
+    });
     super.initState();
   }
 

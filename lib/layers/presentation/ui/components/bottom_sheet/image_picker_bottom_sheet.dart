@@ -4,11 +4,11 @@ import '../../../../../i18n/resources.dart';
 import '../sized_box_default.dart';
 import './bottom_sheet_default.dart';
 
-class BottomSheetImagePicker extends StatelessWidget {
+class ImagePickerBottomSheet extends StatelessWidget {
   final VoidCallback onPressedCamera;
   final VoidCallback onPressedGallery;
 
-  const BottomSheetImagePicker({
+  const ImagePickerBottomSheet({
     Key? key,
     required this.onPressedCamera,
     required this.onPressedGallery,
@@ -23,7 +23,7 @@ class BottomSheetImagePicker extends StatelessWidget {
     await BottomSheetDefault.show(
       context: context,
       title: title,
-      child: BottomSheetImagePicker(
+      child: ImagePickerBottomSheet(
         onPressedCamera: onPressedCamera,
         onPressedGallery: onPressedGallery,
       ),
@@ -32,22 +32,25 @@ class BottomSheetImagePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _buttonRounded(
-          context,
-          Icons.photo_camera_outlined,
-          R.string.camera,
-          onPressedCamera,
-        ),
-        const SizedBoxDefault.horizontal(),
-        _buttonRounded(
-          context,
-          Icons.image_outlined,
-          R.string.gallery,
-          onPressedGallery,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: Row(
+        children: [
+          _buttonRounded(
+            context,
+            Icons.photo_camera_outlined,
+            R.string.camera,
+            onPressedCamera,
+          ),
+          const SizedBoxDefault.horizontal(),
+          _buttonRounded(
+            context,
+            Icons.image_outlined,
+            R.string.gallery,
+            onPressedGallery,
+          ),
+        ],
+      ),
     );
   }
 

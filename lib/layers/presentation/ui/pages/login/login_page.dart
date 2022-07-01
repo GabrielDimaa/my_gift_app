@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../presenters/login/getx_login_presenter.dart';
 import '../../../presenters/login/login_presenter.dart';
+import '../../components/bottom_sheet/exit_app_bottom_sheet.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/form/validators/input_validators.dart';
@@ -31,89 +32,92 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const PaddingDefault(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      HeaderWidget(text: R.string.login),
-                      const SizedBoxDefault(4),
-                      ButtonLoginWithWidget(
-                        text: R.string.loginWithGoogle,
-                        icon: SvgPicture.asset(
-                          "assets/icons/google.svg",
-                          width: 22,
-                          height: 22,
-                          color: Theme.of(context).colorScheme.onBackground,
+    return WillPopScope(
+      onWillPop: () async => await ExitAppBottomSheet.show(context),
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const PaddingDefault(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        HeaderWidget(text: R.string.login),
+                        const SizedBoxDefault(4),
+                        ButtonLoginWithWidget(
+                          text: R.string.loginWithGoogle,
+                          icon: SvgPicture.asset(
+                            "assets/icons/google.svg",
+                            width: 22,
+                            height: 22,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                          onPressed: () async {
+                            try {
+                              await presenter.loginWithGoogle();
+                            } catch (e) {
+                              ErrorDialog.show(context: context, content: e.toString());
+                            }
+                          },
                         ),
-                        onPressed: () async {
-                          try {
-                            await presenter.loginWithGoogle();
-                          } catch (e) {
-                            ErrorDialog.show(context: context, content: e.toString());
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 18),
-                      const DividerOrWidget(),
-                      const SizedBox(height: 18),
-                      Form(
-                        key: _formKey,
-                        child: Column(
+                        const SizedBox(height: 18),
+                        const DividerOrWidget(),
+                        const SizedBox(height: 18),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              TextFieldDefault(
+                                label: R.string.email,
+                                hint: R.string.emailHint,
+                                controller: _emailController,
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.emailAddress,
+                                onSaved: presenter.viewModel.setEmail,
+                                validator: InputEmailValidator().validate,
+                                textCapitalization: TextCapitalization.none,
+                              ),
+                              const SizedBoxDefault(2),
+                              TextFieldDefault(
+                                label: R.string.password,
+                                hint: R.string.passwordHint,
+                                controller: _passwordController,
+                                textInputAction: TextInputAction.done,
+                                keyboardType: TextInputType.visiblePassword,
+                                onSaved: presenter.viewModel.setPassword,
+                                validator: InputRequiredValidator().validate,
+                                obscureText: true,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBoxDefault(5),
+                        ElevatedButton(
+                          child: Text(R.string.enter),
+                          onPressed: () async => await _login(),
+                        ),
+                        const SizedBoxDefault(2),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            TextFieldDefault(
-                              label: R.string.email,
-                              hint: R.string.emailHint,
-                              controller: _emailController,
-                              textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.emailAddress,
-                              onSaved: presenter.viewModel.setEmail,
-                              validator: InputEmailValidator().validate,
-                              textCapitalization: TextCapitalization.none,
-                            ),
-                            const SizedBoxDefault(2),
-                            TextFieldDefault(
-                              label: R.string.password,
-                              hint: R.string.passwordHint,
-                              controller: _passwordController,
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.visiblePassword,
-                              onSaved: presenter.viewModel.setPassword,
-                              validator: InputRequiredValidator().validate,
-                              obscureText: true,
+                            Text(R.string.doNotHaveAccount, style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 16)),
+                            TextButton(
+                              child: Text(R.string.register, style: const TextStyle(fontSize: 16)),
+                              onPressed: () async => await presenter.navigateToSignUp(),
                             ),
                           ],
                         ),
-                      ),
-                      const SizedBoxDefault(5),
-                      ElevatedButton(
-                        child: Text(R.string.enter),
-                        onPressed: () async => await _login(),
-                      ),
-                      const SizedBoxDefault(2),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(R.string.doNotHaveAccount, style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 16)),
-                          TextButton(
-                            child: Text(R.string.register, style: const TextStyle(fontSize: 16)),
-                            onPressed: () async => await presenter.navigateToSignUp(),
-                          ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

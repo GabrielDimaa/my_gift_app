@@ -6,8 +6,8 @@ import '../../../../../../i18n/resources.dart';
 import '../../../../../../routes/routes.dart';
 import '../../../../presenters/friend/friends_presenter.dart';
 import '../../../../viewmodels/user_viewmodel.dart';
+import '../../../components/bottom_sheet/confirm_bottom_sheet.dart';
 import '../../../components/circular_loading.dart';
-import '../../../components/dialogs/confirm_dialog.dart';
 import '../../../components/dialogs/error_dialog.dart';
 import '../../../components/dialogs/loading_dialog.dart';
 import '../../../components/sized_box_default.dart';
@@ -168,12 +168,11 @@ class PersonsSearchDelegate extends SearchDelegate {
 
   Future<void> _undoFriend({required BuildContext context, required String friendUserId}) async {
     try {
-      final bool confirmed = await ConfirmDialog.show(
+      final bool confirmed = await ConfirmBottomSheet.show(
             context: context,
             title: R.string.undoFriend,
             message: R.string.undoFriendConfirm,
-          ) ??
-          false;
+          );
 
       if (!confirmed) return;
 

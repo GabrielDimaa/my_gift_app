@@ -6,6 +6,7 @@ import '../../../../../routes/routes.dart';
 import '../../../../domain/entities/user_entity.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/photo_profile_action.dart';
+import '../../components/bottom_sheet/exit_app_bottom_sheet.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
@@ -32,56 +33,59 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBarDefault(
-        title: R.string.dashboard,
-        actions: [PhotoProfileAction(scaffoldKey: _scaffoldKey)],
-      ),
-      endDrawer: const ConfigDrawer(),
-      body: SafeArea(
-        child: Padding(
-          padding: const PaddingDefault(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBoxDefault(2),
-              Text("${R.string.hello}, ${_user.name.split(" ").first} 👋", style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 26)),
-              const SizedBoxDefault(2),
-              Expanded(
-                child: ListView(
-                  children: [
-                    CardButton(
-                      text: R.string.wishes,
-                      icon: Icons.card_giftcard_outlined,
-                      color: const Color(0xFF3BC189),
-                      onTap: () async => await _navigateToWishlist(),
-                    ),
-                    const SizedBoxDefault(),
-                    CardButton(
-                      text: R.string.friends,
-                      icon: Icons.people_alt_outlined,
-                      color: const Color(0xFF8830F8),
-                      onTap: () async => await _navigateToFriends(),
-                    ),
-                    const SizedBoxDefault(),
-                    CardButton(
-                      text: R.string.archive,
-                      icon: Icons.archive_outlined,
-                      color: const Color(0xFFCE4163),
-                      onTap: () => ErrorDialog.show(context: context, content: "Em breve..."),
-                    ),
-                    const SizedBoxDefault(),
-                    CardButton(
-                      text: R.string.config,
-                      icon: Icons.settings_outlined,
-                      color: const Color(0xFF535353),
-                      onTap: () => _scaffoldKey.currentState?.openEndDrawer(),
-                    ),
-                  ],
+    return WillPopScope(
+      onWillPop: () async => await ExitAppBottomSheet.show(context),
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBarDefault(
+          title: R.string.dashboard,
+          actions: [PhotoProfileAction(scaffoldKey: _scaffoldKey)],
+        ),
+        endDrawer: const ConfigDrawer(),
+        body: SafeArea(
+          child: Padding(
+            padding: const PaddingDefault(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBoxDefault(2),
+                Text("${R.string.hello}, ${_user.name.split(" ").first} 👋", style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 26)),
+                const SizedBoxDefault(2),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      CardButton(
+                        text: R.string.wishes,
+                        icon: Icons.card_giftcard_outlined,
+                        color: const Color(0xFF3BC189),
+                        onTap: () async => await _navigateToWishlist(),
+                      ),
+                      const SizedBoxDefault(),
+                      CardButton(
+                        text: R.string.friends,
+                        icon: Icons.people_alt_outlined,
+                        color: const Color(0xFF8830F8),
+                        onTap: () async => await _navigateToFriends(),
+                      ),
+                      const SizedBoxDefault(),
+                      CardButton(
+                        text: R.string.archive,
+                        icon: Icons.archive_outlined,
+                        color: const Color(0xFFCE4163),
+                        onTap: () => ErrorDialog.show(context: context, content: "Em breve..."),
+                      ),
+                      const SizedBoxDefault(),
+                      CardButton(
+                        text: R.string.config,
+                        icon: Icons.settings_outlined,
+                        color: const Color(0xFF535353),
+                        onTap: () => _scaffoldKey.currentState?.openEndDrawer(),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

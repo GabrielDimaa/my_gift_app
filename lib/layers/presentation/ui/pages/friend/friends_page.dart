@@ -8,8 +8,8 @@ import '../../../presenters/friend/getx_friends_presenter.dart';
 import '../../../viewmodels/user_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
+import '../../components/bottom_sheet/confirm_bottom_sheet.dart';
 import '../../components/circular_loading.dart';
-import '../../components/dialogs/confirm_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/not_found.dart';
@@ -112,12 +112,11 @@ class _FriendsPageState extends State<FriendsPage> {
 
   Future<void> _undoFriend(String friendUserId) async {
     try {
-      final bool confirmed = await ConfirmDialog.show(
+      final bool confirmed = await ConfirmBottomSheet.show(
             context: context,
             title: R.string.undoFriend,
             message: R.string.undoFriendConfirm,
-          ) ??
-          false;
+          );
 
       if (!confirmed) return;
 

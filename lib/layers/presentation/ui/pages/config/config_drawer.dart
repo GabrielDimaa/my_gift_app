@@ -9,7 +9,7 @@ import '../../../../domain/entities/user_entity.dart';
 import '../../../../domain/enums/theme_mode.dart' as enum_theme;
 import '../../../presenters/config/config_presenter.dart';
 import '../../../presenters/config/getx_config_presenter.dart';
-import '../../components/dialogs/confirm_dialog.dart';
+import '../../components/bottom_sheet/confirm_bottom_sheet.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/padding/padding_default.dart';
@@ -149,12 +149,11 @@ class _ConfigDrawerState extends State<ConfigDrawer> {
 
   Future<void> _logout() async {
     try {
-      final bool confirmed = await ConfirmDialog.show(
+      final bool confirmed = await ConfirmBottomSheet.show(
             context: context,
             title: R.string.logout,
             message: R.string.confirmLogout,
-          ) ??
-          false;
+          );
 
       if (confirmed) {
         await LoadingDialog.show(

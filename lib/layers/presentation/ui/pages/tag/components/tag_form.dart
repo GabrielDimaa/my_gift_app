@@ -36,7 +36,7 @@ class TagForm extends StatelessWidget {
             child: Text(R.string.colorTag),
           ),
           SizedBox(
-            height: 150,
+            height: 120,
             child: GridView.builder(
               itemCount: colors.length,
               physics: const NeverScrollableScrollPhysics(),

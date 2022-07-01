@@ -6,7 +6,7 @@ import '../../../../../i18n/resources.dart';
 import '../../../presenters/signup/getx_signup_presenter.dart';
 import '../../../presenters/signup/signup_presenter.dart';
 import '../../components/app_bar/app_bar_default.dart';
-import '../../components/bottom_sheet/bottom_sheet_image_picker.dart';
+import '../../components/bottom_sheet/image_picker_bottom_sheet.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/images/image_loader_default.dart';
@@ -55,7 +55,7 @@ class _SignupPhotoPageState extends State<SignupPhotoPage> {
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  await BottomSheetImagePicker.show(
+                                  await ImagePickerBottomSheet.show(
                                     context: context,
                                     title: R.string.photoProfile,
                                     onPressedCamera: () async {

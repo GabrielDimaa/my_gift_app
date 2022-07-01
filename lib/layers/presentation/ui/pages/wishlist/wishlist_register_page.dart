@@ -11,9 +11,9 @@ import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
 import '../../components/bottom_sheet/bottom_sheet_default.dart';
+import '../../components/bottom_sheet/confirm_bottom_sheet.dart';
 import '../../components/button/save_button.dart';
 import '../../components/circular_loading.dart';
-import '../../components/dialogs/confirm_dialog.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/form/text_field_default.dart';
@@ -189,6 +189,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const SizedBoxDefault(),
             TagForm(viewModel: tag, formKeyTag: formKeyTag),
             const SizedBoxDefault(3),
             SaveButton(
@@ -225,13 +226,13 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
         _formKey.currentState!.save();
 
         if (presenter.viewModel.wishes.isEmpty) {
-          final bool? confirmed = await ConfirmDialog.show(
+          final bool confirmed = await ConfirmBottomSheet.show(
             context: context,
             title: R.string.titleNoneWish,
             message: R.string.messageNoneWish,
           );
 
-          if (!(confirmed ?? false)) return;
+          if (!confirmed) return;
         }
 
         await LoadingDialog.show(
@@ -250,12 +251,11 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
 
   Future<void> _delete() async {
     try {
-      final bool confirmed = await ConfirmDialog.show(
+      final bool confirmed = await ConfirmBottomSheet.show(
             context: context,
             title: R.string.delete,
             message: R.string.confirmDeleteWishlist,
-          ) ??
-          false;
+          );
       if (!confirmed) return;
 
       await LoadingDialog.show(
@@ -324,7 +324,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                             try {
                               if (wish.id == null) return true;
 
-                              final bool confirmed = await ConfirmDialog.show(context: context, title: R.string.delete, message: R.string.confirmDeleteWish) ?? false;
+                              final bool confirmed = await ConfirmBottomSheet.show(context: context, title: R.string.delete, message: R.string.confirmDeleteWish);
                               if (confirmed) {
                                 await LoadingDialog.show(
                                   context: context,

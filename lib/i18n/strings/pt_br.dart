@@ -367,6 +367,12 @@ class PtBr implements Translation {
 
   @override
   String get profile => "Perfil";
+
+  @override
+  String get exit => "Sair";
+
+  @override
+  String get exitMessage => "Você deseja realmente sair?";
   //endregion
 
   //region Validation

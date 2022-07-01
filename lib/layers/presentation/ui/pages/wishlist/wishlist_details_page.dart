@@ -38,103 +38,109 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarDefault(
-        title: R.string.wishlist,
-        actions: [
-          ButtonAction(
-            visible: presenter.canEdit,
-            label: R.string.edit,
-            icon: Icons.edit_outlined,
-            onPressed: () async => await _edit(),
-          ),
-        ],
-        onBackPressed: () => Navigator.pop(context, presenter.viewModel),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const PaddingDefault(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Obx(
-                  () {
-                    if (presenter.loading) {
-                      return const CircularLoading();
-                    } else {
-                      return SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBoxDefault(2),
-                            ButtonBar(
-                              buttonPadding: EdgeInsets.zero,
-                              alignment: MainAxisAlignment.spaceBetween,
-                              overflowButtonSpacing: 8,
-                              children: [
-                                Obx(
-                                  () => Text(
-                                    presenter.viewModel.description!,
-                                    style: textTheme.headline6,
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Obx(
-                                    () => Chip(
-                                      label: Text(
-                                        presenter.viewModel.tag!.name!,
-                                        style: textTheme.caption?.copyWith(
-                                          color: Color(presenter.viewModel.tag!.color!),
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      visualDensity: const VisualDensity(vertical: -3),
-                                      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                                      backgroundColor: Color(presenter.viewModel.tag!.color!).withOpacity(0.1),
-                                      side: BorderSide(color: Color(presenter.viewModel.tag!.color!)),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, presenter.viewModel);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBarDefault(
+          title: R.string.wishlist,
+          actions: [
+            ButtonAction(
+              visible: presenter.canEdit,
+              label: R.string.edit,
+              icon: Icons.edit_outlined,
+              onPressed: () async => await _edit(),
+            ),
+          ],
+          onBackPressed: () => Navigator.pop(context, presenter.viewModel),
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const PaddingDefault(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Obx(
+                    () {
+                      if (presenter.loading) {
+                        return const CircularLoading();
+                      } else {
+                        return SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBoxDefault(2),
+                              ButtonBar(
+                                buttonPadding: EdgeInsets.zero,
+                                alignment: MainAxisAlignment.spaceBetween,
+                                overflowButtonSpacing: 8,
+                                children: [
+                                  Obx(
+                                    () => Text(
+                                      presenter.viewModel.description!,
+                                      style: textTheme.headline6,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBoxDefault(),
-                            Obx(
-                              () {
-                                if (presenter.viewModel.wishes.isNotEmpty) {
-                                  return ListView.separated(
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: presenter.viewModel.wishes.length,
-                                    separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
-                                    itemBuilder: (_, index) {
-                                      final WishViewModel wish = presenter.viewModel.wishes[index];
-                                      return ListTileWish(
-                                        contentPadding: const EdgeInsets.all(6),
-                                        viewModel: wish,
-                                        onTap: () async => await _navigateToWish(wish, index),
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  return Column(
-                                    children: [
-                                      const SizedBoxDefault(6),
-                                      NotFound(message: R.string.noneWishes),
-                                    ],
-                                  );
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Obx(
+                                      () => Chip(
+                                        label: Text(
+                                          presenter.viewModel.tag!.name!,
+                                          style: textTheme.caption?.copyWith(
+                                            color: Color(presenter.viewModel.tag!.color!),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        visualDensity: const VisualDensity(vertical: -3),
+                                        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                                        backgroundColor: Color(presenter.viewModel.tag!.color!).withOpacity(0.1),
+                                        side: BorderSide(color: Color(presenter.viewModel.tag!.color!)),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBoxDefault(),
+                              Obx(
+                                () {
+                                  if (presenter.viewModel.wishes.isNotEmpty) {
+                                    return ListView.separated(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: presenter.viewModel.wishes.length,
+                                      separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
+                                      itemBuilder: (_, index) {
+                                        final WishViewModel wish = presenter.viewModel.wishes[index];
+                                        return ListTileWish(
+                                          contentPadding: const EdgeInsets.all(6),
+                                          viewModel: wish,
+                                          onTap: () async => await _navigateToWish(wish, index),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    return Column(
+                                      children: [
+                                        const SizedBoxDefault(6),
+                                        NotFound(message: R.string.noneWishes),
+                                      ],
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
