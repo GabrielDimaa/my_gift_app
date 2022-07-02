@@ -7,11 +7,13 @@ import '../../../presenters/wishlist/abstracts/wishlists_fetch_presenter.dart';
 import '../../../presenters/wishlist/implements/getx_wishlists_fetch_presenter.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
+import '../../components/app_bar/photo_profile_action.dart';
 import '../../components/button/fab_default.dart';
 import '../../components/circular_loading.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/not_found.dart';
 import '../../components/padding/padding_default.dart';
+import '../config/config_drawer.dart';
 import 'components/wishlist_list_tile.dart';
 
 class WishlistsFetchPage extends StatefulWidget {
@@ -24,6 +26,8 @@ class WishlistsFetchPage extends StatefulWidget {
 class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
   final WishlistsFetchPresenter presenter = Get.find<GetxWishlistsFetchPresenter>();
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     presenter.initialize().catchError((e) => ErrorDialog.show(context: context, content: e.toString()));
@@ -33,7 +37,12 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarDefault(title: R.string.wishlists),
+      key: _scaffoldKey,
+      appBar: AppBarDefault(
+        title: R.string.wishlists,
+        actions: [PhotoProfileAction(scaffoldKey: _scaffoldKey)],
+      ),
+      endDrawer: const ConfigDrawer(),
       floatingActionButton: FABDefault(
         icon: Icons.add,
         onPressed: () async => await _navigateWishlistRegister(),
