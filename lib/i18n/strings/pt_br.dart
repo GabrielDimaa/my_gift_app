@@ -312,6 +312,9 @@ class PtBr implements Translation {
   String get editMyData => "Editar meus dados";
 
   @override
+  String get editData => "Editar dados";
+
+  @override
   String get changePassword => "Alterar senha";
 
   @override
@@ -373,6 +376,12 @@ class PtBr implements Translation {
 
   @override
   String get exitMessage => "Você deseja realmente sair?";
+
+  @override
+  String get savingData => "Salvando dados";
+
+  @override
+  String get alterPhoto => "Alterar foto";
   //endregion
 
   //region Validation

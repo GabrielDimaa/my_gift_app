@@ -107,7 +107,7 @@ class _ConfigDrawerState extends State<ConfigDrawer> {
                     const Divider(thickness: 1, height: 1),
                     _listTile(
                       label: R.string.editMyData,
-                      onTap: () {},
+                      onTap: () async => await Navigator.pushNamed(context, userEditProfileRoute),
                     ),
                     const Divider(thickness: 1, height: 1),
                     _listTile(

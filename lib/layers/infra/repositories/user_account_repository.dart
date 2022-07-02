@@ -72,4 +72,25 @@ class UserAccountRepository implements IUserAccountRepository {
       throw e.toDomainError();
     }
   }
+
+  @override
+  Future<UserEntity> getUserAccount(String userId) async {
+    try {
+      final UserModel userModel = await userAccountDataSource.getById(userId);
+      return userModel.toEntity();
+    } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
+      throw e.toDomainError();
+    }
+  }
+
+  @override
+  Future<void> updateUserAccount(UserEntity entity) async {
+    try {
+      await userAccountDataSource.updateUserAccount(UserModel.fromEntity(entity));
+    } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
+      throw e.toDomainError();
+    }
+  }
 }

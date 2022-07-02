@@ -38,10 +38,7 @@ class _WishlistsFetchPageState extends State<WishlistsFetchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBarDefault(
-        title: R.string.wishlists,
-        actions: [PhotoProfileAction(scaffoldKey: _scaffoldKey)],
-      ),
+      appBar: AppBarDefault(title: R.string.wishlists),
       endDrawer: const ConfigDrawer(),
       floatingActionButton: FABDefault(
         icon: Icons.add,

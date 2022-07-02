@@ -8,4 +8,6 @@ abstract class IUserAccountRepository {
   Future<bool> checkEmailVerified(String userId);
   Future<UserEntity?> getUserLogged();
   Future<void> logout();
+  Future<UserEntity> getUserAccount(String userId);
+  Future<void> updateUserAccount(UserEntity entity);
 }

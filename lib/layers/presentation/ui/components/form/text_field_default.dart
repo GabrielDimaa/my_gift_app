@@ -64,6 +64,7 @@ class TextFieldDefault extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
           ),
+          style: enabled ?? true ? null : TextStyle(color: Colors.grey[600]),
           minLines: minLines,
           maxLines: maxLines,
         ),

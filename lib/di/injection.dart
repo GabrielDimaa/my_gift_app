@@ -22,7 +22,9 @@ import '../layers/domain/usecases/implements/signup/send_verification_email.dart
 import '../layers/domain/usecases/implements/signup/signup_email.dart';
 import '../layers/domain/usecases/implements/tag/get_tags.dart';
 import '../layers/domain/usecases/implements/tag/save_tag.dart';
+import '../layers/domain/usecases/implements/user/get_user_account.dart';
 import '../layers/domain/usecases/implements/user/get_user_logged.dart';
+import '../layers/domain/usecases/implements/user/save_user_account.dart';
 import '../layers/domain/usecases/implements/wish/delete_wish.dart';
 import '../layers/domain/usecases/implements/wish/get_wishes.dart';
 import '../layers/domain/usecases/implements/wish/save_wish.dart';
@@ -52,6 +54,7 @@ import '../layers/presentation/presenters/friend/getx_profile_presenter.dart';
 import '../layers/presentation/presenters/login/getx_login_presenter.dart';
 import '../layers/presentation/presenters/signup/getx_signup_presenter.dart';
 import '../layers/presentation/presenters/splash/getx_splash_presenter.dart';
+import '../layers/presentation/presenters/user/getx_user_edit_profile_presenter.dart';
 import '../layers/presentation/presenters/wish/getx_wish_register_presenter.dart';
 import '../layers/presentation/presenters/wishlist/implements/getx_wishlist_details_presenter.dart';
 import '../layers/presentation/presenters/wishlist/implements/getx_wishlist_register_presenter.dart';
@@ -178,6 +181,8 @@ class Injection {
     Get.lazyPut(() => VerifyFriendship(friendRepository: Get.find<FriendRepository>()), fenix: true);
     Get.lazyPut(() => SaveTheme(configRepository: Get.find<ConfigRepository>()), fenix: true);
     Get.lazyPut(() => GetTheme(configRepository: Get.find<ConfigRepository>()), fenix: true);
+    Get.lazyPut(() => GetUserAccount(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
+    Get.lazyPut(() => SaveUserAccount(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     //endregion
 
     //region Presenters
@@ -242,6 +247,15 @@ class Injection {
         undoFriend: Get.find<UndoFriend>(),
         verifyFriendShip: Get.find<VerifyFriendship>(),
         getWishlists: Get.find<GetWishlists>(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetxUserEditProfilePresenter(
+        getUserAccount: Get.find<GetUserAccount>(),
+        saveUserAccount: Get.find<SaveUserAccount>(),
+        fetchImagePickerCamera: Get.find<FetchImagePickerCamera>(),
+        fetchImagePickerGallery: Get.find<FetchImagePickerGallery>(),
       ),
       fenix: true,
     );

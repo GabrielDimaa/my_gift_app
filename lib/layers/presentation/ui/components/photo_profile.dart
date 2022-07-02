@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/user_entity.dart';
+import 'images/image_loader_default.dart';
 
 class PhotoProfile extends StatelessWidget {
   final UserEntity user;
@@ -19,11 +19,13 @@ class PhotoProfile extends StatelessWidget {
           style: const TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
-      child: CachedNetworkImage(
-        imageUrl: user.photo ?? "",
-        imageBuilder: (_, image) => CircleAvatar(backgroundImage: image),
-        placeholder: (context, url) => const CircularProgressIndicator(),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
+      child: CircleAvatar(
+        child: ImageLoaderDefault(
+          image: user.photo ?? "",
+          width: 100,
+          height: 100,
+          radius: 100,
+        ),
       ),
     );
   }

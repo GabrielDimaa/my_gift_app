@@ -104,6 +104,7 @@ abstract class Translation {
   String get hello;
   String get logout;
   String get editMyData;
+  String get editData;
   String get changePassword;
   String get theme;
   String get goingOut;
@@ -125,6 +126,8 @@ abstract class Translation {
   String get profile;
   String get exit;
   String get exitMessage;
+  String get savingData;
+  String get alterPhoto;
   //endregion
 
   //region Validation

@@ -193,6 +193,37 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
     }
   }
 
+  @override
+  Future<void> updateUserAccount(UserModel model) async {
+    try {
+      await ConnectivityNetwork.hasInternet();
+
+      final WriteBatch batch = firestore.batch();
+
+      if (model.photo?.isNotEmpty ?? false) {
+        if (!(Uri.tryParse(model.photo!)?.isAbsolute ?? false)) {
+          final snapshot = await firestore.collection(constantUsersReference).doc(model.id).get();
+          if ((snapshot.data()?['photo'] ?? false) != null) {
+            await firebaseStorageDataSource.delete("profile/${model.id}");
+          }
+
+          final String photoUrl = await firebaseStorageDataSource.upload("profile/${model.id}", File(model.photo!));
+          model.photo = photoUrl;
+        }
+      }
+
+      batch.update(firestore.collection(constantUsersReference).doc(model.id), model.toJson());
+
+      await batch.commit();
+    } on FirebaseException catch (e) {
+      throw e.getInfraError;
+    } on InfraError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedInfraError();
+    }
+  }
+
   List<String> _mountSearchName(String name) {
     List<String> list = [];
     for (var index = 0; index <= name.length; index++) {

@@ -9,4 +9,5 @@ abstract class IUserAccountDataSource {
   Future<UserModel?> getUserLogged();
   Future<UserModel> getById(String userId);
   Future<void> logout();
+  Future<void> updateUserAccount(UserModel model);
 }
