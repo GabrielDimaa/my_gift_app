@@ -51,11 +51,14 @@ class BottomSheetDefault extends StatelessWidget {
           Positioned(
             top: 10,
             right: 10,
-            child: IconButton(
-              splashRadius: 24,
-              icon: const Icon(Icons.close),
-              tooltip: R.string.close,
-              onPressed: () => enablePop ? Navigator.pop(context) : null,
+            child: Visibility(
+              visible: enablePop,
+              child: IconButton(
+                splashRadius: 24,
+                icon: const Icon(Icons.close),
+                tooltip: R.string.close,
+                onPressed: () => Navigator.pop(context),
+              ),
             ),
           ),
           Column(

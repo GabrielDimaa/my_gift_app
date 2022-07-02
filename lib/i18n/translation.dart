@@ -128,6 +128,14 @@ abstract class Translation {
   String get exitMessage;
   String get savingData;
   String get alterPhoto;
+  String get resetPassword;
+  String get explicationSendResetPassword;
+  String get explicationCodeResetPassword;
+  String get explicationEmailResetPassword;
+  String get send;
+  String get sent;
+  String get sending;
+  String get resendCode;
   //endregion
 
   //region Validation
@@ -161,6 +169,7 @@ abstract class Translation {
   String get passwordError;
   String get passwordNotInformedError;
   String get nameNotInformedError;
+  String get codeNotInformedError;
   String get shortPasswordError;
   String get permissionDeniedError;
   String get withoutPermissionCameraError;

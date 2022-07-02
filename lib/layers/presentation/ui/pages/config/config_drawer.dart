@@ -112,7 +112,7 @@ class _ConfigDrawerState extends State<ConfigDrawer> {
                     const Divider(thickness: 1, height: 1),
                     _listTile(
                       label: R.string.changePassword,
-                      onTap: () {},
+                      onTap: () async => await Navigator.pushNamed(context, emailResetPasswordRoute, arguments: true),
                     ),
                     const Divider(thickness: 1, height: 1),
                   ],

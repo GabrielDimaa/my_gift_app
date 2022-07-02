@@ -25,6 +25,8 @@ import '../layers/domain/usecases/implements/tag/save_tag.dart';
 import '../layers/domain/usecases/implements/user/get_user_account.dart';
 import '../layers/domain/usecases/implements/user/get_user_logged.dart';
 import '../layers/domain/usecases/implements/user/save_user_account.dart';
+import '../layers/domain/usecases/implements/user/send_code_update_password.dart';
+import '../layers/domain/usecases/implements/user/update_password.dart';
 import '../layers/domain/usecases/implements/wish/delete_wish.dart';
 import '../layers/domain/usecases/implements/wish/get_wishes.dart';
 import '../layers/domain/usecases/implements/wish/save_wish.dart';
@@ -54,6 +56,7 @@ import '../layers/presentation/presenters/friend/getx_profile_presenter.dart';
 import '../layers/presentation/presenters/login/getx_login_presenter.dart';
 import '../layers/presentation/presenters/signup/getx_signup_presenter.dart';
 import '../layers/presentation/presenters/splash/getx_splash_presenter.dart';
+import '../layers/presentation/presenters/user/getx_reset_password_presenter.dart';
 import '../layers/presentation/presenters/user/getx_user_edit_profile_presenter.dart';
 import '../layers/presentation/presenters/wish/getx_wish_register_presenter.dart';
 import '../layers/presentation/presenters/wishlist/implements/getx_wishlist_details_presenter.dart';
@@ -183,6 +186,8 @@ class Injection {
     Get.lazyPut(() => GetTheme(configRepository: Get.find<ConfigRepository>()), fenix: true);
     Get.lazyPut(() => GetUserAccount(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => SaveUserAccount(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
+    Get.lazyPut(() => UpdatePassword(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
+    Get.lazyPut(() => SendCodeUpdatePassword(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     //endregion
 
     //region Presenters
@@ -256,6 +261,13 @@ class Injection {
         saveUserAccount: Get.find<SaveUserAccount>(),
         fetchImagePickerCamera: Get.find<FetchImagePickerCamera>(),
         fetchImagePickerGallery: Get.find<FetchImagePickerGallery>(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+          () => GetxResetPasswordPresenter(
+        updatePassword: Get.find<UpdatePassword>(),
+        sendCodeUpdatePassword: Get.find<SendCodeUpdatePassword>(),
       ),
       fenix: true,
     );

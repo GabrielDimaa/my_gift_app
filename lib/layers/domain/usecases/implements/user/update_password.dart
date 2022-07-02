@@ -12,6 +12,8 @@ class UpdatePassword implements IUpdatePassword {
   @override
   Future<void> update(NewPasswordParams params) async {
     try {
+      if (params.newPassword.length < 8) throw PasswordDomainError(message: R.string.shortPasswordError);
+
       await userAccountRepository.updatePassword(params);
     } on DomainError {
       rethrow;

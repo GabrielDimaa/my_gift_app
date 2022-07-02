@@ -16,6 +16,6 @@ abstract class ParamsFactory {
 
   static NewPasswordParams newPasswordParams() => NewPasswordParams(
         code: faker.randomGenerator.integer(9999, min: 1000).toString(),
-        newPassword: faker.randomGenerator.string(8),
+        newPassword: faker.randomGenerator.string(20, min: 8),
       );
 }

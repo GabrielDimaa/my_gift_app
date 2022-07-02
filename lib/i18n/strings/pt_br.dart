@@ -382,6 +382,30 @@ class PtBr implements Translation {
 
   @override
   String get alterPhoto => "Alterar foto";
+
+  @override
+  String get resetPassword => "Redefinir senha";
+
+  @override
+  String get explicationSendResetPassword => "Redefinição de senha enviado para seu endereço de email.";
+
+  @override
+  String get explicationCodeResetPassword => "Insira o código enviado para seu endereço de email.";
+
+  @override
+  String get explicationEmailResetPassword => "Insira o endereço de email para enviarmos a redefinição de senha.";
+
+  @override
+  String get send => "Enviar";
+
+  @override
+  String get sent => "Enviado";
+
+  @override
+  String get sending => "Enviando";
+
+  @override
+  String get resendCode => "Reenviar código";
   //endregion
 
   //region Validation
@@ -467,6 +491,9 @@ class PtBr implements Translation {
 
   @override
   String get nameNotInformedError => "Nome não informado.";
+
+  @override
+  String get codeNotInformedError => "Código não informado";
 
   @override
   String get shortPasswordError => "Senha muito curta.";

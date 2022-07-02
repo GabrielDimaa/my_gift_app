@@ -22,14 +22,14 @@ void main() {
   setUpAll(() => registerFallbackValue(entity));
 
   test("Deve chamar sendCodeUpdatePassword com valores corretos", () async {
-    await sut.send(entity);
+    await sut.send(email);
     verify(() => userAccountRepositorySpy.sendCodeUpdatePassword(email));
   });
 
   test("Deve throw UnexpectedDomainError", () {
     userAccountRepositorySpy.mockSendCodeUpdatePasswordError();
 
-    final Future future = sut.send(entity);
+    final Future future = sut.send(email);
     expect(future, throwsA(isA<UnexpectedDomainError>()));
   });
 }

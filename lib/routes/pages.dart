@@ -9,6 +9,8 @@ import '../layers/presentation/ui/pages/signup/signup_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_password_page.dart';
 import '../layers/presentation/ui/pages/signup/signup_photo_page.dart';
 import '../layers/presentation/ui/pages/splash/splash_page.dart';
+import '../layers/presentation/ui/pages/user/code_reset_password_page.dart';
+import '../layers/presentation/ui/pages/user/email_reset_password_page.dart';
 import '../layers/presentation/ui/pages/user/user_edit_profile_page.dart';
 import '../layers/presentation/ui/pages/wish/wish_details_page.dart';
 import '../layers/presentation/ui/pages/wish/wish_register_page.dart';
@@ -34,5 +36,6 @@ class Pages {
         GetPage(name: friendsRoute, page: () => const FriendsPage()),
         GetPage(name: profileRoute, page: () => ProfilePage(viewModel: Get.arguments)),
         GetPage(name: userEditProfileRoute, page: () => const UserEditProfilePage()),
+        GetPage(name: emailResetPasswordRoute, page: () => EmailResetPasswordPage(logged: Get.arguments ?? false)),
       ];
 }
