@@ -16,6 +16,8 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
     mockCheckEmailVerified(true);
     mockGetUserLogged(entityResult);
     mockLogout();
+    mockGetUserAccount(entityResult);
+    mockUpdateUserAccount();
   }
 
   //region auth
@@ -52,5 +54,17 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
   When mockLogoutCall() => when(() => logout());
   void mockLogout() => mockLogoutCall().thenAnswer((_) => Future.value());
   void mockLogoutError({Exception? error}) => mockLogoutCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region getUserAccount
+  When mockGetUserAccountCall() => when(() => getUserAccount(any()));
+  void mockGetUserAccount(UserEntity data) => mockGetUserAccountCall().thenAnswer((_) => Future.value(data));
+  void mockGetUserAccountError({Exception? error}) => mockGetUserAccountCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region updateUserAccount
+  When mockUpdateUserAccountCall() => when(() => updateUserAccount(any()));
+  void mockUpdateUserAccount() => mockUpdateUserAccountCall().thenAnswer((_) => Future.value());
+  void mockUpdateUserAccountError({Exception? error}) => mockUpdateUserAccountCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }

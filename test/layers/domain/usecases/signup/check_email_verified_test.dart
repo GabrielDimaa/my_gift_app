@@ -20,6 +20,8 @@ void main() {
     sut = CheckEmailVerified(userAccountRepository: userAccountRepositorySpy);
   });
 
+  setUpAll(() => registerFallbackValue(user));
+
   test("Deve chamar sendVerificationEmail com valores corretos", () async {
     await sut.check(userId);
     verify(() => userAccountRepositorySpy.checkEmailVerified(userId));

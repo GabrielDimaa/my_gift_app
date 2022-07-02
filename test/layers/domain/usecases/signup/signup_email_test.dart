@@ -19,6 +19,8 @@ void main() {
     sut = SignUpEmail(userAccountRepository: userAccountRepositorySpy);
   });
 
+  setUpAll(() => registerFallbackValue(userRequest));
+
   test("Deve chamar signUpWithEmail com valores corretos", () async {
     await sut.signUp(userRequest);
 

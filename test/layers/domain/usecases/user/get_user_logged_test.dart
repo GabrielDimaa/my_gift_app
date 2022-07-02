@@ -2,6 +2,7 @@ import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:desejando_app/layers/domain/usecases/implements/user/get_user_logged.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../infra/repositories/mocks/user_account_repository_spy.dart';
 import '../../entities/entity_extension.dart';
@@ -17,6 +18,8 @@ void main() {
     userAccountRepositorySpy = UserAccountRepositorySpy(entityResult: entityResult);
     sut = GetUserLogged(userAccountRepository: userAccountRepositorySpy);
   });
+
+  setUpAll(() => registerFallbackValue(entityResult));
 
   test("Deve chamar getUser e retornar o user com sucesso", () async {
     final UserEntity? user = await sut.getUser();

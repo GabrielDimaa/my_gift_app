@@ -12,6 +12,8 @@ class FirebaseUserAccountDataSourceSpy extends Mock implements IUserAccountDataS
     mockCheckEmailVerified(true);
     mockGetUserLogged(model);
     mockLogout();
+    mockGetById(model);
+    mockUpdateUserAccount();
   }
 
   //region authWithEmail
@@ -44,9 +46,21 @@ class FirebaseUserAccountDataSourceSpy extends Mock implements IUserAccountDataS
   void mockGetUserLoggedError(Exception error) => mockGetUserLoggedCall().thenThrow(error);
   //endregion
 
-  //region getUserLogged
+  //region logout
   When mockLogoutCall() => when(() => logout());
   void mockLogout() => mockLogoutCall().thenAnswer((_) => Future.value());
   void mockLogoutError(Exception error) => mockLogoutCall().thenThrow(error);
+  //endregion
+
+  //region getById
+  When mockGetByIdCall() => when(() => getById(any()));
+  void mockGetById(UserModel data) => mockGetByIdCall().thenAnswer((_) => Future.value(data));
+  void mockGetByIdError(Exception error) => mockGetByIdCall().thenThrow(error);
+  //endregion
+
+  //region updateUserAccount
+  When mockUpdateUserAccountCall() => when(() => updateUserAccount(any()));
+  void mockUpdateUserAccount() => mockUpdateUserAccountCall().thenAnswer((_) => Future.value());
+  void mockUpdateUserAccountError(Exception error) => mockUpdateUserAccountCall().thenThrow(error);
   //endregion
 }

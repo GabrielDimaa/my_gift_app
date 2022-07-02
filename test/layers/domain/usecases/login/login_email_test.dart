@@ -21,6 +21,8 @@ void main() {
     sut = LoginEmail(userAccountRepository: userAccountRepositorySpy);
   });
 
+  setUpAll(() => registerFallbackValue(userResult));
+
   test("Deve chamar authWithEmail com valores corretos", () async {
     await sut.auth(loginParams);
 

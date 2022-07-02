@@ -307,4 +307,69 @@ void main() {
       expect(future, throwsA(isA<Exception>()));
     });
   });
+
+  group("getUserAccount", () {
+    test("Deve chamar getById com sucesso", () async {
+      await sut.getUserAccount(userId);
+      verify(() => userAccountDataSourceSpy.getById(userId));
+    });
+
+    test("Deve throw UnexpectedInfraError", () {
+      userAccountDataSourceSpy.mockGetByIdError(UnexpectedInfraError());
+
+      final Future future = sut.getUserAccount(userId);
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
+      userAccountDataSourceSpy.mockGetByIdError(Exception());
+
+      final Future future = sut.getUserAccount(userId);
+      expect(future, throwsA(isA<Exception>()));
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      userAccountDataSourceSpy.mockGetByIdError(ConnectionInfraError());
+
+      final Future future = sut.getUserAccount(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError se InternalInfraError", () {
+      userAccountDataSourceSpy.mockGetByIdError(InternalInfraError());
+
+      final Future future = sut.getUserAccount(userId);
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+  });
+
+  group("getUserAccount", () {
+    test("Deve throw UnexpectedInfraError", () {
+      userAccountDataSourceSpy.mockUpdateUserAccountError(UnexpectedInfraError());
+
+      final Future future = sut.updateUserAccount(userModel.toEntity());
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
+      userAccountDataSourceSpy.mockUpdateUserAccountError(Exception());
+
+      final Future future = sut.updateUserAccount(userModel.toEntity());
+      expect(future, throwsA(isA<Exception>()));
+    });
+
+    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
+      userAccountDataSourceSpy.mockUpdateUserAccountError(ConnectionInfraError());
+
+      final Future future = sut.updateUserAccount(userModel.toEntity());
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError se InternalInfraError", () {
+      userAccountDataSourceSpy.mockUpdateUserAccountError(InternalInfraError());
+
+      final Future future = sut.updateUserAccount(userModel.toEntity());
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+  });
 }
