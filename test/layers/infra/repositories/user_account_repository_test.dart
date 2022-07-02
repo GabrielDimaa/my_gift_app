@@ -1,6 +1,7 @@
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
+import 'package:desejando_app/layers/domain/helpers/params/new_password_params.dart';
 import 'package:desejando_app/layers/infra/helpers/errors/infra_error.dart';
 import 'package:desejando_app/layers/infra/models/user_model.dart';
 import 'package:desejando_app/layers/infra/repositories/user_account_repository.dart';
@@ -19,6 +20,7 @@ void main() {
   final LoginParams loginParams = ParamsFactory.login();
   final UserModel userModel = ModelFactory.user();
   final String userId = userModel.id!;
+  final NewPasswordParams params = ParamsFactory.newPasswordParams();
 
   setUp(() {
     userAccountDataSourceSpy = FirebaseUserAccountDataSourceSpy(userModel);
@@ -28,6 +30,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(loginParams);
     registerFallbackValue(userModel);
+    registerFallbackValue(params);
   });
 
   group("authWithEmail", () {
@@ -343,7 +346,7 @@ void main() {
     });
   });
 
-  group("getUserAccount", () {
+  group("updateUserAccount", () {
     test("Deve throw UnexpectedInfraError", () {
       userAccountDataSourceSpy.mockUpdateUserAccountError(UnexpectedInfraError());
 
@@ -370,6 +373,120 @@ void main() {
 
       final Future future = sut.updateUserAccount(userModel.toEntity());
       expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+  });
+
+  group("sendCodeUpdatePassword", () {
+    final String email = userModel.email;
+
+    test("Deve chamar getById com sucesso", () async {
+      await sut.sendCodeUpdatePassword(userId);
+      verify(() => userAccountDataSourceSpy.sendCodeUpdatePassword(userId));
+    });
+
+    test("Deve throw UnexpectedInfraError", () {
+      userAccountDataSourceSpy.mockSendCodeUpdatePasswordError(UnexpectedInfraError());
+      final Future future = sut.sendCodeUpdatePassword(email);
+
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
+      userAccountDataSourceSpy.mockSendCodeUpdatePasswordError(Exception());
+      final Future future = sut.sendCodeUpdatePassword(email);
+
+      expect(future, throwsA(isA()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      userAccountDataSourceSpy.mockSendCodeUpdatePasswordError(ConnectionInfraError());
+      final Future future = sut.sendCodeUpdatePassword(email);
+
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      userAccountDataSourceSpy.mockSendCodeUpdatePasswordError(InternalInfraError());
+      final Future future = sut.sendCodeUpdatePassword(email);
+
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw EmailInvalidDomainError", () {
+      userAccountDataSourceSpy.mockSendCodeUpdatePasswordError(EmailInvalidInfraError());
+      final Future future = sut.sendCodeUpdatePassword(email);
+
+      expect(future, throwsA(isA<EmailInvalidDomainError>()));
+    });
+
+    test("Deve throw EmailInUseDomainError", () {
+      userAccountDataSourceSpy.mockSendCodeUpdatePasswordError(EmailInUseInfraError());
+      final Future future = sut.sendCodeUpdatePassword(email);
+
+      expect(future, throwsA(isA<EmailInUseDomainError>()));
+    });
+
+    test("Deve throw PasswordDomainError", () {
+      userAccountDataSourceSpy.mockSendCodeUpdatePasswordError(WrongPasswordInfraError());
+      final Future future = sut.sendCodeUpdatePassword(email);
+
+      expect(future, throwsA(isA<PasswordDomainError>()));
+    });
+  });
+
+  group("updatePassword", () {
+    test("Deve retornar UserEntity com sucesso", () async {
+      await sut.updatePassword(params);
+      verify(() => userAccountDataSourceSpy.updatePassword(params));
+    });
+
+    test("Deve throw UnexpectedInfraError", () {
+      userAccountDataSourceSpy.mockUpdatePasswordError(UnexpectedInfraError());
+      final Future future = sut.updatePassword(params);
+
+      expect(future, throwsA(isA<UnexpectedInfraError>()));
+    });
+
+    test("Deve throw Exception", () {
+      userAccountDataSourceSpy.mockUpdatePasswordError(Exception());
+      final Future future = sut.updatePassword(params);
+
+      expect(future, throwsA(isA()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      userAccountDataSourceSpy.mockUpdatePasswordError(ConnectionInfraError());
+      final Future future = sut.updatePassword(params);
+
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw UnexpectedDomainError", () {
+      userAccountDataSourceSpy.mockUpdatePasswordError(InternalInfraError());
+      final Future future = sut.updatePassword(params);
+
+      expect(future, throwsA(isA<UnexpectedDomainError>()));
+    });
+
+    test("Deve throw EmailInvalidDomainError", () {
+      userAccountDataSourceSpy.mockUpdatePasswordError(EmailInvalidInfraError());
+      final Future future = sut.updatePassword(params);
+
+      expect(future, throwsA(isA<EmailInvalidDomainError>()));
+    });
+
+    test("Deve throw EmailInUseDomainError", () {
+      userAccountDataSourceSpy.mockUpdatePasswordError(EmailInUseInfraError());
+      final Future future = sut.updatePassword(params);
+
+      expect(future, throwsA(isA<EmailInUseDomainError>()));
+    });
+
+    test("Deve throw PasswordDomainError", () {
+      userAccountDataSourceSpy.mockUpdatePasswordError(WrongPasswordInfraError());
+      final Future future = sut.updatePassword(params);
+
+      expect(future, throwsA(isA<PasswordDomainError>()));
     });
   });
 }

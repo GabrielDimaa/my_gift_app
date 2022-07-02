@@ -14,6 +14,8 @@ class FirebaseUserAccountDataSourceSpy extends Mock implements IUserAccountDataS
     mockLogout();
     mockGetById(model);
     mockUpdateUserAccount();
+    mockSendCodeUpdatePassword();
+    mockUpdatePassword();
   }
 
   //region authWithEmail
@@ -62,5 +64,17 @@ class FirebaseUserAccountDataSourceSpy extends Mock implements IUserAccountDataS
   When mockUpdateUserAccountCall() => when(() => updateUserAccount(any()));
   void mockUpdateUserAccount() => mockUpdateUserAccountCall().thenAnswer((_) => Future.value());
   void mockUpdateUserAccountError(Exception error) => mockUpdateUserAccountCall().thenThrow(error);
+  //endregion
+
+  //region sendCodeUpdatePassword
+  When mockSendCodeUpdatePasswordCall() => when(() => sendCodeUpdatePassword(any()));
+  void mockSendCodeUpdatePassword() => mockSendCodeUpdatePasswordCall().thenAnswer((_) => Future.value());
+  void mockSendCodeUpdatePasswordError(Exception error) => mockSendCodeUpdatePasswordCall().thenThrow(error);
+  //endregion
+
+  //region updatePassword
+  When mockUpdatePasswordCall() => when(() => updatePassword(any()));
+  void mockUpdatePassword() => mockUpdatePasswordCall().thenAnswer((_) => Future.value());
+  void mockUpdatePasswordError(Exception error) => mockUpdatePasswordCall().thenThrow(error);
   //endregion
 }

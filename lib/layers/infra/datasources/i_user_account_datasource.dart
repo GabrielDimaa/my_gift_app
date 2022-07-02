@@ -1,4 +1,5 @@
 import '../../domain/helpers/params/login_params.dart';
+import '../../domain/helpers/params/new_password_params.dart';
 import '../models/user_model.dart';
 
 abstract class IUserAccountDataSource {
@@ -10,4 +11,6 @@ abstract class IUserAccountDataSource {
   Future<UserModel> getById(String userId);
   Future<void> logout();
   Future<void> updateUserAccount(UserModel model);
+  Future<void> sendCodeUpdatePassword(String email);
+  Future<void> updatePassword(NewPasswordParams params);
 }

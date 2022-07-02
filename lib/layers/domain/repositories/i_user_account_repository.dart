@@ -1,5 +1,6 @@
 import '../../domain/entities/user_entity.dart';
 import '../../domain/helpers/params/login_params.dart';
+import '../helpers/params/new_password_params.dart';
 
 abstract class IUserAccountRepository {
   Future<UserEntity> authWithEmail(LoginParams params);
@@ -10,4 +11,6 @@ abstract class IUserAccountRepository {
   Future<void> logout();
   Future<UserEntity> getUserAccount(String userId);
   Future<void> updateUserAccount(UserEntity entity);
+  Future<void> updatePassword(NewPasswordParams params);
+  Future<void> sendCodeUpdatePassword(String email);
 }

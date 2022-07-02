@@ -557,5 +557,8 @@ class PtBr implements Translation {
 
   @override
   String get noAccessError => "Você não tem acesso para editar.";
+
+  @override
+  String get sendCodeError => "Houve um erro ao enviar código para o email.";
   //endregion
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:desejando_app/layers/domain/helpers/params/new_password_params.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../domain/helpers/params/login_params.dart';
@@ -215,6 +216,32 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       batch.update(firestore.collection(constantUsersReference).doc(model.id), model.toJson());
 
       await batch.commit();
+    } on FirebaseException catch (e) {
+      throw e.getInfraError;
+    } on InfraError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedInfraError();
+    }
+  }
+
+  @override
+  Future<void> sendCodeUpdatePassword(String email) async {
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseException catch (e) {
+      throw e.getInfraError;
+    } on InfraError {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedInfraError();
+    }
+  }
+
+  @override
+  Future<void> updatePassword(NewPasswordParams params) async {
+    try {
+      await firebaseAuth.confirmPasswordReset(code: params.code, newPassword: params.newPassword);
     } on FirebaseException catch (e) {
       throw e.getInfraError;
     } on InfraError {

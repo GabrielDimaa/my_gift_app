@@ -1,3 +1,5 @@
+import 'package:desejando_app/layers/domain/helpers/params/new_password_params.dart';
+
 import '../../domain/entities/user_entity.dart';
 import '../../domain/helpers/params/login_params.dart';
 import '../../domain/repositories/i_user_account_repository.dart';
@@ -88,6 +90,26 @@ class UserAccountRepository implements IUserAccountRepository {
   Future<void> updateUserAccount(UserEntity entity) async {
     try {
       await userAccountDataSource.updateUserAccount(UserModel.fromEntity(entity));
+    } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
+      throw e.toDomainError();
+    }
+  }
+
+  @override
+  Future<void> sendCodeUpdatePassword(String email) async {
+    try {
+      await userAccountDataSource.sendCodeUpdatePassword(email);
+    } on InfraError catch (e) {
+      if (e is UnexpectedInfraError) rethrow;
+      throw e.toDomainError();
+    }
+  }
+
+  @override
+  Future<void> updatePassword(NewPasswordParams params) async {
+    try {
+      await userAccountDataSource.updatePassword(params);
     } on InfraError catch (e) {
       if (e is UnexpectedInfraError) rethrow;
       throw e.toDomainError();

@@ -1,5 +1,6 @@
 import 'package:desejando_app/layers/domain/entities/user_entity.dart';
 import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
+import 'package:desejando_app/layers/domain/helpers/params/new_password_params.dart';
 import 'package:desejando_app/layers/domain/repositories/i_user_account_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -7,8 +8,9 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
   final LoginParams? params;
   final UserEntity? entityRequest;
   final UserEntity entityResult;
+  final NewPasswordParams? newPasswordParams;
 
-  UserAccountRepositorySpy({this.params, this.entityRequest, required this.entityResult}) {
+  UserAccountRepositorySpy({this.params, this.entityRequest, required this.entityResult, this.newPasswordParams}) {
     if (params != null) mockAuthWithEmail(entityResult);
     if (entityRequest != null) mockSignUpWithEmail(entityResult);
 
@@ -18,6 +20,8 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
     mockLogout();
     mockGetUserAccount(entityResult);
     mockUpdateUserAccount();
+    mockSendCodeUpdatePassword();
+    if (newPasswordParams != null) mockUpdatePassword();
   }
 
   //region auth
@@ -66,5 +70,17 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
   When mockUpdateUserAccountCall() => when(() => updateUserAccount(any()));
   void mockUpdateUserAccount() => mockUpdateUserAccountCall().thenAnswer((_) => Future.value());
   void mockUpdateUserAccountError({Exception? error}) => mockUpdateUserAccountCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region sendCodeUpdatePassword
+  When mockSendCodeUpdatePasswordCall() => when(() => sendCodeUpdatePassword(any()));
+  void mockSendCodeUpdatePassword() => mockSendCodeUpdatePasswordCall().thenAnswer((_) => Future.value());
+  void mockSendCodeUpdatePasswordError({Exception? error}) => mockSendCodeUpdatePasswordCall().thenThrow(error ?? Exception("any_error"));
+  //endregion
+
+  //region updatePassword
+  When mockUpdatePasswordCall() => when(() => updatePassword(any()));
+  void mockUpdatePassword() => mockUpdatePasswordCall().thenAnswer((_) => Future.value());
+  void mockUpdatePasswordError({Exception? error}) => mockUpdatePasswordCall().thenThrow(error ?? Exception("any_error"));
   //endregion
 }
