@@ -100,6 +100,9 @@ class _EmailResetPasswordPageState extends State<EmailResetPasswordPage> {
 
         await LoadingDialog.show(context: context, message: "${R.string.sending}...", onAction: () async => await presenter.sendCode());
 
+        if (!mounted) return;
+        final double width = MediaQuery.of(context).size.width;
+
         await BottomSheetDefault.show(
           context: context,
           title: R.string.sent,
@@ -108,7 +111,7 @@ class _EmailResetPasswordPageState extends State<EmailResetPasswordPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SvgPicture.asset("assets/images/concluded.svg", width: MediaQuery.of(context).size.width / 2),
+              SvgPicture.asset("assets/images/concluded.svg", width: width / 2),
               const SizedBoxDefault(2),
               Text(R.string.explicationSendResetPassword),
               const SizedBoxDefault(3),
