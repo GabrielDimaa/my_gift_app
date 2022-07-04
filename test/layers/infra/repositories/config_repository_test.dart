@@ -1,6 +1,6 @@
-import 'package:desejando_app/layers/domain/enums/theme_mode.dart';
-import 'package:desejando_app/layers/infra/helpers/errors/infra_error.dart';
-import 'package:desejando_app/layers/infra/repositories/config_repository.dart';
+import 'package:my_gift_app/layers/domain/enums/theme_mode.dart';
+import 'package:my_gift_app/layers/infra/helpers/errors/infra_error.dart';
+import 'package:my_gift_app/layers/infra/repositories/config_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

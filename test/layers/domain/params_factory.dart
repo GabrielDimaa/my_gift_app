@@ -1,6 +1,6 @@
-import 'package:desejando_app/layers/domain/helpers/params/friend_params.dart';
-import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
-import 'package:desejando_app/layers/domain/helpers/params/new_password_params.dart';
+import 'package:my_gift_app/layers/domain/helpers/params/friend_params.dart';
+import 'package:my_gift_app/layers/domain/helpers/params/login_params.dart';
+import 'package:my_gift_app/layers/domain/helpers/params/new_password_params.dart';
 import 'package:faker/faker.dart';
 
 abstract class ParamsFactory {

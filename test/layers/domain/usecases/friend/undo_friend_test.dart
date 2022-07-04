@@ -1,6 +1,6 @@
-import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
-import 'package:desejando_app/layers/domain/helpers/params/friend_params.dart';
-import 'package:desejando_app/layers/domain/usecases/implements/friend/undo_friend.dart';
+import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:my_gift_app/layers/domain/helpers/params/friend_params.dart';
+import 'package:my_gift_app/layers/domain/usecases/implements/friend/undo_friend.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

@@ -1,5 +1,5 @@
-import 'package:desejando_app/layers/domain/entities/tag_entity.dart';
-import 'package:desejando_app/layers/domain/repositories/i_tag_repository.dart';
+import 'package:my_gift_app/layers/domain/entities/tag_entity.dart';
+import 'package:my_gift_app/layers/domain/repositories/i_tag_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
 class TagRepositorySpy extends Mock implements ITagRepository {

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
-import 'package:desejando_app/layers/domain/usecases/implements/image_picker/fetch_image_picker_gallery.dart';
+import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:my_gift_app/layers/domain/usecases/implements/image_picker/fetch_image_picker_gallery.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

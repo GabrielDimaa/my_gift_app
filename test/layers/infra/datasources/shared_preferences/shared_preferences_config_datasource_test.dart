@@ -1,5 +1,5 @@
-import 'package:desejando_app/layers/domain/enums/theme_mode.dart';
-import 'package:desejando_app/layers/infra/datasources/shared_preferences/shared_preferences_config_datasource.dart';
+import 'package:my_gift_app/layers/domain/enums/theme_mode.dart';
+import 'package:my_gift_app/layers/infra/datasources/shared_preferences/shared_preferences_config_datasource.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

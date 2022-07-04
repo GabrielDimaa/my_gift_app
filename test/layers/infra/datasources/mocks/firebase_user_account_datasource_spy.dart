@@ -1,5 +1,5 @@
-import 'package:desejando_app/layers/infra/datasources/i_user_account_datasource.dart';
-import 'package:desejando_app/layers/infra/models/user_model.dart';
+import 'package:my_gift_app/layers/infra/datasources/i_user_account_datasource.dart';
+import 'package:my_gift_app/layers/infra/models/user_model.dart';
 import 'package:mocktail/mocktail.dart';
 
 class FirebaseUserAccountDataSourceSpy extends Mock implements IUserAccountDataSource {

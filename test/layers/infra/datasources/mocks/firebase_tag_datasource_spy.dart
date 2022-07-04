@@ -1,5 +1,5 @@
-import 'package:desejando_app/layers/infra/datasources/i_tag_datasource.dart';
-import 'package:desejando_app/layers/infra/models/tag_model.dart';
+import 'package:my_gift_app/layers/infra/datasources/i_tag_datasource.dart';
+import 'package:my_gift_app/layers/infra/models/tag_model.dart';
 import 'package:mocktail/mocktail.dart';
 
 class FirebaseTagDataSourceSpy extends Mock implements ITagDataSource {

@@ -1,6 +1,6 @@
-import 'package:desejando_app/layers/infra/datasources/i_friend_datasource.dart';
-import 'package:desejando_app/layers/infra/models/friends_model.dart';
-import 'package:desejando_app/layers/infra/models/user_model.dart';
+import 'package:my_gift_app/layers/infra/datasources/i_friend_datasource.dart';
+import 'package:my_gift_app/layers/infra/models/friends_model.dart';
+import 'package:my_gift_app/layers/infra/models/user_model.dart';
 import 'package:mocktail/mocktail.dart';
 
 class FirebaseFriendDataSourceSpy extends Mock implements IFriendDataSource {

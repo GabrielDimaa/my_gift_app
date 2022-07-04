@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:desejando_app/layers/domain/helpers/params/new_password_params.dart';
+import 'package:my_gift_app/layers/domain/helpers/params/new_password_params.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../domain/helpers/params/login_params.dart';

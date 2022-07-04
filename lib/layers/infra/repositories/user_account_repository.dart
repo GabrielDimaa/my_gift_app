@@ -1,4 +1,4 @@
-import 'package:desejando_app/layers/domain/helpers/params/new_password_params.dart';
+import 'package:my_gift_app/layers/domain/helpers/params/new_password_params.dart';
 
 import '../../domain/entities/user_entity.dart';
 import '../../domain/helpers/params/login_params.dart';

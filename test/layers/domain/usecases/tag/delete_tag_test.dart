@@ -1,5 +1,5 @@
-import 'package:desejando_app/layers/domain/usecases/implements/tag/delete_tag.dart';
-import 'package:desejando_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:my_gift_app/layers/domain/usecases/implements/tag/delete_tag.dart';
+import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

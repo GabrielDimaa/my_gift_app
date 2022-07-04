@@ -1,5 +1,5 @@
-import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
-import 'package:desejando_app/layers/domain/repositories/i_wish_repository.dart';
+import 'package:my_gift_app/layers/domain/entities/wish_entity.dart';
+import 'package:my_gift_app/layers/domain/repositories/i_wish_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
 class WishRepositorySpy extends Mock implements IWishRepository {

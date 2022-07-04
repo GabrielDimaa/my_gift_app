@@ -1,5 +1,5 @@
-import 'package:desejando_app/layers/infra/datasources/i_wish_datasource.dart';
-import 'package:desejando_app/layers/infra/models/wish_model.dart';
+import 'package:my_gift_app/layers/infra/datasources/i_wish_datasource.dart';
+import 'package:my_gift_app/layers/infra/models/wish_model.dart';
 import 'package:mocktail/mocktail.dart';
 
 class FirebaseWishDataSourceSpy extends Mock implements IWishDataSource {

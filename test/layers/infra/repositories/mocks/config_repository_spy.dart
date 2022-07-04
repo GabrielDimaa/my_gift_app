@@ -1,5 +1,5 @@
-import 'package:desejando_app/layers/domain/enums/theme_mode.dart';
-import 'package:desejando_app/layers/domain/repositories/i_config_repository.dart';
+import 'package:my_gift_app/layers/domain/enums/theme_mode.dart';
+import 'package:my_gift_app/layers/domain/repositories/i_config_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
 class ConfigRepositorySpy extends Mock implements IConfigRepository {

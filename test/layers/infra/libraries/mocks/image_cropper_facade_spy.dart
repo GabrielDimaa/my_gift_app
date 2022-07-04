@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:desejando_app/layers/infra/libraries/image_crop/i_image_cropper_facade.dart';
+import 'package:my_gift_app/layers/infra/libraries/image_crop/i_image_cropper_facade.dart';
 import 'package:mocktail/mocktail.dart';
 
 class ImageCropperFacadeSpy extends Mock implements IImageCropperFacade {

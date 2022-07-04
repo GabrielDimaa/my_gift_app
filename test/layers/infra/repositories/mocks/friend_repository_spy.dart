@@ -1,6 +1,6 @@
-import 'package:desejando_app/layers/domain/entities/friends_entity.dart';
-import 'package:desejando_app/layers/domain/entities/user_entity.dart';
-import 'package:desejando_app/layers/domain/repositories/i_friend_repository.dart';
+import 'package:my_gift_app/layers/domain/entities/friends_entity.dart';
+import 'package:my_gift_app/layers/domain/entities/user_entity.dart';
+import 'package:my_gift_app/layers/domain/repositories/i_friend_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
 class FriendRepositorySpy extends Mock implements IFriendRepository {

@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "887699817659",
-    "project_id": "desejando-daec2",
-    "storage_bucket": "desejando-daec2.appspot.com"
+    "project_number": "189883363296",
+    "project_id": "my-gift-ad6df",
+    "storage_bucket": "my-gift-ad6df.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:887699817659:android:6fe650e3fffd92828c959e",
+        "mobilesdk_app_id": "1:189883363296:android:a091f907ffeffa1afd8585",
         "android_client_info": {
-          "package_name": "com.desejando_app.desejando_app"
+          "package_name": "com.gabrielhainzenreder.myGiftApp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "887699817659-28vd1ned3s97ri948igac5o5r5do0f6b.apps.googleusercontent.com",
+          "client_id": "189883363296-60gsd45kshageuem0e29khimjtj2nms1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.desejando_app.desejando_app",
+            "package_name": "com.gabrielhainzenreder.myGiftApp",
             "certificate_hash": "806bf8a83f30ae69d4594fb11c2bfecb34e7972d"
           }
         },
         {
-          "client_id": "887699817659-kbvpq6bcqbfq2v26dapoqf4ol9v1e9di.apps.googleusercontent.com",
+          "client_id": "189883363296-igmht3ohmo3ekbeh4lidju1980c6gcq2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCm1GlCe540IN4JrvoV9WPeaZTDWzw4aWU"
+          "current_key": "AIzaSyCwo96e8_om5pHHOQPnJB6Wj0QmhFtgeEY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "887699817659-kbvpq6bcqbfq2v26dapoqf4ol9v1e9di.apps.googleusercontent.com",
+              "client_id": "189883363296-igmht3ohmo3ekbeh4lidju1980c6gcq2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,8 +1,8 @@
-import 'package:desejando_app/layers/domain/entities/friends_entity.dart';
-import 'package:desejando_app/layers/domain/entities/tag_entity.dart';
-import 'package:desejando_app/layers/domain/entities/user_entity.dart';
-import 'package:desejando_app/layers/domain/entities/wish_entity.dart';
-import 'package:desejando_app/layers/domain/entities/wishlist_entity.dart';
+import 'package:my_gift_app/layers/domain/entities/friends_entity.dart';
+import 'package:my_gift_app/layers/domain/entities/tag_entity.dart';
+import 'package:my_gift_app/layers/domain/entities/user_entity.dart';
+import 'package:my_gift_app/layers/domain/entities/wish_entity.dart';
+import 'package:my_gift_app/layers/domain/entities/wishlist_entity.dart';
 
 extension WishlistEntityExtension on WishlistEntity {
   bool equals(WishlistEntity entity) {

@@ -1,4 +1,4 @@
-import 'package:desejando_app/layers/presentation/ui/components/sized_box_default.dart';
+import 'package:my_gift_app/layers/presentation/ui/components/sized_box_default.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

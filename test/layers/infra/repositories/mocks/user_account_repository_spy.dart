@@ -1,7 +1,7 @@
-import 'package:desejando_app/layers/domain/entities/user_entity.dart';
-import 'package:desejando_app/layers/domain/helpers/params/login_params.dart';
-import 'package:desejando_app/layers/domain/helpers/params/new_password_params.dart';
-import 'package:desejando_app/layers/domain/repositories/i_user_account_repository.dart';
+import 'package:my_gift_app/layers/domain/entities/user_entity.dart';
+import 'package:my_gift_app/layers/domain/helpers/params/login_params.dart';
+import 'package:my_gift_app/layers/domain/helpers/params/new_password_params.dart';
+import 'package:my_gift_app/layers/domain/repositories/i_user_account_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
 class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {

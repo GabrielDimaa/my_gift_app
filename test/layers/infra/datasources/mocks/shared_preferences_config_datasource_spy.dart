@@ -1,4 +1,4 @@
-import 'package:desejando_app/layers/infra/datasources/i_config_datasource.dart';
+import 'package:my_gift_app/layers/infra/datasources/i_config_datasource.dart';
 import 'package:mocktail/mocktail.dart';
 
 class SharedPreferencesConfigDataSourceSpy extends Mock implements IConfigDataSource {

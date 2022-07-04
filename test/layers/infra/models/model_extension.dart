@@ -1,8 +1,8 @@
-import 'package:desejando_app/layers/infra/models/friends_model.dart';
-import 'package:desejando_app/layers/infra/models/tag_model.dart';
-import 'package:desejando_app/layers/infra/models/user_model.dart';
-import 'package:desejando_app/layers/infra/models/wish_model.dart';
-import 'package:desejando_app/layers/infra/models/wishlist_model.dart';
+import 'package:my_gift_app/layers/infra/models/friends_model.dart';
+import 'package:my_gift_app/layers/infra/models/tag_model.dart';
+import 'package:my_gift_app/layers/infra/models/user_model.dart';
+import 'package:my_gift_app/layers/infra/models/wish_model.dart';
+import 'package:my_gift_app/layers/infra/models/wishlist_model.dart';
 
 extension WishlistModelExtension on WishlistModel {
   bool equals(WishlistModel model) {

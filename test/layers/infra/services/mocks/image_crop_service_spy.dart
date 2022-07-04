@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:desejando_app/layers/domain/services/i_image_crop_service.dart';
+import 'package:my_gift_app/layers/domain/services/i_image_crop_service.dart';
 import 'package:mocktail/mocktail.dart';
 
 class ImageCropServiceSpy extends Mock implements IImageCropService {

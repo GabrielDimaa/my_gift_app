@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:desejando_app/layers/infra/helpers/errors/infra_error.dart';
-import 'package:desejando_app/layers/infra/services/image_crop_service.dart';
+import 'package:my_gift_app/layers/infra/helpers/errors/infra_error.dart';
+import 'package:my_gift_app/layers/infra/services/image_crop_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

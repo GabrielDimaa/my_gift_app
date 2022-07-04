@@ -1,4 +1,4 @@
-package com.desejando_app.desejando_app
+package com.gabrielhainzenreder.my_gift_app
 
 import io.flutter.embedding.android.FlutterActivity
 
