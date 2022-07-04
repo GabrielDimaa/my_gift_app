@@ -53,6 +53,7 @@ abstract class Translation {
   String get hintTag;
   String get save;
   String get tag;
+  String get tags;
   String get addTag;
   String get wishes;
   String get wish;
@@ -60,6 +61,7 @@ abstract class Translation {
   String get seeWishes;
   String get tagNormal;
   String get createTag;
+  String get editTag;
   String get colorTag;
   String get savingTag;
   String get savingWishlist;
@@ -91,7 +93,9 @@ abstract class Translation {
   String get edit;
   String get confirmDeleteWish;
   String get confirmDeleteWishlist;
+  String get confirmDeleteTag;
   String get deletingWish;
+  String get deletingTag;
   String get linkSite;
   String get copyLink;
   String get copiedLink;
@@ -161,6 +165,8 @@ abstract class Translation {
   String get nameTagEmptyError;
   String get colorTagEmptyError;
   String get nameColorTagError;
+  String get nameTagNotInformedError;
+  String get colorTagNotInformedError;
   String get wishlistUninformedError;
   String get emailInUseError;
   String get emailNotVerifiedError;
@@ -201,5 +207,6 @@ abstract class Translation {
   String get getProfileError;
   String get noAccessError;
   String get sendCodeError;
+  String get tagUsedByWishlistError;
   //endregion
 }

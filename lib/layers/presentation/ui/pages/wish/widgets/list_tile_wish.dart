@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../../extensions/double_extension.dart';
 import '../../../../viewmodels/wish_viewmodel.dart';
+import '../../../components/dismissible_default.dart';
 import '../../../components/images/image_loader_default.dart';
 import '../../../components/sized_box_default.dart';
 import 'wish_without_image.dart';
@@ -24,21 +25,10 @@ class ListTileWish extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: ValueKey<WishViewModel>(viewModel),
-      direction: onDismissed != null ? DismissDirection.startToEnd : DismissDirection.none,
+    return DismissibleDefault<WishViewModel>(
+      valueKey: viewModel,
       onDismissed: onDismissed,
       confirmDismiss: confirmDismiss,
-      background: Container(
-        color: Colors.redAccent,
-        child: const Align(
-          alignment: Alignment(-0.9, 0.0),
-          child: Icon(
-            Icons.delete,
-            color: Colors.white,
-          ),
-        ),
-      ),
       child: ListTile(
         contentPadding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
         onTap: onTap,

@@ -7,7 +7,6 @@ import '../../../presenters/wishlist/abstracts/wishlists_fetch_presenter.dart';
 import '../../../presenters/wishlist/implements/getx_wishlists_fetch_presenter.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
-import '../../components/app_bar/photo_profile_action.dart';
 import '../../components/button/fab_default.dart';
 import '../../components/circular_loading.dart';
 import '../../components/dialogs/error_dialog.dart';

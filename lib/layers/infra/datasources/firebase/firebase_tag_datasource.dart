@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../../i18n/resources.dart';
+import '../../../domain/helpers/errors/domain_error.dart';
 import '../../helpers/connectivity_network.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
 import '../../models/user_model.dart';
@@ -91,6 +93,9 @@ class FirebaseTagDataSource implements ITagDataSource {
   Future<void> delete(String id) async {
     try {
       await ConnectivityNetwork.hasInternet();
+
+      final snapshot = await firestore.collection(constantWishlistsReference).where('tag_id', isEqualTo: id).get();
+      if (snapshot.docs.isNotEmpty) throw UnexpectedDomainError(R.string.tagUsedByWishlistError);
 
       final doc = firestore.collection(constantTagsReference).doc(id);
       await doc.delete();

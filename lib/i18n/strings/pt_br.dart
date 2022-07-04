@@ -159,6 +159,9 @@ class PtBr implements Translation {
   String get tag => "Tag";
 
   @override
+  String get tags => "Tags";
+
+  @override
   String get addTag => "Add";
 
   @override
@@ -178,6 +181,9 @@ class PtBr implements Translation {
 
   @override
   String get createTag => "Criar tag";
+
+  @override
+  String get editTag => "Editar tag";
 
   @override
   String get colorTag => "Cor";
@@ -273,7 +279,13 @@ class PtBr implements Translation {
   String get confirmDeleteWishlist => "Deseja excluir permanentemente esta lista de desejos?";
 
   @override
+  String get confirmDeleteTag => "Deseja excluir permanentemente esta tag?";
+
+  @override
   String get deletingWish => "Excluindo desejo";
+
+  @override
+  String get deletingTag => "Excluindo tag";
 
   @override
   String get linkSite => "Link do site";
@@ -469,6 +481,12 @@ class PtBr implements Translation {
   String get nameColorTagError => "Nome ou cor da tag não informada.";
 
   @override
+  String get nameTagNotInformedError => "Nome da tag não informada.";
+
+  @override
+  String get colorTagNotInformedError => "Cor da tag não informada.";
+
+  @override
   String get wishlistUninformedError => "Lista de desejos não informada.";
 
   @override
@@ -587,5 +605,8 @@ class PtBr implements Translation {
 
   @override
   String get sendCodeError => "Houve um erro ao enviar código para o email.";
+
+  @override
+  String get tagUsedByWishlistError => "Tag está sendo utilizada por uma ou mais listas de desejos.";
   //endregion
 }

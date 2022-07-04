@@ -20,6 +20,7 @@ import '../layers/domain/usecases/implements/logout/logout.dart';
 import '../layers/domain/usecases/implements/signup/check_email_verified.dart';
 import '../layers/domain/usecases/implements/signup/send_verification_email.dart';
 import '../layers/domain/usecases/implements/signup/signup_email.dart';
+import '../layers/domain/usecases/implements/tag/delete_tag.dart';
 import '../layers/domain/usecases/implements/tag/get_tags.dart';
 import '../layers/domain/usecases/implements/tag/save_tag.dart';
 import '../layers/domain/usecases/implements/user/get_user_account.dart';
@@ -56,6 +57,7 @@ import '../layers/presentation/presenters/friend/getx_profile_presenter.dart';
 import '../layers/presentation/presenters/login/getx_login_presenter.dart';
 import '../layers/presentation/presenters/signup/getx_signup_presenter.dart';
 import '../layers/presentation/presenters/splash/getx_splash_presenter.dart';
+import '../layers/presentation/presenters/tag/getx_tags_fetch_presenter.dart';
 import '../layers/presentation/presenters/user/getx_reset_password_presenter.dart';
 import '../layers/presentation/presenters/user/getx_user_edit_profile_presenter.dart';
 import '../layers/presentation/presenters/wish/getx_wish_register_presenter.dart';
@@ -177,6 +179,7 @@ class Injection {
     Get.lazyPut(() => DeleteWish(wishRepository: Get.find<WishRepository>()), fenix: true);
     Get.lazyPut(() => GetTags(tagRepository: Get.find<TagRepository>()), fenix: true);
     Get.lazyPut(() => SaveTag(tagRepository: Get.find<TagRepository>()), fenix: true);
+    Get.lazyPut(() => DeleteTag(tagRepository: Get.find<TagRepository>()), fenix: true);
     Get.lazyPut(() => GetFriends(friendRepository: Get.find<FriendRepository>()), fenix: true);
     Get.lazyPut(() => UndoFriend(friendRepository: Get.find<FriendRepository>()), fenix: true);
     Get.lazyPut(() => AddFriend(friendRepository: Get.find<FriendRepository>()), fenix: true);
@@ -265,9 +268,17 @@ class Injection {
       fenix: true,
     );
     Get.lazyPut(
-          () => GetxResetPasswordPresenter(
+      () => GetxResetPasswordPresenter(
         updatePassword: Get.find<UpdatePassword>(),
         sendCodeUpdatePassword: Get.find<SendCodeUpdatePassword>(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetxTagsFetchPresenter(
+        getTags: Get.find<GetTags>(),
+        saveTag: Get.find<SaveTag>(),
+        deleteTag: Get.find<DeleteTag>(),
       ),
       fenix: true,
     );

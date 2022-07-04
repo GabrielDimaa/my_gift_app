@@ -12,7 +12,11 @@ class TagForm extends StatelessWidget {
   final GlobalKey<FormState> formKeyTag;
   final TextEditingController _nameTagController = TextEditingController();
 
-  TagForm({Key? key, required this.viewModel, required this.formKeyTag}) : super(key: key);
+  TagForm({Key? key, required this.viewModel, required this.formKeyTag}) : super(key: key) {
+    if (viewModel.id != null) {
+      _nameTagController.text = viewModel.name ?? "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +51,15 @@ class TagForm extends StatelessWidget {
               ),
               itemBuilder: (_, index) {
                 return Obx(
-                  () => RawMaterialButton(
-                    shape: const CircleBorder(),
-                    fillColor: Color(colors[index]),
-                    child: colors[index] == viewModel.color ? const Icon(Icons.check, size: 28) : const SizedBox.shrink(),
-                    onPressed: () => viewModel.setColor(colors[index]),
-                  ),
+                  () {
+                    final bool colorEquals = viewModel.color != null && Color(colors[index]) == Color(viewModel.color!);
+                    return RawMaterialButton(
+                      shape: const CircleBorder(),
+                      fillColor: Color(colors[index]),
+                      child: colorEquals ? const Icon(Icons.check, size: 28) : const SizedBox.shrink(),
+                      onPressed: () => viewModel.setColor(colors[index]),
+                    );
+                  },
                 );
               },
             ),

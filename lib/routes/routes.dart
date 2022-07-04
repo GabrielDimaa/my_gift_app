@@ -12,6 +12,7 @@ const String wishRegisterRoute = "/wish_register";
 const String wishDetailsRoute = "/wish_details";
 const String friendsRoute = "/friends";
 const String profileRoute = "/profile";
+const String tagsFetchRoute = "/tags_fetch";
 const String userEditProfileRoute = "/user_edit_profile";
 const String emailResetPasswordRoute = "/email_reset_password";
 const String codeResetPasswordRoute = "/code_reset_password";

@@ -69,10 +69,10 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                       const SizedBoxDefault(),
                       CardButton(
-                        text: R.string.archive,
-                        icon: Icons.archive_outlined,
+                        text: R.string.tags,
+                        icon: Icons.label_important_outline,
                         color: const Color(0xFFCE4163),
-                        onTap: () => ErrorDialog.show(context: context, content: "Em breve..."),
+                        onTap: () async => await _navigateToTags(),
                       ),
                       const SizedBoxDefault(),
                       CardButton(
@@ -98,5 +98,9 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<void> _navigateToFriends() async {
     await Navigator.pushNamed(context, friendsRoute);
+  }
+
+  Future<void> _navigateToTags() async {
+    await Navigator.pushNamed(context, tagsFetchRoute);
   }
 }
