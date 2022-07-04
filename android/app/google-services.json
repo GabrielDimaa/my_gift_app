@@ -41,6 +41,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189883363296:android:e036058e64c30640fd8585",
+        "android_client_info": {
+          "package_name": "com.gabrielhainzenreder.my_gift_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189883363296-igmht3ohmo3ekbeh4lidju1980c6gcq2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwo96e8_om5pHHOQPnJB6Wj0QmhFtgeEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189883363296-igmht3ohmo3ekbeh4lidju1980c6gcq2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
