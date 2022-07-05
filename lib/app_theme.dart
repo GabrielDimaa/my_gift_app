@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'routes/pages.dart';
@@ -105,6 +106,11 @@ class AppTheme extends StatelessWidget {
               elevation: 4,
             ),
           ),
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
           supportedLocales: const [Locale('pt', 'BR')],
           getPages: Pages().getPages(),
         );
