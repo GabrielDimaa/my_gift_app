@@ -14,7 +14,6 @@ class GetWishlistByTag implements IGetWishlistsByTag {
   Future<List<WishlistEntity>> get(TagEntity tag) async {
     try {
       throw UnimplementedError();
-      return await wishlistRepository.getByTag(tag);
     } on UnexpectedError {
       throw StandardError(R.string.getError);
     }

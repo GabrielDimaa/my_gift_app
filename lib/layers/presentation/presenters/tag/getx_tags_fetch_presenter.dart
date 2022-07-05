@@ -40,11 +40,7 @@ class GetxTagsFetchPresenter extends GetxController with LoadingManager implemen
       setLoading(true);
 
       _user = UserGlobal().getUser()!;
-
-      List<TagEntity> tags = await _getTags.get(_user.id!);
-      setViewModel(tags.map((e) => TagViewModel.fromEntity(e)).toList());
-
-      _sort();
+      await fetch();
     } finally {
       setLoading(false);
     }
@@ -63,6 +59,14 @@ class GetxTagsFetchPresenter extends GetxController with LoadingManager implemen
     } else {
       _viewModel.add(viewModelSaved);
     }
+
+    _sort();
+  }
+
+  @override
+  Future<void> fetch() async {
+    List<TagEntity> tags = await _getTags.get(_user.id!);
+    setViewModel(tags.map((e) => TagViewModel.fromEntity(e)).toList());
 
     _sort();
   }

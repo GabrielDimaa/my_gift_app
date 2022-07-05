@@ -7,7 +7,6 @@ import '../../../../domain/entities/user_entity.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/photo_profile_action.dart';
 import '../../components/bottom_sheet/exit_app_bottom_sheet.dart';
-import '../../components/dialogs/error_dialog.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import '../config/config_drawer.dart';

@@ -119,6 +119,7 @@ abstract class Translation {
   String get messageSearchDelegate;
   String get messageNotFoundSearchDelegate;
   String get noneFriendAdd;
+  String get noneTagRegister;
   String get notFoundFriend;
   String get undoFriend;
   String get undo;

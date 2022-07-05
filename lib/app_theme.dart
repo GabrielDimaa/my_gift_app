@@ -105,6 +105,7 @@ class AppTheme extends StatelessWidget {
               elevation: 4,
             ),
           ),
+          supportedLocales: const [Locale('pt', 'BR')],
           getPages: Pages().getPages(),
         );
       },

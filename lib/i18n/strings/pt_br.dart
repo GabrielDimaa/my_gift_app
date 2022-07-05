@@ -357,6 +357,9 @@ class PtBr implements Translation {
   String get noneFriendAdd => "Nenhum amigo adicionado.\nPara você visualizar a lista de desejos dos seus amigos, basta adicioná-los.";
 
   @override
+  String get noneTagRegister => "Nenhuma tag cadastrada.";
+
+  @override
   String get notFoundFriend => "Nenhum amigo encontrado";
 
   @override

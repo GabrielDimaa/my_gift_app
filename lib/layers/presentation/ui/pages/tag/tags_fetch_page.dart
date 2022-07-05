@@ -15,6 +15,7 @@ import '../../components/circular_loading.dart';
 import '../../components/dialogs/error_dialog.dart';
 import '../../components/dialogs/loading_dialog.dart';
 import '../../components/dismissible_default.dart';
+import '../../components/not_found.dart';
 import '../../components/padding/padding_default.dart';
 import '../../components/sized_box_default.dart';
 import 'components/tag_form.dart';
@@ -57,31 +58,42 @@ class _TagsFetchPageState extends State<TagsFetchPage> {
                   children: [
                     const SizedBoxDefault(2),
                     Expanded(
-                      child: ListView.separated(
-                        separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
-                        itemCount: presenter.viewModel.length,
-                        itemBuilder: (_, index) {
-                          final TagViewModel tag = presenter.viewModel[index];
-                          return DismissibleDefault<TagViewModel>(
-                            valueKey: tag,
-                            onDismissed: (_) {},
-                            confirmDismiss: (_) async => await _delete(tag),
-                            child: Obx(
-                              () => ListTile(
-                                onTap: () async => await _saveTag(tag),
-                                contentPadding: EdgeInsets.zero,
-                                minLeadingWidth: 0,
-                                leading: Icon(Icons.label_important_outline, color: Color(tag.color!)),
-                                title: Text(tag.name!),
-                                trailing: IconButton(
-                                  onPressed: () async => await _delete(tag),
-                                  icon: const Icon(Icons.delete_outline),
-                                  color: Colors.redAccent,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
+                      child: RefreshIndicator(
+                        onRefresh: presenter.fetch,
+                        child: Obx(
+                          () {
+                            if (presenter.viewModel.isNotEmpty) {
+                              return ListView.separated(
+                                separatorBuilder: (_, __) => const Divider(thickness: 1, height: 1),
+                                itemCount: presenter.viewModel.length,
+                                itemBuilder: (_, index) {
+                                  final TagViewModel tag = presenter.viewModel[index];
+                                  return DismissibleDefault<TagViewModel>(
+                                    valueKey: tag,
+                                    onDismissed: (_) {},
+                                    confirmDismiss: (_) async => await _delete(tag),
+                                    child: Obx(
+                                          () => ListTile(
+                                        onTap: () async => await _saveTag(tag),
+                                        contentPadding: EdgeInsets.zero,
+                                        minLeadingWidth: 0,
+                                        leading: Icon(Icons.label_important_outline, color: Color(tag.color!)),
+                                        title: Text(tag.name!),
+                                        trailing: IconButton(
+                                          onPressed: () async => await _delete(tag),
+                                          icon: const Icon(Icons.delete_outline),
+                                          color: Colors.redAccent,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              return NotFound(message: R.string.noneTagRegister);
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ],

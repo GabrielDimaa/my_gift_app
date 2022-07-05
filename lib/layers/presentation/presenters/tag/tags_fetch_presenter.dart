@@ -5,6 +5,7 @@ import '../../viewmodels/tag_viewmodel.dart';
 
 abstract class TagsFetchPresenter implements IInitialize, IViewModel<List<TagViewModel>>, ILoading {
   Future<void> save(TagViewModel viewModel);
+  Future<void> fetch();
   Future<void> delete(TagViewModel viewModel);
   void validate(TagViewModel viewModel);
 }
