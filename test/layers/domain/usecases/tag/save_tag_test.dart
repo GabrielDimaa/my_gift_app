@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/entities/tag_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/tag/save_tag.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -36,19 +36,33 @@ void main() {
 
     test("Deve throw ValidationDomainError se entity.name for vazio", () {
       final Future future = sut.save(EntityFactory.tag()..name = "");
-      expect(future, throwsA(isA<ValidationDomainError>()));
+      expect(future, throwsA(isA<RequiredError>()));
     });
 
     test("Deve throw ValidationDomainError se entity.color for vazio", () {
       final Future future = sut.save(EntityFactory.tag()..color = "");
-      expect(future, throwsA(isA<ValidationDomainError>()));
+      expect(future, throwsA(isA<RequiredError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
-      tagRepositorySpy.mockCreateError();
+    test("Deve throw StandardError se ocorrer um erro inesperado", () {
+      tagRepositorySpy.mockCreateError(error: UnexpectedError());
 
       final Future future = sut.save(tagToSaved);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
+    });
+
+    test("Deve throw StandardError", () {
+      tagRepositorySpy.mockCreateError(error: StandardError());
+
+      final Future future = sut.save(tagToSaved);
+      expect(future, throwsA(isA<StandardError>()));
+    });
+
+    test("Deve throw Exception", () {
+      tagRepositorySpy.mockCreateError(error: Exception());
+
+      final Future future = sut.save(tagToSaved);
+      expect(future, throwsA(isA<Exception>()));
     });
   });
 
@@ -74,26 +88,33 @@ void main() {
 
     test("Deve throw ValidationDomainError se entity.name for vazio", () {
       final Future future = sut.save(EntityFactory.tag()..name = "");
-      expect(future, throwsA(isA<ValidationDomainError>()));
+      expect(future, throwsA(isA<RequiredError>()));
     });
 
     test("Deve throw ValidationDomainError se entity.color for vazio", () {
       final Future future = sut.save(EntityFactory.tag()..color = "");
-      expect(future, throwsA(isA<ValidationDomainError>()));
+      expect(future, throwsA(isA<RequiredError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
-      tagRepositorySpy.mockUpdateError();
+    test("Deve throw UnexpectedDomainError se ocorrer um erro inesperado", () {
+      tagRepositorySpy.mockUpdateError(error: UnexpectedError());
 
       final Future future = sut.save(tagToUpdated);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
-    test("Deve throw NotFoundDomainError", () {
-      tagRepositorySpy.mockUpdateError(error: NotFoundDomainError());
+    test("Deve throw StandardError", () {
+      tagRepositorySpy.mockUpdateError(error: StandardError());
 
       final Future future = sut.save(tagToUpdated);
-      expect(future, throwsA(isA<NotFoundDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
+    });
+
+    test("Deve throw Exception", () {
+      tagRepositorySpy.mockUpdateError(error: Exception());
+
+      final Future future = sut.save(tagToUpdated);
+      expect(future, throwsA(isA<Exception>()));
     });
   });
 }

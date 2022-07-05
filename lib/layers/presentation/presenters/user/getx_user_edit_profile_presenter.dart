@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 
+import '../../../../exceptions/errors.dart';
 import '../../../../i18n/resources.dart';
 import '../../../../monostates/user_global.dart';
 import '../../../domain/entities/user_entity.dart';
-import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_camera.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
 import '../../../domain/usecases/abstracts/user/i_get_user_account.dart';
@@ -48,8 +48,6 @@ class GetxUserEditProfilePresenter extends GetxController with LoadingManager im
 
       final UserViewModel userViewModel = await _getUser(user.id!);
       setViewModel(userViewModel);
-    } on DomainError catch (e) {
-      throw e.message;
     } finally {
       setLoading(false);
     }
@@ -70,8 +68,6 @@ class GetxUserEditProfilePresenter extends GetxController with LoadingManager im
       if (image == null) throw Exception(R.string.noImageSelected);
 
       viewModel.setPhoto(image.path);
-    } on DomainError catch (e) {
-      throw Exception(e.message);
     } finally {
       setLoading(false);
     }
@@ -79,30 +75,22 @@ class GetxUserEditProfilePresenter extends GetxController with LoadingManager im
 
   @override
   Future<void> save() async {
-    try {
-      validate();
+    validate();
 
-      final UserEntity user = _viewModel.toEntity();
-      await _saveUserAccount.save(user);
+    final UserEntity user = _viewModel.toEntity();
+    await _saveUserAccount.save(user);
 
-      UserGlobal().setUser(user);
-    } on DomainError catch (e) {
-      throw e.message;
-    }
+    UserGlobal().setUser(user);
   }
 
   @override
   void validate() {
-    if (_viewModel.name.isEmpty) throw ValidationDomainError(message: R.string.nameNotInformedError);
-    if (_viewModel.email.isEmpty) throw ValidationDomainError(message: R.string.emailNotInformedError);
+    if (_viewModel.name.isEmpty) throw RequiredError(R.string.nameNotInformedError);
+    if (_viewModel.email.isEmpty) throw RequiredError(R.string.emailNotInformedError);
   }
 
   Future<UserViewModel> _getUser(String userId) async {
-    try {
-      final UserEntity userEntity = await _getUserAccount.get(userId);
-      return UserViewModel.fromEntity(userEntity);
-    } on DomainError catch (e) {
-      throw e.message;
-    }
+    final UserEntity userEntity = await _getUserAccount.get(userId);
+    return UserViewModel.fromEntity(userEntity);
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'errors/infra_error.dart';
+import '../../../exceptions/errors.dart';
+import '../../../i18n/resources.dart';
 
 class ConnectivityNetwork {
   static Future<void> hasInternet() async {
@@ -16,7 +17,7 @@ class ConnectivityNetwork {
 
       throw const SocketException("error");
     } on SocketException catch (_) {
-      throw ConnectionInfraError();
+      throw StandardError(R.string.connectionError);
     }
   }
 }

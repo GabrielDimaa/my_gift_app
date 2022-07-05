@@ -1,5 +1,6 @@
+import '../../../exceptions/errors.dart';
+import '../../../i18n/resources.dart';
 import '../../domain/entities/wish_entity.dart';
-import '../helpers/errors/infra_error.dart';
 import 'user_model.dart';
 
 class WishModel {
@@ -52,7 +53,7 @@ class WishModel {
   }
 
   Map<String, dynamic> toJson() {
-    if (wishlistId == null) throw InvalidDataInfraError();
+    if (wishlistId == null) throw StandardError(R.string.invalidDataError);
 
     return {
       'user_id': user.id,
@@ -87,7 +88,7 @@ class WishModel {
   }
 
   factory WishModel.fromEntity(WishEntity entity) {
-    if (entity.id != null && entity.wishlistId == null) throw InvalidDataInfraError();
+    if (entity.id != null && entity.wishlistId == null) throw StandardError(R.string.invalidDataError);
 
     return WishModel(
       id: entity.id,
@@ -106,7 +107,7 @@ class WishModel {
   }
 
   factory WishModel.fromJson(Map<String, dynamic> json) {
-    if (json['wishlist_id'] == null) throw InvalidDataInfraError();
+    if (json['wishlist_id'] == null) throw StandardError(R.string.invalidDataError);
 
     return WishModel(
       id: json['id'],

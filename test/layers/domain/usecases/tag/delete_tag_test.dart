@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/tag/delete_tag.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -22,17 +22,24 @@ void main() {
     verify(() => tagRepositorySpy.delete(tagId));
   });
 
-  test("Deve throw UnexpectedDomainError", () {
-    tagRepositorySpy.mockDeleteError();
+  test("Deve throw StandardError", () {
+    tagRepositorySpy.mockDeleteError(error: UnexpectedError());
 
     final Future future = sut.delete(tagId);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
   });
 
-  test("Deve throw NotFoundDomainError", () {
-    tagRepositorySpy.mockDeleteError(error: NotFoundDomainError());
+  test("Deve throw StandardError", () {
+    tagRepositorySpy.mockDeleteError(error: StandardError());
 
     final Future future = sut.delete(tagId);
-    expect(future, throwsA(isA<NotFoundDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw Exception", () {
+    tagRepositorySpy.mockDeleteError(error: Exception());
+
+    final Future future = sut.delete(tagId);
+    expect(future, throwsA(isA<Exception>()));
   });
 }

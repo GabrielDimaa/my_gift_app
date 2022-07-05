@@ -1,4 +1,4 @@
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/helpers/params/friend_params.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/friend/add_friend.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -29,13 +29,18 @@ void main() {
     repositorySpy.mockAddFriendError();
 
     final Future future = sut.add(params);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<Exception>()));
   });
 
-  test("Deve throw NotFoundDomainError", () {
-    repositorySpy.mockAddFriendError(error: NotFoundDomainError());
+  test("Deve throw StandardError", () {
+    repositorySpy.mockAddFriendError(error: UnexpectedError());
 
-    final Future future = sut.add(params);
-    expect(future, throwsA(isA<NotFoundDomainError>()));
+    Future future = sut.add(params);
+    expect(future, throwsA(isA<StandardError>()));
+
+    repositorySpy.mockAddFriendError(error: StandardError());
+
+    future = sut.add(params);
+    expect(future, throwsA(isA<StandardError>()));
   });
 }

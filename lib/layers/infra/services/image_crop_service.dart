@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import '../../domain/services/i_image_crop_service.dart';
-import '../helpers/errors/infra_error.dart';
 import '../libraries/image_crop/i_image_cropper_facade.dart';
 
 class ImageCropService implements IImageCropService {
@@ -11,11 +10,6 @@ class ImageCropService implements IImageCropService {
 
   @override
   Future<File?> crop(File image) async {
-    try {
-      return await imageCropperFacade.crop(image);
-    } on InfraError catch (e) {
-      if (e is UnexpectedInfraError) rethrow;
-      throw e.toDomainError();
-    }
+    return await imageCropperFacade.crop(image);
   }
 }

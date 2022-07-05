@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 
+import '../../../../exceptions/errors.dart';
 import '../../../../monostates/user_global.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_camera.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
@@ -14,7 +15,6 @@ import '../../ui/pages/signup/signup_confirm_email_page.dart';
 import './signup_presenter.dart';
 import '../../../../i18n/resources.dart';
 import '../../../domain/entities/user_entity.dart';
-import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/usecases/abstracts/signup/i_signup_email.dart';
 import '../../helpers/mixins/loading_manager.dart';
 import '../../ui/pages/login/login_page.dart';
@@ -83,14 +83,10 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
 
   @override
   Future<void> signup() async {
-    try {
-      validate();
+    validate();
 
-      _userEntity = await _signUpEmail.signUp(viewModel.toEntity());
-      await navigateToConfirmEmail();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    _userEntity = await _signUpEmail.signUp(viewModel.toEntity());
+    await navigateToConfirmEmail();
   }
 
   @override
@@ -114,8 +110,6 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
       if (image == null) throw Exception(R.string.noImageSelected);
 
       viewModel.setPhoto(image);
-    } on DomainError catch (e) {
-      throw Exception(e.message);
     } finally {
       setLoading(false);
     }
@@ -126,13 +120,11 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
     try {
       setLoadingResendEmail(true);
 
-      if (_userEntity?.id == null) throw UnexpectedDomainError(R.string.unexpectedError);
+      if (_userEntity?.id == null) throw UnexpectedError(R.string.unexpectedError);
       await _sendVerificationEmail.send(_userEntity!.id!);
 
       setResendEmail(true);
       startTimerResendEmail();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
     } finally {
       //Apenas para exibição do loading na tela, sem atrapalhar o processo.
       await Future.delayed(const Duration(seconds: 2));
@@ -142,32 +134,28 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
 
   @override
   Future<void> completeAccount() async {
-    try {
-      if (_userEntity?.id == null) {
-        final UserEntity? user = await _getUserLogged.getUser();
-        if (user == null) throw UnexpectedDomainError(R.string.unexpectedError);
+    if (_userEntity?.id == null) {
+      final UserEntity? user = await _getUserLogged.getUser();
+      if (user == null) throw UnexpectedError(R.string.unexpectedError);
 
-        _userEntity = user;
-      }
-      final bool verified = await _checkEmailVerified.check(_userEntity!.id!);
-      if (!verified) throw EmailNotVerifiedDomainError();
-
-      _userEntity!.emailVerified = verified;
-
-      final UserGlobal userGlobal = UserGlobal();
-      userGlobal.setUser(_userEntity);
-
-      await navigateToDashboard();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
+      _userEntity = user;
     }
+    final bool verified = await _checkEmailVerified.check(_userEntity!.id!);
+    if (!verified) throw StandardError(R.string.emailNotVerifiedError);
+
+    _userEntity!.emailVerified = verified;
+
+    final UserGlobal userGlobal = UserGlobal();
+    userGlobal.setUser(_userEntity);
+
+    await navigateToDashboard();
   }
 
   @override
   void validate() async {
-    if (viewModel.email == null || viewModel.email!.trim().isEmpty) throw ValidationDomainError(message: R.string.emailNotInformedError);
-    if (viewModel.password == null || viewModel.password!.isEmpty) throw ValidationDomainError(message: R.string.passwordNotInformedError);
-    if (viewModel.name == null || viewModel.name!.trim().isEmpty) throw ValidationDomainError(message: R.string.nameNotInformedError);
+    if (viewModel.email == null || viewModel.email!.trim().isEmpty) throw RequiredError( R.string.emailNotInformedError);
+    if (viewModel.password == null || viewModel.password!.isEmpty) throw RequiredError(R.string.passwordNotInformedError);
+    if (viewModel.name == null || viewModel.name!.trim().isEmpty) throw RequiredError(R.string.nameNotInformedError);
   }
 
   @override

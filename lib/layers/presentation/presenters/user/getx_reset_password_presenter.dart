@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
+import '../../../../exceptions/errors.dart';
 import '../../../../i18n/resources.dart';
 import '../../../../monostates/user_global.dart';
-import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/helpers/params/new_password_params.dart';
 import '../../../domain/usecases/abstracts/user/i_send_code_update_password.dart';
 import '../../../domain/usecases/abstracts/user/i_update_password.dart';
@@ -62,8 +62,6 @@ class GetxResetPasswordPresenter extends GetxController with LoadingManager impl
         final String email = UserGlobal().getUser()!.email;
         _viewModel.setEmail(email);
       }
-    } on DomainError catch (e) {
-      throw Exception(e.message);
     } finally {
       setLoading(false);
     }
@@ -71,14 +69,10 @@ class GetxResetPasswordPresenter extends GetxController with LoadingManager impl
 
   @override
   Future<void> sendCode() async {
-    try {
-      if (_viewModel.email == null) throw Exception(R.string.emailNotInformedError);
-      await _sendCodeUpdatePassword.send(_viewModel.email!);
+    if (_viewModel.email == null) throw Exception(R.string.emailNotInformedError);
+    await _sendCodeUpdatePassword.send(_viewModel.email!);
 
-      startTimerResendEmail();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    startTimerResendEmail();
   }
 
   @override
@@ -90,8 +84,6 @@ class GetxResetPasswordPresenter extends GetxController with LoadingManager impl
 
       _resendEmail.value = true;
       startTimerResendEmail();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
     } finally {
       //Apenas para exibição do loading na tela, sem atrapalhar o processo.
       await Future.delayed(const Duration(seconds: 2));
@@ -101,20 +93,16 @@ class GetxResetPasswordPresenter extends GetxController with LoadingManager impl
 
   @override
   Future<void> updatePassword() async {
-    try {
-      validate();
+    validate();
 
-      final NewPasswordParams params = NewPasswordParams(newPassword: _viewModel.newPassword!, code: _viewModel.code!);
-      await _updatePassword.update(params);
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    final NewPasswordParams params = NewPasswordParams(newPassword: _viewModel.newPassword!, code: _viewModel.code!);
+    await _updatePassword.update(params);
   }
 
   @override
   void validate() {
-    if (_viewModel.code?.isEmpty ?? true) throw ValidationDomainError(message: R.string.codeNotInformedError);
-    if (_viewModel.newPassword?.isEmpty ?? true) throw ValidationDomainError(message: R.string.passwordNotInformedError);
+    if (_viewModel.code?.isEmpty ?? true) throw RequiredError(R.string.codeNotInformedError);
+    if (_viewModel.newPassword?.isEmpty ?? true) throw RequiredError(R.string.passwordNotInformedError);
   }
 
   @override

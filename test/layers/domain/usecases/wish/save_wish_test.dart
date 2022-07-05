@@ -1,6 +1,6 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/wish/save_wish.dart';
 import 'package:my_gift_app/layers/domain/entities/wish_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -36,14 +36,28 @@ void main() {
 
     test("Deve throw se wish não tiver um wishlist vinculado", () {
       final Future future = sut.save(EntityFactory.wish(withId: false, withWishlistId: false));
-      expect(future, throwsA(isA<ValidationDomainError>()));
+      expect(future, throwsA(isA<RequiredError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
-      wishRepositorySpy.mockCreateError();
+    test("Deve throw StandardError se ocorrer um erro inesperado", () {
+      wishRepositorySpy.mockCreateError(error: UnexpectedError());
 
       final Future future = sut.save(entityRequest);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
+    });
+
+    test("Deve throw StandardError", () {
+      wishRepositorySpy.mockCreateError(error: StandardError());
+
+      final Future future = sut.save(entityRequest);
+      expect(future, throwsA(isA<StandardError>()));
+    });
+
+    test("Deve throw Exception", () {
+      wishRepositorySpy.mockCreateError(error: Exception());
+
+      final Future future = sut.save(entityRequest);
+      expect(future, throwsA(isA<Exception>()));
     });
   });
 
@@ -73,21 +87,28 @@ void main() {
 
     test("Deve throw se wish não tiver um wishlist vinculado", () {
       final Future future = sut.save(EntityFactory.wish(withId: false, withWishlistId: false));
-      expect(future, throwsA(isA<ValidationDomainError>()));
+      expect(future, throwsA(isA<RequiredError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
-      wishRepositorySpy.mockUpdateError();
+    test("Deve throw StandardError se ocorrer um erro inesperado", () {
+      wishRepositorySpy.mockUpdateError(error: UnexpectedError());
 
       final Future future = sut.save(entityRequest);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
-    test("Deve throw NotFoundDomainError", () {
-      wishRepositorySpy.mockUpdateError(error: NotFoundDomainError());
+    test("Deve throw StandardError", () {
+      wishRepositorySpy.mockUpdateError(error: StandardError());
 
       final Future future = sut.save(entityRequest);
-      expect(future, throwsA(isA<NotFoundDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
+    });
+
+    test("Deve throw Exception", () {
+      wishRepositorySpy.mockUpdateError(error: Exception());
+
+      final Future future = sut.save(entityRequest);
+      expect(future, throwsA(isA<Exception>()));
     });
   });
 }

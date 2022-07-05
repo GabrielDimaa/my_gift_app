@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../../exceptions/errors.dart';
 import '../../../domain/helpers/params/friend_params.dart';
 import '../../helpers/connectivity_network.dart';
-import '../../helpers/errors/infra_error.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
 import '../../models/friends_model.dart';
 import '../../models/user_model.dart';
@@ -25,10 +25,10 @@ class FirebaseFriendDataSource implements IFriendDataSource {
       await collUser.collection(constantFriendsReference).doc(params.friendUserId).set({});
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -41,10 +41,10 @@ class FirebaseFriendDataSource implements IFriendDataSource {
       await collUser.collection(constantFriendsReference).doc(params.friendUserId).delete();
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -75,10 +75,10 @@ class FirebaseFriendDataSource implements IFriendDataSource {
       return model;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -101,10 +101,10 @@ class FirebaseFriendDataSource implements IFriendDataSource {
       return users;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -118,10 +118,10 @@ class FirebaseFriendDataSource implements IFriendDataSource {
       return snapshot.exists;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 }

@@ -6,7 +6,6 @@ import '../../../../i18n/resources.dart';
 import '../../../../monostates/user_global.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/entities/wish_entity.dart';
-import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_camera.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
 import '../../../domain/usecases/abstracts/wish/i_delete_wish.dart';
@@ -72,39 +71,27 @@ class GetxWishRegisterPresenter extends GetxController implements WishRegisterPr
 
   @override
   Future<void> getFromCameraOrGallery({bool isGallery = true}) async {
-    try {
-      final File? image;
-      if (isGallery) {
-        image = await _fetchImagePickerGallery.fetchFromGallery();
-      } else {
-        image = await _fetchImagePickerCamera.fetchFromCamera();
-      }
-
-      if (image == null) throw Exception(R.string.noImageSelected);
-
-      viewModel.setImage(image.path);
-    } on DomainError catch (e) {
-      throw Exception(e.message);
+    final File? image;
+    if (isGallery) {
+      image = await _fetchImagePickerGallery.fetchFromGallery();
+    } else {
+      image = await _fetchImagePickerCamera.fetchFromCamera();
     }
+
+    if (image == null) throw Exception(R.string.noImageSelected);
+
+    viewModel.setImage(image.path);
   }
 
   @override
   Future<void> save() async {
-    try {
-      final WishEntity wishSaved = await _saveWish.save(viewModel.toEntity(_user));
-      setViewModel(WishViewModel.fromEntity(wishSaved));
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    final WishEntity wishSaved = await _saveWish.save(viewModel.toEntity(_user));
+    setViewModel(WishViewModel.fromEntity(wishSaved));
   }
 
   @override
   Future<void> delete() async {
-    try {
-      if (viewModel.id != null) await _deleteWish.delete(viewModel.id!);
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    if (viewModel.id != null) await _deleteWish.delete(viewModel.id!);
   }
 
   @override

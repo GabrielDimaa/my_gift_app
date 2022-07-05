@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/image_picker/fetch_image_picker_gallery.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -45,24 +45,24 @@ void main() {
     verify(() => imageCropServiceSpy.crop(fileResultPicker)).called(1);
   });
 
-  test("Deve throw UnexpectedDomainError se getFromCamera throws", () {
-    imagePickerServiceSpy.mockGetFromGalleryError();
+  test("Deve throw UnexpectedError se getFromCamera throws", () {
+    imagePickerServiceSpy.mockGetFromGalleryError(error: UnexpectedError());
 
     final Future future = sut.fetchFromGallery();
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
   });
 
-  test("Deve throw WithoutPermissionDomainError se não tiver permissão pra acessar a galeria", () {
-    imagePickerServiceSpy.mockGetFromGalleryError(error: WithoutPermissionDomainError());
+  test("Deve throw StandardError se não tiver permissão pra acessar a galeria", () {
+    imagePickerServiceSpy.mockGetFromGalleryError(error: StandardError());
 
     final Future future = sut.fetchFromGallery();
-    expect(future, throwsA(isA<WithoutPermissionDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
   });
 
-  test("Deve throw UnexpectedDomainError se crop error", () {
+  test("Deve throw Exception se crop error", () {
     imageCropServiceSpy.mockCropError();
 
     final Future future = sut.fetchFromGallery();
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<Exception>()));
   });
 }

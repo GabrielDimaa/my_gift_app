@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/wishlist/delete_wishlist.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -22,17 +22,24 @@ void main() {
     verify(() => wishlistRepositorySpy.delete(wishlistId));
   });
 
-  test("Deve throw UnexpectedDomainError", () {
-    wishlistRepositorySpy.mockDeleteError();
+  test("Deve throw StandardError se ocorrer um erro inesperado", () {
+    wishlistRepositorySpy.mockDeleteError(error: UnexpectedError());
     
     final Future future = sut.delete(wishlistId);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
   });
 
-  test("Deve throw NotFoundDomainError", () {
-    wishlistRepositorySpy.mockDeleteError(error: NotFoundDomainError());
+  test("Deve throw StandardError", () {
+    wishlistRepositorySpy.mockDeleteError(error: StandardError());
 
     final Future future = sut.delete(wishlistId);
-    expect(future, throwsA(isA<NotFoundDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw Exception", () {
+    wishlistRepositorySpy.mockDeleteError(error: Exception());
+
+    final Future future = sut.delete(wishlistId);
+    expect(future, throwsA(isA<Exception>()));
   });
 }

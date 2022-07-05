@@ -1,6 +1,6 @@
+import '../../../../../exceptions/errors.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../entities/tag_entity.dart';
-import '../../../helpers/errors/domain_error.dart';
 import '../../../repositories/i_tag_repository.dart';
 import '../../abstracts/tag/i_get_tags.dart';
 
@@ -13,10 +13,8 @@ class GetTags implements IGetTags {
   Future<List<TagEntity>> get(String userId) async {
     try {
       return await tagRepository.getAll(userId);
-    } on DomainError {
-      rethrow;
-    } catch (e) {
-      throw UnexpectedDomainError(R.string.getError);
+    } on UnexpectedError {
+      throw StandardError(R.string.getError);
     }
   }
 }

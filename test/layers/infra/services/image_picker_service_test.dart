@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
-import 'package:my_gift_app/layers/infra/helpers/errors/infra_error.dart';
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/infra/services/image_picker_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -34,11 +33,11 @@ void main() {
       expect(file, null);
     });
 
-    test("Deve throw WithoutPermissionDomainError se WithoutPermissionInfraError", () {
-      imagePickerFacadeSpy.mockGetFromCameraError(error: WithoutPermissionInfraError());
+    test("Deve throw StandardError se não tiver acesso", () {
+      imagePickerFacadeSpy.mockGetFromCameraError(error: StandardError());
 
       final Future future = sut.getFromCamera();
-      expect(future, throwsA(isA<WithoutPermissionDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
     test("Deve throw Exception", () {
@@ -49,10 +48,10 @@ void main() {
     });
 
     test("Deve throw UnexpectedInfraError", () {
-      imagePickerFacadeSpy.mockGetFromCameraError(error: UnexpectedInfraError());
+      imagePickerFacadeSpy.mockGetFromCameraError(error: UnexpectedError());
 
       final Future future = sut.getFromCamera();
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
   });
 
@@ -69,18 +68,18 @@ void main() {
       expect(file, null);
     });
 
-    test("Deve throw WithoutPermissionDomainError se WithoutPermissionInfraError", () {
-      imagePickerFacadeSpy.mockGetFromGalleryError(error: WithoutPermissionInfraError());
+    test("Deve throw StandardError se não tiver acesso", () {
+      imagePickerFacadeSpy.mockGetFromGalleryError(error: StandardError());
 
       final Future future = sut.getFromGallery();
-      expect(future, throwsA(isA<WithoutPermissionDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
     test("Deve throw UnexpectedInfraError", () {
-      imagePickerFacadeSpy.mockGetFromGalleryError(error: UnexpectedInfraError());
+      imagePickerFacadeSpy.mockGetFromGalleryError(error: UnexpectedError());
 
       final Future future = sut.getFromGallery();
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
 
     test("Deve throw Exception", () {

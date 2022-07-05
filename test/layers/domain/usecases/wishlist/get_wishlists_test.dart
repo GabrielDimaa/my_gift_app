@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/entities/wishlist_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/wishlist/get_wishlists.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -32,10 +32,24 @@ void main() {
     expect(wishlists, wishResult);
   });
 
-  test("Deve throw UnexpectedDomainError se retornar um erro qualquer", () {
-    wishlistRepositorySpy.mockGetAllError();
+  test("Deve throw StandardError se retornar um erro qualquer", () {
+    wishlistRepositorySpy.mockGetAllError(error: UnexpectedError());
 
     final Future future = sut.get(userId);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw StandardError", () {
+    wishlistRepositorySpy.mockGetAllError(error: StandardError());
+
+    final Future future = sut.get(userId);
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw Exception", () {
+    wishlistRepositorySpy.mockGetAllError(error: Exception());
+
+    final Future future = sut.get(userId);
+    expect(future, throwsA(isA<Exception>()));
   });
 }

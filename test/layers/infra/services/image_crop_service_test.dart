@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:my_gift_app/layers/infra/helpers/errors/infra_error.dart';
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/infra/services/image_crop_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -45,9 +45,9 @@ void main() {
   });
 
   test("Deve throw UnexpectedInfraError", () {
-    imageCropperFacadeSpy.mockCropError(error: UnexpectedInfraError());
+    imageCropperFacadeSpy.mockCropError(error: UnexpectedError());
 
     final Future future = sut.crop(fileResult);
-    expect(future, throwsA(isA<UnexpectedInfraError>()));
+    expect(future, throwsA(isA<UnexpectedError>()));
   });
 }

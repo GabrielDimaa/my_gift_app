@@ -1,6 +1,6 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/login/login_email.dart';
 import 'package:my_gift_app/layers/domain/entities/user_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:my_gift_app/layers/domain/helpers/params/login_params.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -35,17 +35,31 @@ void main() {
     expect(user, userResult);
   });
 
-  test("Deve throw EmailNotVerifiedDomainError se email não for verificado", () {
+  test("Deve throw EmailError se email não for verificado", () {
     userAccountRepositorySpy.mockAuthWithEmail(EntityFactory.user(emailVerified: false));
     final Future future = sut.auth(loginParams);
 
-    expect(future, throwsA(isA<EmailNotVerifiedDomainError>()));
+    expect(future, throwsA(isA<EmailError>()));
   });
 
-  test("Deve throw NotFoundDomainError", () {
-    userAccountRepositorySpy.mockAuthWithEmailError(NotFoundDomainError(message: "any_message"));
+  test("Deve throw StandardError", () {
+    userAccountRepositorySpy.mockAuthWithEmailError(UnexpectedError());
     final Future future = sut.auth(loginParams);
 
-    expect(future, throwsA(isA<NotFoundDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw Exception", () {
+    userAccountRepositorySpy.mockAuthWithEmailError(Exception());
+    final Future future = sut.auth(loginParams);
+
+    expect(future, throwsA(isA<Exception>()));
+  });
+
+  test("Deve throw StandardError", () {
+    userAccountRepositorySpy.mockAuthWithEmailError(StandardError());
+    final Future future = sut.auth(loginParams);
+
+    expect(future, throwsA(isA<StandardError>()));
   });
 }

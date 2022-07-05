@@ -1,8 +1,8 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/signup/check_email_verified.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:my_gift_app/layers/domain/entities/user_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../infra/repositories/mocks/user_account_repository_spy.dart';
@@ -36,17 +36,24 @@ void main() {
     expect(value, false);
   });
 
-  test("Deve throw UnexpectedDomainError se ocorrer um erro inesperado", () {
-    userAccountRepositorySpy.mockCheckEmailVerifiedError(UnexpectedDomainError("any_message"));
+  test("Deve throw StandardError se ocorrer um erro inesperado", () {
+    userAccountRepositorySpy.mockCheckEmailVerifiedError(UnexpectedError());
 
     final Future future = sut.check(userId);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
   });
 
-  test("Deve throw NotFoundDomainError", () {
-    userAccountRepositorySpy.mockCheckEmailVerifiedError(NotFoundDomainError());
+  test("Deve throw StandardError", () {
+    userAccountRepositorySpy.mockCheckEmailVerifiedError(StandardError());
 
     final Future future = sut.check(userId);
-    expect(future, throwsA(isA<NotFoundDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw Exception", () {
+    userAccountRepositorySpy.mockCheckEmailVerifiedError(Exception());
+
+    final Future future = sut.check(userId);
+    expect(future, throwsA(isA<Exception>()));
   });
 }

@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../../exceptions/errors.dart';
+import '../../../../i18n/resources.dart';
 import '../../helpers/connectivity_network.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
 import '../../models/user_model.dart';
 import 'constants/collection_reference.dart';
-import '../../helpers/errors/infra_error.dart';
 import '../i_user_account_datasource.dart';
 import '../i_wish_datasource.dart';
 import '../../models/wish_model.dart';
@@ -33,7 +34,7 @@ class FirebaseWishDataSource implements IWishDataSource {
       final Map<String, dynamic>? json = snapshot.data();
       json?.addAll({'id': snapshot.id});
 
-      if (json?['user_id'] == null) throw NotFoundInfraError();
+      if (json?['user_id'] == null) throw StandardError(R.string.wishNotFoundError);
 
       //Busca o usuário
       final UserModel user = await userDataSource.getById(json?['user_id']);
@@ -41,15 +42,15 @@ class FirebaseWishDataSource implements IWishDataSource {
         'user': user.toJson()..addAll({'id': user.id})
       });
 
-      if (!WishModel.validateJson(json)) throw NotFoundInfraError();
+      if (!WishModel.validateJson(json)) throw StandardError(R.string.notFoundError);
 
       return WishModel.fromJson(json!);
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -85,10 +86,10 @@ class FirebaseWishDataSource implements IWishDataSource {
       return wishesModel;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -108,10 +109,10 @@ class FirebaseWishDataSource implements IWishDataSource {
       return model.clone(id: doc.id);
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -124,7 +125,7 @@ class FirebaseWishDataSource implements IWishDataSource {
 
       final snapshot = await doc.get();
       final Map<String, dynamic>? jsonOld = snapshot.data()?..addAll({'id': snapshot.id});
-      if (jsonOld == null) throw NotFoundInfraError();
+      if (jsonOld == null) throw StandardError(R.string.notFoundError);
 
       if (jsonOld['image'] != model.image) {
         //Se jsonOld tiver imagem salva, deve ser removida, tanto para fazer upload, como para manter um wish sem imagem.
@@ -143,10 +144,10 @@ class FirebaseWishDataSource implements IWishDataSource {
       return model;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -165,10 +166,10 @@ class FirebaseWishDataSource implements IWishDataSource {
       }
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 }

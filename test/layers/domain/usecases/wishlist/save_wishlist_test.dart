@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/entities/wishlist_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/wishlist/save_wishlist.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -39,25 +39,32 @@ void main() {
       expect(wishlist.wishes.length, wishlistResult.wishes.length);
     });
 
-    test("Deve throw ValidationDomainError se entity.id null", () {
+    test("Deve throw StandardError se entity.id null", () {
       wishlistRepositorySpy.mockCreate(EntityFactory.wishlist(withId: false));
 
       final Future future = sut.save(entity);
-      expect(future, throwsA(isA<ValidationDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
-      wishlistRepositorySpy.mockCreateError();
+    test("Deve throw StandardError se ocorrer um erro inesperado", () {
+      wishlistRepositorySpy.mockCreateError(error: UnexpectedError());
 
       final Future future = sut.save(entity);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
-    test("Deve throw AlreadyExistsDomainError", () {
-      wishlistRepositorySpy.mockCreateError(error: AlreadyExistsDomainError());
+    test("Deve throw StandardError", () {
+      wishlistRepositorySpy.mockCreateError(error: StandardError());
 
       final Future future = sut.save(entity);
-      expect(future, throwsA(isA<AlreadyExistsDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
+    });
+
+    test("Deve throw Exception", () {
+      wishlistRepositorySpy.mockCreateError(error: Exception());
+
+      final Future future = sut.save(entity);
+      expect(future, throwsA(isA<Exception>()));
     });
   });
 
@@ -84,25 +91,25 @@ void main() {
       expect(wishlist.id, entity.id);
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw UnexpectedDomainError se ocorrer um erro inesperado", () {
+      wishlistRepositorySpy.mockUpdateError(error: UnexpectedError());
+
+      final Future future = sut.save(entity);
+      expect(future, throwsA(isA<StandardError>()));
+    });
+
+    test("Deve throw StandardError", () {
+      wishlistRepositorySpy.mockUpdateError(error: StandardError());
+
+      final Future future = sut.save(entity);
+      expect(future, throwsA(isA<StandardError>()));
+    });
+
+    test("Deve throw Exception", () {
       wishlistRepositorySpy.mockUpdateError();
 
       final Future future = sut.save(entity);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
-    });
-
-    test("Deve throw AlreadyExistsDomainError", () {
-      wishlistRepositorySpy.mockUpdateError(error: AlreadyExistsDomainError());
-
-      final Future future = sut.save(entity);
-      expect(future, throwsA(isA<AlreadyExistsDomainError>()));
-    });
-
-    test("Deve throw NotFoundDomainError", () {
-      wishlistRepositorySpy.mockUpdateError(error: NotFoundDomainError());
-
-      final Future future = sut.save(entity);
-      expect(future, throwsA(isA<NotFoundDomainError>()));
+      expect(future, throwsA(isA<Exception>()));
     });
   });
 }

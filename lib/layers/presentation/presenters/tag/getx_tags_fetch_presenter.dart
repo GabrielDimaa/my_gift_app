@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 
+import '../../../../exceptions/errors.dart';
 import '../../../../i18n/resources.dart';
 import '../../../../monostates/user_global.dart';
 import '../../../domain/entities/tag_entity.dart';
 import '../../../domain/entities/user_entity.dart';
-import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/usecases/abstracts/tag/i_delete_tag.dart';
 import '../../../domain/usecases/abstracts/tag/i_get_tags.dart';
 import '../../../domain/usecases/abstracts/tag/i_save_tag.dart';
@@ -45,8 +45,6 @@ class GetxTagsFetchPresenter extends GetxController with LoadingManager implemen
       setViewModel(tags.map((e) => TagViewModel.fromEntity(e)).toList());
 
       _sort();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
     } finally {
       setLoading(false);
     }
@@ -54,41 +52,33 @@ class GetxTagsFetchPresenter extends GetxController with LoadingManager implemen
 
   @override
   Future<void> save(TagViewModel viewModel) async {
-    try {
-      validate(viewModel);
+    validate(viewModel);
 
-      final TagEntity tagEntitySaved = await _saveTag.save(viewModel.toEntity(_user));
-      final TagViewModel viewModelSaved = TagViewModel.fromEntity(tagEntitySaved);
+    final TagEntity tagEntitySaved = await _saveTag.save(viewModel.toEntity(_user));
+    final TagViewModel viewModelSaved = TagViewModel.fromEntity(tagEntitySaved);
 
-      if (viewModel.id != null) {
-        int index = _viewModel.indexWhere((e) => e.id == viewModel.id);
-        _viewModel[index] = viewModelSaved;
-      } else {
-        _viewModel.add(viewModelSaved);
-      }
-
-      _sort();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
+    if (viewModel.id != null) {
+      int index = _viewModel.indexWhere((e) => e.id == viewModel.id);
+      _viewModel[index] = viewModelSaved;
+    } else {
+      _viewModel.add(viewModelSaved);
     }
+
+    _sort();
   }
 
   @override
   Future<void> delete(TagViewModel viewModel) async {
-    try {
-      if (viewModel.id == null) return;
+    if (viewModel.id == null) return;
 
-      await _deleteTag.delete(viewModel.id!);
-      _viewModel.removeWhere((e) => e.id == viewModel.id);
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    await _deleteTag.delete(viewModel.id!);
+    _viewModel.removeWhere((e) => e.id == viewModel.id);
   }
 
   @override
   void validate(TagViewModel viewModel) {
-    if (viewModel.name?.isEmpty ?? true) throw Exception(R.string.nameTagNotInformedError);
-    if (viewModel.color == null) throw Exception(R.string.colorTagNotInformedError);
+    if (viewModel.name?.isEmpty ?? true) throw RequiredError(R.string.nameTagNotInformedError);
+    if (viewModel.color == null) throw RequiredError(R.string.colorTagNotInformedError);
   }
 
   void _sort() => _viewModel.sort((a, b) => a.name.toString().toLowerCase().compareTo(b.name.toString().toLowerCase()));

@@ -1,6 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/entities/tag_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
-import 'package:my_gift_app/layers/infra/helpers/errors/infra_error.dart';
 import 'package:my_gift_app/layers/infra/models/tag_model.dart';
 import 'package:my_gift_app/layers/infra/repositories/tag_repository.dart';
 import 'package:faker/faker.dart';
@@ -35,11 +34,11 @@ void main() {
       expect(tags.equals(tagsResult.map((e) => e.toEntity()).toList()), true);
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
-      tagDataSourceSpy.mockGetAllError(error: ConnectionInfraError());
+    test("Deve throw StandardError", () {
+      tagDataSourceSpy.mockGetAllError(error: StandardError());
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
     test("Deve throw Exception", () {
@@ -49,11 +48,11 @@ void main() {
       expect(future, throwsA(isA()));
     });
 
-    test("Deve throw UnexpectedInfraError", () {
-      tagDataSourceSpy.mockGetAllError(error: UnexpectedInfraError());
+    test("Deve throw UnexpectedError", () {
+      tagDataSourceSpy.mockGetAllError(error: UnexpectedError());
       final Future future = sut.getAll(userId);
 
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
   });
 
@@ -75,21 +74,21 @@ void main() {
       expect(!tag.equals(tagToSaved), true);
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
-      tagDataSourceSpy.mockCreateError(error: ConnectionInfraError());
+    test("Deve throw StandardError", () {
+      tagDataSourceSpy.mockCreateError(error: StandardError());
 
       final Future future = sut.create(tagToSaved);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
-      tagDataSourceSpy.mockCreateError(error: UnexpectedInfraError());
+    test("Deve throw StandardError", () {
+      tagDataSourceSpy.mockCreateError(error: UnexpectedError());
 
       final Future future = sut.create(tagToSaved);
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
 
-    test("Deve throw UnexpectedDomainError", () {
+    test("Deve throw StandardError", () {
       tagDataSourceSpy.mockCreateError();
 
       final Future future = sut.create(tagToSaved);
@@ -114,18 +113,18 @@ void main() {
       expect(tag.id != null, true);
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
-      tagDataSourceSpy.mockUpdateError(error: ConnectionInfraError());
+    test("Deve throw StandardError", () {
+      tagDataSourceSpy.mockUpdateError(error: StandardError());
 
       final Future future = sut.update(tagToUpdated);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
-    test("Deve throw UnexpectedInfraError", () {
-      tagDataSourceSpy.mockUpdateError(error: UnexpectedInfraError());
+    test("Deve throw UnexpectedError", () {
+      tagDataSourceSpy.mockUpdateError(error: UnexpectedError());
 
       final Future future = sut.update(tagToUpdated);
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
 
     test("Deve throw Exception", () {
@@ -133,13 +132,6 @@ void main() {
 
       final Future future = sut.update(tagToUpdated);
       expect(future, throwsA(isA()));
-    });
-
-    test("Deve throw NotFoundDomainError se NotFoundInfraError", () {
-      tagDataSourceSpy.mockUpdateError(error: NotFoundInfraError());
-
-      final Future future = sut.update(tagToUpdated);
-      expect(future, throwsA(isA<NotFoundDomainError>()));
     });
   });
 
@@ -156,18 +148,18 @@ void main() {
       verify(() => tagDataSourceSpy.delete(tagId));
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
-      tagDataSourceSpy.mockDeleteError(error: ConnectionInfraError());
+    test("Deve throw StandardError", () {
+      tagDataSourceSpy.mockDeleteError(error: StandardError());
 
       final Future future = sut.delete(tagId);
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
-    test("Deve throw UnexpectedInfraError", () {
-      tagDataSourceSpy.mockDeleteError(error: UnexpectedInfraError());
+    test("Deve throw UnexpectedError", () {
+      tagDataSourceSpy.mockDeleteError(error: UnexpectedError());
 
       final Future future = sut.delete(tagId);
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
 
     test("Deve throw Exception", () {
@@ -175,13 +167,6 @@ void main() {
 
       final Future future = sut.delete(tagId);
       expect(future, throwsA(isA()));
-    });
-
-    test("Deve throw NotFoundDomainError se NotFoundInfraError", () {
-      tagDataSourceSpy.mockDeleteError(error: NotFoundInfraError());
-
-      final Future future = sut.delete(tagId);
-      expect(future, throwsA(isA<NotFoundDomainError>()));
     });
   });
 }

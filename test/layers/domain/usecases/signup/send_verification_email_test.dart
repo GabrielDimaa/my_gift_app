@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/entities/user_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/signup/send_verification_email.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -26,24 +26,31 @@ void main() {
     verify(() => userAccountRepositorySpy.sendVerificationEmail(userId));
   });
 
-  test("Deve throw EmailInvalidDomainError se email for inválido", () {
-    userAccountRepositorySpy.mockSendVerificationEmailError(EmailInvalidDomainError());
+  test("Deve throw EmailError se email for inválido", () {
+    userAccountRepositorySpy.mockSendVerificationEmailError(EmailError());
 
     final Future future = sut.send(userId);
-    expect(future, throwsA(isA<EmailInvalidDomainError>()));
+    expect(future, throwsA(isA<EmailError>()));
   });
 
-  test("Deve throw UnexpectedDomainError se ocorrer um erro inesperado", () {
-    userAccountRepositorySpy.mockSendVerificationEmailError(UnexpectedDomainError("any_message"));
+  test("Deve throw StandardError se ocorrer um erro inesperado", () {
+    userAccountRepositorySpy.mockSendVerificationEmailError(UnexpectedError("any_message"));
 
     final Future future = sut.send(userId);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
   });
 
-  test("Deve throw NotFoundDomainError", () {
-    userAccountRepositorySpy.mockSendVerificationEmailError(NotFoundDomainError());
+  test("Deve throw StandardError", () {
+    userAccountRepositorySpy.mockSendVerificationEmailError(StandardError());
 
     final Future future = sut.send(userId);
-    expect(future, throwsA(isA<NotFoundDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw Exception", () {
+    userAccountRepositorySpy.mockSendVerificationEmailError(Exception());
+
+    final Future future = sut.send(userId);
+    expect(future, throwsA(isA<Exception>()));
   });
 }

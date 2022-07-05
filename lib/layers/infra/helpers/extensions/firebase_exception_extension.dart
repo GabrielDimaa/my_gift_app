@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../helpers/errors/infra_error.dart';
+import '../../../../exceptions/errors.dart';
+import '../../../../i18n/resources.dart';
 
 /*
 [ABORTED] A operação foi abortada, normalmente devido a um problema de simultaneidade, como abortos de transações, etc.
@@ -21,28 +22,27 @@ import '../../helpers/errors/infra_error.dart';
 [UNKNOWN] Erro desconhecido ou um erro de um domínio de erro diferente.
 
 https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestoreException.Code
- */
+*/
 
 extension FirebaseExceptionExtension on FirebaseException {
-  InfraError get getInfraError {
+  Error get getInfraError {
     switch(code.toUpperCase()) {
-      case "ABORTED": return AbortedInfraError();
-      case "ALREADY_EXISTS": return AlreadyExistsInfraError();
-      case "CANCELLED": return CancelledInfraError();
-      case "DATA_LOSS": return UnexpectedInfraError();
-      case "DEADLINE_EXCEEDED": return UnexpectedInfraError();
-      case "FAILED_PRECONDITION": return AbortedInfraError();
-      case "INTERNAL": return InternalInfraError();
-      case "INVALID_ARGUMENT": return InvalidArgumentInfraError();
-      case "NOT_FOUND": return NotFoundInfraError();
-      case "OUT_OF_RANGE": return UnexpectedInfraError();
-      case "PERMISSION_DENIED": return PermissionDeniedInfraError();
-      case "RESOURCE_EXHAUSTED": return ResourceExhaustedInfraError();
-      case "UNAUTHENTICATED": return UnauthenticatedInfraError();
-      case "UNAVAILABLE": return UnavailableInfraError();
-      case "UNIMPLEMENTED": return UnexpectedInfraError();
-      case "UNKNOWN": return UnexpectedInfraError();
-      default: return UnexpectedInfraError();
+      case "ABORTED":
+      case "FAILED_PRECONDITION": return StandardError(R.string.abortedError);
+      case "ALREADY_EXISTS": return StandardError(R.string.alreadyExistsError);
+      case "CANCELLED": return StandardError(R.string.cancelledError);
+      case "INTERNAL": return StandardError(R.string.internalError);
+      case "INVALID_ARGUMENT": return StandardError(R.string.invalidArgumentError);
+      case "NOT_FOUND": return StandardError(R.string.actionCodeError);
+      case "PERMISSION_DENIED": return StandardError(R.string.permissionDeniedError);
+      case "RESOURCE_EXHAUSTED": return StandardError(R.string.resourceExhaustedError);
+      case "UNAUTHENTICATED": return StandardError(R.string.unauthenticatedError);
+      case "UNAVAILABLE": return StandardError(R.string.unavailableError);
+      case "DEADLINE_EXCEEDED":
+      case "DATA_LOSS":
+      case "OUT_OF_RANGE":
+      case "UNIMPLEMENTED":
+      default: return UnexpectedError();
     }
   }
 }

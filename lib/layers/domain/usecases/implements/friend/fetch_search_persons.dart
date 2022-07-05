@@ -1,6 +1,6 @@
+import '../../../../../exceptions/errors.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../entities/user_entity.dart';
-import '../../../helpers/errors/domain_error.dart';
 import '../../../repositories/i_friend_repository.dart';
 import '../../abstracts/friend/i_fetch_search_persons.dart';
 
@@ -13,10 +13,8 @@ class FetchSearchPersons implements IFetchSearchPersons {
   Future<List<UserEntity>> search(String name) async {
     try {
       return await friendRepository.fetchSearchPersons(name);
-    } on DomainError {
-      rethrow;
-    } catch (e) {
-      throw UnexpectedDomainError(R.string.addFriendError);
+    } on UnexpectedError {
+      throw StandardError(R.string.fetchFriendError);
     }
   }
 }

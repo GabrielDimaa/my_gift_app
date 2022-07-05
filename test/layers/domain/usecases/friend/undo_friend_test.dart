@@ -1,4 +1,4 @@
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/helpers/params/friend_params.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/friend/undo_friend.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -25,17 +25,22 @@ void main() {
     verify(() => repositorySpy.undoFriend(params));
   });
 
-  test("Deve throw UnexpectedDomainError", () {
+  test("Deve throw Exception", () {
     repositorySpy.mockUndoFriendError();
 
     final Future future = sut.undo(params);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<Exception>()));
   });
 
-  test("Deve throw NotFoundDomainError", () {
-    repositorySpy.mockUndoFriendError(error: NotFoundDomainError());
+  test("Deve throw StandardError", () {
+    repositorySpy.mockUndoFriendError(error: UnexpectedError());
 
-    final Future future = sut.undo(params);
-    expect(future, throwsA(isA<NotFoundDomainError>()));
+    Future future = sut.undo(params);
+    expect(future, throwsA(isA<StandardError>()));
+
+    repositorySpy.mockUndoFriendError(error: StandardError());
+
+    future = sut.undo(params);
+    expect(future, throwsA(isA<StandardError>()));
   });
 }

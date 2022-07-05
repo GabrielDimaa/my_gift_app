@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:my_gift_app/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 
-import '../../helpers/errors/infra_error.dart';
+import '../../../../app_theme.dart';
+import '../../../../exceptions/errors.dart';
 import './i_image_cropper_facade.dart';
 
 class ImageCropperFacade implements IImageCropperFacade {
@@ -33,7 +33,7 @@ class ImageCropperFacade implements IImageCropperFacade {
 
       return File(cropImage!.path);
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 }

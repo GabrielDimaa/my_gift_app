@@ -3,13 +3,14 @@ import 'package:collection/collection.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../../exceptions/errors.dart';
+import '../../../../i18n/resources.dart';
 import '../../../domain/enums/tag_internal.dart';
 import '../../helpers/connectivity_network.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
 import '../../models/user_model.dart';
 import '../../models/wish_model.dart';
 import 'constants/collection_reference.dart';
-import '../../helpers/errors/infra_error.dart';
 import '../i_user_account_datasource.dart';
 import '../i_wishlist_datasource.dart';
 import '../../models/tag_model.dart';
@@ -33,7 +34,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       final snapshotWishlist = await firestore.collection(constantWishlistsReference).doc(id).get();
 
       final Map<String, dynamic>? jsonWishlist = snapshotWishlist.data()?..addAll({'id': snapshotWishlist.id});
-      if (jsonWishlist == null) throw NotFoundInfraError();
+      if (jsonWishlist == null) throw StandardError(R.string.wishlistNotFoundError);
 
       //endregion
 
@@ -64,7 +65,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
         };
       } else {
         jsonTag = await _getTag(jsonWishlist['tag_id'], jsonUser);
-        if (!TagModel.validateJson(jsonTag)) throw NotFoundInfraError();
+        if (!TagModel.validateJson(jsonTag)) throw StandardError(R.string.tagNotFoundError);
       }
 
       //endregion
@@ -76,15 +77,15 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
         'user': jsonUser,
       });
 
-      if (!WishlistModel.validateJson(jsonWishlist)) throw UnexpectedInfraError();
+      if (!WishlistModel.validateJson(jsonWishlist)) throw UnexpectedError();
 
       return WishlistModel.fromJson(jsonWishlist);
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -153,7 +154,7 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
         var tag = jsonListTags.firstWhere((e) {
           bool result = e['id'] == json['tag_id'];
           return result;
-        }, orElse: () => throw UnexpectedInfraError());
+        }, orElse: () => throw UnexpectedError());
         json.addAll({'tag': tag});
 
         //Adiciona o user ao json
@@ -169,10 +170,10 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       //endregion
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -205,10 +206,10 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       return wishlistsModel;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -254,10 +255,10 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       return wishlistSaved;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -272,10 +273,10 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       return model;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -313,10 +314,10 @@ class FirebaseWishlistDataSource implements IWishlistDataSource {
       }
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 

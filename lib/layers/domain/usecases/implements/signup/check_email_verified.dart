@@ -1,5 +1,5 @@
+import '../../../../../exceptions/errors.dart';
 import '../../../../../i18n/resources.dart';
-import '../../../helpers/errors/domain_error.dart';
 import '../../../repositories/i_user_account_repository.dart';
 import '../../abstracts/signup/i_check_email_verified.dart';
 
@@ -12,10 +12,8 @@ class CheckEmailVerified implements ICheckEmailVerified {
   Future<bool> check(String userId) async {
     try {
       return await userAccountRepository.checkEmailVerified(userId);
-    } on DomainError {
-      rethrow;
-    } catch (e) {
-      throw UnexpectedDomainError(R.string.checkEmailVerifiedError);
+    } on UnexpectedError {
+      throw StandardError(R.string.checkEmailVerifiedError);
     }
   }
 }

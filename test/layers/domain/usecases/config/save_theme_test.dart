@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/enums/theme_mode.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/config/save_theme.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -24,10 +24,22 @@ void main() {
     verify(() => configRepositorySpy.saveTheme(themeMode));
   });
 
-  test("Deve throw UnexpectedDomainError", () {
+  test("Deve throw Exception", () {
     configRepositorySpy.mockSaveThemeError();
 
     final Future future = sut.save(themeMode);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<Exception>()));
+  });
+
+  test("Deve throw UnexpectedDomainError", () {
+    configRepositorySpy.mockSaveThemeError(error: UnexpectedError());
+
+    Future future = sut.save(themeMode);
+    expect(future, throwsA(isA<StandardError>()));
+
+    configRepositorySpy.mockSaveThemeError(error: StandardError());
+
+    future = sut.save(themeMode);
+    expect(future, throwsA(isA<StandardError>()));
   });
 }

@@ -1,12 +1,13 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_gift_app/layers/domain/helpers/params/new_password_params.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../../exceptions/errors.dart';
+import '../../../../i18n/resources.dart';
 import '../../../domain/helpers/params/login_params.dart';
+import '../../../domain/helpers/params/new_password_params.dart';
 import '../../helpers/connectivity_network.dart';
-import '../../helpers/errors/infra_error.dart';
 import '../../helpers/extensions/firebase_auth_exception_extension.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
 import '../../models/user_model.dart';
@@ -32,7 +33,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
 
       final UserCredential credential = await firebaseAuth.signInWithEmailAndPassword(email: params.email, password: params.password);
 
-      if (credential.user == null) throw NotFoundInfraError();
+      if (credential.user == null) throw StandardError(R.string.loginNotFoundError);
 
       final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: credential.user!.uid).get();
       final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data()..addAll({'id': credential.user!.uid});
@@ -43,10 +44,10 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       return userModel;
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -55,7 +56,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
     try {
       await ConnectivityNetwork.hasInternet();
 
-      if (model.password == null) throw WrongPasswordInfraError();
+      if (model.password == null) throw StandardError(R.string.passwordError);
 
       //region FirebaseAuth
 
@@ -92,10 +93,10 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       throw e.getInfraError;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -108,10 +109,10 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       await firebaseAuth.currentUser?.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -126,10 +127,10 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       return firebaseAuth.currentUser!.emailVerified;
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -152,10 +153,10 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       return userModel;
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -167,15 +168,15 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       final snapshotUser = await firestore.collection(constantUsersReference).where(FieldPath.documentId, isEqualTo: userId).get();
       final Map<String, dynamic> jsonUser = snapshotUser.docs.first.data();
 
-      if (jsonUser.isEmpty) throw NotFoundInfraError();
+      if (jsonUser.isEmpty) throw StandardError(R.string.notFoundError);
 
       return UserModel.fromJson(jsonUser..addAll({'id': userId}));
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -187,10 +188,10 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       await firebaseAuth.signOut();
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -218,10 +219,10 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       await batch.commit();
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -231,10 +232,10 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       await firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -244,10 +245,10 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       await firebaseAuth.confirmPasswordReset(code: params.code, newPassword: params.newPassword);
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 

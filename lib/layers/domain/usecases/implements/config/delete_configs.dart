@@ -1,5 +1,5 @@
+import '../../../../../exceptions/errors.dart';
 import '../../../../../i18n/resources.dart';
-import '../../../helpers/errors/domain_error.dart';
 import '../../../repositories/i_config_repository.dart';
 import '../../abstracts/config/i_delete_configs.dart';
 
@@ -12,10 +12,8 @@ class DeleteConfigs implements IDeleteConfigs {
   Future<void> delete() async {
     try {
       return await configRepository.deleteConfigs();
-    } on DomainError {
-      rethrow;
-    } catch (e) {
-      throw UnexpectedDomainError(R.string.deleteError);
+    } on UnexpectedError {
+      throw StandardError(R.string.deleteError);
     }
   }
 }

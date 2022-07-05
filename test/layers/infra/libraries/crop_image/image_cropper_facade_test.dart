@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:my_gift_app/layers/infra/helpers/errors/infra_error.dart';
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/infra/libraries/image_crop/image_cropper_facade.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -48,6 +48,6 @@ void main() {
     imageCropperSpy.mockCropImageError();
 
     final Future future = sut.crop(fileResult);
-    expect(future, throwsA(isA<UnexpectedInfraError>()));
+    expect(future, throwsA(isA<UnexpectedError>()));
   });
 }

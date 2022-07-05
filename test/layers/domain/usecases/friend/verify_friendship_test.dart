@@ -1,4 +1,4 @@
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/helpers/params/friend_params.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/friend/verify_friendship.dart';
 import 'package:faker/faker.dart';
@@ -36,6 +36,18 @@ void main() {
     repositorySpy.mockVerifyFriendshipError();
 
     final Future future = sut.verify(params);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<Exception>()));
+  });
+
+  test("Deve throw StandardError", () {
+    repositorySpy.mockVerifyFriendshipError(error: UnexpectedError());
+
+    Future future = sut.verify(params);
+    expect(future, throwsA(isA<StandardError>()));
+
+    repositorySpy.mockVerifyFriendshipError(error: StandardError());
+
+    future = sut.verify(params);
+    expect(future, throwsA(isA<StandardError>()));
   });
 }

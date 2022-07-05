@@ -535,10 +535,13 @@ class PtBr implements Translation {
   String get resourceExhaustedError => "Não foi possível concluir a operação. Verifique se o seu dispositivo possui espaço no armazenamento.";
 
   @override
-  String get splashError => "Houve um erro ao carregar os dados.";
+  String get dataLoadError => "Houve um erro ao carregar os dados.";
 
   @override
   String get loginError => "Não foi possível fazer login. Tente novamente.";
+
+  @override
+  String get logoutError => "Não foi possível fazer logout. Tente novamente.";
 
   @override
   String get signUpError => "Não foi possível criar sua conta de usuário. Tente novamente.";
@@ -595,6 +598,12 @@ class PtBr implements Translation {
   String get addFriendError => "Não foi possível adicionar amigo. Tente novamente.";
 
   @override
+  String get getFriendError => "Não foi possível buscar amigo.";
+
+  @override
+  String get fetchFriendError => "Não foi possível carregar amigos.";
+
+  @override
   String get undoFriendError => "Não foi possível adicionar amigo. Tente novamente.";
 
   @override
@@ -608,5 +617,14 @@ class PtBr implements Translation {
 
   @override
   String get tagUsedByWishlistError => "Tag está sendo utilizada por uma ou mais listas de desejos.";
+
+  @override
+  String get wishlistNotFoundError => "Lista de desejos não encontrada.";
+
+  @override
+  String get wishNotFoundError => "Desejo não encontrado";
+
+  @override
+  String get tagNotFoundError => "Tag não encontrada.";
   //endregion
 }

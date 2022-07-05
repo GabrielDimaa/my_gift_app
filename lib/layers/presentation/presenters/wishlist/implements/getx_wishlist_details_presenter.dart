@@ -4,7 +4,6 @@ import '../../../../../i18n/resources.dart';
 import '../../../../../monostates/user_global.dart';
 import '../../../../domain/entities/user_entity.dart';
 import '../../../../domain/entities/wish_entity.dart';
-import '../../../../domain/helpers/errors/domain_error.dart';
 import '../../../../domain/usecases/abstracts/wish/i_get_wishes.dart';
 import '../../../helpers/mixins/loading_manager.dart';
 import '../../../viewmodels/wish_viewmodel.dart';
@@ -45,13 +44,9 @@ class GetxWishlistDetailsPresenter extends GetxController with LoadingManager im
 
   @override
   Future<void> getWishes() async {
-    try {
-      final List<WishEntity> wishesEntity = await _getWishes.get(viewModel.id!);
-      viewModel.setWishes(wishesEntity.map((e) => WishViewModel.fromEntity(e)).toList());
+    final List<WishEntity> wishesEntity = await _getWishes.get(viewModel.id!);
+    viewModel.setWishes(wishesEntity.map((e) => WishViewModel.fromEntity(e)).toList());
 
-      viewModel.wishes.sort((a, b) => a.description.toString().toLowerCase().compareTo(b.description.toString().toLowerCase()));
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    viewModel.wishes.sort((a, b) => a.description.toString().toLowerCase().compareTo(b.description.toString().toLowerCase()));
   }
 }

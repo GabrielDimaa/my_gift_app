@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 
+import '../../../../exceptions/errors.dart';
 import '../../../../i18n/resources.dart';
 import '../../../../monostates/user_global.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/entities/wishlist_entity.dart';
-import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/helpers/params/friend_params.dart';
 import '../../../domain/usecases/abstracts/friend/i_add_friend.dart';
 import '../../../domain/usecases/abstracts/friend/i_undo_friend.dart';
@@ -54,15 +54,13 @@ class GetxProfilePresenter extends GetxController with LoadingManager implements
     try {
       setLoading(true);
 
-      if (viewModel == null) throw UnexpectedDomainError(R.string.unexpectedError);
+      if (viewModel == null) throw UnexpectedError(R.string.unexpectedError);
 
       _viewModel = viewModel;
       _user = UserGlobal().getUser()!;
 
       await getWishlists();
       await verifyFriendShip();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
     } finally {
       setLoading(false);
     }
@@ -70,45 +68,29 @@ class GetxProfilePresenter extends GetxController with LoadingManager implements
 
   @override
   Future<void> addFriend() async {
-    try {
-      final FriendParams params = FriendParams(userId: _user.id!, friendUserId: _viewModel.id);
-      await _addFriend.add(params);
+    final FriendParams params = FriendParams(userId: _user.id!, friendUserId: _viewModel.id);
+    await _addFriend.add(params);
 
-      _verifyIsFriend.value = true;
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    _verifyIsFriend.value = true;
   }
 
   @override
   Future<void> undoFriend() async {
-    try {
-      final FriendParams params = FriendParams(userId: _user.id!, friendUserId: _viewModel.id);
-      await _undoFriend.undo(params);
+    final FriendParams params = FriendParams(userId: _user.id!, friendUserId: _viewModel.id);
+    await _undoFriend.undo(params);
 
-      _verifyIsFriend.value = false;
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    _verifyIsFriend.value = false;
   }
 
   @override
   Future<void> verifyFriendShip() async {
-    try {
-      final FriendParams params = FriendParams(userId: _user.id!, friendUserId: _viewModel.id);
-      _verifyIsFriend.value = await _verifyFriendShip.verify(params);
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    final FriendParams params = FriendParams(userId: _user.id!, friendUserId: _viewModel.id);
+    _verifyIsFriend.value = await _verifyFriendShip.verify(params);
   }
 
   @override
   Future<void> getWishlists() async {
-    try {
-      final List<WishlistEntity> wishlistsEntity = await _getWishlists.get(_viewModel.id);
-      _wishlists.value = wishlistsEntity.map((e) => WishlistViewModel.fromEntity(e)).toList();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    final List<WishlistEntity> wishlistsEntity = await _getWishlists.get(_viewModel.id);
+    _wishlists.value = wishlistsEntity.map((e) => WishlistViewModel.fromEntity(e)).toList();
   }
 }

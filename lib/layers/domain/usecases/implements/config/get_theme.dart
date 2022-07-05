@@ -1,6 +1,6 @@
+import '../../../../../exceptions/errors.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../enums/theme_mode.dart';
-import '../../../helpers/errors/domain_error.dart';
 import '../../../repositories/i_config_repository.dart';
 import '../../abstracts/config/i_get_theme.dart';
 
@@ -13,10 +13,8 @@ class GetTheme implements IGetTheme {
   Future<ThemeMode?> get() async {
     try {
       return await configRepository.getTheme();
-    } on DomainError {
-      rethrow;
-    } catch (e) {
-      throw UnexpectedDomainError(R.string.getError);
+    } on UnexpectedError {
+      throw StandardError(R.string.getError);
     }
   }
 }

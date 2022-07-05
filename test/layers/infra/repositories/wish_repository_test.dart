@@ -1,6 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/entities/wish_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
-import 'package:my_gift_app/layers/infra/helpers/errors/infra_error.dart';
 import 'package:my_gift_app/layers/infra/models/wish_model.dart';
 import 'package:my_gift_app/layers/infra/repositories/wish_repository.dart';
 import 'package:faker/faker.dart';
@@ -37,18 +36,18 @@ void main() {
       expect(wish.equals(wishResult.toEntity()), true);
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
-      wishDataSourceSpy.mockGetByIdError(error: ConnectionInfraError());
+    test("Deve throw StandardError", () {
+      wishDataSourceSpy.mockGetByIdError(error: StandardError());
       final Future future = sut.getById(wishId);
 
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
-    test("Deve throw UnexpectedInfraError", () {
-      wishDataSourceSpy.mockGetByIdError(error: UnexpectedInfraError());
+    test("Deve throw UnexpectedError", () {
+      wishDataSourceSpy.mockGetByIdError(error: UnexpectedError());
       final Future future = sut.getById(wishId);
 
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
 
     test("Deve throw Exception", () {
@@ -56,13 +55,6 @@ void main() {
       final Future future = sut.getById(wishId);
 
       expect(future, throwsA(isA()));
-    });
-
-    test("Deve throw NotFoundDomainError se NotFoundInfraError", () {
-      wishDataSourceSpy.mockGetByIdError(error: NotFoundInfraError());
-      final Future future = sut.getById(wishId);
-
-      expect(future, throwsA(isA<NotFoundDomainError>()));
     });
   });
 
@@ -85,18 +77,18 @@ void main() {
       expect(wishes.equals(wishesResult.map((e) => e.toEntity()).toList()), true);
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
-      wishDataSourceSpy.mockGetByWishlistError(error: ConnectionInfraError());
+    test("Deve throw StandardError", () {
+      wishDataSourceSpy.mockGetByWishlistError(error: StandardError());
       final Future future = sut.getByWishlist(wishlistId);
 
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
-    test("Deve throw UnexpectedInfraError", () {
-      wishDataSourceSpy.mockGetByWishlistError(error: UnexpectedInfraError());
+    test("Deve throw UnexpectedError", () {
+      wishDataSourceSpy.mockGetByWishlistError(error: UnexpectedError());
       final Future future = sut.getByWishlist(wishlistId);
 
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
 
     test("Deve throw Exception", () {
@@ -125,24 +117,18 @@ void main() {
       expect(wish.id != null, true);
     });
 
-    test("Deve throw ValidationDomainError se wishlistId for null", () async {
-      final Future future = sut.create(EntityFactory.wish(withWishlistId: false));
-
-      expect(future, throwsA(isA<ValidationDomainError>()));
-    });
-
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
-      wishDataSourceSpy.mockCreateError(error: ConnectionInfraError());
+    test("Deve throw StandardError", () {
+      wishDataSourceSpy.mockCreateError(error: StandardError());
       final Future future = sut.create(wishRequest);
 
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
-    test("Deve throw UnexpectedInfraError", () {
-      wishDataSourceSpy.mockCreateError(error: UnexpectedInfraError());
+    test("Deve throw UnexpectedError", () {
+      wishDataSourceSpy.mockCreateError(error: UnexpectedError());
       final Future future = sut.create(wishRequest);
 
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
 
     test("Deve throw Exception", () {
@@ -150,13 +136,6 @@ void main() {
       final Future future = sut.create(wishRequest);
 
       expect(future, throwsA(isA()));
-    });
-
-    test("Deve throw NotFoundDomainError se NotFoundInfraError", () {
-      wishDataSourceSpy.mockCreateError(error: NotFoundInfraError());
-      final Future future = sut.create(wishRequest);
-
-      expect(future, throwsA(isA<NotFoundDomainError>()));
     });
   });
 
@@ -179,17 +158,11 @@ void main() {
       expect(wish.id != null, true);
     });
 
-    test("Deve throw ValidationDomainError se wishlistId for null", () async {
-      final Future future = sut.update(EntityFactory.wish(withWishlistId: false));
-
-      expect(future, throwsA(isA<ValidationDomainError>()));
-    });
-
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
-      wishDataSourceSpy.mockUpdateError(error: ConnectionInfraError());
+    test("Deve throw StandardError", () {
+      wishDataSourceSpy.mockUpdateError(error: StandardError());
       final Future future = sut.update(wishRequest);
 
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
     test("Deve throw Exception", () {
@@ -199,18 +172,11 @@ void main() {
       expect(future, throwsA(isA()));
     });
 
-    test("Deve throw UnexpectedInfraError", () {
-      wishDataSourceSpy.mockUpdateError(error: UnexpectedInfraError());
+    test("Deve throw UnexpectedError", () {
+      wishDataSourceSpy.mockUpdateError(error: UnexpectedError());
       final Future future = sut.update(wishRequest);
 
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
-    });
-
-    test("Deve throw NotFoundDomainError se NotFoundInfraError", () {
-      wishDataSourceSpy.mockUpdateError(error: NotFoundInfraError());
-      final Future future = sut.update(wishRequest);
-
-      expect(future, throwsA(isA<NotFoundDomainError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
   });
 
@@ -228,11 +194,11 @@ void main() {
       verify(() => wishDataSourceSpy.delete(wishId));
     });
 
-    test("Deve throw UnexpectedDomainError se ConnectionInfraError", () {
-      wishDataSourceSpy.mockDeleteError(error: ConnectionInfraError());
+    test("Deve throw StandardError", () {
+      wishDataSourceSpy.mockDeleteError(error: StandardError());
       final Future future = sut.delete(wishId);
 
-      expect(future, throwsA(isA<UnexpectedDomainError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
     test("Deve throw Exception", () {
@@ -242,18 +208,11 @@ void main() {
       expect(future, throwsA(isA()));
     });
 
-    test("Deve throw UnexpectedInfraError", () {
-      wishDataSourceSpy.mockDeleteError(error: UnexpectedInfraError());
+    test("Deve throw UnexpectedError", () {
+      wishDataSourceSpy.mockDeleteError(error: UnexpectedError());
       final Future future = sut.delete(wishId);
 
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
-    });
-
-    test("Deve throw NotFoundDomainError se NotFoundInfraError", () {
-      wishDataSourceSpy.mockDeleteError(error: NotFoundInfraError());
-      final Future future = sut.delete(wishId);
-
-      expect(future, throwsA(isA<NotFoundDomainError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
   });
 }

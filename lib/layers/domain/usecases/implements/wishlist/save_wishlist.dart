@@ -1,6 +1,6 @@
+import '../../../../../exceptions/errors.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../entities/wishlist_entity.dart';
-import '../../../helpers/errors/domain_error.dart';
 import '../../../repositories/i_wishlist_repository.dart';
 import '../../abstracts/wishlist/i_save_wishlist.dart';
 
@@ -14,16 +14,14 @@ class SaveWishlist implements ISaveWishlist {
     try {
       if (entity.id == null) {
         final WishlistEntity wishlistResponse = await wishlistRepository.create(entity);
-        if (wishlistResponse.id == null) throw ValidationDomainError(message: R.string.saveError);
+        if (wishlistResponse.id == null) throw StandardError(R.string.saveError);
 
         return wishlistResponse;
       } else {
         return await wishlistRepository.update(entity);
       }
-    } on DomainError {
-      rethrow;
-    } catch (e) {
-      throw UnexpectedDomainError(R.string.saveError);
+    } on UnexpectedError {
+      throw StandardError(R.string.saveError);
     }
   }
 }

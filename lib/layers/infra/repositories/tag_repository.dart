@@ -1,7 +1,6 @@
 import '../../domain/entities/tag_entity.dart';
 import '../../domain/repositories/i_tag_repository.dart';
 import '../datasources/i_tag_datasource.dart';
-import '../helpers/errors/infra_error.dart';
 import '../models/tag_model.dart';
 
 class TagRepository implements ITagRepository {
@@ -11,44 +10,24 @@ class TagRepository implements ITagRepository {
 
   @override
   Future<List<TagEntity>> getAll(userId) async {
-    try {
-      final List<TagModel> tagsModel = await tagDataSource.getAll(userId);
-      return tagsModel.map((e) => e.toEntity()).toList();
-    } on InfraError catch (e) {
-      if (e is UnexpectedInfraError) rethrow;
-      throw e.toDomainError();
-    }
+    final List<TagModel> tagsModel = await tagDataSource.getAll(userId);
+    return tagsModel.map((e) => e.toEntity()).toList();
   }
 
   @override
   Future<TagEntity> create(TagEntity entity) async {
-    try {
-      final TagModel tagModel = await tagDataSource.create(TagModel.fromEntity(entity));
-      return tagModel.toEntity();
-    } on InfraError catch (e) {
-      if (e is UnexpectedInfraError) rethrow;
-      throw e.toDomainError();
-    }
+    final TagModel tagModel = await tagDataSource.create(TagModel.fromEntity(entity));
+    return tagModel.toEntity();
   }
 
   @override
   Future<TagEntity> update(TagEntity entity) async {
-    try {
-      final TagModel tagModel = await tagDataSource.update(TagModel.fromEntity(entity));
-      return tagModel.toEntity();
-    } on InfraError catch (e) {
-      if (e is UnexpectedInfraError) rethrow;
-      throw e.toDomainError();
-    }
+    final TagModel tagModel = await tagDataSource.update(TagModel.fromEntity(entity));
+    return tagModel.toEntity();
   }
 
   @override
   Future<void> delete(String id) async {
-    try {
-      await tagDataSource.delete(id);
-    } on InfraError catch (e) {
-      if (e is UnexpectedInfraError) rethrow;
-      throw e.toDomainError();
-    }
+    await tagDataSource.delete(id);
   }
 }

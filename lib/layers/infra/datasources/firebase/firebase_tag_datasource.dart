@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../../exceptions/errors.dart';
 import '../../../../i18n/resources.dart';
-import '../../../domain/helpers/errors/domain_error.dart';
 import '../../helpers/connectivity_network.dart';
 import '../../helpers/extensions/firebase_exception_extension.dart';
 import '../../models/user_model.dart';
 import 'constants/collection_reference.dart';
-import '../../helpers/errors/infra_error.dart';
 import '../i_tag_datasource.dart';
 import '../../models/tag_model.dart';
 import '../i_user_account_datasource.dart';
@@ -46,10 +45,10 @@ class FirebaseTagDataSource implements ITagDataSource {
       return tagsModel;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -64,10 +63,10 @@ class FirebaseTagDataSource implements ITagDataSource {
       return model.clone(id: doc.id);
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -82,10 +81,10 @@ class FirebaseTagDataSource implements ITagDataSource {
       return model;
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -95,16 +94,16 @@ class FirebaseTagDataSource implements ITagDataSource {
       await ConnectivityNetwork.hasInternet();
 
       final snapshot = await firestore.collection(constantWishlistsReference).where('tag_id', isEqualTo: id).get();
-      if (snapshot.docs.isNotEmpty) throw UnexpectedDomainError(R.string.tagUsedByWishlistError);
+      if (snapshot.docs.isNotEmpty) throw StandardError(R.string.tagUsedByWishlistError);
 
       final doc = firestore.collection(constantTagsReference).doc(id);
       await doc.delete();
     } on FirebaseException catch (e) {
       throw e.getInfraError;
-    } on InfraError {
+    } on Error {
       rethrow;
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 }

@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/entities/user_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/signup/signup_email.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -33,31 +33,31 @@ void main() {
     expect(user, userResult);
   });
 
-  test("Deve throw PasswordDomainError se senha não conter pelo menos 8 caracteres", () {
-    userAccountRepositorySpy.mockSignUpWithEmailError(PasswordDomainError());
-    final Future future = sut.signUp(userRequest);
+  test("Deve throw StandardError se senha não conter pelo menos 8 caracteres", () {
+    var userRequestLocal = userRequest;
+    final Future future = sut.signUp(userRequestLocal..password = "12345");
 
-    expect(future, throwsA(isA<PasswordDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
   });
 
-  test("Deve throw EmailInvalidDomainError se email for inválido", () {
-    userAccountRepositorySpy.mockSignUpWithEmailError(EmailInvalidDomainError());
+  test("Deve throw UnexpectedError se ocorrer um erro inesperado", () {
+    userAccountRepositorySpy.mockSignUpWithEmailError(UnexpectedError());
     final Future future = sut.signUp(userRequest);
 
-    expect(future, throwsA(isA<EmailInvalidDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
   });
 
-  test("Deve throw EmailInUseDomainError se email já estiver em uso", () {
-    userAccountRepositorySpy.mockSignUpWithEmailError(EmailInUseDomainError());
+  test("Deve throw StandardError", () {
+    userAccountRepositorySpy.mockSignUpWithEmailError(StandardError());
     final Future future = sut.signUp(userRequest);
 
-    expect(future, throwsA(isA<EmailInUseDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
   });
 
-  test("Deve throw UnexpectedDomainError se ocorrer um erro inesperado", () {
-    userAccountRepositorySpy.mockSignUpWithEmailError(UnexpectedDomainError("any_message"));
+  test("Deve throw Exception", () {
+    userAccountRepositorySpy.mockSignUpWithEmailError(Exception());
     final Future future = sut.signUp(userRequest);
 
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<Exception>()));
   });
 }

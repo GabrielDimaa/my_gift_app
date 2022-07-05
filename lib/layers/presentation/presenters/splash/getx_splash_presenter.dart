@@ -4,7 +4,6 @@ import '../../../../app_theme.dart';
 import '../../../../monostates/user_global.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/enums/theme_mode.dart';
-import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/usecases/abstracts/config/i_get_theme.dart';
 import '../../../domain/usecases/abstracts/signup/i_check_email_verified.dart';
 import '../../../domain/usecases/abstracts/signup/i_send_verification_email.dart';
@@ -32,30 +31,24 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
 
   @override
   Future<void> initialize([viewModel]) async {
-    try {
-      await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
-      final UserEntity? user = await _getUserLogged.getUser();
-      if (user == null) await navigateToLogin();
+    final UserEntity? user = await _getUserLogged.getUser();
+    if (user == null) await navigateToLogin();
 
-      final bool emailVerified = await _checkEmailVerified.check(user!.id!);
-      if (emailVerified) {
-        UserGlobal().setUser(user);
-        final theme = await _getTheme.get();
-        if (theme != null) AppTheme.theme.value = theme.toMaterial();
+    final bool emailVerified = await _checkEmailVerified.check(user!.id!);
+    if (emailVerified) {
+      UserGlobal().setUser(user);
+      final theme = await _getTheme.get();
+      if (theme != null) AppTheme.theme.value = theme.toMaterial();
 
-        await navigateToDashboard();
-      } else {
-        try {
-          await _sendVerificationEmail.send(user.id!);
-        } finally {
-          await navigateToConfirmEmail();
-        }
+      await navigateToDashboard();
+    } else {
+      try {
+        await _sendVerificationEmail.send(user.id!);
+      } finally {
+        await navigateToConfirmEmail();
       }
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    } catch (e) {
-      await navigateToLogin();
     }
   }
 

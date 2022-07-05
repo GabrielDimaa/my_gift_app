@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:my_gift_app/layers/infra/helpers/errors/infra_error.dart';
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/infra/libraries/image_picker/image_picker_facade.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -42,14 +42,14 @@ void main() {
       imagePickerSpy.mockPickImageError(error: PlatformException(code: "any_code"));
 
       final Future future = sut.getFromCamera();
-      expect(future, throwsA(isA<WithoutPermissionInfraError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
     test("Deve throw UnexpectedInfraError", () {
       imagePickerSpy.mockPickImageError();
 
       final Future future = sut.getFromCamera();
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
   });
 
@@ -80,14 +80,14 @@ void main() {
       imagePickerSpy.mockPickImageError(error: PlatformException(code: "any_code"));
 
       final Future future = sut.getFromGallery();
-      expect(future, throwsA(isA<WithoutPermissionInfraError>()));
+      expect(future, throwsA(isA<StandardError>()));
     });
 
     test("Deve throw UnexpectedInfraError", () {
       imagePickerSpy.mockPickImageError();
 
       final Future future = sut.getFromGallery();
-      expect(future, throwsA(isA<UnexpectedInfraError>()));
+      expect(future, throwsA(isA<UnexpectedError>()));
     });
   });
 }

@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/entities/tag_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/tag/get_tags.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,10 +31,24 @@ void main() {
     expect(tags.equals(tagsResult), true);
   });
 
-  test("Deve throw UnexpectedDomainError", () {
-    tagRepositorySpy.mockGetAllError();
+  test("Deve throw StandardError se ocorrer um erro inesperado", () {
+    tagRepositorySpy.mockGetAllError(error: UnexpectedError());
 
     final Future future = sut.get(userId);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw StandardError", () {
+    tagRepositorySpy.mockGetAllError(error: StandardError());
+
+    final Future future = sut.get(userId);
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw Exception", () {
+    tagRepositorySpy.mockGetAllError(error: Exception());
+
+    final Future future = sut.get(userId);
+    expect(future, throwsA(isA<Exception>()));
   });
 }

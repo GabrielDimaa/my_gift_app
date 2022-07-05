@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../../../../exceptions/errors.dart';
 import '../../../../../i18n/resources.dart';
-import '../../../helpers/errors/infra_error.dart';
 import './i_storage_datasource.dart';
 
 class FirebaseStorageDataSource implements IStorageDataSource {
@@ -18,7 +18,7 @@ class FirebaseStorageDataSource implements IStorageDataSource {
       await storage.putFile(file);
       return await storage.getDownloadURL();
     } catch (e) {
-      throw UnexpectedInfraError(message: R.string.uploadImageError);
+      throw StandardError(R.string.uploadImageError);
     }
   }
 
@@ -28,7 +28,7 @@ class FirebaseStorageDataSource implements IStorageDataSource {
       final storage = firebaseStorage.ref().child(path);
       await storage.delete();
     } catch (e) {
-      throw UnexpectedInfraError(message: R.string.deleteImageError);
+      throw StandardError(R.string.deleteImageError);
     }
   }
 }

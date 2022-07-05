@@ -1,6 +1,6 @@
+import '../../../../../exceptions/errors.dart';
 import '../../../../../i18n/resources.dart';
 import '../../../entities/user_entity.dart';
-import '../../../helpers/errors/domain_error.dart';
 import '../../../helpers/params/login_params.dart';
 import '../../../repositories/i_user_account_repository.dart';
 import '../../abstracts/login/i_login_email.dart';
@@ -14,14 +14,11 @@ class LoginEmail implements ILoginEmail {
   Future<UserEntity> auth(LoginParams params) async {
     try {
       final UserEntity user = await userAccountRepository.authWithEmail(params);
-      if (!user.emailVerified) throw EmailNotVerifiedDomainError();
+      if (!user.emailVerified) throw EmailError(R.string.emailNotVerifiedError);
 
       return user;
-    } on DomainError catch(e) {
-      if (e is NotFoundDomainError) throw NotFoundDomainError(message: R.string.loginNotFoundError);
-      rethrow;
-    } catch (e) {
-      throw UnexpectedDomainError(R.string.loginError);
+    } on UnexpectedError {
+      throw StandardError(R.string.loginError);
     }
   }
 }

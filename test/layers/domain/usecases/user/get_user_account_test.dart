@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/entities/user_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/user/get_user_account.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -32,10 +32,24 @@ void main() {
     expect(user.equals(entity), true);
   });
 
-  test("Deve throw UnexpectedDomainError", () {
+  test("Deve throw UnexpectedDomainError se ocorrer qualquer tipo de erro", () {
+    userAccountRepositorySpy.mockGetUserAccountError(error: UnexpectedError());
+
+    final Future future = sut.get(userId);
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw StandardError", () {
+    userAccountRepositorySpy.mockGetUserAccountError(error: StandardError());
+
+    final Future future = sut.get(userId);
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw Exception", () {
     userAccountRepositorySpy.mockGetUserAccountError();
 
     final Future future = sut.get(userId);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<Exception>()));
   });
 }

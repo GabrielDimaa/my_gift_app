@@ -1,6 +1,6 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/wish/get_wish_by_id.dart';
 import 'package:my_gift_app/layers/domain/entities/wish_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -30,17 +30,24 @@ void main() {
     expect(wish, wishResult);
   });
 
-  test("Deve throw UnexpectedDomainError", () {
-    wishRepository.mockGetByIdError();
+  test("Deve throw StandardError se ocorrer um erro inesperado", () {
+    wishRepository.mockGetByIdError(error: UnexpectedError());
 
     final Future future = sut.get(wishId);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
   });
 
-  test("Deve throw NotFoundDomainError", () {
-    wishRepository.mockGetByIdError(error: NotFoundDomainError());
+  test("Deve throw StandardError", () {
+    wishRepository.mockGetByIdError(error: StandardError());
 
     final Future future = sut.get(wishId);
-    expect(future, throwsA(isA<NotFoundDomainError>()));
+    expect(future, throwsA(isA<StandardError>()));
+  });
+
+  test("Deve throw Exception", () {
+    wishRepository.mockGetByIdError(error: Exception());
+
+    final Future future = sut.get(wishId);
+    expect(future, throwsA(isA<Exception>()));
   });
 }

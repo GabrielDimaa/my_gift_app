@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../helpers/errors/infra_error.dart';
+import '../../../../exceptions/errors.dart';
+import '../../../../i18n/resources.dart';
 import './i_image_picker_facade.dart';
 
 class ImagePickerFacade implements IImagePickerFacade {
@@ -19,9 +20,9 @@ class ImagePickerFacade implements IImagePickerFacade {
       if (image?.path.isEmpty ?? true) return null;
       return File(image!.path);
     } on PlatformException {
-      throw WithoutPermissionInfraError();
+      throw StandardError(R.string.withoutPermissionCameraError);
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 
@@ -33,9 +34,9 @@ class ImagePickerFacade implements IImagePickerFacade {
       if (image?.path.isEmpty ?? true) return null;
       return File(image!.path);
     } on PlatformException {
-      throw WithoutPermissionInfraError();
+      throw StandardError(R.string.withoutPermissionCameraError);
     } catch (e) {
-      throw UnexpectedInfraError();
+      throw UnexpectedError();
     }
   }
 }

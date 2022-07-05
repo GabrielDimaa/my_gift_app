@@ -3,7 +3,6 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import '../../../../monostates/user_global.dart';
 import '../../../domain/entities/friends_entity.dart';
 import '../../../domain/entities/user_entity.dart';
-import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/helpers/params/friend_params.dart';
 import '../../../domain/usecases/abstracts/friend/i_add_friend.dart';
 import '../../../domain/usecases/abstracts/friend/i_fetch_search_persons.dart';
@@ -48,8 +47,6 @@ class GetxFriendsPresenter extends GetxController with LoadingManager implements
       _user = UserGlobal().getUser()!;
 
       await getFriends();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
     } finally {
       setLoading(false);
     }
@@ -57,37 +54,25 @@ class GetxFriendsPresenter extends GetxController with LoadingManager implements
 
   @override
   Future<void> getFriends() async {
-    try {
-      final FriendsEntity friends = await _getFriends.get(_user.id!);
-      _viewModel.setFriends(FriendsViewModel.fromEntity(friends).friends);
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    final FriendsEntity friends = await _getFriends.get(_user.id!);
+    _viewModel.setFriends(FriendsViewModel.fromEntity(friends).friends);
   }
 
   @override
   Future<void> undoFriend(String friendUserId) async {
-    try {
-      final FriendParams params = FriendParams(userId: _user.id!, friendUserId: friendUserId);
-      await _undoFriend.undo(params);
+    final FriendParams params = FriendParams(userId: _user.id!, friendUserId: friendUserId);
+    await _undoFriend.undo(params);
 
-      _viewModel.friends.removeWhere((friend) => friend.id == friendUserId);
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    _viewModel.friends.removeWhere((friend) => friend.id == friendUserId);
   }
 
   @override
   Future<void> addFriend(UserViewModel person) async {
-    try {
-      final FriendParams params = FriendParams(userId: _user.id!, friendUserId: person.id);
-      await _addFriend.add(params);
+    final FriendParams params = FriendParams(userId: _user.id!, friendUserId: person.id);
+    await _addFriend.add(params);
 
-      _viewModel.friends.add(person);
-      _viewModel.friends.sort((a, b) => a.name.toString().toLowerCase().compareTo(b.name.toString().toLowerCase()));
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    _viewModel.friends.add(person);
+    _viewModel.friends.sort((a, b) => a.name.toString().toLowerCase().compareTo(b.name.toString().toLowerCase()));
   }
 
   @override

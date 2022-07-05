@@ -183,8 +183,9 @@ abstract class Translation {
   String get unauthenticatedError;
   String get unavailableError;
   String get resourceExhaustedError;
-  String get splashError;
+  String get dataLoadError;
   String get loginError;
+  String get logoutError;
   String get signUpError;
   String get sendVerificationEmailError;
   String get checkEmailVerifiedError;
@@ -203,10 +204,15 @@ abstract class Translation {
   String get priceNotInformed;
   String get priceMinMaxError;
   String get addFriendError;
+  String get getFriendError;
+  String get fetchFriendError;
   String get undoFriendError;
   String get getProfileError;
   String get noAccessError;
   String get sendCodeError;
   String get tagUsedByWishlistError;
+  String get wishlistNotFoundError;
+  String get wishNotFoundError;
+  String get tagNotFoundError;
   //endregion
 }

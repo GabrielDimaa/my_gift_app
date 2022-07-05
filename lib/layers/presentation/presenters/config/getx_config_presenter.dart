@@ -1,5 +1,4 @@
 import '../../../domain/enums/theme_mode.dart';
-import '../../../domain/helpers/errors/domain_error.dart';
 import '../../../domain/usecases/abstracts/config/i_get_theme.dart';
 import '../../../domain/usecases/abstracts/config/i_save_theme.dart';
 import '../../../domain/usecases/abstracts/logout/i_logout.dart';
@@ -18,11 +17,7 @@ class GetxConfigPresenter implements ConfigPresenter {
 
   @override
   Future<void> logout() async {
-    try {
-      await _logout.logout();
-    } on DomainError catch (e) {
-      throw Exception(e.message);
-    }
+    await _logout.logout();
   }
 
   @override

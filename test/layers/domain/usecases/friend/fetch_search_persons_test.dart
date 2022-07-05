@@ -1,5 +1,5 @@
+import 'package:my_gift_app/exceptions/errors.dart';
 import 'package:my_gift_app/layers/domain/entities/user_entity.dart';
-import 'package:my_gift_app/layers/domain/helpers/errors/domain_error.dart';
 import 'package:my_gift_app/layers/domain/usecases/implements/friend/fetch_search_persons.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -35,6 +35,18 @@ void main() {
     repositorySpy.mockFetchSearchFriendsError();
 
     final Future future = sut.search(name);
-    expect(future, throwsA(isA<UnexpectedDomainError>()));
+    expect(future, throwsA(isA<Exception>()));
+  });
+
+  test("Deve throw StandardError", () {
+    repositorySpy.mockFetchSearchFriendsError(error: UnexpectedError());
+
+    Future future = sut.search(name);
+    expect(future, throwsA(isA<StandardError>()));
+
+    repositorySpy.mockFetchSearchFriendsError(error: StandardError());
+
+    future = sut.search(name);
+    expect(future, throwsA(isA<StandardError>()));
   });
 }
