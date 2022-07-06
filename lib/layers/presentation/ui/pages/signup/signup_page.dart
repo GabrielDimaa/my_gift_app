@@ -7,6 +7,7 @@ import '../../../presenters/signup/getx_signup_presenter.dart';
 import '../../../presenters/signup/signup_presenter.dart';
 import '../../components/bottom_sheet/exit_app_bottom_sheet.dart';
 import '../../components/dialogs/error_dialog.dart';
+import '../../components/dialogs/loading_dialog.dart';
 import '../../components/form/text_field_default.dart';
 import '../../components/form/validators/input_validators.dart';
 import '../../components/padding/padding_default.dart';
@@ -54,13 +55,7 @@ class _SignupPageState extends State<SignupPage> {
                             height: 22,
                             color: Theme.of(context).colorScheme.onBackground,
                           ),
-                          onPressed: () async {
-                            try {
-                              await presenter.signupWithGoogle();
-                            } catch (e) {
-                              ErrorDialog.show(context: context, content: e.toString());
-                            }
-                          },
+                          onPressed: () async => await _signupWithGoogle(),
                         ),
                         const SizedBox(height: 18),
                         const DividerOrWidget(),
@@ -125,6 +120,16 @@ class _SignupPageState extends State<SignupPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       await presenter.navigateToSignupPassword();
+    }
+  }
+
+  Future<void> _signupWithGoogle() async {
+    try {
+      await LoadingDialog.show(context: context, message: "${R.string.signupWithGoogle}...", onAction: () async {
+        await presenter.signupWithGoogle();
+      });
+    } catch (e) {
+      ErrorDialog.show(context: context, content: e.toString());
     }
   }
 }

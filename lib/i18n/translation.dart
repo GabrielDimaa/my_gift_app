@@ -23,6 +23,7 @@ abstract class Translation {
   String get clear;
   String get completingRegistration;
   String get signingUp;
+  String get signingUpWithGoogle;
   String get loggingIn;
   String get loggingInWithGoogle;
   String get name;

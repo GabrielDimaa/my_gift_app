@@ -15,7 +15,7 @@ class PtBr implements Translation {
   String get loginWithGoogle => "Entrar com o Google";
 
   @override
-  String get signupWithGoogle => "Cadastrar-se com o Google";
+  String get signupWithGoogle => "Cadastrando-se com o Google";
 
   @override
   String get loginOu => "ou";
@@ -55,6 +55,9 @@ class PtBr implements Translation {
 
   @override
   String get signingUp => "Cadastrando-se";
+
+  @override
+  String get signingUpWithGoogle => "Cadastrando-se com Google";
 
   @override
   String get loggingIn => "Fazendo login";
