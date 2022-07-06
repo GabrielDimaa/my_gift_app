@@ -1,40 +1,26 @@
 import '../i18n/resources.dart';
 
-class Error implements Exception {
-  final String? message;
+abstract class Error implements Exception {
+  String? message;
 
   Error([this.message]);
 
   @override
-  String toString() => message?.toString() ?? "";
+  String toString() => message ?? "";
 }
 
-class StandardError implements Error {
-  @override
-  final String? message;
-
-  StandardError([this.message]);
+class StandardError extends Error {
+  StandardError([String? message]) : super(message);
 }
 
-class UnexpectedError implements Error {
-  @override
-  final String? message;
-
-  UnexpectedError([this.message]) {
-    message == null ? R.string.unexpectedError : "";
-  }
+class UnexpectedError extends Error {
+  UnexpectedError([String? message]) : super(message ?? R.string.unexpectedError);
 }
 
-class RequiredError implements Error {
-  @override
-  final String message;
-
-  RequiredError(this.message);
+class RequiredError extends Error {
+  RequiredError(String message) : super(message);
 }
 
-class EmailError implements Error {
-  @override
-  final String? message;
-
-  EmailError([this.message]);
+class EmailError extends Error {
+  EmailError([String? message]) : super(message);
 }
