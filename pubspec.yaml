@@ -22,6 +22,7 @@ dependencies:
   firebase_storage: ^10.2.17
   flutter_svg: ^1.1.0
   get: ^4.6.5
+  google_sign_in: ^5.3.3
   image_cropper: ^2.0.3
   image_picker: ^0.8.5+3
   intl: ^0.17.0

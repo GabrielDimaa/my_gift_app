@@ -56,13 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                             height: 22,
                             color: Theme.of(context).colorScheme.onBackground,
                           ),
-                          onPressed: () async {
-                            try {
-                              await presenter.loginWithGoogle();
-                            } catch (e) {
-                              ErrorDialog.show(context: context, content: e.toString());
-                            }
-                          },
+                          onPressed: () async => await _loginWithGoogle(),
                         ),
                         const SizedBox(height: 18),
                         const DividerOrWidget(),
@@ -129,10 +123,23 @@ class _LoginPageState extends State<LoginPage> {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
 
-        await LoadingDialog.show(context: context, message: "${R.string.loggingIn}...", onAction: () async {
-          await presenter.login();
-        });
+        await LoadingDialog.show(
+            context: context,
+            message: "${R.string.loggingIn}...",
+            onAction: () async {
+              await presenter.login();
+            });
       }
+    } catch (e) {
+      ErrorDialog.show(context: context, content: e.toString());
+    }
+  }
+
+  Future<void> _loginWithGoogle() async {
+    try {
+      await LoadingDialog.show(context: context, message: "${R.string.loggingInWithGoogle}...", onAction: () async {
+        await presenter.loginWithGoogle();
+      });
     } catch (e) {
       ErrorDialog.show(context: context, content: e.toString());
     }

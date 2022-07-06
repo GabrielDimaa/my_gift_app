@@ -23,6 +23,12 @@ class UserAccountRepository implements IUserAccountRepository {
   }
 
   @override
+  Future<UserEntity?> authWithGoogle() async {
+    final UserModel? userModel = await userAccountDataSource.authWithGoogle();
+    return userModel?.toEntity();
+  }
+
+  @override
   Future<void> sendVerificationEmail(String userId) async {
     await userAccountDataSource.sendVerificationEmail(userId);
   }

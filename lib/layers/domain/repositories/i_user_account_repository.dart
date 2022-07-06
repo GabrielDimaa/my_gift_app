@@ -5,6 +5,7 @@ import '../helpers/params/new_password_params.dart';
 abstract class IUserAccountRepository {
   Future<UserEntity> authWithEmail(LoginParams params);
   Future<UserEntity> signUpWithEmail(UserEntity entity);
+  Future<UserEntity?> authWithGoogle();
   Future<void> sendVerificationEmail(String userId);
   Future<bool> checkEmailVerified(String userId);
   Future<UserEntity?> getUserLogged();

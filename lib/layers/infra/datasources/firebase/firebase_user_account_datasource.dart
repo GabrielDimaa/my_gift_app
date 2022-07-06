@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../exceptions/errors.dart';
 import '../../../../i18n/resources.dart';
@@ -19,11 +20,13 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firestore;
   final IStorageDataSource firebaseStorageDataSource;
+  final GoogleSignIn googleSignIn;
 
   FirebaseUserAccountDataSource({
     required this.firebaseAuth,
     required this.firestore,
     required this.firebaseStorageDataSource,
+    required this.googleSignIn,
   });
 
   @override
@@ -92,6 +95,57 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
     } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
     } on FirebaseException catch (e) {
+      throw e.getInfraError;
+    } on Error {
+      rethrow;
+    } catch (e) {
+      throw UnexpectedError();
+    }
+  }
+
+  @override
+  Future<UserModel?> authWithGoogle() async {
+    try {
+      await ConnectivityNetwork.hasInternet();
+
+      if (await googleSignIn.isSignedIn()) await googleSignIn.signOut();
+      final GoogleSignInAccount? account = await googleSignIn.signIn();
+
+      if (account != null) {
+        final GoogleSignInAuthentication authentication = await account.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: authentication.accessToken,
+          idToken: authentication.idToken,
+        );
+        final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
+
+        final snapshot = await firestore.collection(constantUsersReference).where('email', isEqualTo: account.email).limit(1).get();
+
+        if (snapshot.docs.isEmpty) {
+          final UserModel model = UserModel(
+            name: account.displayName ?? account.email,
+            email: account.email,
+            emailVerified: true,
+            photo: account.photoUrl,
+          );
+
+          var json = model.toJson();
+          json.addAll({'searchName': _mountSearchName(model.name)});
+          await firestore.collection(constantUsersReference).doc(userCredential.user!.uid).set(json);
+
+          return model.clone(id: userCredential.user!.uid);
+        } else {
+          final Map<String, dynamic> jsonUser = snapshot.docs.first.data()..addAll({'id': snapshot.docs.first.id});
+
+          final UserModel model = UserModel.fromJson(jsonUser);
+          model.emailVerified = true;
+
+          return model;
+        }
+      }
+
+      return null;
+    } on FirebaseAuthException catch (e) {
       throw e.getInfraError;
     } on Error {
       rethrow;
@@ -186,6 +240,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
       if (firebaseAuth.currentUser == null) return;
 
       await firebaseAuth.signOut();
+      await googleSignIn.signOut();
     } on FirebaseException catch (e) {
       throw e.getInfraError;
     } on Error {
@@ -255,7 +310,7 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
   List<String> _mountSearchName(String name) {
     List<String> list = [];
     for (var index = 0; index <= name.length; index++) {
-      list.add(name.substring(0, index).toLowerCase());
+      if (index > 0) list.add(name.substring(0, index).toLowerCase());
     }
     return list;
   }

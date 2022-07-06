@@ -5,6 +5,7 @@ import '../../../../i18n/resources.dart';
 import '../../../../monostates/user_global.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/usecases/abstracts/login/i_login_email.dart';
+import '../../../domain/usecases/abstracts/login/i_login_google.dart';
 import '../../ui/pages/dashboard/dashboard_page.dart';
 import '../../ui/pages/signup/signup_confirm_email_page.dart';
 import '../../ui/pages/signup/signup_page.dart';
@@ -13,8 +14,13 @@ import './login_presenter.dart';
 
 class GetxLoginPresenter extends GetxController implements LoginPresenter {
   final ILoginEmail _loginWithEmail;
+  final ILoginGoogle _loginWithGoogle;
 
-  GetxLoginPresenter({required ILoginEmail loginWithEmail}) : _loginWithEmail = loginWithEmail;
+  GetxLoginPresenter({
+    required ILoginEmail loginWithEmail,
+    required ILoginGoogle loginWithGoogle,
+  })  : _loginWithEmail = loginWithEmail,
+        _loginWithGoogle = loginWithGoogle;
 
   late LoginViewModel _viewModel;
 
@@ -53,7 +59,18 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
 
   @override
   Future<void> loginWithGoogle() async {
-    throw UnimplementedError();
+    try {
+      final UserEntity? user = await _loginWithGoogle.auth();
+
+      if (user != null) {
+        final UserGlobal userGlobal = UserGlobal();
+        userGlobal.setUser(user);
+
+        await navigateToDashboard();
+      }
+    } on EmailError {
+      await navigateToConfirmEmail();
+    }
   }
 
   @override

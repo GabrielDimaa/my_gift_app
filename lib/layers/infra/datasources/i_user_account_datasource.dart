@@ -5,6 +5,7 @@ import '../models/user_model.dart';
 abstract class IUserAccountDataSource {
   Future<UserModel> authWithEmail(LoginParams params);
   Future<UserModel> signUpWithEmail(UserModel model);
+  Future<UserModel?> authWithGoogle();
   Future<void> sendVerificationEmail(String userId);
   Future<bool> checkEmailVerified(String userId);
   Future<UserModel?> getUserLogged();

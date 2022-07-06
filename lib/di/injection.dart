@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +17,7 @@ import '../layers/domain/usecases/implements/friend/verify_friendship.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_camera.dart';
 import '../layers/domain/usecases/implements/image_picker/fetch_image_picker_gallery.dart';
 import '../layers/domain/usecases/implements/login/login_email.dart';
+import '../layers/domain/usecases/implements/login/login_google.dart';
 import '../layers/domain/usecases/implements/logout/logout.dart';
 import '../layers/domain/usecases/implements/signup/check_email_verified.dart';
 import '../layers/domain/usecases/implements/signup/send_verification_email.dart';
@@ -84,6 +86,7 @@ class Injection {
     //region Libraries
     Get.lazyPut(() => ImagePicker(), fenix: true);
     Get.lazyPut(() => ImageCropper(), fenix: true);
+    Get.lazyPut(() => GoogleSignIn(), fenix: true);
     await Get.putAsync<SharedPreferences>(() async => await SharedPreferences.getInstance());
     //endregion
 
@@ -94,6 +97,7 @@ class Injection {
         firebaseAuth: Get.find<FirebaseAuth>(),
         firestore: Get.find<FirebaseFirestore>(),
         firebaseStorageDataSource: Get.find<FirebaseStorageDataSource>(),
+        googleSignIn: Get.find<GoogleSignIn>(),
       ),
       fenix: true,
     );
@@ -152,6 +156,7 @@ class Injection {
 
     //region UseCases
     Get.lazyPut(() => LoginEmail(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
+    Get.lazyPut(() => LoginGoogle(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => Logout(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(() => SignUpEmail(userAccountRepository: Get.find<UserAccountRepository>()), fenix: true);
     Get.lazyPut(
@@ -194,7 +199,13 @@ class Injection {
     //endregion
 
     //region Presenters
-    Get.lazyPut(() => GetxLoginPresenter(loginWithEmail: Get.find<LoginEmail>()), fenix: true);
+    Get.lazyPut(
+      () => GetxLoginPresenter(
+        loginWithEmail: Get.find<LoginEmail>(),
+        loginWithGoogle: Get.find<LoginGoogle>(),
+      ),
+      fenix: true,
+    );
     Get.lazyPut(
       () => GetxConfigPresenter(
         logout: Get.find<Logout>(),
@@ -211,6 +222,7 @@ class Injection {
         sendVerificationEmail: Get.find<SendVerificationEmail>(),
         checkEmailVerified: Get.find<CheckEmailVerified>(),
         getUserLogged: Get.find<GetUserLogged>(),
+        loginWithGoogle: Get.find<LoginGoogle>(),
       ),
       fenix: true,
     );

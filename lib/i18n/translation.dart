@@ -24,6 +24,7 @@ abstract class Translation {
   String get completingRegistration;
   String get signingUp;
   String get loggingIn;
+  String get loggingInWithGoogle;
   String get name;
   String get nameHint;
   String get photo;

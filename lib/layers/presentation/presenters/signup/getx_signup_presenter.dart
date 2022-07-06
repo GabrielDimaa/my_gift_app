@@ -7,6 +7,7 @@ import '../../../../exceptions/errors.dart';
 import '../../../../monostates/user_global.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_camera.dart';
 import '../../../domain/usecases/abstracts/image_picker/i_fetch_image_picker_gallery.dart';
+import '../../../domain/usecases/abstracts/login/i_login_google.dart';
 import '../../../domain/usecases/abstracts/signup/i_check_email_verified.dart';
 import '../../../domain/usecases/abstracts/signup/i_send_verification_email.dart';
 import '../../../domain/usecases/abstracts/user/i_get_user_logged.dart';
@@ -29,6 +30,7 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   final ISendVerificationEmail _sendVerificationEmail;
   final ICheckEmailVerified _checkEmailVerified;
   final IGetUserLogged _getUserLogged;
+  final ILoginGoogle _loginWithGoogle;
 
   GetxSignupPresenter({
     required ISignUpEmail signUpEmail,
@@ -37,12 +39,14 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
     required ISendVerificationEmail sendVerificationEmail,
     required ICheckEmailVerified checkEmailVerified,
     required IGetUserLogged getUserLogged,
+    required ILoginGoogle loginWithGoogle,
   })  : _signUpEmail = signUpEmail,
         _fetchImagePickerCamera = fetchImagePickerCamera,
         _fetchImagePickerGallery = fetchImagePickerGallery,
         _sendVerificationEmail = sendVerificationEmail,
         _checkEmailVerified = checkEmailVerified,
-        _getUserLogged = getUserLogged;
+        _getUserLogged = getUserLogged,
+        _loginWithGoogle = loginWithGoogle;
 
   late SignupViewModel _viewModel;
 
@@ -90,9 +94,19 @@ class GetxSignupPresenter extends GetxController with LoadingManager implements 
   }
 
   @override
-  Future<void> signupWithGoogle() {
-    // TODO: implement signupWithGoogle
-    throw UnimplementedError();
+  Future<void> signupWithGoogle() async {
+    try {
+      final UserEntity? user = await _loginWithGoogle.auth();
+
+      if (user != null) {
+        final UserGlobal userGlobal = UserGlobal();
+        userGlobal.setUser(user);
+
+        await navigateToDashboard();
+      }
+    } on EmailError {
+      await navigateToConfirmEmail();
+    }
   }
 
   @override
