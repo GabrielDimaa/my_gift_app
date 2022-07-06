@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
 set(BINARY_NAME "my_gift_app")
-set(APPLICATION_ID "com.gabrielhainzenreder.my_gift_app")
+set(APPLICATION_ID "com.hainzenredergabriel.my_gift_app")
 
 cmake_policy(SET CMP0063 NEW)
 
