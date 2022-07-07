@@ -7,6 +7,7 @@ class FirebaseUserAccountDataSourceSpy extends Mock implements IUserAccountDataS
 
   FirebaseUserAccountDataSourceSpy(this.model) {
     mockAuthWithEmail(model);
+    mockAuthWithGoogle(model);
     mockSignUpWithEmail(model);
     mockSendVerificationEmail();
     mockCheckEmailVerified(true);
@@ -22,6 +23,12 @@ class FirebaseUserAccountDataSourceSpy extends Mock implements IUserAccountDataS
   When mockAuthWithEmailCall() => when(() => authWithEmail(any()));
   void mockAuthWithEmail(UserModel data) => mockAuthWithEmailCall().thenAnswer((_) => Future.value(data));
   void mockAuthWithEmailError(Exception error) => mockAuthWithEmailCall().thenThrow(error);
+  //endregion
+
+  //region authWithGoogle
+  When mockAuthWithGoogleCall() => when(() => authWithGoogle());
+  void mockAuthWithGoogle(UserModel? data) => mockAuthWithGoogleCall().thenAnswer((_) => Future.value(data));
+  void mockAuthWithGoogleError(Exception error) => mockAuthWithGoogleCall().thenThrow(error);
   //endregion
 
   //region signUpWithEmail

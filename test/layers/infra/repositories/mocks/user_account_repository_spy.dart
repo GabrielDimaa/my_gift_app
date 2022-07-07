@@ -14,6 +14,7 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
     if (params != null) mockAuthWithEmail(entityResult);
     if (entityRequest != null) mockSignUpWithEmail(entityResult);
 
+    mockAuthWithGoogle(entityResult);
     mockSendVerificationEmail(entityResult.id!);
     mockCheckEmailVerified(true);
     mockGetUserLogged(entityResult);
@@ -24,13 +25,19 @@ class UserAccountRepositorySpy extends Mock implements IUserAccountRepository {
     if (newPasswordParams != null) mockUpdatePassword();
   }
 
-  //region auth
+  //region authWithEmail
   When mockAuthWithEmailCall() => when(() => authWithEmail(params!));
   void mockAuthWithEmail(UserEntity data) => mockAuthWithEmailCall().thenAnswer((_) => Future.value(data));
   void mockAuthWithEmailError(Exception error) => mockAuthWithEmailCall().thenThrow(error);
   //endregion
 
-  //region signup
+  //region authWithGoogle
+  When mockAuthWithGoogleCall() => when(() => authWithGoogle());
+  void mockAuthWithGoogle(UserEntity? data) => mockAuthWithGoogleCall().thenAnswer((_) => Future.value(data));
+  void mockAuthWithGoogleError(Exception error) => mockAuthWithGoogleCall().thenThrow(error);
+  //endregion
+
+  //region signUpWithEmail
   When mockSignUpWithEmailCall() => when(() => signUpWithEmail(entityRequest!));
   void mockSignUpWithEmail(UserEntity data) => mockSignUpWithEmailCall().thenAnswer((_) => Future.value(data));
   void mockSignUpWithEmailError(Exception error) => mockSignUpWithEmailCall().thenThrow(error);

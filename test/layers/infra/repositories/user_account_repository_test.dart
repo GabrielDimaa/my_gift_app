@@ -65,6 +65,41 @@ void main() {
     });
   });
 
+  group("authWithGoogle", () {
+    test("Deve retornar UserEntity com sucesso", () async {
+      final UserEntity? entity = await sut.authWithGoogle();
+      expect(entity!.equals(userModel.toEntity()), true);
+    });
+
+    test("Deve retornar null", () async {
+      userAccountDataSourceSpy.mockAuthWithGoogle(null);
+
+      final UserEntity? entity = await sut.authWithGoogle();
+      expect(entity, null);
+    });
+
+    test("Deve throw StandardError", () {
+      userAccountDataSourceSpy.mockAuthWithGoogleError(StandardError());
+
+      final Future future = sut.authWithGoogle();
+      expect(future, throwsA(isA<StandardError>()));
+    });
+
+    test("Deve throw UnexpectedError", () {
+      userAccountDataSourceSpy.mockAuthWithGoogleError(UnexpectedError());
+
+      final Future future = sut.authWithGoogle();
+      expect(future, throwsA(isA<UnexpectedError>()));
+    });
+
+    test("Deve throw EmailError", () {
+      userAccountDataSourceSpy.mockAuthWithGoogleError(EmailError());
+
+      final Future future = sut.authWithGoogle();
+      expect(future, throwsA(isA<EmailError>()));
+    });
+  });
+
   group("signUpWithEmail", () {
     test("Deve retornar UserEntity com sucesso", () async {
       final UserEntity entity = await sut.signUpWithEmail(userModel.toEntity());
