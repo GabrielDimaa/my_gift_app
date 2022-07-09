@@ -33,6 +33,7 @@ requirements
 /build/
 
 /lib/firebase_options.dart
+/prod
 
 # Web related
 lib/generated_plugin_registrant.dart
