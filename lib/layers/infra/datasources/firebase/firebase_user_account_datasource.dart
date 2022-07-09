@@ -261,7 +261,11 @@ class FirebaseUserAccountDataSource implements IUserAccountDataSource {
         if (!(Uri.tryParse(model.photo!)?.isAbsolute ?? false)) {
           final snapshot = await firestore.collection(constantUsersReference).doc(model.id).get();
           if ((snapshot.data()?['photo'] ?? false) != null) {
-            await firebaseStorageDataSource.delete("profile/${model.id}");
+            try {
+              await firebaseStorageDataSource.delete("profile/${model.id}");
+            } catch (_) {
+              //Tenta excluir, se der erro ignora, pois pode ser uma foto da conta do Google, portanto não é armazenada no Storage.
+            }
           }
 
           final String photoUrl = await firebaseStorageDataSource.upload("profile/${model.id}", File(model.photo!));
