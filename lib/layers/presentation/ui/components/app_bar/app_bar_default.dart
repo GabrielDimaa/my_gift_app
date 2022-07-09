@@ -7,8 +7,15 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final List<Widget> actions;
   final VoidCallback? onBackPressed;
+  final bool visibleBackButton;
 
-  const AppBarDefault({Key? key, required this.title, this.actions = const [], this.onBackPressed}) : super(key: key);
+  const AppBarDefault({
+    Key? key,
+    required this.title,
+    this.actions = const [],
+    this.onBackPressed,
+    this.visibleBackButton = true,
+  }) : super(key: key);
 
   static double get toolbarHeight => 110;
 
@@ -30,7 +37,7 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Visibility(
-                visible: Navigator.canPop(context),
+                visible: visibleBackButton && Navigator.canPop(context),
                 replacement: const SizedBox(height: 48),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10),

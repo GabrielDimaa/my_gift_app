@@ -38,6 +38,7 @@ class _DashboardPageState extends State<DashboardPage> {
         key: _scaffoldKey,
         appBar: AppBarDefault(
           title: R.string.dashboard,
+          visibleBackButton: false,
           actions: [PhotoProfileAction(scaffoldKey: _scaffoldKey)],
         ),
         endDrawer: const ConfigDrawer(),
