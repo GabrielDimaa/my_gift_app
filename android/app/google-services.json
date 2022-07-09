@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "808823029026",
-    "project_id": "my-gift-78fa1",
-    "storage_bucket": "my-gift-78fa1.appspot.com"
+    "project_number": "482229712673",
+    "project_id": "my-gift---dev",
+    "storage_bucket": "my-gift---dev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:808823029026:android:defc39a9d131be6af0397b",
+        "mobilesdk_app_id": "1:482229712673:android:43bd02911760d518bd7060",
         "android_client_info": {
           "package_name": "com.hainzenredergabriel.my_gift_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "808823029026-9aiio8l5kbsun7osslqnhvo3hc5kkjh2.apps.googleusercontent.com",
+          "client_id": "482229712673-k26j4crukebmhhobumppun9c581k3dck.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.hainzenredergabriel.my_gift_app",
-            "certificate_hash": "c732b3f82167ea8bfa189dbbf7910b3183b3d0d1"
+            "certificate_hash": "806bf8a83f30ae69d4594fb11c2bfecb34e7972d"
           }
         },
         {
-          "client_id": "808823029026-a17sv1um0hv80cekmh7m4gk4g1vjs931.apps.googleusercontent.com",
+          "client_id": "482229712673-31p29a986ld0jsi4i87omg78b15c3p1a.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC87J-t0-Uqve23i2rNOewWuSgEoI5aKzE"
+          "current_key": "AIzaSyBJJTX8x9CQx478rCXuYeukqn0NS3CZWAA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "808823029026-a17sv1um0hv80cekmh7m4gk4g1vjs931.apps.googleusercontent.com",
+              "client_id": "482229712673-31p29a986ld0jsi4i87omg78b15c3p1a.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
