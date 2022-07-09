@@ -129,6 +129,12 @@ class PtBr implements Translation {
   String get wishlists => "Listas de Desejos";
 
   @override
+  String get editList => "Editar Lista";
+
+  @override
+  String get newList => "Nova Lista";
+
+  @override
   String get notFoundWishlists => "Nenhuma lista de desejos encontrada.";
 
   @override
