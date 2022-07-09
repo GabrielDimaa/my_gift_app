@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "808823029026-4bavvmpg1cm5n6hdtglao6gk11j3gpo0.apps.googleusercontent.com",
+          "client_id": "808823029026-9aiio8l5kbsun7osslqnhvo3hc5kkjh2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.hainzenredergabriel.my_gift_app",
-            "certificate_hash": "806bf8a83f30ae69d4594fb11c2bfecb34e7972d"
+            "certificate_hash": "c732b3f82167ea8bfa189dbbf7910b3183b3d0d1"
           }
         },
         {
