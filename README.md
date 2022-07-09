@@ -62,4 +62,4 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 Este projeto esta sob a licença [MIT](./LICENSE).
 
-Feito com ❤️ por Gabriel Hainzenreder 👋🏽 [Contato!](https://www.linkedin.com/in/gabriel-de-matos-hainzenreder-98005b192)
+Desenvolvido por Gabriel Hainzenreder 👋🏽 [Contato!](https://www.linkedin.com/in/gabriel-de-matos-hainzenreder-98005b192)
