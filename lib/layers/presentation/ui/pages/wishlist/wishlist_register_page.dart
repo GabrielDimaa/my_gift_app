@@ -58,7 +58,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBarDefault(
-        title: R.string.wishlists,
+        title: widget.viewModel?.id == null ? R.string.newList : R.string.editList,
         actions: [
           ButtonAction(
             visible: widget.viewModel?.id != null,

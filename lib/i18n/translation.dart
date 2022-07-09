@@ -43,6 +43,8 @@ abstract class Translation {
   String get camera;
   String get close;
   String get wishlists;
+  String get editList;
+  String get newList;
   String get notFoundWishlists;
   String get noneWishlists;
   String get notFoundWishes;
