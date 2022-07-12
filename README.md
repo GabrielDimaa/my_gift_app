@@ -19,7 +19,7 @@
 </p>
 
 <h4 align="center"> 
-  :bomb: <a href="https://play.google.com/store/apps/details?id=com.strapen_app.strapen_app" target="_blank">EM PRODUÇÃO</a> :volcano:
+  :bomb: <a href="https://play.google.com/store/apps/details?id=com.hainzenredergabriel.my_gift_app" target="_blank">EM PRODUÇÃO</a> :volcano:
 </h4>
 
 ## 💻 Sobre o projeto
@@ -45,8 +45,6 @@ Por mais que a pessoa gostaria de ganhar um presente que ela precise, muitas vez
 
 ## 🛠 Tecnologias
 
-As seguintes ferramentas foram usadas na construção do projeto:
-
 -   **Flutter/Dart**
 -   **Firebase**
     - Firestore
@@ -54,6 +52,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
     - Cloud Functions
     - Storage
 -   **Figma**
+-   **Rive**
 -   **Trello**
 
 ---
