@@ -7,7 +7,7 @@
 
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/GabrielDimaa/my_gift_app">
   
-  <a href="https://github.com/GabrielDimaa/strapen_app">
+  <a href="https://github.com/GabrielDimaa/my_gift_app">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/GabrielDimaa/my_gift_app">
   </a>
     
