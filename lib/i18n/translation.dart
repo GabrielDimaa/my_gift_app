@@ -145,6 +145,8 @@ abstract class Translation {
   String get sent;
   String get sending;
   String get resendCode;
+  String get discard;
+  String get discardChangesMessage;
   //endregion
 
   //region Validation

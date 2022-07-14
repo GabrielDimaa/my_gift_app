@@ -11,6 +11,7 @@ import '../../../viewmodels/wishlist_viewmodel.dart';
 import '../../components/app_bar/app_bar_default.dart';
 import '../../components/app_bar/button_action.dart';
 import '../../components/bottom_sheet/confirm_bottom_sheet.dart';
+import '../../components/bottom_sheet/discard_changes_bottom_sheet.dart';
 import '../../components/bottom_sheet/image_picker_bottom_sheet.dart';
 import '../../components/button/save_button.dart';
 import '../../components/dialogs/error_dialog.dart';
@@ -79,181 +80,188 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarDefault(
-        title: widget.viewModel == null ? R.string.newWish : R.string.editWish,
-        actions: [
-          ButtonAction(
-            visible: widget.viewModel != null,
-            label: "Excluir",
-            icon: Icons.delete_outlined,
-            onPressed: () async => await _delete(),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const PaddingDefault(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBoxDefault(3),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 6, bottom: 10),
-                        child: Text(R.string.image),
-                      ),
-                      Stack(
-                        children: [
-                          InkWell(
-                            onTap: () async => await _addImage(),
-                            borderRadius: BorderRadius.circular(18),
-                            child: Obx(
-                              () => Visibility(
-                                visible: presenter.viewModel.image == null,
-                                replacement: ClipRRect(
-                                  borderRadius: BorderRadius.circular(18),
-                                  child: ImageLoaderDefault(
-                                    image: presenter.viewModel.image ?? "",
-                                    width: 150,
-                                    height: 150,
-                                  ),
-                                ),
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.surface,
-                                    border: Border.all(color: const Color(0xFF464646), width: 2),
+    return WillPopScope(
+      onWillPop: () async {
+        if (presenter.hasChanged) return await DiscardChangesBottomSheet.show(context);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBarDefault(
+          title: widget.viewModel == null ? R.string.newWish : R.string.editWish,
+          actions: [
+            ButtonAction(
+              visible: widget.viewModel != null,
+              label: "Excluir",
+              icon: Icons.delete_outlined,
+              onPressed: () async => await _delete(),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const PaddingDefault(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBoxDefault(3),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6, bottom: 10),
+                          child: Text(R.string.image),
+                        ),
+                        Stack(
+                          children: [
+                            InkWell(
+                              onTap: () async => await _addImage(),
+                              borderRadius: BorderRadius.circular(18),
+                              child: Obx(
+                                () => Visibility(
+                                  visible: presenter.viewModel.image == null,
+                                  replacement: ClipRRect(
                                     borderRadius: BorderRadius.circular(18),
+                                    child: ImageLoaderDefault(
+                                      image: presenter.viewModel.image ?? "",
+                                      width: 150,
+                                      height: 150,
+                                    ),
                                   ),
-                                  height: 150,
-                                  width: 150,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.photo_size_select_large, size: 50),
-                                      const SizedBoxDefault(),
-                                      Text(R.string.addImage, style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 14)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Obx(
-                            () => Visibility(
-                              visible: presenter.viewModel.image != null,
-                              child: Positioned(
-                                top: 0,
-                                right: 0,
-                                child: Material(
-                                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10)),
-                                  color: Theme.of(context).colorScheme.background,
-                                  child: SizedBox(
-                                    width: 32,
-                                    height: 32,
-                                    child: IconButton(
-                                      iconSize: 20,
-                                      color: Theme.of(context).colorScheme.secondary,
-                                      padding: EdgeInsets.zero,
-                                      icon: const Icon(Icons.delete),
-                                      onPressed: () => presenter.viewModel.setImage(null),
-                                      splashRadius: 16,
-                                      tooltip: R.string.removeImage,
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).colorScheme.surface,
+                                      border: Border.all(color: const Color(0xFF464646), width: 2),
+                                      borderRadius: BorderRadius.circular(18),
+                                    ),
+                                    height: 150,
+                                    width: 150,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.photo_size_select_large, size: 50),
+                                        const SizedBoxDefault(),
+                                        Text(R.string.addImage, style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 14)),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBoxDefault(2),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextFieldDefault(
-                              label: R.string.labelDescription,
-                              hint: R.string.hintDescriptionWish,
-                              controller: _descriptionController,
-                              focusNode: _descriptionFocus,
-                              onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_linkFocus),
-                              textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.text,
-                              onSaved: presenter.viewModel.setDescription,
-                              validator: InputRequiredValidator().validate,
-                              textCapitalization: TextCapitalization.sentences,
-                            ),
-                            const SizedBoxDefault(2),
-                            TextFieldDefault(
-                              label: R.string.labelLinkWish,
-                              hint: R.string.hintLinkWish,
-                              controller: _linkController,
-                              focusNode: _linkFocus,
-                              onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.url,
-                              onSaved: presenter.viewModel.setLink,
-                              textCapitalization: TextCapitalization.none,
-                            ),
-                            const SizedBoxDefault(2),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 6, bottom: 10),
-                              child: Text(R.string.labelPriceRangeWish),
-                            ),
-                            const SizedBoxDefault(2),
-                            RangeSliderPrice(presenter: presenter),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 6),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Obx(
-                                    () {
-                                      if (presenter.viewModel.priceRangeInitial == PriceRange.pr500.max && presenter.viewModel.priceRangeFinal == PriceRange.pr500.max) {
-                                        return Text("${R.string.greaterThan} ${PriceRange.pr500.max.money}");
-                                      } else {
-                                        final double start = presenter.viewModel.priceRangeInitial ?? startRangeSliderDefault;
-                                        final double end = presenter.viewModel.priceRangeFinal ?? endRangeSliderDefault;
-                                        return Text("${start.money} - ${end.money}");
-                                      }
-                                    },
+                            Obx(
+                              () => Visibility(
+                                visible: presenter.viewModel.image != null,
+                                child: Positioned(
+                                  top: 0,
+                                  right: 0,
+                                  child: Material(
+                                    borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10)),
+                                    color: Theme.of(context).colorScheme.background,
+                                    child: SizedBox(
+                                      width: 32,
+                                      height: 32,
+                                      child: IconButton(
+                                        iconSize: 20,
+                                        color: Theme.of(context).colorScheme.secondary,
+                                        padding: EdgeInsets.zero,
+                                        icon: const Icon(Icons.delete),
+                                        onPressed: () => presenter.viewModel.setImage(null),
+                                        splashRadius: 16,
+                                        tooltip: R.string.removeImage,
+                                      ),
+                                    ),
                                   ),
-                                  DropdownPriceRange(presenter: presenter),
-                                ],
+                                ),
                               ),
                             ),
-                            const SizedBoxDefault(2),
-                            TextFieldDefault(
-                              label: R.string.labelNoteWish,
-                              hint: R.string.hintNoteWish,
-                              controller: _noteController,
-                              focusNode: _noteFocus,
-                              onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.text,
-                              onSaved: presenter.viewModel.setNote,
-                              textCapitalization: TextCapitalization.sentences,
-                              minLines: 2,
-                              maxLines: 4,
-                            ),
-                            const SizedBoxDefault(),
                           ],
                         ),
-                      ),
-                    ],
+                        const SizedBoxDefault(2),
+                        Form(
+                          key: _formKey,
+                          onChanged: () => presenter.setHasChanged(true),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextFieldDefault(
+                                label: R.string.labelDescription,
+                                hint: R.string.hintDescriptionWish,
+                                controller: _descriptionController,
+                                focusNode: _descriptionFocus,
+                                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_linkFocus),
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.text,
+                                onSaved: presenter.viewModel.setDescription,
+                                validator: InputRequiredValidator().validate,
+                                textCapitalization: TextCapitalization.sentences,
+                              ),
+                              const SizedBoxDefault(2),
+                              TextFieldDefault(
+                                label: R.string.labelLinkWish,
+                                hint: R.string.hintLinkWish,
+                                controller: _linkController,
+                                focusNode: _linkFocus,
+                                onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
+                                textInputAction: TextInputAction.done,
+                                keyboardType: TextInputType.url,
+                                onSaved: presenter.viewModel.setLink,
+                                textCapitalization: TextCapitalization.none,
+                              ),
+                              const SizedBoxDefault(2),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 6, bottom: 10),
+                                child: Text(R.string.labelPriceRangeWish),
+                              ),
+                              const SizedBoxDefault(2),
+                              RangeSliderPrice(presenter: presenter),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 6),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Obx(
+                                      () {
+                                        if (presenter.viewModel.priceRangeInitial == PriceRange.pr500.max && presenter.viewModel.priceRangeFinal == PriceRange.pr500.max) {
+                                          return Text("${R.string.greaterThan} ${PriceRange.pr500.max.money}");
+                                        } else {
+                                          final double start = presenter.viewModel.priceRangeInitial ?? startRangeSliderDefault;
+                                          final double end = presenter.viewModel.priceRangeFinal ?? endRangeSliderDefault;
+                                          return Text("${start.money} - ${end.money}");
+                                        }
+                                      },
+                                    ),
+                                    DropdownPriceRange(presenter: presenter),
+                                  ],
+                                ),
+                              ),
+                              const SizedBoxDefault(2),
+                              TextFieldDefault(
+                                label: R.string.labelNoteWish,
+                                hint: R.string.hintNoteWish,
+                                controller: _noteController,
+                                focusNode: _noteFocus,
+                                onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
+                                textInputAction: TextInputAction.done,
+                                keyboardType: TextInputType.text,
+                                onSaved: presenter.viewModel.setNote,
+                                textCapitalization: TextCapitalization.sentences,
+                                minLines: 2,
+                                maxLines: 4,
+                              ),
+                              const SizedBoxDefault(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBoxDefault(2),
-              SaveButton(onPressed: () async => await _save()),
-            ],
+                const SizedBoxDefault(2),
+                SaveButton(onPressed: () async => await _save()),
+              ],
+            ),
           ),
         ),
       ),
@@ -313,6 +321,8 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
       title: R.string.imageWish,
       onPressedCamera: () async {
         try {
+          presenter.setHasChanged(true);
+
           await LoadingDialog.show(
               context: context,
               message: "${R.string.opening} ${R.string.camera}...",
@@ -328,6 +338,8 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
       },
       onPressedGallery: () async {
         try {
+          presenter.setHasChanged(true);
+
           await LoadingDialog.show(
               context: context,
               message: "${R.string.opening} ${R.string.gallery}...",

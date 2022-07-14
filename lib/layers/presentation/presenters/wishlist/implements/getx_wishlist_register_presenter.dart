@@ -45,9 +45,16 @@ class GetxWishlistRegisterPresenter extends GetxController with LoadingManager i
   late WishlistViewModel _viewModel;
   late RxList<TagViewModel> _tagsViewModel;
   late UserEntity _user;
+  bool _hasChanged = false;
 
   @override
   WishlistViewModel get viewModel => _viewModel;
+
+  @override
+  bool get hasChanged => _hasChanged;
+
+  @override
+  void setHasChanged(bool value) => _hasChanged = value;
 
   @override
   void setViewModel(WishlistViewModel value) => _viewModel = value;

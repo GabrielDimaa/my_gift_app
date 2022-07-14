@@ -6,6 +6,9 @@ import '../../../viewmodels/wish_viewmodel.dart';
 import '../../../viewmodels/wishlist_viewmodel.dart';
 
 abstract class WishlistRegisterPresenter implements IViewModel<WishlistViewModel>, IInitialize<WishlistViewModel>, ILoading {
+  bool get hasChanged;
+  void setHasChanged(bool value);
+
   List<TagViewModel> get tagsViewModel;
 
   Future<void> save();

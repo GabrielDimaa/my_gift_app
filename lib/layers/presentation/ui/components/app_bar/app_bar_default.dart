@@ -46,7 +46,7 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
                     iconSize: 38,
                     splashRadius: 32,
                     icon: const Icon(Icons.keyboard_backspace),
-                    onPressed: onBackPressed ?? () => Navigator.pop(context),
+                    onPressed: onBackPressed ?? () => Navigator.maybePop(context),
                     tooltip: R.string.back,
                   ),
                 ),

@@ -3,6 +3,9 @@ import '../../helpers/interfaces/i_view_model.dart';
 import '../../viewmodels/wish_viewmodel.dart';
 
 abstract class WishRegisterPresenter implements IViewModel<WishViewModel> {
+  bool get hasChanged;
+  void setHasChanged(bool value);
+
   PriceRange get priceRangeSelected;
   void setPriceRange(PriceRange? value, {bool calculate = true});
 

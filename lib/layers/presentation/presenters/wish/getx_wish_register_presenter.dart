@@ -33,6 +33,7 @@ class GetxWishRegisterPresenter extends GetxController implements WishRegisterPr
   late WishViewModel _viewModel;
   late UserEntity _user;
   final Rx<PriceRange> _priceRange = Rx<PriceRange>(PriceRange.pr1_100);
+  bool _hasChanged = false;
 
   @override
   WishViewModel get viewModel => _viewModel;
@@ -61,6 +62,12 @@ class GetxWishRegisterPresenter extends GetxController implements WishRegisterPr
       }
     }
   }
+
+  @override
+  bool get hasChanged => _hasChanged;
+
+  @override
+  void setHasChanged(bool value) => _hasChanged = value;
 
   @override
   void onInit() {

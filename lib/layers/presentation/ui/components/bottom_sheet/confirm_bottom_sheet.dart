@@ -6,21 +6,31 @@ import 'bottom_sheet_default.dart';
 
 class ConfirmBottomSheet extends StatelessWidget {
   final String message;
+  final String? cancelButton;
+  final String? confirmButton;
 
   const ConfirmBottomSheet({
     Key? key,
     required this.message,
+    this.cancelButton,
+    this.confirmButton,
   }) : super(key: key);
 
   static Future<bool> show({
     required BuildContext context,
     required String title,
     required String message,
+    String? cancelButton,
+    String? confirmButton,
   }) async {
     return await BottomSheetDefault.show<bool>(
           context: context,
           title: title,
-          child: ConfirmBottomSheet(message: message),
+          child: ConfirmBottomSheet(
+            message: message,
+            cancelButton: cancelButton,
+            confirmButton: confirmButton,
+          ),
         ) ??
         false;
   }
@@ -37,16 +47,16 @@ class ConfirmBottomSheet extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
+              onPressed: () => Navigator.of(context).pop(true),
               child: Text(
-                R.string.cancel,
+                confirmButton ?? R.string.confirm,
                 style: TextStyle(fontSize: 18, color: Theme.of(context).colorScheme.secondary),
               ),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () => Navigator.of(context).pop(false),
               child: Text(
-                R.string.confirm,
+                cancelButton ?? R.string.cancel,
                 style: TextStyle(fontSize: 18, color: Theme.of(context).colorScheme.secondary),
               ),
             ),
