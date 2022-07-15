@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:rive/rive.dart';
 
 import '../../../../../app_theme.dart';
 import '../../../presenters/splash/getx_splash_presenter.dart';
@@ -19,13 +19,17 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   final SplashPresenter presenter = Get.find<GetxSplashPresenter>();
 
-  @override
-  void initState() {
-    presenter.initialize().catchError((e) async {
-      await ErrorDialog.show(context: context, content: e.toString());
-      await presenter.navigateToLogin();
+  StateMachineController? stateMachine;
+
+  void _onRiveInit(Artboard artboard) {
+    stateMachine = StateMachineController.fromArtboard(artboard, 'State Machine');
+    artboard.addController(stateMachine!);
+    stateMachine!.isActiveChanged.addListener(() async {
+      presenter.initialize().catchError((e) async {
+        await ErrorDialog.show(context: context, content: e.toString());
+        await presenter.navigateToLogin();
+      });
     });
-    super.initState();
   }
 
   @override
@@ -40,14 +44,14 @@ class _SplashPageState extends State<SplashPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              SvgPicture.asset(
-                "assets/images/my_gift_logo.svg",
-                width: 55,
-                height: 55,
-                color: Colors.white,
+              AspectRatio(
+                aspectRatio: 3,
+                child: RiveAnimation.asset(
+                  "assets/animations/my_gif_logo.riv",
+                  onInit: _onRiveInit,
+                ),
               ),
               const SizedBoxDefault(3),
-              LinearProgressIndicator(backgroundColor: const AppTheme().dark),
             ],
           ),
         ),

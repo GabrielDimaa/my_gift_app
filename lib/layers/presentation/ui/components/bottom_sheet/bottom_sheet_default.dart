@@ -46,44 +46,47 @@ class BottomSheetDefault extends StatelessWidget {
     return BottomSheet(
       onClosing: () {},
       enableDrag: false,
-      builder: (_) => Stack(
-        children: [
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Visibility(
-              visible: enablePop,
-              child: IconButton(
-                splashRadius: 24,
-                icon: const Icon(Icons.close),
-                tooltip: R.string.close,
-                onPressed: () => Navigator.pop(context),
+      builder: (_) => Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Stack(
+          children: [
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Visibility(
+                visible: enablePop,
+                child: IconButton(
+                  splashRadius: 24,
+                  icon: const Icon(Icons.close),
+                  tooltip: R.string.close,
+                  onPressed: () => Navigator.pop(context),
+                ),
               ),
             ),
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Visibility(
-                visible: title != null,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 24, bottom: 20),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      title ?? "",
-                      style: Theme.of(context).textTheme.headline6,
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Visibility(
+                  visible: title != null,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30, left: 24, bottom: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        title ?? "",
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: contentPadding ?? const EdgeInsets.only(left: 24, right: 24, bottom: 24),
-                child: child,
-              ),
-            ],
-          ),
-        ],
+                Padding(
+                  padding: contentPadding ?? const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+                  child: child,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

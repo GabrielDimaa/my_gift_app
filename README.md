@@ -7,7 +7,7 @@
 
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/GabrielDimaa/my_gift_app">
   
-  <a href="https://github.com/GabrielDimaa/strapen_app">
+  <a href="https://github.com/GabrielDimaa/my_gift_app">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/GabrielDimaa/my_gift_app">
   </a>
     
@@ -19,7 +19,7 @@
 </p>
 
 <h4 align="center"> 
-  :bomb: <a href="https://play.google.com/store/apps/details?id=com.strapen_app.strapen_app" target="_blank">EM PRODUÇÃO</a> :volcano:
+  :bomb: <a href="https://play.google.com/store/apps/details?id=com.hainzenredergabriel.my_gift_app" target="_blank">EM PRODUÇÃO</a> :volcano:
 </h4>
 
 ## 💻 Sobre o projeto
@@ -45,8 +45,6 @@ Por mais que a pessoa gostaria de ganhar um presente que ela precise, muitas vez
 
 ## 🛠 Tecnologias
 
-As seguintes ferramentas foram usadas na construção do projeto:
-
 -   **Flutter/Dart**
 -   **Firebase**
     - Firestore
@@ -54,6 +52,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
     - Cloud Functions
     - Storage
 -   **Figma**
+-   **Rive**
 -   **Trello**
 
 ---
@@ -62,4 +61,4 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 Este projeto esta sob a licença [MIT](./LICENSE.md).
 
-Feito com ❤️ por Gabriel Hainzenreder 👋🏽 [Contato!](https://www.linkedin.com/in/gabriel-de-matos-hainzenreder-98005b192)
+Desenvolvido por Gabriel Hainzenreder 👋🏽 [Contato!](https://www.linkedin.com/in/gabriel-de-matos-hainzenreder-98005b192)

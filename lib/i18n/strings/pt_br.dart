@@ -433,6 +433,12 @@ class PtBr implements Translation {
 
   @override
   String get resendCode => "Reenviar código";
+
+  @override
+  String get discard => "Descartar";
+
+  @override
+  String get discardChangesMessage => "Tem certeza que deseja descartar as alterações?";
   //endregion
 
   //region Validation

@@ -73,7 +73,7 @@ class _TagsFetchPageState extends State<TagsFetchPage> {
                                     onDismissed: (_) {},
                                     confirmDismiss: (_) async => await _delete(tag),
                                     child: Obx(
-                                          () => ListTile(
+                                      () => ListTile(
                                         onTap: () async => await _saveTag(tag),
                                         contentPadding: EdgeInsets.zero,
                                         minLeadingWidth: 0,
