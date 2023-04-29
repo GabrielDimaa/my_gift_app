@@ -1,0 +1,25 @@
+name: Flutter_Tests
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.7.7'
+        channel: 'stable'
+    - name: Pub get
+      run: flutter pub get
+    - name: Analyze
+      run: flutter analyze
+    - name: Run tests
+      run: flutter test --coverage
+    - name: Upload coverage to codecov
+      run: curl -s https://codecov.io/bash
+      shell: bash
