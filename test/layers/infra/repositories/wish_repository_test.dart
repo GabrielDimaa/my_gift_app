@@ -35,6 +35,12 @@ void main() {
 
       expect(wish.equals(wishResult.toEntity()), true);
     });
+    
+    test("sdlfkjsld", () async {
+      final WishEntity wish = await sut.getById(wishId);
+
+      expect(wish.equals(wishResult.toEntity()), true);
+    });
 
     test("Deve throw StandardError", () {
       wishDataSourceSpy.mockGetByIdError(error: StandardError());
