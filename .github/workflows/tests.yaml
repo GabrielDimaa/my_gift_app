@@ -3,6 +3,9 @@ name: Flutter_Tests
 on:
   pull_request:
     branches: [master]
+    
+env:
+  env_var: ${{ vars.FIREBASE_VARS }}
 
 jobs:
   tests:
@@ -15,12 +18,7 @@ jobs:
         flutter-version: '3.7.6'
     - name: Flutter version
       run: flutter --version
-    - name: Use variables
-      run: |
-        echo "variable: $FIREBASE_VARS"
-      env:
-        REPOSITORY_VAR: ${{ vars.FIREBASE_VARS }}
-    - name: ${{ vars.API_KEY }}
+    - name: Use variables ${{ vars.API_KEY }}
       run: |
         echo "pinting: ${{ vars.API_KEY }}"
     - name: Pub get
