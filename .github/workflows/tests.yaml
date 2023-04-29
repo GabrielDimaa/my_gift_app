@@ -16,10 +16,9 @@ jobs:
     - name: Flutter version
       run: flutter --version
     - name: Use variables
-      run: |
-        echo "repository variable : $FIREBASE_VARS"
       env:
         REPOSITORY_VAR: ${{ vars.FIREBASE_VARS }}
+    - name: ${{ vars.API_KEY }}
     - name: Pub get
       run: flutter pub get
     - name: Analyze
