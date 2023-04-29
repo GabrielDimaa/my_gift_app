@@ -44,7 +44,7 @@ class ListTileWish extends StatelessWidget {
                   Text(viewModel.description!),
                   Text(
                     "${viewModel.priceRangeInitial!.money} - ${viewModel.priceRangeFinal!.money}",
-                    style: Theme.of(context).textTheme.caption?.copyWith(fontWeight: FontWeight.w500, color: Colors.grey),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w500, color: Colors.grey),
                   ),
                 ],
               ),

@@ -14,7 +14,7 @@ class HeaderWidget extends StatelessWidget {
         const SizedBoxDefault(2),
         Text(
           text,
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
           textAlign: TextAlign.center,
         ),
       ],

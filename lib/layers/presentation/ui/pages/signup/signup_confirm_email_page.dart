@@ -50,7 +50,7 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const SizedBoxDefault(2),
-                        Text(R.string.explicationConfirmEmail, style: Theme.of(context).textTheme.subtitle1),
+                        Text(R.string.explicationConfirmEmail, style: Theme.of(context).textTheme.titleMedium),
                         const SizedBoxDefault(2),
                         Row(
                           children: [
@@ -101,7 +101,7 @@ class _SignupConfirmEmailPageState extends State<SignupConfirmEmailPage> {
                           ],
                         ),
                         const SizedBoxDefault(5),
-                        Text(R.string.explicationConfirmedEmail, style: Theme.of(context).textTheme.subtitle1),
+                        Text(R.string.explicationConfirmedEmail, style: Theme.of(context).textTheme.titleMedium),
                         const SizedBoxDefault(5),
                         ElevatedButton(
                           child: Text(R.string.completeAccount),

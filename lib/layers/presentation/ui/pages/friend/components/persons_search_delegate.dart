@@ -36,7 +36,7 @@ class PersonsSearchDelegate extends SearchDelegate {
         iconTheme: theme.primaryIconTheme.copyWith(color: colorScheme.onBackground),
         toolbarHeight: 70,
       ),
-      textTheme: TextTheme(headline6: TextStyle(color: colorScheme.onBackground, fontSize: 18)),
+      textTheme: TextTheme(titleLarge: TextStyle(color: colorScheme.onBackground, fontSize: 18)),
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
         hintStyle: theme.inputDecorationTheme.hintStyle?.copyWith(fontSize: 18, color: Colors.grey),
@@ -142,12 +142,12 @@ class PersonsSearchDelegate extends SearchDelegate {
         Text(
           R.string.findPeople,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: 4),
         Text(
           R.string.messageSearchDelegate,
-          style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 16, color: Colors.grey[400]),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 16, color: Colors.grey[400]),
           textAlign: TextAlign.center,
         ),
       ],
@@ -168,13 +168,15 @@ class PersonsSearchDelegate extends SearchDelegate {
 
   Future<void> _undoFriend({required BuildContext context, required String friendUserId}) async {
     try {
-      final bool confirmed = await ConfirmBottomSheet.show(
-            context: context,
-            title: R.string.undoFriend,
-            message: R.string.undoFriendConfirm,
-          );
+      final mounted = context.mounted;
 
-      if (!confirmed) return;
+      final bool confirmed = await ConfirmBottomSheet.show(
+        context: context,
+        title: R.string.undoFriend,
+        message: R.string.undoFriendConfirm,
+      );
+
+      if (!confirmed || !mounted) return;
 
       await LoadingDialog.show(
         context: context,

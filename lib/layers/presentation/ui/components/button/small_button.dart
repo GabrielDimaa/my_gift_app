@@ -17,7 +17,7 @@ class SmallButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        textStyle: Theme.of(context).textTheme.caption?.copyWith(fontWeight: FontWeight.w600),
+        textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         minimumSize: const Size(0, 0),
       ),

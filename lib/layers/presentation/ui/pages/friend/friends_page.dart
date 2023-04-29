@@ -120,6 +120,7 @@ class _FriendsPageState extends State<FriendsPage> {
 
       if (!confirmed) return;
 
+      if (!mounted) return;
       await LoadingDialog.show(
         context: context,
         message: "${R.string.undoingFriend}...",

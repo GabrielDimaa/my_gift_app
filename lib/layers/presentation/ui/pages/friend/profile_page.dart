@@ -92,13 +92,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               const SizedBoxDefault(2),
                               Text(
                                 widget.viewModel.name,
-                                style: textTheme.headline5,
+                                style: textTheme.headlineSmall,
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 5),
                               Text(
                                 widget.viewModel.email,
-                                style: textTheme.subtitle1?.copyWith(color: Colors.grey),
+                                style: textTheme.titleMedium?.copyWith(color: Colors.grey),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBoxDefault(3),
@@ -106,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   R.string.wishlists,
-                                  style: textTheme.subtitle1?.copyWith(fontSize: 24),
+                                  style: textTheme.titleMedium?.copyWith(fontSize: 24),
                                 ),
                               ),
                               const SizedBoxDefault(),
@@ -203,6 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (!confirmed) return;
 
+      if (!mounted) return;
       await LoadingDialog.show(
         context: context,
         message: "${R.string.undoingFriend}...",

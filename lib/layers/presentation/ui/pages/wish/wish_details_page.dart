@@ -101,7 +101,7 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
                                       onTap: () async => await _goToSite(),
                                       child: Text(
                                         widget.viewModel.link ?? "",
-                                        style: textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700, decoration: TextDecoration.underline),
+                                        style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700, decoration: TextDecoration.underline),
                                       ),
                                     ),
                                   ),
@@ -176,7 +176,7 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
             Expanded(
               child: Text(
                 R.string.copiedLink,
-                style: textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w500, color: colorScheme.background),
+                style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500, color: colorScheme.background),
               ),
             ),
             const SizedBoxDefault.horizontal(),
@@ -202,7 +202,7 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         text,
-        style: textTheme.bodyText2?.copyWith(color: Colors.grey),
+        style: textTheme.bodyMedium?.copyWith(color: Colors.grey),
       ),
     );
   }
@@ -210,7 +210,7 @@ class _WishDetailsPageState extends State<WishDetailsPage> {
   Widget _content({required String text}) {
     return Text(
       text,
-      style: textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+      style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
     );
   }
 

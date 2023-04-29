@@ -62,14 +62,14 @@ class _ConfigDrawerState extends State<ConfigDrawer> {
                       contentPadding: EdgeInsets.zero,
                       title: Text(
                         _user.name,
-                        style: textTheme.headline5?.copyWith(fontSize: 20),
+                        style: textTheme.headlineSmall?.copyWith(fontSize: 20),
                         overflow: TextOverflow.fade,
                         maxLines: 1,
                         softWrap: false,
                       ),
                       subtitle: Text(
                         _user.email,
-                        style: textTheme.caption?.copyWith(fontWeight: FontWeight.w600),
+                        style: textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
                         overflow: TextOverflow.fade,
                         maxLines: 1,
                         softWrap: false,
@@ -88,7 +88,7 @@ class _ConfigDrawerState extends State<ConfigDrawer> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(R.string.theme, style: textTheme.bodyText1),
+                          Text(R.string.theme, style: textTheme.bodyLarge),
                           SwitchCustom(
                             activeColor: colorScheme.primary,
                             inactiveColor: colorScheme.secondary,
@@ -126,8 +126,7 @@ class _ConfigDrawerState extends State<ConfigDrawer> {
                   icon: const Icon(Icons.logout_outlined),
                   onPressed: () async => await _logout(),
                   style: OutlinedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.secondary,
-                    side: BorderSide(color: Theme.of(context).colorScheme.secondary, width: 2),
+                    foregroundColor: Theme.of(context).colorScheme.secondary, side: BorderSide(color: Theme.of(context).colorScheme.secondary, width: 2),
                   ),
                 ),
               ),
@@ -156,6 +155,7 @@ class _ConfigDrawerState extends State<ConfigDrawer> {
           );
 
       if (confirmed) {
+        if (!mounted) return;
         await LoadingDialog.show(
             context: context,
             message: "${R.string.goingOut}...",

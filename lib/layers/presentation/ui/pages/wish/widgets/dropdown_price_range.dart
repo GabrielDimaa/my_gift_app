@@ -25,7 +25,7 @@ class DropdownPriceRange extends StatelessWidget {
           onChanged: presenter.setPriceRange,
           underline: const SizedBox.shrink(),
           borderRadius: BorderRadius.circular(18),
-          style: theme.textTheme.button?.copyWith(fontSize: 14, color: theme.brightness == Brightness.dark ? const Color(0xFFC1C1C1) : theme.colorScheme.onBackground),
+          style: theme.textTheme.labelLarge?.copyWith(fontSize: 14, color: theme.brightness == Brightness.dark ? const Color(0xFFC1C1C1) : theme.colorScheme.onBackground),
           isDense: true,
           icon: Icon(Icons.arrow_drop_down_outlined, color: theme.colorScheme.secondary),
           items: [

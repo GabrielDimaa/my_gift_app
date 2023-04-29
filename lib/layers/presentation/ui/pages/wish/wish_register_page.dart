@@ -143,7 +143,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
                                       children: [
                                         const Icon(Icons.photo_size_select_large, size: 50),
                                         const SizedBoxDefault(),
-                                        Text(R.string.addImage, style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 14)),
+                                        Text(R.string.addImage, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14)),
                                       ],
                                     ),
                                   ),
@@ -298,7 +298,7 @@ class _WishRegisterPageState extends State<WishRegisterPage> {
       );
 
       if (confirmed) {
-        if (presenter.viewModel.id != null) {
+        if (presenter.viewModel.id != null && mounted) {
           await LoadingDialog.show(
             context: context,
             message: "${R.string.deletingWish}...",

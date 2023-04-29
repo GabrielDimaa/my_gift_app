@@ -49,7 +49,7 @@ class _DashboardPageState extends State<DashboardPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBoxDefault(2),
-                Text("${R.string.hello}, ${_user.name.split(" ").first} 👋", style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 26)),
+                Text("${R.string.hello}, ${_user.name.split(" ").first} 👋", style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 26)),
                 const SizedBoxDefault(2),
                 Expanded(
                   child: ListView(
