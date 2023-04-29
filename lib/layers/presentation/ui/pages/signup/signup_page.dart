@@ -97,7 +97,7 @@ class _SignupPageState extends State<SignupPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(R.string.alreadyHaveAccount, style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 16)),
+                            Text(R.string.alreadyHaveAccount, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 16)),
                             TextButton(
                               child: Text(R.string.makeLogin, style: const TextStyle(fontSize: 16)),
                               onPressed: () async => await presenter.navigateToLogin(),

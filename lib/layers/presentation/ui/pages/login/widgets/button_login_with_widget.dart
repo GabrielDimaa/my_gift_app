@@ -32,7 +32,7 @@ class ButtonLoginWithWidget extends StatelessWidget {
           children: [
             icon,
             const SizedBoxDefault.horizontal(),
-            Text(text, style: Theme.of(context).textTheme.bodyText1),
+            Text(text, style: Theme.of(context).textTheme.bodyLarge),
           ],
         ),
       ),

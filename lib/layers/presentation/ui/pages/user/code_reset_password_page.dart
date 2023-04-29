@@ -42,7 +42,7 @@ class _CodeResetPasswordPageState extends State<CodeResetPasswordPage> {
                   child: Column(
                     children: [
                       const SizedBoxDefault(2),
-                      Text(R.string.explicationCodeResetPassword, style: Theme.of(context).textTheme.subtitle1),
+                      Text(R.string.explicationCodeResetPassword, style: Theme.of(context).textTheme.titleMedium),
                       const SizedBoxDefault(2),
                       Row(
                         children: [

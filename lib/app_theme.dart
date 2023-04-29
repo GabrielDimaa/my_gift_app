@@ -173,49 +173,50 @@ class AppTheme extends StatelessWidget {
       );
 
   TextTheme get _textThemeLight => TextTheme(
-        headline6: TextStyle(color: dark, fontSize: 22, fontWeight: FontWeight.w600),
-        headline5: TextStyle(color: dark, fontSize: 28, fontWeight: FontWeight.w700),
-        headline4: TextStyle(color: dark, fontSize: 34, fontWeight: FontWeight.w800),
-        headline3: TextStyle(color: dark, fontSize: 40, fontWeight: FontWeight.w800),
-        headline2: TextStyle(color: dark, fontSize: 44, fontWeight: FontWeight.w700),
-        headline1: TextStyle(color: dark, fontSize: 50, fontWeight: FontWeight.w600),
-        subtitle2: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w700),
-        subtitle1: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w500),
-        button: TextStyle(color: dark, fontSize: 20, fontWeight: FontWeight.w700),
-        bodyText2: TextStyle(color: dark, fontSize: 16, fontWeight: FontWeight.w400),
-        bodyText1: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w400),
-        caption: TextStyle(color: dark, fontSize: 14, fontWeight: FontWeight.w300),
+        titleLarge: TextStyle(color: dark, fontSize: 22, fontWeight: FontWeight.w600),
+        headlineSmall: TextStyle(color: dark, fontSize: 28, fontWeight: FontWeight.w700),
+        headlineMedium: TextStyle(color: dark, fontSize: 34, fontWeight: FontWeight.w800),
+        displaySmall: TextStyle(color: dark, fontSize: 40, fontWeight: FontWeight.w800),
+        displayMedium: TextStyle(color: dark, fontSize: 44, fontWeight: FontWeight.w700),
+        displayLarge: TextStyle(color: dark, fontSize: 50, fontWeight: FontWeight.w600),
+        titleSmall: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w700),
+        titleMedium: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w500),
+        labelLarge: TextStyle(color: dark, fontSize: 20, fontWeight: FontWeight.w700),
+        bodyMedium: TextStyle(color: dark, fontSize: 16, fontWeight: FontWeight.w400),
+        bodyLarge: TextStyle(color: dark, fontSize: 18, fontWeight: FontWeight.w400),
+        bodySmall: TextStyle(color: dark, fontSize: 14, fontWeight: FontWeight.w300),
       );
 
   TextTheme get _textThemeDark => TextTheme(
-        headline6: TextStyle(color: light, fontSize: 22, fontWeight: FontWeight.w600),
-        headline5: TextStyle(color: light, fontSize: 28, fontWeight: FontWeight.w700),
-        headline4: TextStyle(color: light, fontSize: 34, fontWeight: FontWeight.w800),
-        headline3: TextStyle(color: light, fontSize: 40, fontWeight: FontWeight.w800),
-        headline2: TextStyle(color: light, fontSize: 44, fontWeight: FontWeight.w700),
-        headline1: TextStyle(color: light, fontSize: 50, fontWeight: FontWeight.w600),
-        subtitle2: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w700),
-        subtitle1: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w500),
-        button: TextStyle(color: light, fontSize: 20, fontWeight: FontWeight.w700),
-        bodyText2: TextStyle(color: light, fontSize: 16, fontWeight: FontWeight.w400),
-        bodyText1: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w400),
-        caption: TextStyle(color: light, fontSize: 14, fontWeight: FontWeight.w300),
+        titleLarge: TextStyle(color: light, fontSize: 22, fontWeight: FontWeight.w600),
+        headlineSmall: TextStyle(color: light, fontSize: 28, fontWeight: FontWeight.w700),
+        headlineMedium: TextStyle(color: light, fontSize: 34, fontWeight: FontWeight.w800),
+        displaySmall: TextStyle(color: light, fontSize: 40, fontWeight: FontWeight.w800),
+        displayMedium: TextStyle(color: light, fontSize: 44, fontWeight: FontWeight.w700),
+        displayLarge: TextStyle(color: light, fontSize: 50, fontWeight: FontWeight.w600),
+        titleSmall: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w700),
+        titleMedium: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w500),
+        labelLarge: TextStyle(color: light, fontSize: 20, fontWeight: FontWeight.w700),
+        bodyMedium: TextStyle(color: light, fontSize: 16, fontWeight: FontWeight.w400),
+        bodyLarge: TextStyle(color: light, fontSize: 18, fontWeight: FontWeight.w400),
+        bodySmall: TextStyle(color: light, fontSize: 14, fontWeight: FontWeight.w300),
       );
 
   ElevatedButtonThemeData _elevatedButtonTheme({Color? onSurface}) => ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: 4,
-          primary: primary,
-          onPrimary: light,
+          backgroundColor: primary,
+          disabledForegroundColor: onSurface?.withOpacity(0.38),
+          disabledBackgroundColor: onSurface?.withOpacity(0.12),
+          foregroundColor: light,
           padding: const EdgeInsets.all(16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-          onSurface: onSurface,
         ),
       );
 
   OutlinedButtonThemeData get _outlinedButtonTheme => OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          primary: primary,
+          foregroundColor: primary,
           padding: const EdgeInsets.symmetric(vertical: 10),
           side: BorderSide(color: primary, width: 2),
           shape: RoundedRectangleBorder(
@@ -226,7 +227,7 @@ class AppTheme extends StatelessWidget {
 
   TextButtonThemeData get _textButtonTheme => TextButtonThemeData(
         style: TextButton.styleFrom(
-          primary: secondary,
+          foregroundColor: secondary,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         ),
       );

@@ -135,8 +135,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                                 icon: const Icon(Icons.add),
                                 label: Text(R.string.addWishes),
                                 style: OutlinedButton.styleFrom(
-                                  primary: colorScheme.secondary,
-                                  side: BorderSide(color: colorScheme.secondary, width: 2),
+                                  foregroundColor: colorScheme.secondary, side: BorderSide(color: colorScheme.secondary, width: 2),
                                 ),
                                 onPressed: () async => await _navigateToWishCreate(),
                               ),
@@ -159,7 +158,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                                     TextButton(
                                       child: Text(
                                         R.string.seeWishes,
-                                        style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                               fontSize: 16,
                                               color: Theme.of(context).colorScheme.secondary,
                                             ),
@@ -243,6 +242,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
           if (!confirmed) return;
         }
 
+        if (!mounted) return;
         await LoadingDialog.show(
           context: context,
           message: "${R.string.savingWishlist}...",
@@ -266,6 +266,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
           );
       if (!confirmed) return;
 
+      if (!mounted) return;
       await LoadingDialog.show(
         context: context,
         message: "${R.string.deletingWishlist}...",
@@ -336,7 +337,7 @@ class _WishlistRegisterPageState extends State<WishlistRegisterPage> {
                               if (wish.id == null) return true;
 
                               final bool confirmed = await ConfirmBottomSheet.show(context: context, title: R.string.delete, message: R.string.confirmDeleteWish);
-                              if (confirmed) {
+                              if (confirmed && mounted) {
                                 await LoadingDialog.show(
                                   context: context,
                                   message: "${R.string.deletingWish}...",

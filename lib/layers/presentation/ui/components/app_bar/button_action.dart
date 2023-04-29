@@ -25,7 +25,7 @@ class ButtonAction extends StatelessWidget {
         icon: Icon(icon, size: iconSize),
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          textStyle: Theme.of(context).textTheme.button?.copyWith(fontSize: 16),
+          textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 16),
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 0),
         ),
       ),

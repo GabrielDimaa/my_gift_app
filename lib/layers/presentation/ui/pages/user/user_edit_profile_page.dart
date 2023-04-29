@@ -91,7 +91,7 @@ class _UserEditProfilePageState extends State<UserEditProfilePage> {
                                                 children: [
                                                   Text(
                                                     R.string.alterPhoto,
-                                                    style: Theme.of(context).textTheme.caption,
+                                                    style: Theme.of(context).textTheme.bodySmall,
                                                     textAlign: TextAlign.center,
                                                   ),
                                                   const SizedBoxDefault.horizontal(),

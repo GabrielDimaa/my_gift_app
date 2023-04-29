@@ -63,7 +63,7 @@ class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 18),
-            child: Text(title, style: Theme.of(context).textTheme.headline4),
+            child: Text(title, style: Theme.of(context).textTheme.headlineMedium),
           ),
         ],
       ),

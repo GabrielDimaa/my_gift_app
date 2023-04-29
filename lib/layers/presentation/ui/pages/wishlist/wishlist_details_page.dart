@@ -81,7 +81,7 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
                                   Obx(
                                     () => Text(
                                       presenter.viewModel.description!,
-                                      style: textTheme.headline6,
+                                      style: textTheme.titleLarge,
                                     ),
                                   ),
                                   Align(
@@ -90,7 +90,7 @@ class _WishlistDetailsPageState extends State<WishlistDetailsPage> {
                                       () => Chip(
                                         label: Text(
                                           presenter.viewModel.tag!.name!,
-                                          style: textTheme.caption?.copyWith(
+                                          style: textTheme.bodySmall?.copyWith(
                                             color: Color(presenter.viewModel.tag!.color!),
                                             fontWeight: FontWeight.w600,
                                           ),

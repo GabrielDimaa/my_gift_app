@@ -152,7 +152,7 @@ class _TagsFetchPageState extends State<TagsFetchPage> {
   Future<bool> _delete(TagViewModel tag) async {
     try {
       final bool confirmed = await ConfirmBottomSheet.show(context: context, title: R.string.delete, message: R.string.confirmDeleteTag);
-      if (confirmed) {
+      if (confirmed && mounted) {
         await LoadingDialog.show(
           context: context,
           message: "${R.string.deletingTag}...",

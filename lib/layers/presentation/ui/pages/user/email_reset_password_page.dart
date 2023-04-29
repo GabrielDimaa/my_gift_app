@@ -57,7 +57,7 @@ class _EmailResetPasswordPageState extends State<EmailResetPasswordPage> {
                       child: Column(
                         children: [
                           const SizedBoxDefault(2),
-                          Text(R.string.explicationEmailResetPassword, style: Theme.of(context).textTheme.subtitle1),
+                          Text(R.string.explicationEmailResetPassword, style: Theme.of(context).textTheme.titleMedium),
                           const SizedBoxDefault(2),
                           Form(
                             key: _formKey,
